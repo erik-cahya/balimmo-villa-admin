@@ -1,0 +1,2933 @@
+// 20250416173809
+// https://balimmo.properties/wp-json/wp/v2/listings
+[
+  {
+    "id": 16334,
+    "date": "2025-04-14T07:02:25",
+    "date_gmt": "2025-04-14T07:02:25",
+    "guid": {
+      "rendered": "https://balimmo.properties/?post_type=myhome_listing&#038;p=16334"
+    },
+    "modified": "2025-04-16T02:24:18",
+    "modified_gmt": "2025-04-16T02:24:18",
+    "slug": "villa-serenity-2",
+    "status": "publish",
+    "type": "myhome_listing",
+    "link": "https://balimmo.properties/listing/villa-serenity-2/",
+    "title": {
+      "rendered": "Villa Serenity 2"
+    },
+    "content": {
+      "rendered": "<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur</p>\n",
+      "protected": false
+    },
+    "author": 3,
+    "template": "",
+    "myhome_14": [
+      "Villa"
+    ],
+    "myhome_9508": [
+      "Badung"
+    ],
+    "myhome_15545": [
+      "Canggu"
+    ],
+    "myhome_16062": [
+      "Available"
+    ],
+    "myhome_16065": [
+      "Leasehold"
+    ],
+    "myhome_16067": [
+      "Yes"
+    ],
+    "myhome_16074": [
+      "2"
+    ],
+    "myhome_16078": [
+      "Closed kitchen"
+    ],
+    "myhome_16079": [
+      "Alang-alang roof"
+    ],
+    "myhome_16080": [
+      "Ceramic"
+    ],
+    "myhome_16130": [],
+    "myhome_16129": [],
+    "myhome_16081": [
+      "Private"
+    ],
+    "myhome_16085": [
+      "Yes"
+    ],
+    "myhome_16177": [
+      "Yes"
+    ],
+    "myhome_16088": [
+      "Yes"
+    ],
+    "myhome_16181": [
+      "Yes"
+    ],
+    "myhome_16091": [
+      "Yes"
+    ],
+    "myhome_16174": [
+      "Yes"
+    ],
+    "myhome_16095": [
+      "Yes"
+    ],
+    "myhome_16330": [
+      "Yes"
+    ],
+    "myhome_16332": [
+      "Electric"
+    ],
+    "myhome_16186": [
+      "Yes"
+    ],
+    "myhome_16192": [
+      "CCTV"
+    ],
+    "myhome_16326": [
+      "Yes"
+    ],
+    "myhome_16335": [
+      "Yes"
+    ],
+    "myhome_16328": [
+      "Yes"
+    ],
+    "myhome_16189": [
+      "Yes"
+    ],
+    "myhome_16190": [
+      "Dishwasher"
+    ],
+    "myhome_16191": [
+      "Dryer",
+      "Washing machine"
+    ],
+    "myhome_16338": [
+      "Yes"
+    ],
+    "myhome_16339": [
+      "Yes"
+    ],
+    "myhome_4661": [],
+    "myhome_16133": [
+      "Jungle",
+      "Mountain"
+    ],
+    "myhome_16134": [
+      "Yes"
+    ],
+    "myhome_16137": [
+      "Beach",
+      "Restaurants"
+    ],
+    "myhome_16138": [
+      "Yes"
+    ],
+    "myhome_16340": [
+      "Gated community"
+    ],
+    "myhome_16341": [
+      "Yes"
+    ],
+    "myhome_16202": [
+      "Maintenance",
+      "Reception"
+    ],
+    "myhome_16139": [
+      "Rented"
+    ],
+    "myhome_16140": [
+      "Yes"
+    ],
+    "myhome_16207": [],
+    "myhome_16345": [
+      "Yes"
+    ],
+    "class_list": [
+      "post-16334",
+      "myhome_listing",
+      "type-myhome_listing",
+      "status-publish",
+      "hentry",
+      "myhome_14-villa",
+      "myhome_9508-badung",
+      "myhome_15545-canggu",
+      "myhome_16062-available",
+      "myhome_16065-leasehold",
+      "myhome_16067-yes",
+      "myhome_16074-648",
+      "myhome_16078-closed-kitchen",
+      "myhome_16079-alang-alang-roof",
+      "myhome_16080-ceramic",
+      "myhome_16081-private",
+      "myhome_16085-yes",
+      "myhome_16177-yes",
+      "myhome_16088-yes",
+      "myhome_16181-yes",
+      "myhome_16091-yes",
+      "myhome_16174-yes",
+      "myhome_16095-yes",
+      "myhome_16330-yes",
+      "myhome_16332-electric",
+      "myhome_16186-yes",
+      "myhome_16192-cctv",
+      "myhome_16326-yes",
+      "myhome_16335-yes",
+      "myhome_16328-yes",
+      "myhome_16189-yes",
+      "myhome_16190-dishwasher",
+      "myhome_16191-dryer",
+      "myhome_16191-washing-machine",
+      "myhome_16338-yes",
+      "myhome_16339-yes",
+      "myhome_16133-jungle",
+      "myhome_16133-mountain",
+      "myhome_16134-yes",
+      "myhome_16137-beach",
+      "myhome_16137-restaurants",
+      "myhome_16138-yes",
+      "myhome_16340-gated-community",
+      "myhome_16341-yes",
+      "myhome_16202-maintenance",
+      "myhome_16202-reception",
+      "myhome_16139-rented",
+      "myhome_16140-yes",
+      "myhome_16345-yes"
+    ],
+    "myhome_16061": [
+      "Jl Pantai Nyanyi No 24"
+    ],
+    "myhome_16120": [
+      "521456"
+    ],
+    "myhome_9733": [
+      "2022"
+    ],
+    "myhome_16064": [
+      "Jamal"
+    ],
+    "myhome_16213": [
+      "08789654256"
+    ],
+    "myhome_16413": [
+      "2020"
+    ],
+    "myhome_16414": [
+      "2050"
+    ],
+    "myhome_16068": [
+      "15"
+    ],
+    "myhome_16229": [],
+    "myhome_5974": [
+      "$ 250,000"
+    ],
+    "myhome_16415": [
+      "$ 200"
+    ],
+    "myhome_16416": [
+      "$ 5,000"
+    ],
+    "myhome_16071": [
+      "350m²"
+    ],
+    "myhome_16072": [
+      "300m²"
+    ],
+    "myhome_16073": [
+      "300m²"
+    ],
+    "myhome_16075": [
+      "25m²"
+    ],
+    "myhome_16205": [],
+    "myhome_16206": [],
+    "myhome_5462": [
+      "3"
+    ],
+    "myhome_5463": [
+      "4"
+    ],
+    "myhome_16076": [
+      "2 Cars, 5 Motorbike"
+    ],
+    "myhome_16128": [],
+    "myhome_16083": [
+      "35"
+    ],
+    "myhome_16084": [
+      "3"
+    ],
+    "myhome_16178": [
+      "20"
+    ],
+    "myhome_16183": [
+      "5"
+    ],
+    "myhome_16092": [
+      "40"
+    ],
+    "myhome_16175": [
+      "4"
+    ],
+    "myhome_16329": [
+      "2000watt"
+    ],
+    "myhome_16187": [
+      "50"
+    ],
+    "myhome_16337": [
+      "15liter"
+    ],
+    "myhome_16135": [
+      "8"
+    ],
+    "myhome_16195": [
+      "10"
+    ],
+    "myhome_16197": [],
+    "myhome_16199": [
+      "5"
+    ],
+    "myhome_16200": [],
+    "myhome_16342": [
+      "$ 50"
+    ],
+    "myhome_16203": [
+      "10%"
+    ],
+    "myhome_16343": [
+      "3%"
+    ],
+    "myhome_16141": [],
+    "myhome_145": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img1-1.webp",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img3-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img2-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img4-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img5-2.jpg"
+    ],
+    "myhome_16344": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/sanur.bali_.jpg"
+    ],
+    "myhome_16142": [],
+    "myhome_16143": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img9.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img8-1.jpg"
+    ],
+    "myhome_16144": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img8-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img7-2.jpg"
+    ],
+    "myhome_16346": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img9-2.jpg"
+    ],
+    "myhome_345": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=pdcNkMHctq9gnBi7",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16096": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=pdcNkMHctq9gnBi7",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16098": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=pdcNkMHctq9gnBi7",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16334",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/types/myhome_listing"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/users/3"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16334/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 16347,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16334/revisions/16347"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/media?parent=16334"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "myhome_14",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_14?post=16334"
+        },
+        {
+          "taxonomy": "myhome_9508",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_9508?post=16334"
+        },
+        {
+          "taxonomy": "myhome_15545",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_15545?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16062",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16062?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16065",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16065?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16067",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16067?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16074",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16074?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16078",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16078?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16079",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16079?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16080",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16080?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16130",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16130?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16129",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16129?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16081",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16081?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16085",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16085?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16177",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16177?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16088",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16088?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16181",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16181?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16091",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16091?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16174",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16174?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16095",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16095?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16330",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16330?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16332",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16332?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16186",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16186?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16192",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16192?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16326",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16326?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16335",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16335?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16328",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16328?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16189",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16189?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16190",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16190?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16191",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16191?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16338",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16338?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16339",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16339?post=16334"
+        },
+        {
+          "taxonomy": "myhome_4661",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_4661?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16133",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16133?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16134",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16134?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16137",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16137?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16138",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16138?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16340",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16340?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16341",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16341?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16202",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16202?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16139",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16139?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16140",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16140?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16207",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16207?post=16334"
+        },
+        {
+          "taxonomy": "myhome_16345",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16345?post=16334"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 16212,
+    "date": "2025-04-11T00:15:03",
+    "date_gmt": "2025-04-11T00:15:03",
+    "guid": {
+      "rendered": "https://balimmo.properties/?post_type=myhome_listing&#038;p=16212"
+    },
+    "modified": "2025-04-11T06:09:47",
+    "modified_gmt": "2025-04-11T06:09:47",
+    "slug": "villa-serenity",
+    "status": "publish",
+    "type": "myhome_listing",
+    "link": "https://balimmo.properties/listing/villa-serenity/",
+    "title": {
+      "rendered": "Villa Serenity"
+    },
+    "content": {
+      "rendered": "<p>Lorem Ipsum has been the industry&#8217;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "template": "",
+    "myhome_14": [
+      "Villa"
+    ],
+    "myhome_9508": [
+      "Tabanan"
+    ],
+    "myhome_15545": [
+      "Nyanyi"
+    ],
+    "myhome_16062": [
+      "Available"
+    ],
+    "myhome_16065": [
+      "Leasehold"
+    ],
+    "myhome_16067": [
+      "Yes"
+    ],
+    "myhome_16074": [
+      "2"
+    ],
+    "myhome_16078": [
+      "Closed kitchen"
+    ],
+    "myhome_16079": [
+      "Flat roof"
+    ],
+    "myhome_16080": [
+      "Ceramic"
+    ],
+    "myhome_16130": [],
+    "myhome_16129": [],
+    "myhome_16081": [
+      "Private"
+    ],
+    "myhome_16085": [
+      "Yes"
+    ],
+    "myhome_16177": [
+      "Yes"
+    ],
+    "myhome_16088": [
+      "No"
+    ],
+    "myhome_16181": [
+      "Yes"
+    ],
+    "myhome_16091": [
+      "No"
+    ],
+    "myhome_16174": [
+      "No"
+    ],
+    "myhome_16095": [
+      "No"
+    ],
+    "myhome_16330": [],
+    "myhome_16332": [],
+    "myhome_16186": [
+      "No"
+    ],
+    "myhome_16192": [
+      "Alarm system"
+    ],
+    "myhome_16326": [],
+    "myhome_16335": [],
+    "myhome_16328": [],
+    "myhome_16189": [
+      "No"
+    ],
+    "myhome_16190": [
+      "Dishwasher"
+    ],
+    "myhome_16191": [
+      "Dryer",
+      "Washing machine"
+    ],
+    "myhome_16338": [],
+    "myhome_16339": [],
+    "myhome_4661": [
+      "Backup generator",
+      "BBQ Area"
+    ],
+    "myhome_16133": [
+      "Jungle"
+    ],
+    "myhome_16134": [
+      "No"
+    ],
+    "myhome_16137": [
+      "Beach",
+      "Restaurants"
+    ],
+    "myhome_16138": [
+      "Yes"
+    ],
+    "myhome_16340": [],
+    "myhome_16341": [],
+    "myhome_16202": [],
+    "myhome_16139": [],
+    "myhome_16140": [],
+    "myhome_16207": [],
+    "myhome_16345": [],
+    "class_list": [
+      "post-16212",
+      "myhome_listing",
+      "type-myhome_listing",
+      "status-publish",
+      "hentry",
+      "myhome_14-villa",
+      "myhome_9508-tabanan",
+      "myhome_15545-nyanyi",
+      "myhome_16062-available",
+      "myhome_16065-leasehold",
+      "myhome_16067-yes",
+      "myhome_16074-648",
+      "myhome_16078-closed-kitchen",
+      "myhome_16079-flat-roof",
+      "myhome_16080-ceramic",
+      "myhome_16081-private",
+      "myhome_16085-yes",
+      "myhome_16177-yes",
+      "myhome_16088-no",
+      "myhome_16181-yes",
+      "myhome_16091-no",
+      "myhome_16174-no",
+      "myhome_16095-no",
+      "myhome_16186-no",
+      "myhome_16192-alarm-system",
+      "myhome_16189-no",
+      "myhome_16190-dishwasher",
+      "myhome_16191-dryer",
+      "myhome_16191-washing-machine",
+      "myhome_4661-backup-generator",
+      "myhome_4661-bbq-area",
+      "myhome_16133-jungle",
+      "myhome_16134-no",
+      "myhome_16137-beach",
+      "myhome_16137-restaurants",
+      "myhome_16138-yes"
+    ],
+    "myhome_16061": [
+      "Jl Pantai Nyanyi No 24"
+    ],
+    "myhome_16120": [
+      "524556"
+    ],
+    "myhome_9733": [
+      "2022"
+    ],
+    "myhome_16064": [
+      "Jamal"
+    ],
+    "myhome_16213": [],
+    "myhome_16413": [],
+    "myhome_16414": [],
+    "myhome_16068": [
+      "5"
+    ],
+    "myhome_16229": [
+      "$ 6,000 /month"
+    ],
+    "myhome_5974": [],
+    "myhome_16415": [],
+    "myhome_16416": [],
+    "myhome_16071": [
+      "350m²"
+    ],
+    "myhome_16072": [
+      "300m²"
+    ],
+    "myhome_16073": [
+      "250m²"
+    ],
+    "myhome_16075": [
+      "25m²"
+    ],
+    "myhome_16205": [],
+    "myhome_16206": [],
+    "myhome_5462": [
+      "4"
+    ],
+    "myhome_5463": [
+      "4"
+    ],
+    "myhome_16076": [
+      "2 Cars, 5 Motorbike"
+    ],
+    "myhome_16128": [],
+    "myhome_16083": [
+      "50"
+    ],
+    "myhome_16084": [
+      "3"
+    ],
+    "myhome_16178": [
+      "21"
+    ],
+    "myhome_16183": [
+      "220"
+    ],
+    "myhome_16092": [],
+    "myhome_16175": [],
+    "myhome_16329": [],
+    "myhome_16187": [],
+    "myhome_16337": [],
+    "myhome_16135": [],
+    "myhome_16195": [
+      "50"
+    ],
+    "myhome_16197": [],
+    "myhome_16199": [
+      "10"
+    ],
+    "myhome_16200": [],
+    "myhome_16342": [],
+    "myhome_16203": [],
+    "myhome_16343": [],
+    "myhome_16141": [],
+    "myhome_145": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img1-1.webp",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img2-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img3-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img4-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img5-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img6-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img7-2.jpg"
+    ],
+    "myhome_16344": [],
+    "myhome_16142": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/jammal-modif.pdf"
+    ],
+    "myhome_16143": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/sanur.bali_.jpg"
+    ],
+    "myhome_16144": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img10-1.jpg"
+    ],
+    "myhome_16346": [],
+    "myhome_345": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=9G348CSruTMK9bKI",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16096": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=9G348CSruTMK9bKI",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16098": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=9G348CSruTMK9bKI",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16212",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/types/myhome_listing"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/users/2"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 0,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16212/revisions"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/media?parent=16212"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "myhome_14",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_14?post=16212"
+        },
+        {
+          "taxonomy": "myhome_9508",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_9508?post=16212"
+        },
+        {
+          "taxonomy": "myhome_15545",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_15545?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16062",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16062?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16065",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16065?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16067",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16067?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16074",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16074?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16078",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16078?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16079",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16079?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16080",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16080?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16130",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16130?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16129",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16129?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16081",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16081?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16085",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16085?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16177",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16177?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16088",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16088?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16181",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16181?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16091",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16091?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16174",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16174?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16095",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16095?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16330",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16330?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16332",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16332?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16186",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16186?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16192",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16192?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16326",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16326?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16335",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16335?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16328",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16328?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16189",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16189?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16190",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16190?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16191",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16191?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16338",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16338?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16339",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16339?post=16212"
+        },
+        {
+          "taxonomy": "myhome_4661",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_4661?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16133",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16133?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16134",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16134?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16137",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16137?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16138",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16138?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16340",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16340?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16341",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16341?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16202",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16202?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16139",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16139?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16140",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16140?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16207",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16207?post=16212"
+        },
+        {
+          "taxonomy": "myhome_16345",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16345?post=16212"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 16044,
+    "date": "2025-04-09T03:35:59",
+    "date_gmt": "2025-04-09T03:35:59",
+    "guid": {
+      "rendered": "https://balimmo.properties/?post_type=myhome_listing&#038;p=16044"
+    },
+    "modified": "2025-04-15T07:57:30",
+    "modified_gmt": "2025-04-15T07:57:30",
+    "slug": "villa-teratai-biru",
+    "status": "publish",
+    "type": "myhome_listing",
+    "link": "https://balimmo.properties/listing/villa-teratai-biru/",
+    "title": {
+      "rendered": "Villa Teratai Biru"
+    },
+    "content": {
+      "rendered": "<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur</p>\n",
+      "protected": false
+    },
+    "author": 14,
+    "template": "",
+    "myhome_14": [
+      "Villa"
+    ],
+    "myhome_9508": [
+      "Badung"
+    ],
+    "myhome_15545": [
+      "Canggu"
+    ],
+    "myhome_16062": [
+      "Available"
+    ],
+    "myhome_16065": [
+      "Freehold"
+    ],
+    "myhome_16067": [],
+    "myhome_16074": [
+      "2"
+    ],
+    "myhome_16078": [
+      "Closed kitchen"
+    ],
+    "myhome_16079": [
+      "Alang-alang roof"
+    ],
+    "myhome_16080": [
+      "Ceramic"
+    ],
+    "myhome_16130": [],
+    "myhome_16129": [],
+    "myhome_16081": [
+      "Private"
+    ],
+    "myhome_16085": [
+      "No"
+    ],
+    "myhome_16177": [
+      "Yes"
+    ],
+    "myhome_16088": [
+      "No"
+    ],
+    "myhome_16181": [
+      "No"
+    ],
+    "myhome_16091": [
+      "No"
+    ],
+    "myhome_16174": [
+      "Yes"
+    ],
+    "myhome_16095": [
+      "No"
+    ],
+    "myhome_16330": [
+      "Yes"
+    ],
+    "myhome_16332": [
+      "Electric"
+    ],
+    "myhome_16186": [
+      "Yes"
+    ],
+    "myhome_16192": [
+      "Alarm system",
+      "CCTV"
+    ],
+    "myhome_16326": [
+      "No"
+    ],
+    "myhome_16335": [
+      "No"
+    ],
+    "myhome_16328": [
+      "Yes"
+    ],
+    "myhome_16189": [
+      "Yes"
+    ],
+    "myhome_16190": [
+      "Dishwasher",
+      "Oven"
+    ],
+    "myhome_16191": [
+      "Dryer"
+    ],
+    "myhome_16338": [
+      "Yes"
+    ],
+    "myhome_16339": [
+      "Yes"
+    ],
+    "myhome_4661": [],
+    "myhome_16133": [
+      "Jungle"
+    ],
+    "myhome_16134": [
+      "Yes"
+    ],
+    "myhome_16137": [
+      "Beach"
+    ],
+    "myhome_16138": [
+      "Yes"
+    ],
+    "myhome_16340": [
+      "Gated community"
+    ],
+    "myhome_16341": [
+      "No"
+    ],
+    "myhome_16202": [],
+    "myhome_16139": [
+      "Vacant land"
+    ],
+    "myhome_16140": [
+      "Yes"
+    ],
+    "myhome_16207": [],
+    "myhome_16345": [
+      "Yes"
+    ],
+    "class_list": [
+      "post-16044",
+      "myhome_listing",
+      "type-myhome_listing",
+      "status-publish",
+      "hentry",
+      "myhome_14-villa",
+      "myhome_9508-badung",
+      "myhome_15545-canggu",
+      "myhome_16062-available",
+      "myhome_16065-freehold",
+      "myhome_16074-648",
+      "myhome_16078-closed-kitchen",
+      "myhome_16079-alang-alang-roof",
+      "myhome_16080-ceramic",
+      "myhome_16081-private",
+      "myhome_16085-no",
+      "myhome_16177-yes",
+      "myhome_16088-no",
+      "myhome_16181-no",
+      "myhome_16091-no",
+      "myhome_16174-yes",
+      "myhome_16095-no",
+      "myhome_16330-yes",
+      "myhome_16332-electric",
+      "myhome_16186-yes",
+      "myhome_16192-alarm-system",
+      "myhome_16192-cctv",
+      "myhome_16326-no",
+      "myhome_16335-no",
+      "myhome_16328-yes",
+      "myhome_16189-yes",
+      "myhome_16190-dishwasher",
+      "myhome_16190-oven",
+      "myhome_16191-dryer",
+      "myhome_16338-yes",
+      "myhome_16339-yes",
+      "myhome_16133-jungle",
+      "myhome_16134-yes",
+      "myhome_16137-beach",
+      "myhome_16138-yes",
+      "myhome_16340-gated-community",
+      "myhome_16341-no",
+      "myhome_16139-vacant-land",
+      "myhome_16140-yes",
+      "myhome_16345-yes"
+    ],
+    "myhome_16061": [
+      "Jl Pantai Nyanyi No 24"
+    ],
+    "myhome_16120": [
+      "52513"
+    ],
+    "myhome_9733": [
+      "2023"
+    ],
+    "myhome_16064": [
+      "Jamal"
+    ],
+    "myhome_16213": [
+      "2525"
+    ],
+    "myhome_16413": [],
+    "myhome_16414": [],
+    "myhome_16068": [],
+    "myhome_16229": [],
+    "myhome_5974": [
+      "$ 500,000"
+    ],
+    "myhome_16415": [
+      "$ 350"
+    ],
+    "myhome_16416": [
+      "$ 5,000"
+    ],
+    "myhome_16071": [
+      "500m²"
+    ],
+    "myhome_16072": [
+      "150m²"
+    ],
+    "myhome_16073": [
+      "150m²"
+    ],
+    "myhome_16075": [
+      "50m²"
+    ],
+    "myhome_16205": [],
+    "myhome_16206": [],
+    "myhome_5462": [
+      "2"
+    ],
+    "myhome_5463": [
+      "2"
+    ],
+    "myhome_16076": [
+      "2 Motorbike"
+    ],
+    "myhome_16128": [],
+    "myhome_16083": [
+      "32"
+    ],
+    "myhome_16084": [
+      "3"
+    ],
+    "myhome_16178": [
+      "50"
+    ],
+    "myhome_16183": [],
+    "myhome_16092": [],
+    "myhome_16175": [
+      "5"
+    ],
+    "myhome_16329": [
+      "1500watt"
+    ],
+    "myhome_16187": [
+      "50"
+    ],
+    "myhome_16337": [],
+    "myhome_16135": [
+      "90"
+    ],
+    "myhome_16195": [
+      "50"
+    ],
+    "myhome_16197": [],
+    "myhome_16199": [],
+    "myhome_16200": [],
+    "myhome_16342": [
+      "$ 35,000"
+    ],
+    "myhome_16203": [
+      "18%"
+    ],
+    "myhome_16343": [
+      "15%"
+    ],
+    "myhome_16141": [],
+    "myhome_145": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img1-1.webp",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img8-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img10-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img11-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img2-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img3-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img4-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img5-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img6-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img7-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img9-2.jpg"
+    ],
+    "myhome_16344": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/sanur.bali_.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/Lovina-Guide-Things-to-do-in-Lovina-Bali.jpg"
+    ],
+    "myhome_16142": [],
+    "myhome_16143": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/photo0jpg.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/jammal-modif.pdf"
+    ],
+    "myhome_16144": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/Aerial_view_of_Bajra_Sandhi_Monument_Denpasar_Bali_Indonesia.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/jammal-modif.pdf",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img8-2.jpg"
+    ],
+    "myhome_16346": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img11-1.jpg"
+    ],
+    "myhome_345": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=9G348CSruTMK9bKI",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16096": {
+      "url": "https://youtu.be/ZDeLHSRWhOM?si=RdQRgi_bOzcOLCG0",
+      "embed": "<iframe title=\"Investissez à partir de 25k€ à Bali !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/ZDeLHSRWhOM?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16098": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=9G348CSruTMK9bKI",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16044",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/types/myhome_listing"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/users/14"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 2,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16044/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 16476,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16044/revisions/16476"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/media?parent=16044"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "myhome_14",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_14?post=16044"
+        },
+        {
+          "taxonomy": "myhome_9508",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_9508?post=16044"
+        },
+        {
+          "taxonomy": "myhome_15545",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_15545?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16062",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16062?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16065",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16065?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16067",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16067?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16074",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16074?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16078",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16078?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16079",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16079?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16080",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16080?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16130",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16130?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16129",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16129?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16081",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16081?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16085",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16085?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16177",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16177?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16088",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16088?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16181",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16181?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16091",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16091?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16174",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16174?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16095",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16095?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16330",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16330?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16332",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16332?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16186",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16186?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16192",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16192?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16326",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16326?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16335",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16335?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16328",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16328?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16189",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16189?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16190",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16190?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16191",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16191?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16338",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16338?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16339",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16339?post=16044"
+        },
+        {
+          "taxonomy": "myhome_4661",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_4661?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16133",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16133?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16134",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16134?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16137",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16137?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16138",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16138?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16340",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16340?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16341",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16341?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16202",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16202?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16139",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16139?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16140",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16140?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16207",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16207?post=16044"
+        },
+        {
+          "taxonomy": "myhome_16345",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16345?post=16044"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 16031,
+    "date": "2025-04-09T03:32:59",
+    "date_gmt": "2025-04-09T03:32:59",
+    "guid": {
+      "rendered": "https://balimmo.properties/?post_type=myhome_listing&#038;p=16031"
+    },
+    "modified": "2025-04-15T08:04:58",
+    "modified_gmt": "2025-04-15T08:04:58",
+    "slug": "villa-namsoon",
+    "status": "publish",
+    "type": "myhome_listing",
+    "link": "https://balimmo.properties/listing/villa-namsoon/",
+    "title": {
+      "rendered": "Villa Nam Soon"
+    },
+    "content": {
+      "rendered": "<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur</p>\n",
+      "protected": false
+    },
+    "author": 2,
+    "template": "",
+    "myhome_14": [
+      "Villa"
+    ],
+    "myhome_9508": [
+      "Tabanan"
+    ],
+    "myhome_15545": [
+      "Nyanyi"
+    ],
+    "myhome_16062": [
+      "Available"
+    ],
+    "myhome_16065": [
+      "Freehold"
+    ],
+    "myhome_16067": [],
+    "myhome_16074": [
+      "1"
+    ],
+    "myhome_16078": [
+      "Open kitchen"
+    ],
+    "myhome_16079": [
+      "Tiled roof"
+    ],
+    "myhome_16080": [
+      "Polished concrete"
+    ],
+    "myhome_16130": [],
+    "myhome_16129": [],
+    "myhome_16081": [
+      "Shared"
+    ],
+    "myhome_16085": [
+      "No"
+    ],
+    "myhome_16177": [
+      "Yes"
+    ],
+    "myhome_16088": [
+      "No"
+    ],
+    "myhome_16181": [
+      "Yes"
+    ],
+    "myhome_16091": [
+      "No"
+    ],
+    "myhome_16174": [
+      "No"
+    ],
+    "myhome_16095": [
+      "No"
+    ],
+    "myhome_16330": [
+      "Yes"
+    ],
+    "myhome_16332": [
+      "Electric"
+    ],
+    "myhome_16186": [
+      "Yes"
+    ],
+    "myhome_16192": [
+      "CCTV",
+      "Security guard"
+    ],
+    "myhome_16326": [
+      "No"
+    ],
+    "myhome_16335": [
+      "Yes"
+    ],
+    "myhome_16328": [
+      "No"
+    ],
+    "myhome_16189": [
+      "Yes"
+    ],
+    "myhome_16190": [
+      "Dishwasher"
+    ],
+    "myhome_16191": [
+      "Washing machine"
+    ],
+    "myhome_16338": [
+      "Yes"
+    ],
+    "myhome_16339": [
+      "No"
+    ],
+    "myhome_4661": [],
+    "myhome_16133": [
+      "Sea"
+    ],
+    "myhome_16134": [
+      "Yes"
+    ],
+    "myhome_16137": [
+      "Restaurants"
+    ],
+    "myhome_16138": [
+      "No"
+    ],
+    "myhome_16340": [],
+    "myhome_16341": [
+      "Yes"
+    ],
+    "myhome_16202": [
+      "Maintenance",
+      "Reception"
+    ],
+    "myhome_16139": [
+      "Rented"
+    ],
+    "myhome_16140": [
+      "Yes"
+    ],
+    "myhome_16207": [],
+    "myhome_16345": [
+      "No"
+    ],
+    "class_list": [
+      "post-16031",
+      "myhome_listing",
+      "type-myhome_listing",
+      "status-publish",
+      "hentry",
+      "myhome_14-villa",
+      "myhome_9508-tabanan",
+      "myhome_15545-nyanyi",
+      "myhome_16062-available",
+      "myhome_16065-freehold",
+      "myhome_16074-647",
+      "myhome_16078-open-kitchen",
+      "myhome_16079-tiled-roof",
+      "myhome_16080-polished-concrete",
+      "myhome_16081-shared",
+      "myhome_16085-no",
+      "myhome_16177-yes",
+      "myhome_16088-no",
+      "myhome_16181-yes",
+      "myhome_16091-no",
+      "myhome_16174-no",
+      "myhome_16095-no",
+      "myhome_16330-yes",
+      "myhome_16332-electric",
+      "myhome_16186-yes",
+      "myhome_16192-cctv",
+      "myhome_16192-security-guard",
+      "myhome_16326-no",
+      "myhome_16335-yes",
+      "myhome_16328-no",
+      "myhome_16189-yes",
+      "myhome_16190-dishwasher",
+      "myhome_16191-washing-machine",
+      "myhome_16338-yes",
+      "myhome_16339-no",
+      "myhome_16133-sea",
+      "myhome_16134-yes",
+      "myhome_16137-restaurants",
+      "myhome_16138-no",
+      "myhome_16341-yes",
+      "myhome_16202-maintenance",
+      "myhome_16202-reception",
+      "myhome_16139-rented",
+      "myhome_16140-yes",
+      "myhome_16345-no"
+    ],
+    "myhome_16061": [
+      "Jl Pantai Nyanyi No 24"
+    ],
+    "myhome_16120": [
+      "43243"
+    ],
+    "myhome_9733": [
+      "2024"
+    ],
+    "myhome_16064": [
+      "Toriq"
+    ],
+    "myhome_16213": [
+      "0878965425"
+    ],
+    "myhome_16413": [],
+    "myhome_16414": [],
+    "myhome_16068": [],
+    "myhome_16229": [],
+    "myhome_5974": [
+      "$ 150,000"
+    ],
+    "myhome_16415": [
+      "$ 500"
+    ],
+    "myhome_16416": [
+      "$ 4,500"
+    ],
+    "myhome_16071": [
+      "150m²"
+    ],
+    "myhome_16072": [
+      "175m²"
+    ],
+    "myhome_16073": [
+      "170m²"
+    ],
+    "myhome_16075": [
+      "15m²"
+    ],
+    "myhome_16205": [],
+    "myhome_16206": [],
+    "myhome_5462": [
+      "3"
+    ],
+    "myhome_5463": [
+      "3"
+    ],
+    "myhome_16076": [
+      "2 Motorbike"
+    ],
+    "myhome_16128": [],
+    "myhome_16083": [
+      "15"
+    ],
+    "myhome_16084": [
+      "3"
+    ],
+    "myhome_16178": [
+      "5"
+    ],
+    "myhome_16183": [
+      "8"
+    ],
+    "myhome_16092": [],
+    "myhome_16175": [],
+    "myhome_16329": [
+      "1200watt"
+    ],
+    "myhome_16187": [
+      "75"
+    ],
+    "myhome_16337": [
+      "25liter"
+    ],
+    "myhome_16135": [
+      "15"
+    ],
+    "myhome_16195": [],
+    "myhome_16197": [],
+    "myhome_16199": [
+      "15"
+    ],
+    "myhome_16200": [],
+    "myhome_16342": [
+      "$ 10,000"
+    ],
+    "myhome_16203": [
+      "15%"
+    ],
+    "myhome_16343": [
+      "12%"
+    ],
+    "myhome_16141": [],
+    "myhome_145": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img1.webp",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img2-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img3-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img4-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img5-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img6-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img7-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img8-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img9-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img10-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img11-1.jpg"
+    ],
+    "myhome_16344": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img7-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img6-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img5-2.jpg"
+    ],
+    "myhome_16142": [],
+    "myhome_16143": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img10-2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img11-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img8-2.jpg"
+    ],
+    "myhome_16144": [],
+    "myhome_16346": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/jammal-modif.pdf"
+    ],
+    "myhome_345": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=pdcNkMHctq9gnBi7",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16096": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=pdcNkMHctq9gnBi7",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16098": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=9G348CSruTMK9bKI",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16031",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/types/myhome_listing"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/users/2"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 2,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16031/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 16479,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16031/revisions/16479"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/media?parent=16031"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "myhome_14",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_14?post=16031"
+        },
+        {
+          "taxonomy": "myhome_9508",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_9508?post=16031"
+        },
+        {
+          "taxonomy": "myhome_15545",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_15545?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16062",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16062?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16065",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16065?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16067",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16067?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16074",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16074?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16078",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16078?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16079",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16079?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16080",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16080?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16130",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16130?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16129",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16129?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16081",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16081?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16085",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16085?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16177",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16177?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16088",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16088?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16181",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16181?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16091",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16091?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16174",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16174?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16095",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16095?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16330",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16330?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16332",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16332?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16186",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16186?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16192",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16192?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16326",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16326?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16335",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16335?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16328",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16328?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16189",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16189?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16190",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16190?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16191",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16191?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16338",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16338?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16339",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16339?post=16031"
+        },
+        {
+          "taxonomy": "myhome_4661",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_4661?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16133",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16133?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16134",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16134?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16137",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16137?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16138",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16138?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16340",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16340?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16341",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16341?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16202",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16202?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16139",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16139?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16140",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16140?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16207",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16207?post=16031"
+        },
+        {
+          "taxonomy": "myhome_16345",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16345?post=16031"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 16010,
+    "date": "2025-04-09T02:17:59",
+    "date_gmt": "2025-04-09T02:17:59",
+    "guid": {
+      "rendered": "https://balimmo.properties/?post_type=myhome_listing&#038;p=16010"
+    },
+    "modified": "2025-04-15T07:52:25",
+    "modified_gmt": "2025-04-15T07:52:25",
+    "slug": "villa-bengal",
+    "status": "publish",
+    "type": "myhome_listing",
+    "link": "https://balimmo.properties/listing/villa-bengal/",
+    "title": {
+      "rendered": "Villa Bengal"
+    },
+    "content": {
+      "rendered": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#8217;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic</p>\n",
+      "protected": false
+    },
+    "author": 14,
+    "template": "",
+    "myhome_14": [
+      "Villa"
+    ],
+    "myhome_9508": [
+      "Badung"
+    ],
+    "myhome_15545": [
+      "Cemagi"
+    ],
+    "myhome_16062": [
+      "Available"
+    ],
+    "myhome_16065": [
+      "Freehold"
+    ],
+    "myhome_16067": [],
+    "myhome_16074": [
+      "2"
+    ],
+    "myhome_16078": [
+      "Closed kitchen"
+    ],
+    "myhome_16079": [
+      "Flat roof"
+    ],
+    "myhome_16080": [
+      "Ceramic"
+    ],
+    "myhome_16130": [],
+    "myhome_16129": [],
+    "myhome_16081": [
+      "No Pool"
+    ],
+    "myhome_16085": [],
+    "myhome_16177": [
+      "Yes"
+    ],
+    "myhome_16088": [
+      "Yes"
+    ],
+    "myhome_16181": [
+      "No"
+    ],
+    "myhome_16091": [
+      "No"
+    ],
+    "myhome_16174": [
+      "Yes"
+    ],
+    "myhome_16095": [
+      "Yes"
+    ],
+    "myhome_16330": [
+      "No"
+    ],
+    "myhome_16332": [],
+    "myhome_16186": [
+      "No"
+    ],
+    "myhome_16192": [
+      "CCTV"
+    ],
+    "myhome_16326": [
+      "Yes"
+    ],
+    "myhome_16335": [
+      "No"
+    ],
+    "myhome_16328": [
+      "No"
+    ],
+    "myhome_16189": [
+      "No"
+    ],
+    "myhome_16190": [],
+    "myhome_16191": [],
+    "myhome_16338": [
+      "Yes"
+    ],
+    "myhome_16339": [
+      "No"
+    ],
+    "myhome_4661": [],
+    "myhome_16133": [
+      "Jungle"
+    ],
+    "myhome_16134": [
+      "No"
+    ],
+    "myhome_16137": [
+      "Beach"
+    ],
+    "myhome_16138": [
+      "No"
+    ],
+    "myhome_16340": [],
+    "myhome_16341": [
+      "Yes"
+    ],
+    "myhome_16202": [
+      "Maintenance"
+    ],
+    "myhome_16139": [
+      "Owner ocupied"
+    ],
+    "myhome_16140": [
+      "No"
+    ],
+    "myhome_16207": [],
+    "myhome_16345": [
+      "No"
+    ],
+    "class_list": [
+      "post-16010",
+      "myhome_listing",
+      "type-myhome_listing",
+      "status-publish",
+      "hentry",
+      "myhome_14-villa",
+      "myhome_9508-badung",
+      "myhome_15545-cemagi",
+      "myhome_16062-available",
+      "myhome_16065-freehold",
+      "myhome_16074-648",
+      "myhome_16078-closed-kitchen",
+      "myhome_16079-flat-roof",
+      "myhome_16080-ceramic",
+      "myhome_16081-no-pool",
+      "myhome_16177-yes",
+      "myhome_16088-yes",
+      "myhome_16181-no",
+      "myhome_16091-no",
+      "myhome_16174-yes",
+      "myhome_16095-yes",
+      "myhome_16330-no",
+      "myhome_16186-no",
+      "myhome_16192-cctv",
+      "myhome_16326-yes",
+      "myhome_16335-no",
+      "myhome_16328-no",
+      "myhome_16189-no",
+      "myhome_16338-yes",
+      "myhome_16339-no",
+      "myhome_16133-jungle",
+      "myhome_16134-no",
+      "myhome_16137-beach",
+      "myhome_16138-no",
+      "myhome_16341-yes",
+      "myhome_16202-maintenance",
+      "myhome_16139-owner-ocupied",
+      "myhome_16140-no",
+      "myhome_16345-no"
+    ],
+    "myhome_16061": [
+      "Jl Pantai Nyanyi No 24"
+    ],
+    "myhome_16120": [
+      "525131"
+    ],
+    "myhome_9733": [
+      "2024"
+    ],
+    "myhome_16064": [
+      "Toriq"
+    ],
+    "myhome_16213": [
+      "0845622"
+    ],
+    "myhome_16413": [],
+    "myhome_16414": [],
+    "myhome_16068": [],
+    "myhome_16229": [],
+    "myhome_5974": [
+      "$ 175,000"
+    ],
+    "myhome_16415": [
+      "$ 2,500"
+    ],
+    "myhome_16416": [
+      "$ 5,000"
+    ],
+    "myhome_16071": [
+      "250m²"
+    ],
+    "myhome_16072": [
+      "225m²"
+    ],
+    "myhome_16073": [
+      "225m²"
+    ],
+    "myhome_16075": [
+      "20m²"
+    ],
+    "myhome_16205": [],
+    "myhome_16206": [],
+    "myhome_5462": [
+      "4"
+    ],
+    "myhome_5463": [
+      "4"
+    ],
+    "myhome_16076": [
+      "1 Car, 1 Motorbike"
+    ],
+    "myhome_16128": [],
+    "myhome_16083": [],
+    "myhome_16084": [],
+    "myhome_16178": [
+      "15"
+    ],
+    "myhome_16183": [],
+    "myhome_16092": [],
+    "myhome_16175": [
+      "2"
+    ],
+    "myhome_16329": [
+      "2500watt"
+    ],
+    "myhome_16187": [],
+    "myhome_16337": [],
+    "myhome_16135": [],
+    "myhome_16195": [
+      "10"
+    ],
+    "myhome_16197": [],
+    "myhome_16199": [],
+    "myhome_16200": [],
+    "myhome_16342": [],
+    "myhome_16203": [
+      "10%"
+    ],
+    "myhome_16343": [
+      "15%"
+    ],
+    "myhome_16141": [],
+    "myhome_145": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img3.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img4.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img10.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img11.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img2.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img5.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img6.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img7.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img8.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img9.jpg"
+    ],
+    "myhome_16344": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/jammal-modif.pdf",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img11-1.jpg",
+      "https://balimmo.properties/wp-content/uploads/2025/04/img10-1.jpg"
+    ],
+    "myhome_16142": [],
+    "myhome_16143": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/Lovina-Guide-Things-to-do-in-Lovina-Bali.jpg"
+    ],
+    "myhome_16144": [],
+    "myhome_16346": [
+      "https://balimmo.properties/wp-content/uploads/2025/04/img10-2.jpg"
+    ],
+    "myhome_345": {
+      "url": "https://youtu.be/iaOv2pNFdEA?si=j2QZv78y1pEvZFBw",
+      "embed": "<iframe title=\"Pourquoi Investir à Bali avec BALIMMO ? Découvrez Notre Expertise !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/iaOv2pNFdEA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16096": {
+      "url": "https://youtu.be/ZDeLHSRWhOM?si=RdQRgi_bOzcOLCG0",
+      "embed": "<iframe title=\"Investissez à partir de 25k€ à Bali !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/ZDeLHSRWhOM?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "myhome_16098": {
+      "url": "https://youtu.be/ZDeLHSRWhOM?si=RdQRgi_bOzcOLCG0",
+      "embed": "<iframe title=\"Investissez à partir de 25k€ à Bali !\" width=\"900\" height=\"506\" src=\"https://www.youtube.com/embed/ZDeLHSRWhOM?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16010",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/types/myhome_listing"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/users/14"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16010/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 16474,
+          "href": "https://balimmo.properties/wp-json/wp/v2/listings/16010/revisions/16474"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://balimmo.properties/wp-json/wp/v2/media?parent=16010"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "myhome_14",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_14?post=16010"
+        },
+        {
+          "taxonomy": "myhome_9508",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_9508?post=16010"
+        },
+        {
+          "taxonomy": "myhome_15545",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_15545?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16062",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16062?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16065",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16065?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16067",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16067?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16074",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16074?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16078",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16078?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16079",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16079?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16080",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16080?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16130",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16130?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16129",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16129?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16081",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16081?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16085",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16085?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16177",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16177?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16088",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16088?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16181",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16181?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16091",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16091?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16174",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16174?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16095",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16095?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16330",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16330?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16332",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16332?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16186",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16186?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16192",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16192?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16326",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16326?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16335",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16335?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16328",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16328?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16189",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16189?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16190",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16190?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16191",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16191?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16338",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16338?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16339",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16339?post=16010"
+        },
+        {
+          "taxonomy": "myhome_4661",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_4661?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16133",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16133?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16134",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16134?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16137",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16137?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16138",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16138?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16340",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16340?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16341",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16341?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16202",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16202?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16139",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16139?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16140",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16140?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16207",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16207?post=16010"
+        },
+        {
+          "taxonomy": "myhome_16345",
+          "embeddable": true,
+          "href": "https://balimmo.properties/wp-json/wp/v2/myhome_16345?post=16010"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]
