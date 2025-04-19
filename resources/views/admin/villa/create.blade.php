@@ -4,43 +4,18 @@
   <main>
     <div class="row g-5 mt-5 justify-content-center">
       <div class="col-lg-6">
+
         <h4 class="mb-3">Billing address</h4>
         
         <form class="needs-validation" action="{{ route('villa.store') }}" method="POST">
           @csrf
           <div class="row g-3">
             
-            <div class="col-12">
-              <label for="firstName" class="form-label">Villa Name</label>
-              <input type="text" class="form-control" id="firstName" name="villa_name">
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
+            <x-forms name="villa_name" label="Villa name" type="text"/>
+            <x-forms name="price" label="Price" type="number"/>
+            <x-forms name="berdroom" label="Bedroom" type="number"/>
+            <x-forms name="sub_region" label="Sub Region" type="text"/>
 
-            <div class="col-12">
-              <label for="firstName" class="form-label">Price</label>
-              <input type="number" class="form-control" id="firstName" name="price">
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="firstName" class="form-label">Bedroom</label>
-              <input type="number" class="form-control" id="firstName" name="bedroom" >
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="firstName" class="form-label">Sub Region</label>
-              <input type="text" class="form-control" id="firstName" name="sub_region">
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
           <hr class="my-4">
 
           <button class="w-100 btn btn-primary btn-lg" type="submit">Input Villa</button>

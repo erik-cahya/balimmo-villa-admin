@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CustomerModel;
 use App\Models\VillaModel;
 use Illuminate\Http\Request;
+use App\Mail\NotifikasiEmail;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
@@ -15,6 +17,24 @@ class CustomerController extends Controller
     //     dd($data['villa']->all());
     //     return view('admin.customers.index', $data);
     // }
+
+    public function sendMail($id){
+
+        $customerData = CustomerModel::where('id', $id)->first();
+        $villaData = VillaModel::where('sub_region', $customerData->localization)
+                ->where('bedroom', '>=', $customerData->require_bedroom)
+                ->where('price', '<=', $customerData->budget)
+                ->orderBy('price', 'desc')
+                ->get();
+
+        // dd($villaData);
+
+        Mail::to($customerData->email)->send(new NotifikasiEmail([
+                'name' => $customerData->name, 'villaData' => $villaData
+        ]));
+        // return view('emails.notifikasi', ['name' => $customerData->name, 'villaData' => $villaData]);
+        return back();
+    }
 
     public function index()
     {

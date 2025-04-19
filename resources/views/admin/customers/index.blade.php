@@ -13,7 +13,7 @@
           <a href="{{ route('customer.form') }}" class="btn btn-sm btn-warning">Create Customer Data</a>
         </div>
         
-        <table class="table table-bordered text-center" style="">
+        <table class="table table-bordered text-center" style="font-size: 14px">
             <thead>
                 <tr>
                   <th>No</th>
@@ -38,10 +38,14 @@
                   <td>{{ $cst->require_bedroom }}</td>
                   <td>{{ $cst->localization }}</td>
                   <td>{{ $cst->time }}</td>
-                  <td class="align-items-center">
+                  <td class="align-items-center d-flex">
                       
                       @if($matchedVillas[$cst->id]->count() > 0)
-                        <button class="btn btn-sm btn-primary ">Send Email</button>
+                       
+                        <form action="{{ route('customer.sendmail', $cst->id) }}" method="POST">
+                          @csrf
+                          <button type="submit" class="btn btn-sm btn-primary mx-2">Send Email</button>
+                        </form>
 
                         <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="collapse" data-bs-target="#villasForCustomer{{ $cst->id }}">
                             Tampilkan {{ $matchedVillas[$cst->id]->count() }} Villa

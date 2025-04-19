@@ -30,5 +30,6 @@ Route::GET('/customers', [CustomerController::class, 'index'])->name('customer.i
 
 Route::GET('/customers/form', [CustomerController::class, 'form'])->name('customer.form');
 Route::POST('customers/store', [CustomerController::class, 'store'])->name('customer.store');
+Route::POST('/customer/send/{email}', [CustomerController::class, 'sendMail'])->name('customer.sendmail');
 
 Route::GET('/mail/send', [MailController::class, 'send']);

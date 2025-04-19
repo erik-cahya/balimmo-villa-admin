@@ -27,6 +27,6 @@ class NotifikasiEmail extends Mailable
     {
         return $this->subject('Contoh Notifikasi')
                     ->view('emails.notifikasi')
-                    ->with(['nama' => $this->data['nama']]);
+                    ->with(['nama' => $this->data['name'], 'villaData' => $this->data['villaData']]);
     }
 }
