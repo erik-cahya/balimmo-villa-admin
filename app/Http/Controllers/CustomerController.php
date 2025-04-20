@@ -10,14 +10,6 @@ use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller
 {
-    // public function index(){
-    //     $data['customers'] = CustomerModel::get();
-    //     $data['villa'] = VillaModel::get();
-
-    //     dd($data['villa']->all());
-    //     return view('admin.customers.index', $data);
-    // }
-
     public function sendMail($id){
 
         $customerData = CustomerModel::where('id', $id)->first();
@@ -40,9 +32,9 @@ class CustomerController extends Controller
     {
         $customers = CustomerModel::all();
         $villas = VillaModel::all();
-        
+
         $matchedVillas = [];
-        
+
         foreach ($customers as $customer) {
             $matchedVillas[$customer->id] = VillaModel::where('sub_region', $customer->localization)
                 ->where('bedroom', '>=', $customer->require_bedroom)

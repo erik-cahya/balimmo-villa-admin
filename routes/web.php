@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::GET('/', [CustomerController::class, 'index'])->name('customer.index');
 
 // ############################ Villa
 Route::get('/villa', [VillaController::class, 'index'])->name('villa.index');
