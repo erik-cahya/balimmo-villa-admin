@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\MailController;
-use App\Http\Controllers\VillaController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,21 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::GET('/', [CustomerController::class, 'index'])->name('customer.index');
+Route::get('/', function () {
+    return view('welcome');
+});
 
-// ############################ Villa
-Route::get('/villa', [VillaController::class, 'index'])->name('villa.index');
-Route::get('/villa/create', [VillaController::class, 'create'])->name('villa.create');
-Route::POST('/villa/store', [VillaController::class, 'store'])->name('villa.store');
+Route::get('/test', function(){
+    return view('admin.dashboard.index');
+});
 
-// ############################ Customers
-Route::GET('/customers', [CustomerController::class, 'index'])->name('customer.index');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::GET('/customers/form', [CustomerController::class, 'form'])->name('customer.form');
-Route::POST('customers/store', [CustomerController::class, 'store'])->name('customer.store');
-Route::POST('/customer/send/{email}', [CustomerController::class, 'sendMail'])->name('customer.sendmail');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::GET('/mail/send', [MailController::class, 'send']);
+require __DIR__.'/auth.php';

@@ -19,6 +19,7 @@ class CustomerController extends Controller
                 ->orderBy('price', 'desc')
                 ->get();
 
+
         // dd($villaData);
 
         Mail::to($customerData->email)->send(new NotifikasiEmail([
