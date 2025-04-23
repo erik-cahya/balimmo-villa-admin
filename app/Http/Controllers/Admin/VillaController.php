@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\VillaModel;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\VillaModel;
 use Illuminate\Support\Facades\DB;
 
 class VillaController extends Controller
@@ -14,6 +15,7 @@ class VillaController extends Controller
     public function index()
     {
         $data['data_villa'] = VillaModel::get();
+        $data['data_villa_count'] = VillaModel::count();
         return view('admin.villa.index', $data);
     }
 
@@ -75,3 +77,4 @@ class VillaController extends Controller
         //
     }
 }
+
