@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 @push('plugin-styles')
     <link href="{{ asset('/admin/assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/admin/assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
 @endpush
 @section('content')
     <nav class="page-breadcrumb">
@@ -15,24 +16,23 @@
           <h4 class="">Villa Listings</h4>
         </div>
         <div class="d-flex align-items-center flex-wrap text-nowrap">
-          <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+          <a href="{{ route('villa.create') }}" class="btn btn-sm btn-primary btn-icon-text mb-2 mb-md-0">
             <i class="mdi mdi-home-plus fs-5"></i>                        
             Add New Villa
-          </button>
+          </a>
         </div>
-      </div>
+    </div>
 
     <div class="row">
         <div class="col-12 col-xl-12 stretch-card">
           <div class="row flex-grow-1">
-            
             <div class="col-md-4 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">
-                        <h6 class="card-title mb-0" style="font-weight: 800">Total Properties</h6>
-                        <h3 class="mt-auto fs-4">{{ $data_villa_count }} Properties</h3>
+                        <h6 class="text-uppercase fw-bolder tx-10">Total Properties</h6>
+                        <h3 class="mt-auto fw-bolder tx-9">{{ $data_villa_count }} Properties</h3>
                     </div>
                     <div class="bg-primary text-light rounded px-3">
                         <i class="mdi mdi-home-analytics" style="font-size: 40px"></i> 
@@ -47,8 +47,8 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">
-                        <h6 class="card-title" style="font-weight: 800">Unit Rent</h6>
-                        <h3 class="mt-auto fs-4">2 Unit</h3>
+                        <h6 class="text-uppercase fw-bolder tx-10">Unit Rent</h6>
+                        <h3 class="mt-auto fw-bolder tx-9">2 Unit</h3>
                     </div>
                     <div class="bg-primary text-light rounded px-3">
                         <i class="mdi mdi-cash-multiple" style="font-size: 40px"></i> 
@@ -62,8 +62,8 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">
-                        <h6 class="card-title" style="font-weight: 800">Unit Rent</h6>
-                        <h3 class="mt-auto fs-4">2 Unit</h3>
+                        <h6 class="text-uppercase fw-bolder tx-10">Unit Rent</h6>
+                        <h3 class="mt-auto fw-bolder tx-9">2 Unit</h3>
                     </div>
                     <div class="bg-primary text-light rounded px-3">
                         <i class="mdi mdi-cash-multiple" style="font-size: 40px"></i> 
@@ -100,7 +100,6 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td class="d-flex align-items-center">
                                     <img src="https://techzaa.in/lahomes/admin/assets/images/properties/p-1.jpg" class="rounded me-3" style="width: 55px; height: 55px;" alt="user">
-
                                     {{ $villa->villa_name }}
                                 </td>
                                 
@@ -122,7 +121,7 @@
                                         <button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data Villa">
                                             <i class="link-icon" data-feather="edit"  height="14"></i>
                                         </button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data Villa">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data Villa" onclick="showSwal('sweet-alert-delete-villa')">
                                             <i class="link-icon" data-feather="trash-2"  height="14"></i>
                                         </button>
                                         
@@ -143,8 +142,12 @@
 @push('plugin-scripts')
   <script src="{{ asset('/admin/assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('/admin/assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
+  <script src="{{ asset('/admin/assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+
 @endpush
 
 @push('custom-scripts')
   <script src="{{ asset('/admin/assets/js/data-table.js') }}"></script>
+  <script src="{{ asset('/admin/assets/js/sweet-alert.js') }}"></script>
+
 @endpush

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\VillaController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// view our form page
+Route::get('/form', [FormController::class, 'index'])->name('form.index');
+Route::post('/form-submit', [FormController::class, 'submit'])->name('form.submit');
+Route::post('/form-upload', [FormController::class, 'upload'])->name('form.upload');
+
+// handle form request
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
 
 
 Route::middleware('auth')->group(function () {

@@ -36,10 +36,9 @@ class VillaController extends Controller
 
         VillaModel::create([
             'villa_name' => $request->villa_name,
-            'price' => $request->price,
+            'price' => str_replace('.', '', $request->price),
             'bedroom' => $request->bedroom,
             'sub_region' => $request->sub_region,
-            'time' => $request->time,
         ]);
 
         return redirect()->route('villa.index');

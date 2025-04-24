@@ -125,7 +125,43 @@ $(function() {
         imageHeight: 200,
         imageAlt: 'Custom image',
       })
-    } else if (type === 'mixin') {
+    } else if (type === 'sweet-alert-delete-villa') {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger me-2'
+        },
+        buttonsStyling: false,
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'me-2',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        } else if (
+          // Read more about handling dismissals
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+          )
+        }
+      })
+    }else if (type === 'mixin') {
       const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -139,6 +175,7 @@ $(function() {
         title: 'Signed in successfully'
       })
     }
+    
   }
 
 });
