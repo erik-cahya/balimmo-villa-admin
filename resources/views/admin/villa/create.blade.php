@@ -1,268 +1,274 @@
 @extends('admin.layouts.master')
-@push('plugin-styles')
-    <link href="{{ asset('/admin/assets/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" />
-@endpush
 @section('content')
+<div class="container-fluid">
 
-<nav class="page-breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Villa</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Add Villa</li>
-    </ol>
-</nav>
-
-<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-    <div>
-      <h4 class="">Add Villa</h4>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between">
-                        <div class="d-flex flex-column">
-                            <img src="https://techzaa.in/lahomes/admin/assets/images/properties/p-1.jpg" alt="" width="100%" id="card-image" class="featured_image img-thumbnail" >
-                            
-                            <h4 class="text-uppercase fw-bolder tx-6 mt-3 empty" id="card-name">Villa</h4>
-
-                            <hr>
-                            <h6 class="tx-9 ">Price : </h6>
-                            <h4 class="fw-bolder tx-6 mt-1 price" id="card-price">Rp. 0</h4>
-
-                            <div class="d-inline-flex mt-3">
-
-                                <span class="badge bg-primary mx-1 bedroom"><i class="mdi mdi-bed-queen-outline"></i> <span id="card-bedroom"> 0 </span> Bedroom</span>
-
-                                <span class="badge bg-primary mx-1 location"><i class="mdi mdi-map-marker-multiple"></i> <span id="card-location"> Denpasar, Bali </span>
-                                </span>
-                            </div>
-
-                        </div>
-                      </div>
-                    </div>
-                </div>
+    <!-- ========== Page Title Start ========== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="mb-0 fw-semibold">Add Property</h4>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Real Estate</a></li>
+                    <li class="breadcrumb-item active">Add Property</li>
+                </ol>
             </div>
         </div>
     </div>
+    <!-- ========== Page Title End ========== -->
 
-    <div class="col-md-8">
-        <form action="{{ route('villa.store') }}" method="POST">
-            @csrf
-            <div class="row">
-                <div class="col-12 grid-margin">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="text-uppercase fw-bolder tx-9 mb-4">Add Villa Photos</h6>
-                            
-                            <form action="/file-upload" class="dropzone" id="exampleDropzone"></form>
+    <div class="row">
+         <div class="col-xl-3 col-lg-4">
+              <div class="card">
+                   <div class="card-body">
+                        <div class="position-relative">
+                             <img src="{{ asset('admin') }}/assets/images/properties/p-1.jpg" alt="" class="img-fluid rounded bg-light">
+                             <span class="position-absolute top-0 end-0 p-1">
+                                  <span class="badge bg-success text-light fs-13">For Rent</span>
+                             </span>
                         </div>
-                    </div>
-                </div>
-                <div class="col-12 grid-margin">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="text-uppercase fw-bolder tx-9">Villa Informations</h6>
-                            <div class="row mt-4">
-                                <div class="col-md-6">
-                                    <label for="villa_name" class="form-label">Villa Name</label>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text fs-20 px-2 py-0">            
-                                            <i class="mdi mdi-home-city-outline"></i>
-                                        </span>
-
-                                        <input type="text" id="villa_name" name="villa_name" class="form-control" placeholder="Input Villa Name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="price" class="form-label">Price</label>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text fs-20 px-2 py-0">            
-                                            <i class="mdi mdi-cash-multiple"></i>
-                                        </span>
-                                        <input type="text" class="form-control" id="price" name="price" placeholder="Masukkan jumlah uang" onkeyup="updateRupiah(event)">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="bedroom" class="form-label">Bedroom</label>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text fs-20 px-2 py-0">            
-                                            <i class="mdi mdi-bed-queen-outline"></i>
-                                        </span>
-
-                                        <input type="number" id="bedroom" name="bedroom" class="form-control" placeholder="Input Bedroom">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="location" class="form-label">Sub Region</label>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text fs-20 px-2 py-0">            
-                                            <i class="mdi mdi-map-marker-multiple"></i>
-                                        </span>
-                                        <input type="text" id="location" name="sub_region" class="form-control" placeholder="Input Sub Region">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="featured_image" class="form-label">Featured Image</label>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text fs-20 px-2 py-0">            
-                                            <i class="mdi mdi-image"></i>
-                                        </span>
-                                        <input class="form-control" type="file" id="featured_image" name="featured_image" onchange="previewImage()" accept="image/*">  
-                                                                         
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mt-3">
+                             <h4 class="mb-1">Dvilla Residences Batu<span class="fs-14 text-muted ms-1">(Residences)</span></h4>
+                             <p  class="mb-1">4604 , Philli Lane Kiowa U.S.A</p>
+                             <h5 class="text-dark fw-medium mt-3">Price :</h5>
+                             <h4 class="fw-semibold mt-2 text-muted">$8,930.00</h4>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 justify-content-end d-flex">
-                            <button type="submit" class="btn btn-sm btn-primary mt-3 ">
-                                <i class="mdi mdi-home-plus fs-5"></i> Add Villa
-                            </button>
+                        <div class="row mt-2 g-2">
+                             <div class="col-lg-3 col-3">
+                                  <span class="badge bg-light-subtle text-muted border fs-12">
+                                       <span class="fs-16"><iconify-icon icon="solar:bed-broken" class="align-middle"></iconify-icon></span>
+                                       5 Beds
+                                  </span>
+                             </div>
+                             <div class="col-lg-3 col-3">
+                                  <span class="badge bg-light-subtle text-muted border fs-12">
+                                       <span class="fs-16"><iconify-icon icon="solar:bath-broken" class="align-middle"></iconify-icon></span>
+                                       4 Bath
+                                  </span>
+                             </div>
+                             <div class="col-lg-3 col-3">
+                                  <span class="badge bg-light-subtle text-muted border fs-12">
+                                       <span class="fs-16"><iconify-icon icon="solar:scale-broken" class="align-middle"></iconify-icon></span>
+                                       1400ft
+                                  </span>
+                             </div>
+                             <div class="col-lg-3 col-3">
+                                  <span class="badge bg-light-subtle text-muted border fs-12">
+                                       <span class="fs-16"><iconify-icon icon="solar:double-alt-arrow-up-broken" class="align-middle"></iconify-icon></span>
+                                       3 Floor
+                                  </span>
+                             </div>
                         </div>
-                    </div>
-                </div>
-            </div> 
-        </form>
+                   </div>
+                   <div class="card-footer bg-light-subtle">
+                        <div class="row g-2">
+                             <div class="col-lg-6">
+                                  <a href="#!" class="btn btn-outline-primary w-100">Add Property</a>
+                             </div>
+                             <div class="col-lg-6">
+                                  <a href="#!" class="btn btn-danger w-100">Cancel</a>
+                             </div>
+                        </div>
+                   </div>
 
+              </div>
+         </div>
+
+         <div class="col-xl-9 col-lg-8 ">
+              <div class="card">
+                   <div class="card-header">
+                        <h4 class="card-title">Add Property Photo</h4>
+                   </div>
+                   <div class="card-body">
+                        <form action="/" method="post" class="dropzone bg-light-subtle py-5" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews" data-upload-preview-template="#uploadPreviewTemplate">
+                             <div class="fallback">
+                                  <input name="file" type="file" multiple="multiple">
+                             </div>
+                             <div class="dz-message needsclick">
+                                  <i class="ri-upload-cloud-2-line fs-48 text-primary"></i>
+                                  <h3 class="mt-4">Drop your images here, or <span class="text-primary">click to browse</span></h3>
+                                  <span class="text-muted fs-13">
+                                       1600 x 1200 (4:3) recommended. PNG, JPG and GIF files are allowed
+                                  </span>
+                             </div>
+                        </form>
+                   </div>
+              </div>
+              <div class="card">
+                   <div class="card-header">
+                        <h4 class="card-title">Property Information</h4>
+                   </div>
+                   <div class="card-body">
+                        <div class="row">
+                             <div class="col-lg-6">
+                                  <form>
+                                       <div class="mb-3">
+                                            <label for="property-name" class="form-label">Property Name</label>
+                                            <input type="text" id="property-name" class="form-control" placeholder="Name">
+                                       </div>
+                                  </form>
+                             </div>
+                             <div class="col-lg-6">
+                                  <form>
+                                       <label for="property-categories" class="form-label">Property Categories</label>
+                                       <select class="form-control" id="property-categories" data-choices data-choices-groups data-placeholder="Select Categories" name="choices-single-groups">
+                                            <option value="Villas">Villas</option>
+                                            <option value="Residences">Residences</option>
+                                            <option value="Bungalow">Bungalow</option>
+                                            <option value="Apartment">Apartment</option>
+                                            <option value="Penthouse">Penthouse</option>
+                                       </select>
+                                  </form>
+                             </div>
+                             <div class="col-lg-4">
+                                  <form>
+                                       <label for="property-price" class="form-label">Price</label>
+                                       <div class="input-group mb-3">
+                                            <span class="input-group-text fs-20 px-2 py-0"><i class="ri-money-dollar-circle-line"></i></span>
+                                            <input type="number" id="property-price" class="form-control" placeholder="000">
+                                       </div>
+                                  </form>
+                             </div>
+                             <div class="col-lg-4">
+                                  <form>
+                                       <label for="property-for" class="form-label">Property For</label>
+                                       <select class="form-control" id="property-for" data-choices data-choices-groups data-placeholder="Select Categories" name="choices-single-groups">
+                                            <option value="Sale">Sale</option>
+                                            <option value="Rent">Rent</option>
+                                            <option value="Other">Other</option>                                                            
+                                       </select>
+                                  </form>
+                             </div>
+                             <div class="col-lg-4">
+                                  <form>
+                                       <label for="property-bedroom" class="form-label">Bedroom</label>
+                                       <div class="input-group mb-3">
+                                            <span class="input-group-text fs-20"><iconify-icon icon="solar:bed-broken" class="align-middle"></iconify-icon></span>
+                                            <input type="number" id="property-bedroom" class="form-control" placeholder="">
+                                       </div>
+                                  </form>
+                             </div>
+                             <div class="col-lg-4">
+                                  <form>
+                                       <label for="property-bathroom" class="form-label">Bathroom</label>
+                                       <div class="input-group mb-3">
+                                            <span class="input-group-text fs-20"><iconify-icon icon="solar:bath-broken" class="align-middle"></iconify-icon></span>
+                                            <input type="number" id="property-bathroom" class="form-control" placeholder="">
+                                       </div>
+                                  </form>
+                             </div>
+                             <div class="col-lg-4">
+                                  <form>
+                                       <label for="property-square-foot" class="form-label">Square Foot</label>
+                                       <div class="input-group mb-3">
+                                            <span class="input-group-text fs-20"><iconify-icon icon="solar:scale-broken" class="align-middle"></iconify-icon></span>
+                                            <input type="number" id="property-square-foot" class="form-control" placeholder="">
+                                       </div>
+                                  </form>
+                             </div>
+                          
+                             <div class="col-lg-4">
+                                  <form>
+                                       <label for="property-square-foot" class="form-label">Floor</label>
+                                       <div class="input-group mb-3">
+                                            <span class="input-group-text fs-20"><iconify-icon icon="solar:double-alt-arrow-up-broken" class="align-middle"></iconify-icon></span>
+                                            <input type="number" id="property-square-foot" class="form-control" placeholder="">
+                                       </div>
+                                  </form>
+                             </div>
+                             
+                             <div class="col-lg-12">
+                                  <form>
+                                       <div class="mb-3">
+                                            <label for="property-address" class="form-label">Property Address</label>
+                                            <textarea class="form-control" id="property-address" rows="3" placeholder="Enter address"></textarea>
+                                       </div>
+                                  </form>
+                             </div>
+                             <div class="col-lg-4">
+                                  <form>
+                                       <div class="mb-3">
+                                            <label for="property-zipcode" class="form-label">Zip-Code</label>
+                                            <input type="number" id="property-zipcode" class="form-control" placeholder="zip-code">
+                                       </div>
+                                  </form>
+                             </div>
+                             <div class="col-lg-4">
+                                  <form>
+                                       <label for="choices-city" class="form-label">City</label>
+                                       <select class="form-control" id="choices-city" data-choices data-choices-groups data-placeholder="Select City" name="choices-city">
+                                            <option value="">Choose a city</option>
+                                            <optgroup label="UK">
+                                                 <option value="London">London</option>
+                                                 <option value="Manchester">Manchester</option>
+                                                 <option value="Liverpool">Liverpool</option>
+                                            </optgroup>
+                                            <optgroup label="FR">
+                                                 <option value="Paris">Paris</option>
+                                                 <option value="Lyon">Lyon</option>
+                                                 <option value="Marseille">Marseille</option>
+                                            </optgroup>
+                                            <optgroup label="DE" disabled>
+                                                 <option value="Hamburg">Hamburg</option>
+                                                 <option value="Munich">Munich</option>
+                                                 <option value="Berlin">Berlin</option>
+                                            </optgroup>
+                                            <optgroup label="US">
+                                                 <option value="New York">New York</option>
+                                                 <option value="Washington" disabled>
+                                                      Washington
+                                                 </option>
+                                                 <option value="Michigan">Michigan</option>
+                                            </optgroup>
+                                            <optgroup label="SP">
+                                                 <option value="Madrid">Madrid</option>
+                                                 <option value="Barcelona">Barcelona</option>
+                                                 <option value="Malaga">Malaga</option>
+                                            </optgroup>
+                                            <optgroup label="CA">
+                                                 <option value="Montreal">Montreal</option>
+                                                 <option value="Toronto">Toronto</option>
+                                                 <option value="Vancouver">Vancouver</option>
+                                            </optgroup>
+                                       </select>
+                                  </form>
+                             </div>
+                             <div class="col-lg-4">
+                                  <form>
+                                       <label for="choices-country" class="form-label">Country</label>
+                                       <select class="form-control" id="choices-country" data-choices data-choices-groups data-placeholder="Select Country" name="choices-country">
+                                            <option value="">Choose a country</option>
+                                            <optgroup label="">
+                                                 <option value="">United Kingdom</option>
+                                                 <option value="Fran">France</option>
+                                                 <option value="Netherlands">Netherlands</option>
+                                                 <option value="U.S.A">U.S.A</option>
+                                                 <option value="Denmark">Denmark</option>
+                                                 <option value="Canada">Canada</option>
+                                                 <option value="Australia">Australia</option>
+                                                 <option value="India">India</option>
+                                                 <option value="Germany">Germany</option>
+                                                 <option value="Spain">Spain</option>
+                                                 <option value="United Arab Emirates">United Arab Emirates</option>
+                                            </optgroup>
+                                       </select>
+                                  </form>
+                             </div>
+                        </div>
+                   </div>
+              </div>
+
+              <div class="mb-3 rounded">
+                   <div class="row justify-content-end g-2">
+                        <div class="col-lg-2">
+                             <a href="#!" class="btn btn-outline-primary w-100">Create Product</a>
+                        </div>
+                        <div class="col-lg-2">
+                             <a href="#!" class="btn btn-danger w-100">Cancel</a>
+                        </div>
+                   </div>
+              </div>
+         </div>
     </div>
+
 </div>
-
-            {{-- <x-form name="sub_region" label="Sub Region" type="text"/> --}}
 @endsection
-@push('plugin-scripts')
-  <script src="{{ asset('/admin/assets/plugins/dropzone/dropzone.min.js') }}"></script>
-@endpush
-
-@push('custom-scripts')
-<script src="{{ asset('/admin/assets/js/dropzone.js') }}"></script>
-  <script>
-    function formatRupiah(angka) {
-        var reverse = angka.toString().split('').reverse().join('');
-        var ribuan = reverse.match(/\d{1,3}/g);
-        var formatted = ribuan.join('.').split('').reverse().join('');
-        return formatted;
-    }
-    function unformatRupiah(rupiah) {
-        return rupiah.replace(/^Rp\.|\./g, '');
-    }
-    function updateRupiah(e) {
-        let amount = e.target.value;
-        amount = unformatRupiah(amount);
-        amount = formatRupiah(amount);
-        e.target.value = amount;
-    }
-</script>
-
-<script>
-    function previewImage() {
-    const image = document.querySelector('#featured_image');
-    const imgPreview = document.querySelector('.featured_image');
-    
-    if (!image.files || !image.files[0]) return;
-    
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        const img = new Image();
-        img.src = e.target.result;
-        
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const sourceAspect = img.width / img.height;
-            const targetAspect = 3 / 2;
-            
-            let sourceX = 0, sourceY = 0, sourceWidth = img.width, sourceHeight = img.height;
-            
-            if (sourceAspect > targetAspect) {
-                sourceWidth = img.height * targetAspect;
-                sourceX = (img.width - sourceWidth) / 2;
-            } else {
-                sourceHeight = img.width / targetAspect;
-                sourceY = (img.height - sourceHeight) / 2;
-            }
-        
-            canvas.width = 500;
-            canvas.height = 360;
-            ctx.drawImage(
-                img, 
-                sourceX, sourceY, sourceWidth, sourceHeight,
-                0, 0, canvas.width, canvas.height            
-            );
-            
-            // Tampilkan hasilnya
-            imgPreview.style.display = 'block';
-            imgPreview.src = canvas.toDataURL('image/jpeg');
-        }
-    }
-    
-    reader.readAsDataURL(image.files[0]);
-}
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get all input elements
-        const nameInput = document.getElementById('villa_name');
-        const priceInput = document.getElementById('price');
-        const bedroomInput = document.getElementById('bedroom');
-        const locationInput = document.getElementById('location');
-
-        // Get all card elements
-        const cardName = document.getElementById('card-name');
-        const cardPrice = document.getElementById('card-price');
-        const cardBedroom = document.getElementById('card-bedroom');
-        const cardLocation = document.getElementById('card-location');
-        
-
-        // Add event listeners for live update
-        nameInput.addEventListener('input', function() {
-            if (this.value.trim() !== '') {
-                cardName.textContent = this.value;
-                cardName.classList.remove('empty');
-            } else {
-                cardName.textContent = 'Villa';
-                cardName.classList.add('empty');
-            }
-        });
-        
-        priceInput.addEventListener('input', function() {
-
-            if (this.value.replace(/\./g, '').trim() !== '') {
-                const numericValue = Number(this.value.replace(/\./g, '').trim());
-                cardPrice.textContent = 'Rp' + numericValue.toLocaleString('id-ID');
-            } else {
-                cardPrice.textContent = '[Harga]';
-            }
-        });
-
-        bedroomInput.addEventListener('input', function() {
-            if (this.value.trim() !== '') {
-                cardBedroom.textContent = this.value;
-                cardBedroom.classList.remove('bedroom');
-            } else {
-                cardBedroom.textContent = '0';
-                cardBedroom.classList.add('bedroom');
-            }
-        });
-
-        locationInput.addEventListener('input', function() {
-            if (this.value.trim() !== '') {
-                cardLocation.textContent = this.value;
-                cardLocation.classList.remove('location');
-            } else {
-                cardLocation.textContent = 'Denpasar, Bali';
-                cardLocation.classList.add('location');
-            }
-        });
-        
-    
-
-    });
-</script>
-@endpush

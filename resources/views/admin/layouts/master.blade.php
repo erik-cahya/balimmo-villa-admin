@@ -1,73 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="Balimmo Properties Admin Panel">
-	<meta name="author" content="Balimmo Properties">
+     <meta charset="utf-8" />
+     <title>Analytics | Lahomes - Real Estate Management Admin Template</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="description" content="A fully responsive premium admin dashboard template, Real Estate Management Admin Template" />
+     <meta name="author" content="Techzaa" />
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <title>Balimmo - System Admin Management</title>
+     <!-- App favicon -->
+     <link rel="shortcut icon" href="{{ asset('admin') }}/assets/images/favicon.ico">
 
-  <!-- Fonts -->
-  {{-- <link rel="preconnect" href="https://fonts.googleapis.com"> --}}
-  {{-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> --}}
-  {{-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"> --}}
+     <!-- Vendor css (Require in all Page) -->
+     <link href="{{ asset('admin') }}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
+     <!-- Icons css (Require in all Page) -->
+     <link href="{{ asset('admin') }}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+     <!-- App css (Require in all Page) -->
+     <link href="{{ asset('admin') }}/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+     <!-- Theme Config js (Require in all Page) -->
+     <script src="{{ asset('admin') }}/assets/js/config.min.js"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Geist+Mono:wght@100..900&display=swap" rel="stylesheet">
-  <!-- End fonts -->
-  
-  <!-- CSRF Token -->
-  <meta name="_token" content="{{ csrf_token() }}">
-  
-  <link rel="shortcut icon" href="{{ asset('/admin//favicon.ico') }}">
-  
-  
-  <!-- plugin css -->
-  <link href="{{ asset('/admin/assets/plugins/@mdi/css/materialdesignicons.min.css') }}" rel="stylesheet" />
-  <link href="{{ asset('/admin/assets/fonts/feather-font/css/iconfont.css') }}" rel="stylesheet" />
-  <link href="{{ asset('/admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" />
-  <!-- end plugin css -->
-
-  @stack('plugin-styles')
-
-  <!-- common css -->
-  <link href="{{ asset('/admin/css/app.css') }}" rel="stylesheet" />
-  <!-- end common css -->
-
-  @stack('style')
+     @stack('style')
 </head>
-<body data-base-url="{{url('/')}}">
 
-  <script src="{{ asset('/admin/assets/js/spinner.js') }}"></script>
+<body>
 
-  <div class="main-wrapper" id="app">
-    @include('admin.layouts.sidebar')
-    <div class="page-wrapper">
-      @include('admin.layouts.header')
-      <div class="page-content">
-        @yield('content')
-      </div>
-      @include('admin.layouts.footer')
-    </div>
-  </div>
+     <div class="wrapper">
 
-    <!-- base js -->
-    <script src="{{ asset('/admin/js/app.js') }}"></script>
-    <script src="{{ asset('/admin/assets/plugins/feather-icons/feather.min.js') }}"></script>
-    <script src="{{ asset('/admin/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    <!-- end base js -->
+          <!-- ========== Topbar Start ========== -->
+          @include('admin.layouts.header')
+          @include('admin.layouts.sidebar')
 
-    <!-- plugin js -->
-    @stack('plugin-scripts')
-    <!-- end plugin js -->
+          <!-- Start right Content here -->
+          <div class="page-content">
+                @yield('content')
+                @include('admin.layouts.footer')
+          </div>
+     </div>
 
-    <!-- common js -->
-    <script src="{{ asset('/admin/assets/js/template.js') }}"></script>
-    <!-- end common js -->
 
-    @stack('custom-scripts')
+     <!-- Vendor Javascript (Require in all Page) -->
+     <script src="{{ asset('admin') }}/assets/js/vendor.js"></script>
+
+     <!-- App Javascript (Require in all Page) -->
+     <script src="{{ asset('admin') }}/assets/js/app.js"></script>
+
+     @stack('scripts')
+
+
+    
+
 </body>
+
 </html>

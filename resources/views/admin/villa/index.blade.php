@@ -1,153 +1,223 @@
 @extends('admin.layouts.master')
-@push('plugin-styles')
-    <link href="{{ asset('/admin/assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}" rel="stylesheet" />
-    <link href="{{ asset('/admin/assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
-@endpush
 @section('content')
-    <nav class="page-breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Villa</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Villa Listing</li>
-        </ol>
-    </nav>
+<div class="container-fluid">
 
-    <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-        <div>
-          <h4 class="">Villa Listings</h4>
-        </div>
-        <div class="d-flex align-items-center flex-wrap text-nowrap">
-          <a href="{{ route('villa.create') }}" class="btn btn-sm btn-primary btn-icon-text mb-2 mb-md-0">
-            <i class="mdi mdi-home-plus fs-5"></i>                        
-            Add New Villa
-          </a>
+    <!-- ========== Page Title Start ========== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <h4 class="mb-0 fw-semibold">Listing List</h4>
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Real Estate</a></li>
+                    <li class="breadcrumb-item active">Listing List</li>
+                </ol>
+            </div>
         </div>
     </div>
+    <!-- ========== Page Title End ========== -->
 
     <div class="row">
-        <div class="col-12 col-xl-12 stretch-card">
-          <div class="row flex-grow-1">
-            <div class="col-md-4 grid-margin stretch-card">
+         <div class="col-md-6 col-xl-3">
               <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-column">
-                        <h6 class="text-uppercase fw-bolder tx-10">Total Properties</h6>
-                        <h3 class="mt-auto fw-bolder tx-9">{{ $data_villa_count }} Properties</h3>
-                    </div>
-                    <div class="bg-primary text-light rounded px-3">
-                        <i class="mdi mdi-home-analytics" style="font-size: 40px"></i> 
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                   <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                             <div>
+                                  <h4 class="card-title mb-2 ">Total Incomes</h4>
+                                  <p class="text-muted fw-medium fs-22 mb-0">$12,7812.09</p>
+                             </div>
+                             <div>
+                                  <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                       <iconify-icon icon="solar:wallet-money-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
+                                  </div>
+                             </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-3">
+                             <p class="mb-0"><span class="text-success fw-medium mb-0"><i class="ri-arrow-up-line"></i>34.4%</span> vs last month</p>
+                             <div>
+                                  <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
 
-            <div class="col-md-4 grid-margin stretch-card">
+                             </div>
+                        </div>
+                   </div>
+              </div>
+         </div>
+
+         <div class="col-md-6 col-xl-3">
               <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-column">
-                        <h6 class="text-uppercase fw-bolder tx-10">Unit Rent</h6>
-                        <h3 class="mt-auto fw-bolder tx-9">2 Unit</h3>
-                    </div>
-                    <div class="bg-primary text-light rounded px-3">
-                        <i class="mdi mdi-cash-multiple" style="font-size: 40px"></i> 
-                    </div>
-                  </div>
-                </div>
+                   <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                             <div>
+                                  <h4 class="card-title mb-2 ">Total Villas</h4>
+                                  <p class="text-muted fw-medium fs-22 mb-0">{{ $data_villa_count }} Unit</p>
+                             </div>
+                             <div>
+                                  <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                       <iconify-icon icon="solar:home-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
+                                  </div>
+                             </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-3">
+                             <p class="mb-0"><span class="text-danger fw-medium mb-0"><i class="ri-arrow-down-line"></i>8.5%</span> vs last month</p>
+
+                             <div>
+                                  <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
+
+                             </div>
+                        </div>
+                   </div>
               </div>
-            </div>
-            <div class="col-md-4 grid-margin stretch-card">
+         </div>
+
+         <div class="col-md-6 col-xl-3">
               <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-column">
-                        <h6 class="text-uppercase fw-bolder tx-10">Unit Rent</h6>
-                        <h3 class="mt-auto fw-bolder tx-9">2 Unit</h3>
-                    </div>
-                    <div class="bg-primary text-light rounded px-3">
-                        <i class="mdi mdi-cash-multiple" style="font-size: 40px"></i> 
-                    </div>
-                  </div>
-                </div>
+                   <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                             <div>
+                                  <h4 class="card-title mb-2 ">Unit Sold</h4>
+                                  <p class="text-muted fw-medium fs-22 mb-0">893 Unit</p>
+                             </div>
+                             <div>
+                                  <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                       <iconify-icon icon="solar:dollar-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
+                                  </div>
+                             </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-3">
+                             <p class="mb-0"><span class="text-success fw-medium mb-0"><i class="ri-arrow-up-line"></i>17%</span> vs last month</p>
+                             <div>
+                                  <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
+
+                             </div>
+                        </div>
+                   </div>
               </div>
-            </div>
-            
-          </div>
-        </div>
-      </div> <!-- row -->
-  
-    <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    {{-- <table id="dataTableExample" class="table table-bordered border-top"> --}}
-                    <table id="dataTableExample" class="table">
-                    <thead>
-                        <tr>
-                            <th class="text-center">No</th>
-                            <th class="text-center">Villa Name</th>
-                            <th class="text-center">Price</th>
-                            <th class="text-center">Bedroom</th>
-                            <th class="text-center">Sub Region</th>
-                            <th class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data_villa as $villa )
-                            <tr class="align-middle">
-                                <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="d-flex align-items-center">
-                                    <img src="https://techzaa.in/lahomes/admin/assets/images/properties/p-1.jpg" class="rounded me-3" style="width: 55px; height: 55px;" alt="user">
-                                    {{ $villa->villa_name }}
-                                </td>
-                                
-                                <td class="text-center fs-5"><span class="badge bg-success">Rp. {{ number_format($villa->price, 0, ',', '.') }}</span></td>
-                                
-                                <td class="align-items-center fs-5">           
-                                    <p class="d-flex align-items-center justify-content-center">
-                                        <i class="mdi mdi-bed-king-outline fs-4 me-1"></i> {{ $villa->bedroom }}
-                                    </p>
-                                </td>
-                                <td class="text-center fs-5"><span class="badge bg-primary">{{ $villa->sub_region }}</span></td>
+         </div>
 
-                                <td class="text-center">
-                                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+         <div class="col-md-6 col-xl-3">
+              <div class="card">
+                   <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                             <div>
+                                  <h4 class="card-title mb-2 ">Unit Rent</h4>
+                                  <p class="text-muted fw-medium fs-22 mb-0">459 Unit</p>
+                             </div>
+                             <div>
+                                  <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                       <iconify-icon icon="solar:key-minimalistic-square-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
+                                  </div>
+                             </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-3">
+                             <p class="mb-0"><span class="text-danger fw-medium mb-0"><i class="ri-arrow-down-line"></i>12%</span> vs last month</p>
+                             <div>
+                                  <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
 
-                                        <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="See Data Villa">
-                                            <i class="link-icon" data-feather="eye"  height="14"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Data Villa">
-                                            <i class="link-icon" data-feather="edit"  height="14"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Data Villa" onclick="showSwal('sweet-alert-delete-villa')">
-                                            <i class="link-icon" data-feather="trash-2"  height="14"></i>
-                                        </button>
-                                        
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                    </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        </div>
+                             </div>
+                        </div>
+                   </div>
+              </div>
+         </div>
     </div>
+    <div class="row">
+         <div class="col-xl-12">
+              <div class="card">
+                   <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                        <div>
+                             <h4 class="card-title mb-0">All Properties List</h4>
+                        </div>
+                        <div class="dropdown">
+                             <a href="#" class="dropdown-toggle btn btn-sm btn-outline-light rounded" data-bs-toggle="dropdown" aria-expanded="false">
+                                  This Month
+                             </a>
+                             <div class="dropdown-menu dropdown-menu-end">
+                                  <!-- item-->
+                                  <a href="#!" class="dropdown-item">Download</a>
+                                  <!-- item-->
+                                  <a href="#!" class="dropdown-item">Export</a>
+                                  <!-- item-->
+                                  <a href="#!" class="dropdown-item">Import</a>
+                             </div>
+                        </div>
+                   </div>
+                   <div class="table-responsive">
+                        <table class="table align-middle text-nowrap table-hover table-centered mb-0">
+                             <thead class="bg-light-subtle">
+                                  <tr>
+                                       <th style="width: 20px;">
+                                            <div class="form-check">
+                                                 <input type="checkbox" class="form-check-input" id="customCheck1">
+                                                 <label class="form-check-label" for="customCheck1"></label>
+                                            </div>
+                                       </th>
+                                       <th>Properties Photo & Name</th>
+                                       <th>Size</th>
+                                       <th>Property Type</th>
+                                       <th>Rent/Sale</th>
+                                       <th>Bedrooms</th>
+                                       <th>Location</th>
+                                       <th>Price</th>
+                                       <th>Action</th>
+                                  </tr>
+                             </thead>
+                             <tbody>
+                              @foreach ($data_villa as $villa)
+                                  <tr>
+                                       <td>
+                                            <div class="form-check">
+                                                 <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                 <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                       </td>
+                                       <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                 <div>
+                                                      <img src="{{ asset('admin') }}/assets/images/properties/p-1.jpg" alt="" class="avatar-md rounded border border-light border-3">
+                                                 </div>
+                                                 <div>
+                                                      <a href="#!" class="text-dark fw-medium fs-15">{{ $villa->villa_name }}</a>
+                                                 </div>
+                                            </div>
+
+                                       </td>
+                                       <td>1400ft</td>
+                                       <td>Residences</td>
+                                       <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">Rent</span></td>
+                                       <td>
+                                            <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> 5</p>
+                                       </td>
+                                       <td>France</td>
+                                       <td>$8,930.00</td>
+                                       <td>
+                                            <div class="d-flex gap-2">
+                                                 <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                 <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                 <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                            </div>
+                                       </td>
+                                  </tr>
+                              @endforeach
+
+
+                             </tbody>
+                        </table>
+                   </div>
+                   <!-- end table-responsive -->
+                   <div class="card-footer">
+                        <nav aria-label="Page navigation example">
+                             <ul class="pagination justify-content-end mb-0">
+                                  <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+                                  <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                  <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                  <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                  <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+                             </ul>
+                        </nav>
+                   </div>
+              </div>
+         </div>
+
+    </div>
+
+
+</div>
 @endsection
-
-@push('plugin-scripts')
-  <script src="{{ asset('/admin/assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
-  <script src="{{ asset('/admin/assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js') }}"></script>
-  <script src="{{ asset('/admin/assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-
-@endpush
-
-@push('custom-scripts')
-  <script src="{{ asset('/admin/assets/js/data-table.js') }}"></script>
-  <script src="{{ asset('/admin/assets/js/sweet-alert.js') }}"></script>
-
-@endpush
