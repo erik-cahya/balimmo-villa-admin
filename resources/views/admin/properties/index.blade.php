@@ -48,7 +48,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                              <div>
                                   <h4 class="card-title mb-2 ">Total Villas</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">{{ $data_villa_count }} Unit</p>
+                                  <p class="text-muted fw-medium fs-22 mb-0">{{ $data_property_count }} Unit</p>
                              </div>
                              <div>
                                   <div class="avatar-md bg-primary bg-opacity-10 rounded">
@@ -160,7 +160,7 @@
                                   </tr>
                              </thead>
                              <tbody>
-                              @foreach ($data_villa as $villa)
+                              @foreach ($data_property as $property)
                                   <tr>
                                        <td>
                                             <div class="form-check">
@@ -174,13 +174,13 @@
                                                       <img src="{{ asset('admin') }}/assets/images/properties/p-1.jpg" alt="" class="avatar-md rounded border border-light border-3">
                                                  </div>
                                                  <div>
-                                                      <a href="#!" class="text-dark fw-medium fs-15">{{ $villa->villa_name }}</a>
+                                                      <a href="#!" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
                                                  </div>
                                             </div>
 
                                        </td>
                                        <td>1400ft</td>
-                                       <td>Residences</td>
+                                       <td class="text-capitalize">{{ $property->property_type }}</td>
                                        <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">Rent</span></td>
                                        <td>
                                             <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> 5</p>

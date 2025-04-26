@@ -40,19 +40,41 @@
                         <span class="nav-icon">
                              <i class="ri-community-line"></i>
                         </span>
-                        <span class="nav-text"> Villa </span>
+                        <span class="nav-text"> Properties </span>
                    </a>
                    <div class="collapse" id="sidebarProperty">
                         <ul class="nav sub-navbar-nav">
                              <li class="sub-nav-item">
-                                  <a class="sub-nav-link" href="{{ route('villa.index') }}">Villa List</a>
+                                  <a class="sub-nav-link" href="{{ route('properties.index') }}">Properties List</a>
                              </li>
                              <li class="sub-nav-item">
-                                  <a class="sub-nav-link" href="{{ route('villa.create') }}">Create Villa Listing</a>
+                                  <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Properties Listing</a>
                              </li>
                         </ul>
                    </div>
               </li>
+
+
+
+               <li class="nav-item">
+                    <a class="nav-link menu-arrow" href="#sidebarFeatures" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarFeatures">
+                         <span class="nav-icon">
+                              <i class="ri-community-line"></i>
+                         </span>
+                         <span class="nav-text"> Properties Features </span>
+                    </a>
+                    <div class="collapse" id="sidebarFeatures">
+                         <ul class="nav sub-navbar-nav">
+                              <li class="sub-nav-item">
+                                   <a class="sub-nav-link" href="{{ route('features.index') }}">Feature List</a>
+                              </li>
+                              <li class="sub-nav-item">
+                                   <a class="sub-nav-link" href="{{ route('features.create') }}">Create Feature</a>
+                              </li>
+                         </ul>
+                    </div>
+               </li>
+
          </ul>
     </div>
 </div>

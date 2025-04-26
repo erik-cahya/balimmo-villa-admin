@@ -4,19 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\VillaModel;
-use Illuminate\Support\Facades\DB;
 
-class VillaController extends Controller
+class FeatureController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data['data_villa'] = VillaModel::get();
-        $data['data_villa_count'] = VillaModel::count();
-        return view('admin.villa.index', $data);
+        return view('admin.properties-features.index');
     }
 
     /**
@@ -24,7 +20,7 @@ class VillaController extends Controller
      */
     public function create()
     {
-        return view('admin.villa.create');
+        return view('admin.properties-features.create');
     }
 
     /**
@@ -32,16 +28,7 @@ class VillaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
-        VillaModel::create([
-            'villa_name' => $request->villa_name,
-            'price' => str_replace('.', '', $request->price),
-            'bedroom' => $request->bedroom,
-            'sub_region' => $request->sub_region,
-        ]);
-
-        return redirect()->route('villa.index');
+        //
     }
 
     /**
@@ -76,4 +63,3 @@ class VillaController extends Controller
         //
     }
 }
-
