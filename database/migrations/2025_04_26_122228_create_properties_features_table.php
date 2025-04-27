@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('properties_feature', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('input_type')->default('text');
-            $table->json('options')->nullable();
+            $table->foreignId('properties_id')->constrained()->on('properties')->onDelete('cascade');
+            $table->string('features_name');
+            $table->text('features_slug');
+            $table->json('features_value');
             $table->timestamps();
         });
 

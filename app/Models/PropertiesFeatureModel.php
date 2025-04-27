@@ -11,4 +11,9 @@ class PropertiesFeatureModel extends Model
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
     use HasFactory;
+
+
+    protected $casts = [
+        'feature_value' => 'array'
+    ];
 }

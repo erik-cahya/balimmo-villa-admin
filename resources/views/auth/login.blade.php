@@ -85,7 +85,7 @@
                               </div> <!-- end card-body -->
                          </div> <!-- end card -->
 
-                         <p class="mb-0 text-center text-white">New here? <a href="auth-signup.html" class="text-reset text-unline-dashed fw-bold ms-1">Sign Up</a></p>
+                         <p class="mb-0 text-center text-white">New here? <a href="{{ route('register') }}" class="text-reset text-unline-dashed fw-bold ms-1">Sign Up</a></p>
 
                     </div> <!-- end col -->
                </div> <!-- end row -->

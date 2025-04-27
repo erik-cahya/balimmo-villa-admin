@@ -40,7 +40,7 @@
                                         <form>
                                              <label for="choices-country" class="form-label">Type Feature Form</label>
                                              <select class="form-control" id="choices-country" data-choices data-choices-groups data-placeholder="Select Country" name="choices-country">
-                                                  <option disabled selected>Choose a country</option>
+                                                  <option value="">Choose a country</option>
                                                   <option value="text">Text</option>
                                                   <option value="option">Option</option>
                                                   <option value="radio">Radio</option>

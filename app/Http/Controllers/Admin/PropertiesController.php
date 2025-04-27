@@ -34,6 +34,7 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         PropertiesModel::create([
             'villa_name' => $request->villa_name,
             'price' => str_replace('.', '', $request->price),
