@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('properties_feature', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('properties_id')->constrained()->on('properties')->onDelete('cascade');
+            // $table->foreignId('properties_id')->constrained()->on('properties')->onDelete('cascade');
+            $table->foreignId('properties_id');
             $table->string('features_name');
-            $table->text('features_slug');
             $table->json('features_value');
             $table->timestamps();
         });

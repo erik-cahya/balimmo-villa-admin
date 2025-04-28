@@ -194,83 +194,227 @@
                               <input type="hidden" id="internal_reference" name="internal_reference" class="form-control" placeholder="Internal Reference" readonly value="{{ Auth::user()->name }}">
                          </div>
 
-                         <div class="col-lg-6" id="group_property_status">
-                              <label for="property_status" class="form-label">Property Status</label>
-                              <select class="form-control" id="property_status" name="property_status" data-choices data-choices-groups data-placeholder="Select Country">
-                                   <option value="" selected disabled>Choose Status of Property</option>
-                                   <option value="avaliable">Avaliable</option>
-                                   <option value="rented">Rented</option>
-                                   <option value="sold">Sold</option>
-                                   <option value="under_construction">Under Construction</option>
-                                   <option value="under_contract">Under Contract</option>
-                              </select>
-                         </div>
-
-                         <div class="col-lg-6 mb-3" id="group_year_built">
-                              <label for="year_built" class="form-label">Year Built</label>
-                              <input type="text" id="year_built" name="year_built" class="form-control" placeholder="Internal Reference">
-                         </div>
-
-                         <div class="col-lg-6 mb-3" id="group_current_owner">
-                              <label for="current_owner" class="form-label">Current Owner</label>
-                              <input type="text" id="current_owner" name="current_owner" class="form-control" placeholder="Internal Reference">
-                         </div>
-                         <div class="col-lg-6 mb-3" id="group_owner_contact">
-                              <label for="owner_contact" class="form-label">Owner Contact</label>
-                              <input type="text" id="owner_contact" name="owner_contact" class="form-control" placeholder="Internal Reference">
-                         </div>
-
-                         <div class="col-lg-6" id="group_property_category">
-                              <label for="property_category" class="form-label">Property Category</label>
-                              <select class="form-control" id="property_category" name="property_category" data-choices data-choices-groups data-placeholder="Select Country">
-                                   <option value="" selected disabled>Choose Category of Property</option>
-                                   <option value="freehold">Freehold</option>
-                                   <option value="leasehold">Leasehold</option>
-                              </select>
-                         </div>
-                    
-                         <div class="col-lg-6 mb-3" id="group_rent_price">
-                              <label for="rent_price" class="form-label">Rent Price</label>
-                              <input type="text" id="rent_price" name="rent_price" class="form-control" placeholder="Internal Reference">
-                         </div>
-
-                         <div class="col-lg-6 mb-3" id="group_annual_fees">
-                              <label for="annual_fees" class="form-label">Annual Fees</label>
-                              <input type="text" id="annual_fees" name="annual_fees" class="form-control" placeholder="Internal Reference">
-                         </div>
-
-                         <div class="col-lg-6 mb-3" id="group_estimated_rental_income">
-                              <label for="estimated_rental_income" class="form-label">Estimated rental income (in a year)</label>
-                              <input type="text" id="estimated_rental_income" name="estimated_rental_income" class="form-control" placeholder="Internal Reference">
-                         </div>
-
-                         {{-- <div class="col-lg-6" id="group_security">
-                              <label for="security" class="form-label">Security</label>
-                              <select class="form-control" id="security" name="security[]" multiple="multiple">
-                                   <option value="Alarm System">Alarm System</option>
-                                   <option value="CCTV">CCTV</option>
-                                   <option value="Security Guard">Security Guard</option>
-                              </select>
-                         </div> --}}
-
-                         <x-form-select name="security" label="Security">
-                              <option value="Alarm System">Alarm System</option>
-                              <option value="CCTV">CCTV</option>
-                              <option value="Security Guard">Security Guard</option>
+                         <x-form-select name="property_status" label="Choose Status Property" >
+                              <option value="" selected disabled>Choose Status of Property</option>
+                              <option value="avaliable">Avaliable</option>
+                              <option value="rented">Rented</option>
+                              <option value="sold">Sold</option>
+                              <option value="under_construction">Under Construction</option>
+                              <option value="under_contract">Under Contract</option>
                          </x-form-select>
 
-                         <hr>
-                         {{-- ##### Features ####### --}}
+                         <x-form-input type="text" name="curryear_builtent_owner" label="Year Built" placeholder="Input Year Built" />
+                         <x-form-input type="text" name="current_owner" label="Current Owner" placeholder="Input Current Owner" />
+                         <x-form-input type="text" name="owner_contact" label="Owner Contact" placeholder="Input Owner Contact" />
 
-                         <x-form-input type="text" name="land_size" label="Land Size (m2)" placeholder="Input Land Size" />
-                         <x-form-input type="text" name="living_area" label="Living Area (m2)" placeholder="Input Living Area" />
-                         <x-form-input type="text" name="built_area" label="Built Area (m2)" placeholder="Input Built Area" />
-                         <x-form-input type="text" name="number_of_floors" label="Number of Floors" placeholder="Input Number of Floors" />
+                         <x-form-select name="property_category" label="Property Category" >
+                              <option value="" selected disabled>Choose Category of Property</option>
+                              <option value="freehold">Freehold</option>
+                              <option value="leasehold">Leasehold</option>
+                         </x-form-select>
 
+                         <x-form-input type="text" name="rent_price" label="Rent Price" placeholder="Input Rental Price" />
+                         <x-form-input type="text" name="annual_fees" label="Annual Fees" placeholder="Input Annual Fees" />
+                         <x-form-input type="text" name="estimated_rental_income" label="Estimated rental income (in a year)" placeholder="Input Estimated Rental Income" />
 
                     </div>
 
                          
+               </div>
+          </div>
+
+          <div class="card">
+               <div class="card-header">
+                    <h4 class="card-title">Add Property Features</h4>
+               </div>
+               <div class="card-body">
+                    <div class="row">
+                         {{-- ##### Features ####### --}}
+                         <x-form-input type="text" name="land_size" label="Land Size (m2)" placeholder="Input Land Size" />
+                         <x-form-input type="text" name="living_area" label="Living Area (m2)" placeholder="Input Living Area" />
+                         <x-form-input type="text" name="built_area" label="Built Area (m2)" placeholder="Input Built Area" />
+                         <x-form-input type="text" name="number_of_floors" label="Number of Floors" placeholder="Input Number of Floors" />
+                         <x-form-input type="text" name="garden_size" label="Garden Size" placeholder="Input Garden Size (m2)" />
+                         <x-form-input type="text" name="number_floors_building" label="Number Floors in Building" placeholder="Input Number of Floors in Building" />
+                         <x-form-input type="text" name="which_floor_apartement" label="Which floor the Appartement is on" placeholder="What floor is the apartment on ?" />
+                         <x-form-input type="text" name="bedroom" label="Bedroom" placeholder="Enter the number of bedrooms" />
+                         <x-form-input type="text" name="bathroom" label="bathroom" placeholder="Enter the number of bathrooms" />
+                         <x-form-input type="text" name="vehicle_spaces" label="Vehicle Spaces" placeholder="Enter the vehicle spaces" />
+                         <x-form-input type="text" name="kitchen_type" label="Kitchen Type" placeholder="Enter the kitchen type" />
+                         <x-form-input type="text" name="roof_type" label="Roof Type" placeholder="Enter the roof type" />
+                         <x-form-input type="text" name="soil_type" label="Soil Type" placeholder="Enter the soil type" />
+                         <x-form-input type="text" name="topography" label="Topography" placeholder="Enter the topography" />
+                         <x-form-input type="text" name="access" label="Access" placeholder="Enter the properties access" />
+                         <x-form-input type="text" name="land_type" label="Land Type" placeholder="Input Land Type" />
+                         <x-form-input type="text" name="swimming_pool" label="Swimming Pool" placeholder="Input Swimming Pool" />
+                         <x-form-input type="text" name="pool_size" label="Pool Size (m2)" placeholder="Input Swimming Pool Size" />
+                         <x-form-input type="text" name="pool_depth" label="Pool Size (m)" placeholder="Input Swimming Pool Depth" />
+                         <x-form-input type="text" name="heated_pool" label="Heated Pool" placeholder="Input Pool Heated" />
+
+                         <x-form-select name="private_graden" label="Choose Private Garden" ></x-form-select>
+                         <x-form-input type="text" name="private_garden_size" label="Private Garden Size (m2)" />
+                         
+                         <x-form-select name="barbecue_area" label="Barbecue Area"></x-form-select>
+
+                         <x-form-select name="gazebo" label="Gazebo/Bale Bengong"></x-form-select>
+                         <x-form-input type="text" name="gazebo_size" label="Gazebo/Bale Bengong Size (m2)" />
+
+                         <x-form-select name="rooftop_terrace" label="Rooftop/Terrace"></x-form-select>
+                         <x-form-input type="text" name="rooftop_terrace_size" label="Rooftop/Terrace Size" />
+                         
+                         <x-form-select name="air_conditioning" label="Air Conditioning"></x-form-select>
+                         <x-form-input type="text" name="number_air_conditioning" label="Number of Units" placeholder="Input Number Unit AC" />
+                         
+                         <x-form-select name="ceiling_fans" label="Ceiling Fans"></x-form-select>
+
+                         <x-form-select name="water_heater" label="Water Heater"></x-form-select>
+                         <x-form-input type="text" name="water_heater_type" label="Water Heater Type" />
+                         
+                         <x-form-input type="text" name="electrical_power_watt" label="Electrical Power Watt" />
+
+                         <x-form-select name="internet" label="Internet/Wi-Fi"></x-form-select>
+                         <x-form-input type="text" name="type_of_connection" label="Speed Connection (mbps)" />
+
+                         <x-form-multiple-select name="security" label="Security">
+                              <option value="alarm_system">Alarm System</option>
+                              <option value="cctv">CCTV</option>
+                              <option value="security_guard">Security Guard</option>
+                         </x-form-multiple-select>
+
+                         <x-form-select name="backup_generator" label="Backup Generator"></x-form-select>
+
+                         <x-form-select name="water_reservoir" label="Water Reservoir"></x-form-select>
+                         <x-form-input type="text" name="water_reservoir_capacity" label="Water Reservoir Capacity (Liter)" />
+                         
+                         <x-form-select name="water_filtration_system" label="Water Filtration System"></x-form-select>
+                         
+                         <x-form-select name="furnished" label="Furnished"></x-form-select>
+
+                         <x-form-multiple-select name="fully_equipped_kitchen" label="Fully equipped kitchen">
+                              <option value="dishwasher">Dishwasher</option>
+                              <option value="oven">Oven</option>
+                              <option value="stove">Stove</option>
+                         </x-form-multiple-select>
+
+                         <x-form-multiple-select name="laundry" label="Fully equipped kitchen">
+                              <option value="dryer">Dryer</option>
+                              <option value="washing_machine">Washing Machine</option>
+                         </x-form-multiple-select>
+
+                         <x-form-select name="private_gym" label="Private Gym"></x-form-select>
+                         <x-form-select name="private_cinema" label="Private Cinema"></x-form-select>
+
+                         <x-form-multiple-select name="features" label="Properties Features">
+                              <option value="backup_generator">Backup Generator</option>
+                              <option value="bbq_area">BBQ Area</option>
+                              <option value="cinema_room">Cinema Room</option>
+                              <option value="filtration">Filtration</option>
+                              <option value="gazebo">Gazebo</option>
+                              <option value="private_gym">Private Gym</option>
+                              <option value="rooftop">Rooftop</option>
+                              <option value="terrace">Terrace</option>
+                              <option value="water_storage">Water Storage</option>
+                         </x-form-multiple-select>
+
+                         <x-form-multiple-select name="properties_view" label="Properties Views">
+                              <option value="jungle">Jungle</option>
+                              <option value="mountain">Mountain</option>
+                              <option value="sky_city">Sky City</option>
+                              <option value="sea">Sea</option>
+                              <option value="rice_fields">Rice Fields</option>
+                         </x-form-multiple-select>
+
+                         <x-form-select name="main_road_access" label="Main Road Access"></x-form-select>
+                         <x-form-input type="text" name="road_width" label="Road Width"/>
+
+                         {{-- ########################### Proximity to key Points --}}
+                         <div class="col-lg-6 mb-3">
+                              <label for="" class="form-label mb-2">Proximity to key Points</label>
+
+                              <div class="btn-group d-flex justify-content-start align-items-center" role="group" aria-label="Basic checkbox toggle button group">
+
+                                   <div class="me-2">
+                                        <input class="form-check-input me-1" type="checkbox" value="beach" name="beach" id="beach">
+                                        <label class="form-check-label" for="beach">Beach</label>
+                                   </div>
+
+                                   <div class="me-2">
+                                        <input class="form-check-input me-1" type="checkbox" value="restaurants" name="restaurants" id="restaurants">
+                                        <label class="form-check-label" for="restaurants">Restaurants</label>
+                                   </div>
+
+                                   <div class="me-2">
+                                        <input class="form-check-input me-1" type="checkbox" value="schools" name="schools" id="schools">
+                                        <label class="form-check-label" for="schools">Schools</label>
+                                   </div>
+
+                                   <div class="me-2">
+                                        <input class="form-check-input me-1" type="checkbox" value="shops" name="shops" id="shops">
+                                        <label class="form-check-label" for="shops">Shops</label>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <x-form-input type="text" name="distance_beach" label="Distance time Beach" placeholder="Input Distance in Minutes"/>
+                         <x-form-input type="text" name="distance_restaurants" label="Distance time restaurants" placeholder="Input Distance in Minutes"/>
+                         <x-form-input type="text" name="distance_school" label="Distance time school" placeholder="Input Distance in Minutes"/>
+                         <x-form-input type="text" name="distance_shops" label="Distance time shops" placeholder="Input Distance in Minutes"/>
+
+                         <x-form-select name="secure_neighborhood" label="Secured Neighborhood"></x-form-select>
+                         <x-form-select name="secure_neighborhood_type" label="Secured Neighborhood Type">
+                              <option value="security_post">Security Post</option>
+                              <option value="gated_community">Gated Community</option>
+                         </x-form-select>
+
+                         <x-form-select name="on_site_service" label="On-site Service"></x-form-select>
+
+                         {{-- <x-form-multiple-select name="on_site_service_type" label="On-site Service Type">
+                              <option value="maintenance">Maintenance</option>
+                              <option value="reception">Reception</option>
+                              <option value="security">Security</option>
+                         </x-form-multiple-select> --}}
+
+                         {{-- ########################### On-site Service Type --}}
+                         <div class="col-lg-6 mb-3" id="group_on_site_service_type">
+                              <label for="" class="form-label mb-2">On-site Service Type</label>
+
+                              <div class="btn-group d-flex justify-content-start align-items-center" role="group" aria-label="Basic checkbox toggle button group">
+
+                                   <div class="me-2">
+                                        <input class="form-check-input me-1" type="checkbox" value="maintenace" name="maintenace" id="maintenace">
+                                        <label class="form-check-label" for="maintenace">Maintenace</label>
+                                   </div>
+
+                                   <div class="me-2">
+                                        <input class="form-check-input me-1" type="checkbox" value="reception" name="reception" id="reception">
+                                        <label class="form-check-label" for="reception">Reception</label>
+                                   </div>
+
+                                   <div class="me-2">
+                                        <input class="form-check-input me-1" type="checkbox" value="security" name="security" id="security">
+                                        <label class="form-check-label" for="security">Security</label>
+                                   </div>
+                              </div>
+                         </div>
+
+                         <x-form-select name="current_usage" label="Current Usage">
+                              <option value="owner_occupied">Owner Occupied</option>
+                              <option value="rented">Rented</option>
+                              <option value="vacant_land">Vacant Land</option>
+                         </x-form-select>
+
+                         <x-form-select name="rental_history" label="Rental History"></x-form-select>
+                         <x-form-input type="text" name="last_year_income" label="Last Year Income"/>
+
+                         <x-form-input type="text" name="estimated_occupancy_rate" label="Estimated Occupancy Rate" placeholder="In Percent (Ex: 10%)"/>
+                         <x-form-input type="text" name="return_on_investment" label="ROI (Return on Investment) Potential" placeholder="Percentage per year (Ex: 12%)"/>
+                         
+                         <x-form-select name="shared_facilities" label="Shared Facilities">
+                              <option value="">No</option>
+                              <option value="pool">Pool</option>
+                         </x-form-select>
+
+                    </div>
                </div>
           </div>
 
@@ -322,11 +466,12 @@
      <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-
-
-
      <script>
           $(document).ready(function() {
+               $('#group_secure_neighborhood_type').hide();
+               $('#group_on_site_service_type').hide();
+               $('#group_last_year_income').hide();
+
                // Swimming Pool Toggle
                $('#swimming_pool').on('change', function() {
                     var value = $(this).val();
@@ -340,8 +485,8 @@
                // Property Type Toggle
                $('#property_type').on('change', function() {
                     var value = $(this).val();
-                    console.log(value);
-                    if (value === 'terrain') {
+
+                    if (value === 'appartement') {
                          $('#group_year_built').hide();
                          $('#group_property_status').show();
                          
@@ -355,6 +500,45 @@
                          $('#group_property_status').show();
                     }
                });
+
+               $('#secure_neighborhood').on('change', function() {
+                    var value = $(this).val();
+                    console.log(value);
+
+                    if (value === 'yes') {
+                         $('#group_secure_neighborhood_type').show();
+                         
+                    } 
+                    else {
+                         $('#group_secure_neighborhood_type').hide();
+                    }
+               });
+
+               $('#on_site_service').on('change', function() {
+                    var value = $(this).val();
+                    console.log(value);
+
+                    if (value === 'yes') {
+                         $('#group_on_site_service_type').show();
+                         
+                    } 
+                    else {
+                         $('#group_on_site_service_type').hide();
+                    }
+               });
+
+               $('#rental_history').on('change', function() {
+                    var value = $(this).val();
+                    console.log(value);
+
+                    if (value === 'yes') {
+                         $('#group_last_year_income').show();
+                         
+                    } 
+                    else {
+                         $('#group_last_year_income').hide();
+                    }
+               });
           });
 
      </script>
@@ -362,6 +546,21 @@
      <script>
           $(document).ready(function() {
                $('#security').select2({
+                    placeholder: 'Select an option'
+               });
+               $('#fully_equipped_kitchen').select2({
+                    placeholder: 'Select an option'
+               });
+               $('#laundry').select2({
+                    placeholder: 'Select an option'
+               });
+               $('#features').select2({
+                    placeholder: 'Select an option'
+               });
+               $('#properties_view').select2({
+                    placeholder: 'Select an option'
+               });
+               $('#on_site_service_type').select2({
                     placeholder: 'Select an option'
                });
           });
