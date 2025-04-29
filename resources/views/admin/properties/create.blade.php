@@ -5,57 +5,6 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <style>
-          .select2-container--default .select2-selection--single {
-          height: calc(2.25rem + 2px);
-          padding: 1px 1px !important;
-          border: 1px solid #eaedf1; 
-          border-radius: 0.375rem;    
-          font-size: 14px;           
-          }
-
-          .select2-search__field{
-               border: 1px solid #eaedf1!important;
-               border-radius: 0.35rem;
-               margin: 6px 0px;
-          }
-
-          .select2-container--default .select2-results__option {
-               padding: 0.25rem 1.25rem; 
-               font-size: 14px;
-          }
-
-          .select2-container--default .select2-selection--single:focus {
-               outline: none;
-          }
-
-          .select2-container--default .select2-dropdown {
-          border: 1px solid #ced4da; 
-          border-radius: 0.375rem;    
-          }
-
-          .select2-container--default .select2-selection--single .select2-selection__rendered {
-               padding: 0.375rem 0.75rem; 
-               color: #687D92 !important;
-          }
-
-          .select2-selection--multiple{
-               border: 1px solid #ced4da!important;
-               border-radius: 0.35rem!important;
-               padding: 0px!important;
-          }
-
-          .select2-search__field{
-               border: 0px!important;
-           }
-
-          .select2-selection__placeholder{
-               color: #687D92 !important;
-          }
-
-          .select2-selection {
-               border: 1px solid #eaedf1 !important;
-          }
-
         .validation-form{
             border-color: #e96767!important;
         }
