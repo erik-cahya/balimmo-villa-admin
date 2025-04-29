@@ -20,6 +20,9 @@
      <!-- Theme Config js (Require in all Page) -->
      <script src="{{ asset('admin') }}/assets/js/config.min.js"></script>
 
+     {{-- Sweet Alert CDN --}}
+     <link href="{{ asset('style/sweetalert2.min.css') }}" rel="stylesheet">
+
      @stack('style')
 </head>
 
@@ -39,11 +42,26 @@
      </div>
 
 
+     <script src="{{ asset('js/sweetalert2.min.js') }}"></script>
+
      <!-- Vendor Javascript (Require in all Page) -->
      <script src="{{ asset('admin') }}/assets/js/vendor.js"></script>
 
      <!-- App Javascript (Require in all Page) -->
      <script src="{{ asset('admin') }}/assets/js/app.js"></script>
+
+     <script>
+          @if(session('flashData'))
+              var flashData = @json(session('flashData'));
+
+              Swal.fire({
+                  title: flashData.judul,
+                  text: flashData.pesan,
+                  icon: flashData.swalFlashIcon,
+                  confirmButtonText: 'OK'
+              });
+          @endif
+      </script>
 
      @stack('scripts')
 

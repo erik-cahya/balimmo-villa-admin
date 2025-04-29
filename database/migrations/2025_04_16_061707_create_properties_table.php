@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->uuid('properties_uuid');
+            $table->uuid('property_uuid');
             $table->string('property_name');
             $table->string('property_type');
             $table->string('region')->nullable();
             $table->string('sub_region')->nullable();
-            $table->string('street')->nullable();
+            $table->text('property_address')->nullable();
             $table->string('internal_reference')->nullable();
-            $table->string('status')->nullable();
+            $table->string('property_status')->nullable();
 
             $table->string('year_built')->nullable();
             $table->string('current_owner')->nullable();

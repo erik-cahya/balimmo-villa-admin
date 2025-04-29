@@ -11,4 +11,8 @@ class PropertiesModel extends Model
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
     use HasFactory;
+
+    protected $casts = [
+        'property_uuid' => 'string'
+    ];
 }

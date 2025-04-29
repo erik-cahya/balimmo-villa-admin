@@ -192,8 +192,13 @@
                                                  <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
                                                  <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
 
-                                                 <input type="hidden" class="propertyId" value="{{ $property->id }}">
-                                                 <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->property_name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></button>
+                                                 <form action="{{ route('properties.destroy', $property->id) }}" method="POST">
+                                                  @csrf
+                                                  @method('DELETE')
+                                                      {{-- <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a> --}}
+                                                      <input type="hidden" id="idAsesor" name="id_asesor" value="{{ $property->id }}">
+                                                      <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->property_name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></button>
+                                                  </form>
                                             </div>
 
                                             {{-- Delete Button
@@ -240,64 +245,66 @@
 @endsection
 @push('scripts')
      {{-- Sweet Alert --}}
-     <script>
-          document.addEventListener('DOMContentLoaded', function() {
-              // Saat halaman sudah ready
-              const deleteButtons = document.querySelectorAll('.deleteButton');
-      
-              deleteButtons.forEach(button => {
-                  button.addEventListener('click', function(e) {
-                      e.preventDefault();
-      
-                      let propertyName = this.getAttribute('data-nama');
-                      let propertyId = this.parentElement.querySelector('.propertyId').value;
-      
-                      Swal.fire({
-                          title: 'Are you sure?',
-                          text: "Delete property " + propertyName + "?",
-                          icon: 'warning',
-                          showCancelButton: true,
-                          confirmButtonColor: '#3085d6',
-                          cancelButtonColor: '#d33',
-                          confirmButtonText: 'Yes, delete it!'
-                      }).then((result) => {
-                          if (result.isConfirmed) {
-                              // Kirim DELETE request manual lewat JavaScript
-                              fetch('/properties/' + propertyId, {
-                                  method: 'DELETE',
-                                  headers: {
-                                      'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                      'Content-Type': 'application/json'
-                                  }
-                              })
-                              .then(response => {
-                                  if (response.ok) {
-                                      Swal.fire(
-                                          'Deleted!',
-                                          'The property has been deleted.',
-                                          'success'
-                                      ).then(() => {
-                                          // Reload page setelah sukses delete
-                                          location.reload();
-                                      });
-                                  } else {
-                                      Swal.fire(
-                                          'Failed!',
-                                          'Something went wrong.',
-                                          'error'
-                                      );
-                                  }
-                              })
-                              .catch(error => {
-                                  console.error('Error:', error);
-                              });
-                          }
-                      });
-                  });
-              });
-          });
-      </script>
-      
+    <script>
+     document.addEventListener("click", function (event) {
+         if (event.target.classList.contains("deleteButton")) {
+             const asesorId = event.target.closest("tr").querySelector('input[name="id_asesor"]').value;
+             const namaAsesor = event.target.getAttribute("data-nama");
+
+             console.log(asesorId);
+             Swal.fire({
+                 title: "Are you sure?",
+                 text: "Apakah Anda ingin menghapus data " + namaAsesor + " ?",
+                 icon: "warning",
+                 showCancelButton: true,
+             }).then((willDelete) => {
+                 if (willDelete.isConfirmed) {
+                     // const url = `/asesor.destroy/${asesorId}`;
+                     const url = `{{ route('properties.destroy', ':id') }}`.replace(':id', asesorId);
+                     console.log(url);
+                     fetch(url, {
+
+                         method: "DELETE",
+                         headers: {
+                             "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                         }
+                     }).then(response => {
+                         if (response.ok) {
+                             Swal.fire(
+                                 'Terhapus',
+                                 'Data Berhasil Dihapus',
+                                 'success'
+                             ).then((result) => {
+                                 if (result.isConfirmed) {
+                                     window.location.reload();
+                                 }
+
+                             });
+                         } else {
+                             Swal.fire({
+                                 title: "Error",
+                                 text: "Gagal menghapus data.",
+                                 icon: "error",
+                             });
+                         }
+                     }).catch(err => {
+                         Swal.fire({
+                             title: "Error",
+                             text: "Terjadi kesalahan pada server.",
+                             icon: "error",
+                         });
+                     });
+                 } else {
+                     Swal.fire({
+                         title: "Dibatalkan",
+                         text: "Data batal dihapus.",
+                         icon: "error",
+                     });
+                 }
+             });
+         }
+     });
+ </script>
  {{-- /* End Sweet Alert --}}
      
 @endpush

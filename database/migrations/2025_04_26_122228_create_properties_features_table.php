@@ -16,7 +16,7 @@ return new class extends Migration
             // $table->foreignId('properties_id')->constrained()->on('properties')->onDelete('cascade');
             $table->foreignId('properties_id');
             $table->string('features_name');
-            $table->json('features_value');
+            $table->text('features_value');
             $table->timestamps();
         });
 
