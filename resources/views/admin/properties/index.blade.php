@@ -150,7 +150,7 @@
                                             </div>
                                        </th>
                                        <th>Properties Photo & Name</th>
-                                       <th>Size</th>
+                                       <th>Internal Reference</th>
                                        <th>Property Type</th>
                                        <th>Rent/Sale</th>
                                        <th>Bedrooms</th>
@@ -179,21 +179,23 @@
                                             </div>
 
                                        </td>
-                                       <td>{{ $property->property_uuid }}</td>
+                                       <td>{{ $property->internal_reference }}</td>
                                        <td class="text-capitalize">{{ $property->property_type }}</td>
-                                       <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">Rent</span></td>
+                                       <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">{{ isset($property->property_status) ? `$property->property_status` : 'Data Not Found' }}</span></td>
                                        <td>
                                             <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> 5</p>
                                        </td>
-                                       <td>France</td>
+                                       <td>{{ isset($property->region) ? `$property->region` : 'Data Not Found' }}</td>
                                        <td>$8,930.00</td>
                                        <td>
                                             <div class="d-flex gap-2">
                                                  <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                                 <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                 <a href="{{ route('properties.details', $property->property_uuid) }}" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
 
+                                                 {{-- Delete Button --}}
                                                  <input type="hidden" class="propertyId" value="{{ $property->id }}">
                                                  <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->property_name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></button>
+                                                 {{-- /. Delete Button --}}
                                             </div>
 
                                             {{-- Delete Button
@@ -261,7 +263,7 @@
                           cancelButtonColor: '#d33',
                           confirmButtonText: 'Yes, delete it!'
                       }).then((result) => {
-                          if (result.isConfirmed) {
+                         if (result.isConfirmed) {
                               // Kirim DELETE request manual lewat JavaScript
                               fetch('/properties/' + propertyId, {
                                   method: 'DELETE',
@@ -270,28 +272,24 @@
                                       'Content-Type': 'application/json'
                                   }
                               })
-                              .then(response => {
-                                  if (response.ok) {
-                                      Swal.fire(
-                                          'Deleted!',
-                                          'The property has been deleted.',
-                                          'success'
-                                      ).then(() => {
-                                          // Reload page setelah sukses delete
-                                          location.reload();
-                                      });
-                                  } else {
-                                      Swal.fire(
-                                          'Failed!',
-                                          'Something went wrong.',
-                                          'error'
-                                      );
-                                  }
+                              .then(response => response.json())
+                              .then(data => {
+                              Swal.fire({
+                                   title: data.judul,
+                                   text: data.pesan,
+                                   icon: data.swalFlashIcon,
+                              });
+
+                              // Optional: reload table / halaman
+                              setTimeout(() => {
+                                   location.reload();
+                              }, 1500);
                               })
                               .catch(error => {
-                                  console.error('Error:', error);
+                              console.error('Error:', error);
+                              Swal.fire('Error', 'Something went wrong!', 'error');
                               });
-                          }
+                         }
                       });
                   });
               });

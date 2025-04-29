@@ -36,13 +36,13 @@
 
 
               <li class="nav-item">
-                   <a class="nav-link menu-arrow" href="#sidebarProperty" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProperty">
+                   <a class="nav-link menu-arrow {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="#sidebarProperty" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProperty">
                         <span class="nav-icon">
                              <i class="ri-community-line"></i>
                         </span>
                         <span class="nav-text"> Properties </span>
                    </a>
-                   <div class="collapse" id="sidebarProperty">
+                   <div class="collapse {{ request()->routeIs('properties.*') ? 'show' : '' }}" id="sidebarProperty">
                         <ul class="nav sub-navbar-nav">
                              <li class="sub-nav-item">
                                   <a class="sub-nav-link" href="{{ route('properties.index') }}">Properties List</a>

@@ -16,6 +16,7 @@ class PropertiesController extends Controller
      */
     public function index()
     {
+
         $data['data_property'] = PropertiesModel::get();
         $data['data_property_count'] = PropertiesModel::count();
         return view('admin.properties.index', $data);
@@ -36,7 +37,13 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        $request->validate([
+            'property_name' => 'required|unique:properties',
+        ], [
+            // 'property_name.required' => 'custom message',
+        ]);
+
+        dd($request->all());
         
         $properties = [
             '_token',
@@ -98,9 +105,14 @@ class PropertiesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function detail(string $uuid)
     {
-        //
+        // dd($uuid);
+
+        $data['data_properties'] = PropertiesModel::where('property_uuid', $uuid)->first();
+        // dd($data['data_properties']);
+
+        return view('admin.properties.details', $data);
     }
 
     /**
@@ -124,13 +136,14 @@ class PropertiesController extends Controller
      */
     public function destroy(string $id)
     {
+        PropertiesFeatureModel::where('properties_id', $id)->delete();
         PropertiesModel::destroy($id);
         $flashData = [
             'judul' => 'Delete Success',
-            'pesan' => 'Data TUK Telah Dihapus',
+            'pesan' => 'Data Property Telah Dihapus',
             'swalFlashIcon' => 'success',
         ];
 
-        return response()->json(['message' => 'Data Surat Berhasil Dihapus']);
+        return response()->json($flashData);
     }
 }

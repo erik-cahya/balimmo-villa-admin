@@ -13,11 +13,14 @@
         @endif
         
     </select>
+
+    @error($name)
+        <style>
+            .choices__inner{ border-color: #e96767!important;}
+        </style>     
+        
+        <div class="validation-message mt-1">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
-{{-- 
-<div class="col-lg-6 mb-3" id="group_{{ $name }}">
-    <label for="{{ $name }}" class="form-label">{{ $label }}</label>
-    <select class="form-control" id="{{ $name }}" name="{{ $name }}" data-choices data-choices-groups>
-        {{ $slot }}
-    </select>
-</div> --}}
