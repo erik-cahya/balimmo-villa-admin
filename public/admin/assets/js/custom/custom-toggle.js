@@ -16,7 +16,7 @@ $(document).ready(function() {
 
      // Property Category
      $('#property_category').on('change', function() {
-          if ($(this).val() === 'leasehold') {
+          if ($(this).val() === 'Leasehold') {
                $('#lease_duration_group').attr('style', 'display: block !important');
           } else {
                $('#lease_duration_group').attr('style', 'display: none !important');

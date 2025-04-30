@@ -87,22 +87,13 @@
                                    <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address"></textarea>
                               </div>
                      
-                              <x-form-select className="col-lg-6" name="property_type" label="Property Type" >
-                                   <option value="" selected disabled>Choose Type of Property</option>
-                                   <option value="appartement">Appartement</option>
-                                   <option value="terrain">Terrain</option>
-                                   <option value="villa">Villa</option>
-                                   <option value="villa-complex">Villa Complex</option>
-                              </x-form-select>
+                              <x-form-select className="col-lg-6" name="property_type" label="Property Type"
+                                   :options="['Appartement', 'Terrain', 'Villa', 'Villa Complex']"
+                              />
                      
-                              <x-form-select className="col-lg-6" name="property_status" label="Choose Status Property" >
-                                   <option value="" selected disabled>Choose Status of Property</option>
-                                   <option value="avaliable">Avaliable</option>
-                                   <option value="rented">Rented</option>
-                                   <option value="sold">Sold</option>
-                                   <option value="under_construction">Under Construction</option>
-                                   <option value="under_contract">Under Contract</option>
-                              </x-form-select>
+                              <x-form-select className="col-lg-6" name="property_status" label="Choose Status Property" 
+                                   :options="['Avaliable', 'Rented', 'Sold', 'Under Construction', 'Under Contract']"
+                              />
                      
                               <div class="col-lg-6 mb-3" id="group_internal_reference">
                                    <label for="internal_reference" class="form-label">Internal Reference</label>
@@ -133,26 +124,18 @@
                               <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" />
                               <x-form-input className="col-lg-6" type="number" name="parking_area" label="Parking Area" />
                               
-                              <x-form-select-two 
-                                   className="col-lg-6" 
-                                   name="kitchen_type" 
-                                   label="Kitchen Type" 
+                              <x-form-select className="col-lg-6" name="kitchen_type" label="Kitchen Type" 
                                    :options="['Closed Kitchen', 'Open Kitchen', 'Full Kitchen']"
                               />
 
-                              <x-form-select className="col-lg-6" name="roof_type" label="Roof Type" placeholder="Enter the kitchen type">
-                                   <option value="" selected disabled>Choose Type of Roof</option>
-                                   <option value="alang alang roof">Alang Alang Roof</option>
-                                   <option value="flat roof">Flat Rood</option>
-                                   <option value="tiled roof">Tiled Roof</option>
-                              </x-form-select>
+                              <x-form-select className="col-lg-6" name="roof_type" label="Roof Type" 
+                                   :options="['Alang Alang Roof', 'Flat Roof', 'Tiled Roof']"
+                              />
 
-                              <x-form-select className="col-lg-6" name="floor_type" label="Floor Type" placeholder="Enter the floor type">
-                                   <option value="" selected disabled>Choose Type of Floor</option>
-                                   <option value="Smooth Concrete">Smooth Concrete</option>
-                                   <option value="Wood Floor">Wood Floor</option>
-                                   <option value="Ceramic Floor">Ceramic Floor</option>
-                              </x-form-select>
+                              <x-form-select className="col-lg-6" name="floor_type" label="Floor Type" 
+                                   :options="['Smoot Concrete', 'Wood Floor', 'Ceramic Floor']"
+                              />
+
        
                          </div>
 
@@ -178,14 +161,16 @@
                                    <option value="rice_fields">Rice Fields</option>
                               </x-form-multiple-select>
 
-                              <x-form-select className="col-lg-6" name="main_road_access" label="Main Road Access"></x-form-select>
-                              <x-form-input className="col-lg-6" type="text" name="road_width" label="Road Width"/>
 
-                              <x-form-select className="col-lg-6" name="secure_neighborhood" label="Secured Neighborhood"></x-form-select>
-                              <x-form-select className="col-lg-6" name="secure_neighborhood_type" label="Secured Neighborhood Type">
-                                   <option value="Security Post">Security Post</option>
-                                   <option value="Gated Community">Gated Community</option>
-                              </x-form-select>
+
+                              <x-form-select className="col-lg-6" name="main_road_access" label="Main Road Access" toggle="#group_road_width"/>
+                              <x-form-input className="col-lg-6 toggle-group" type="text" name="road_width" label="Road Width"/>
+
+                              <x-form-select className="col-lg-6" name="secure_neighborhood" label="Secured Neighborhood" toggle="#group_secure_neighborhood_type"/>
+
+                              <x-form-select className="col-lg-6 toggle-group" name="secure_neighborhood_type" label="Secured Neighborhood Type"
+                                   :options="['Security Post', 'Gated Community']"
+                              />
 
                               {{-- ########################### Proximity to key Points --}}
                               <div class="col-lg-12 mb-3">
@@ -239,14 +224,12 @@
                     <div class="card-body">
                          <div class="row">
 
-                              <x-form-select className="col-lg-6" name="current_usage" label="Current Usage">
-                                   <option value="owner_occupied">Owner Occupied</option>
-                                   <option value="rented">Rented</option>
-                                   <option value="vacant_land">Vacant Land</option>
-                              </x-form-select>
+                              <x-form-select className="col-lg-6" name="current_usage" label="Current Usage"
+                                   :options="['Owner Occupied', 'Rented', 'Vacant Land']"
+                              />
 
-                              <x-form-select className="col-lg-6" name="rental_history" label="Rental History"></x-form-select>
-                              <x-form-input className="col-lg-6" type="text" name="last_year_income" label="Last Year Income"/>
+                              <x-form-select className="col-lg-6" name="rental_history" label="Rental History" toggle="#group_last_year_income" />
+                              <x-form-input className="col-lg-6 toggle-group" type="text" name="last_year_income" label="Last Year Income"/>
 
                               <x-form-input className="col-lg-6" type="text" name="estimated_occupancy_rate" label="Estimated Occupancy Rate" placeholder="In Percent (Ex: 10%)"/>
                               <x-form-input className="col-lg-6" type="text" name="return_on_investment" label="ROI (Return on Investment) Potential" placeholder="Percentage per year (Ex: 12%)"/>
@@ -287,11 +270,9 @@
                          </div>
                          <x-form-input className="col-lg-6" type="text" name="virtual_tour" label="Virtual Tour (URL)" placeholder="Input URL Virtual Tour"/>
 
-                         <x-form-select className="col-lg-6" name="monthly_charges" label="Monthly Charges">
-                              <option value="water">Water</option>
-                              <option value="internet">Internet</option>
-                              <option value="electric">Electric</option>
-                         </x-form-select>
+                         <x-form-select className="col-lg-6" name="monthly_charges" label="Monthly Charges"
+                              :options="['Water', 'Internet', 'Electric']"
+                         />
                     </div>
                </div>
           </div>
@@ -308,11 +289,9 @@
                     <div class="card-body">
                          <div class="row">
 
-                              <x-form-select className="col-lg-12" name="property_category" label="Property Category" >
-                                   <option value="" selected disabled>Choose Category of Property</option>
-                                   <option value="leasehold">Leasehold</option>
-                                   <option value="freehold">Freehold</option>
-                              </x-form-select>
+                              <x-form-select className="col-lg-12" name="property_category" label="Property Category"
+                                   :options="['Leasehold', 'Freehold']"
+                              />
                 
                             <div id="lease_duration_group" class="">
                                    <div class="row">
@@ -321,7 +300,7 @@
                                    </div>
                 
                                    <div class="row">
-                                        <x-form-select className="col-lg-6" name="extend_leasehold" label="Extends Leasehold" toggle="#group_duration_extend_leashold"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="extend_leasehold" label="Extends Leasehold" toggle="#group_duration_extend_leashold" />
                                         <x-form-input className="col-lg-6 toggle-group" type="text" name="duration_extend_leashold" label="Max Ext Duration (Years)" placeholder="Input Extend Leasehold"/>
                                     </div>
                             </div>
@@ -353,7 +332,7 @@
 
                               <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Number of Floors" placeholder="Input Number of Floors" />
 
-                              <x-form-select className="col-lg-6" name="garden" label="Garden" toggle="#group_garden_size"></x-form-select>
+                              <x-form-select className="col-lg-6" name="garden" label="Garden" toggle="#group_garden_size" />
                               <x-form-input className="col-lg-6 toggle-group" type="text" name="garden_size" label="Garden Size" placeholder="Input Garden Size (m²)" />
 
                               <x-form-input className="col-lg-6" type="text" name="number_floors_building" label="Number Floors in Building" placeholder="Input Number of Floors in Building" />
@@ -378,13 +357,13 @@
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-community-line"></i></span> POOL</h5>
                                    <div class="my-3 row">
 
-                                        <x-form-select className="col-lg-12" name="pool" label="Pool" toggle="#pool_group"></x-form-select>
+                                        <x-form-select className="col-lg-12" name="pool" label="Pool" toggle="#pool_group" />
 
                                         <div id="pool_group" class="toggle-group row">
                                              <x-form-input className="col-lg-4" type="text" name="pool_size" label="Pool Size (m²)" placeholder="Input Pool Size" />
                                              <x-form-input className="col-lg-4" type="text" name="pool_depth" label="Pool Depth (m)" placeholder="Input Pool Depth" />
-                                             <x-form-select className="col-lg-4" name="heated_pool" label="Heated Pool"></x-form-select>
-                                             <x-form-select className="col-lg-12" name="shared_pool" label="Shared Pool"></x-form-select>
+                                             <x-form-select className="col-lg-4" name="heated_pool" label="Heated Pool" />
+                                             <x-form-select className="col-lg-12" name="shared_pool" label="Shared Pool" />
                                         </div>
 
                                    </div>
@@ -394,15 +373,15 @@
                                    <h5 class="text-dark fw-semibold"> <span class="nav-icon"><i class="ri-community-line"></i></span> OUTDOOR & GARDEN</h5>
                                    <div class="my-3 row">
 
-                                        <x-form-select className="col-lg-6" name="private_garden" label="Private Garden" toggle="#group_private_garden_size"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="private_garden" label="Private Garden" toggle="#group_private_garden_size" />
                                         <x-form-input className="col-lg-6 toggle-group" type="text" name="private_garden_size" label="Private Garden Size (m²)" />
 
-                                        <x-form-select className="col-lg-6" name="gazebo" label="Gazebo/Bale Bengong" toggle="#group_gazebo_size"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="gazebo" label="Gazebo/Bale Bengong" toggle="#group_gazebo_size" />
                                         <x-form-input className="col-lg-6 toggle-group" type="text" name="gazebo_size" label="Gazebo/Bale Bengong Size (m²)" />
           
-                                        <x-form-select className="col-lg-6" name="barbecue_area" label="Barbecue Area"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="barbecue_area" label="Barbecue Area" />
 
-                                        <x-form-select className="col-lg-6" name="rooftop_terrace" label="Rooftop/Terrace" toggle="#group_rooftop_terrace_size"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="rooftop_terrace" label="Rooftop/Terrace" toggle="#group_rooftop_terrace_size" />
                                         <x-form-input className="col-lg-6 toggle-group" type="text" name="rooftop_terrace_size" label="Rooftop/Terrace Size (m²)" />
                                    </div>
                                </div>
@@ -411,20 +390,18 @@
                                    <h5 class="text-dark fw-semibold"> <span class="nav-icon"><i class="ri-community-line"></i></span> COMFORT & FACILITIES</h5>
                                    <div class="my-3 row">
 
-                                        <x-form-select className="col-lg-6" name="air_conditioning" label="Air Conditioning"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="air_conditioning" label="Air Conditioning" />
                                         <x-form-input className="col-lg-6" type="text" name="number_air_conditioning" label="Number of Units" placeholder="Input Number Unit AC" />
+                                        <x-form-select className="col-lg-6" name="ceiling_fans" label="Ceiling Fans" />
+                                        <x-form-select className="col-lg-6" name="water_heater" label="Water Heater" toggle="#group_water_heater_type" />
+                                        <x-form-select className="col-lg-6 toggle-group" name="water_heater_type" label="Water Heater Type" 
+                                             :options="['Electric', 'Solar']"
+                                        />
 
-                                        <x-form-select className="col-lg-6" name="ceiling_fans" label="Ceiling Fans"></x-form-select>
-
-                                        <x-form-select className="col-lg-6" name="water_heater" label="Water Heater"></x-form-select>
-                                        <x-form-select className="col-lg-6" name="water_heater_type" label="Water Heater Type">
-                                             <option value="electric">Electric</option>
-                                             <option value="solar">Solar</option>
-                                        </x-form-select>
 
                                         <x-form-input className="col-lg-6" type="text" name="electrical_power" label="Electrical Power (watt)" />
 
-                                        <x-form-select className="col-lg-6" name="internet" label="Internet/Wi-Fi"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="internet" label="Internet/Wi-Fi" />
                                         <x-form-input className="col-lg-6" type="text" name="type_of_connection" label="Speed Connection (mbps)" />
 
                                         <x-form-multiple-select name="security" label="Security">
@@ -433,12 +410,12 @@
                                              <option value="security_guard">Security Guard</option>
                                         </x-form-multiple-select>
 
-                                        <x-form-select className="col-lg-6" name="backup_generator" label="Backup Generator"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="backup_generator" label="Backup Generator" />
 
-                                        <x-form-select className="col-lg-6" name="water_reservoir" label="Water Reservoir"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="water_reservoir" label="Water Reservoir" />
                                         <x-form-input className="col-lg-6" type="text" name="water_reservoir_capacity" label="Water Reservoir Capacity (Liter)" />
 
-                                        <x-form-select className="col-lg-6" name="water_filtration_system" label="Water Filtration System"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="water_filtration_system" label="Water Filtration System" />
 
 
                                    </div>
@@ -448,7 +425,7 @@
                                    <h5 class="text-dark fw-semibold"> <span class="nav-icon"><i class="ri-community-line"></i></span> OTHER FACILITIES</h5>
                                    <div class="my-3 row">
 
-                                        <x-form-select className="col-lg-6" name="furnished" label="Furnished"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="furnished" label="Furnished" />
 
                                         <x-form-multiple-select name="fully_equipped_kitchen" label="Fully equipped kitchen">
                                              <option value="dishwasher">Dishwasher</option>
@@ -461,8 +438,8 @@
                                              <option value="washing_machine">Washing Machine</option>
                                         </x-form-multiple-select>
           
-                                        <x-form-select className="col-lg-6" name="private_gym" label="Private Gym"></x-form-select>
-                                        <x-form-select className="col-lg-6" name="private_cinema" label="Private Cinema"></x-form-select>
+                                        <x-form-select className="col-lg-6" name="private_gym" label="Private Gym" />
+                                        <x-form-select className="col-lg-6" name="private_cinema" label="Private Cinema" />
           
                                    </div>
                               </div>
