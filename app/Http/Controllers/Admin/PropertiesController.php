@@ -37,13 +37,12 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'property_name' => 'required|unique:properties',
         ], [
             // 'property_name.required' => 'custom message',
         ]);
-
-        dd($request->all());
         
         $properties = [
             '_token',
