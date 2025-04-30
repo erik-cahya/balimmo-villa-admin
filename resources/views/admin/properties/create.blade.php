@@ -51,7 +51,7 @@
      <!-- ========== Page Title End ========== -->
 
      <div class="row">
-     
+
           <div class="col-xl-6 col-lg-6 ">
                <div class="card">
                     <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
@@ -63,7 +63,7 @@
                               {{-- ##### Main Data Villa ####### --}}
 
                               <x-form-input className="col-lg-12" type="text" name="property_name" label="Properties Name"/>
-                              
+
                               <div class="col-lg-12 mb-3" id="group_property_address">
                                    <label for="property_address" class="form-label">Description</label>
                                    <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address"></textarea>
@@ -82,7 +82,7 @@
                                         <option value="" selected disabled>Select Region First </option>
                                    </select>
                               </div>
-                              
+
                               <div class="col-lg-12 mb-3" id="group_property_address">
                                    <label for="property_address" class="form-label">Property Address</label>
                                    <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address"></textarea>
@@ -116,7 +116,7 @@
                               <x-form-input className="col-lg-6" type="text" name="owner_contact" label="Owner Contact" placeholder="Input Owner Contact" />
                          </div>
 
-                              
+
                     </div>
                </div>
 
@@ -138,20 +138,24 @@
                                    <option value="freehold">Freehold</option>
                               </x-form-select>
 
-
                               {{-- <x-form-select className="col-lg-6" name="private_garden" label="Choose Private Garden" ></x-form-select> --}}
 
-
-                              <div id="lease_duration_group" class="">
+                            <div id="lease_duration_group" class="">
                                    <div class="d-flex">
                                         <x-form-input className="col-lg-6 pe-2" type="text" name="remaining_duration_lease" placeholder="Remaining Lease Duration" label="Remaining Lease Duration (Years)"/>
                                         <x-form-input className="col-lg-6 pe-2" type="text" name="total_duration_lease" placeholder="Total Lease Duration" label="Total Lease Duration (Years)"/>
                                    </div>
-                                   <x-form-input className="col-lg-12 pe-2" type="text" name="extend_leasehold" placeholder="Total Lease Duration" label="Total Lease Duration (Years)"/>
-                              </div>
+
+                                   <div class="d-flex">
+
+                                        <x-form-select className="col-lg-6 pe-2" name="extend_leasehold" label="Extends Leasehold" ></x-form-select>
+                                        <x-form-input className="col-lg-6 pe-2" type="text" name="duration_extend_leashold" label="Maximum Extend Duration Leasehold (Years)"/>
+                                    </div>
+                            </div>
+
                          </div>
 
-                              
+
                     </div>
                </div>
 
@@ -172,7 +176,7 @@
                               <x-form-input className="col-lg-6" type="text" name="bedroom" label="Bedroom" placeholder="Enter the number of bedrooms" />
                               <x-form-input className="col-lg-6" type="text" name="bathroom" label="Bathroom" placeholder="Enter the number of bathrooms" />
                               <x-form-input className="col-lg-6" type="text" name="vehicle_spaces" label="Vehicle Spaces" placeholder="Enter the vehicle spaces" />
-                              
+
                               <x-form-select className="col-lg-6" name="kitchen_type" label="Kitchen Type" placeholder="Enter the kitchen type">
                                    <option value="" selected disabled>Choose Type of Kitchen</option>
                                    <option value="Closed Kitchen">Closed Kitchen</option>
@@ -191,7 +195,7 @@
 
                               <x-form-select className="col-lg-6" name="private_garden" label="Choose Private Garden" ></x-form-select>
                               <x-form-input className="col-lg-6" type="text" name="private_garden_size" label="Private Garden Size (m²)" />
-                              
+
                               <x-form-select className="col-lg-6" name="barbecue_area" label="Barbecue Area"></x-form-select>
 
                               <x-form-select className="col-lg-6" name="gazebo" label="Gazebo/Bale Bengong"></x-form-select>
@@ -199,15 +203,15 @@
 
                               <x-form-select className="col-lg-6" name="rooftop_terrace" label="Rooftop/Terrace"></x-form-select>
                               <x-form-input className="col-lg-6" type="text" name="rooftop_terrace_size" label="Rooftop/Terrace Size" />
-                              
+
                               <x-form-select className="col-lg-6" name="air_conditioning" label="Air Conditioning"></x-form-select>
                               <x-form-input className="col-lg-6" type="text" name="number_air_conditioning" label="Number of Units" placeholder="Input Number Unit AC" />
-                              
+
                               <x-form-select className="col-lg-6" name="ceiling_fans" label="Ceiling Fans"></x-form-select>
 
                               <x-form-select className="col-lg-6" name="water_heater" label="Water Heater"></x-form-select>
                               <x-form-input className="col-lg-6" type="text" name="water_heater_type" label="Water Heater Type" />
-                              
+
                               <x-form-input className="col-lg-6" type="text" name="electrical_power_watt" label="Electrical Power Watt" />
 
                               <x-form-select className="col-lg-6" name="internet" label="Internet/Wi-Fi"></x-form-select>
@@ -223,9 +227,9 @@
 
                               <x-form-select className="col-lg-6" name="water_reservoir" label="Water Reservoir"></x-form-select>
                               <x-form-input className="col-lg-6" type="text" name="water_reservoir_capacity" label="Water Reservoir Capacity (Liter)" />
-                              
+
                               <x-form-select className="col-lg-6" name="water_filtration_system" label="Water Filtration System"></x-form-select>
-                              
+
                               <x-form-select className="col-lg-6" name="furnished" label="Furnished"></x-form-select>
 
                               <x-form-multiple-select name="fully_equipped_kitchen" label="Fully equipped kitchen">
@@ -340,13 +344,13 @@
 
                               <x-form-input className="col-lg-6" type="text" name="estimated_occupancy_rate" label="Estimated Occupancy Rate" placeholder="In Percent (Ex: 10%)"/>
                               <x-form-input className="col-lg-6" type="text" name="return_on_investment" label="ROI (Return on Investment) Potential" placeholder="Percentage per year (Ex: 12%)"/>
-                              
+
                               <x-form-select className="col-lg-6" name="shared_facilities" label="Shared Facilities">
                                    <option value="">No</option>
                                    <option value="pool">Pool</option>
                               </x-form-select>
 
-                              
+
 
                          </div>
                     </div>
@@ -379,7 +383,7 @@
                     </div>
                </div>
 
-               
+
                <div class="mb-3 rounded">
                     <div class="row justify-content-end g-2">
                          <div class="col-lg-2">
@@ -429,8 +433,8 @@
                     if (value === 'appartement') {
                          $('#group_year_built').hide();
                          $('#group_property_status').show();
-                         
-                    } 
+
+                    }
                     else if(value === 'villa') {
                          $('#group_property_status').hide();
                          $('#group_year_built').show();
@@ -447,8 +451,8 @@
 
                     if (value === 'yes') {
                          $('#group_secure_neighborhood_type').show();
-                         
-                    } 
+
+                    }
                     else {
                          $('#group_secure_neighborhood_type').hide();
                     }
@@ -460,8 +464,8 @@
 
                     if (value === 'yes') {
                          $('#group_on_site_service_type').show();
-                         
-                    } 
+
+                    }
                     else {
                          $('#group_on_site_service_type').hide();
                     }
@@ -473,8 +477,8 @@
 
                     if (value === 'yes') {
                          $('#group_last_year_income').show();
-                         
-                    } 
+
+                    }
                     else {
                          $('#group_last_year_income').hide();
                     }
@@ -486,16 +490,25 @@
 
                     if (value === 'yes') {
                          $('#group_private_garden_size').show();
-                         
-                    } 
+
+                    }
                     else {
                          $('#group_private_garden_size').hide();
                     }
                });
-               
+
                // Property Category
                $('#property_category').on('change', function() {
                     if ($(this).val() === 'leasehold') {
+                         $('#lease_duration_group').attr('style', 'display: block !important');
+                    } else {
+                         $('#lease_duration_group').attr('style', 'display: none !important');
+                    }
+               });
+
+               // Property Category
+               $('#extend_leasehold').on('change', function() {
+                    if ($(this).val() === 'yes') {
                          $('#lease_duration_group').attr('style', 'display: block !important');
                     } else {
                          $('#lease_duration_group').attr('style', 'display: none !important');
@@ -540,15 +553,15 @@
          delimiter: ','
      });
  </script>
-     
+
      <script>
           document.addEventListener('DOMContentLoaded', function () {
               const regionSelect = document.getElementById('region');
               const subregionSelect = document.getElementById('subregion');
-          
+
               const regionChoices = new Choices(regionSelect, { searchEnabled: false });
               const subregionChoices = new Choices(subregionSelect, { searchEnabled: false });
-          
+
               const url = "{{ asset('/admin/data/regions.json') }}";
 
               console.log(url);
@@ -562,11 +575,11 @@
                           'label',
                           true
                       );
-          
+
                       regionSelect.addEventListener('change', function () {
                           const selectedRegion = this.value;
                           const subregions = data[selectedRegion] || [];
-          
+
                           // Reset subregion choices
                           subregionChoices.clearChoices();
                           subregionChoices.setChoices(
