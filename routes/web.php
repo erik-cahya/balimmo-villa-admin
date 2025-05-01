@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AgentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\PropertiesController;
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('/properties', PropertiesController::class)->except('show');
     Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details');
+
+    Route::resource('/agent', AgentController::class);
+
     Route::resource('/features', FeatureController::class);
 
     

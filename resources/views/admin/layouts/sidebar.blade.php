@@ -61,16 +61,16 @@
                          <span class="nav-icon">
                               <i class="ri-community-line"></i>
                          </span>
-                         <span class="nav-text"> Properties Features </span>
+                         <span class="nav-text"> Agent </span>
                     </a>
                     <div class="collapse" id="sidebarFeatures">
                          <ul class="nav sub-navbar-nav">
                               <li class="sub-nav-item">
-                                   <a class="sub-nav-link" href="{{ route('features.index') }}">Feature List</a>
+                                   <a class="sub-nav-link" href="{{ route('agent.index') }}">Agent List</a>
                               </li>
-                              <li class="sub-nav-item">
+                              {{-- <li class="sub-nav-item">
                                    <a class="sub-nav-link" href="{{ route('features.create') }}">Create Feature</a>
-                              </li>
+                              </li> --}}
                          </ul>
                     </div>
                </li>
