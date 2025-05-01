@@ -96,7 +96,7 @@
                      
                               <div class="col-lg-6 mb-3" id="group_internal_reference">
                                    <label for="internal_reference" class="form-label">Internal Reference</label>
-                                   <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->name }}">
+                                   <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
                                    <input type="hidden" id="internal_reference" name="internal_reference" class="form-control" placeholder="Internal Reference" readonly value="{{ Auth::user()->name }}">
                               </div>
                      

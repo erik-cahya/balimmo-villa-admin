@@ -96,6 +96,16 @@
                                                 </div>
                                             @enderror
 
+                                            <div class="mb-3">
+                                                  <label class="form-label" for="password_confirmation">Select Role</label>
+                                                  <select name="role" id="role" class="form-control" required>
+                                                       <option value="" selected>Select Role User</option>
+                                                       <option value="master">Master</option>
+                                                       <option value="agent">Agent</option>
+                                                  </select>
+
+                                            </div>
+
                                              <div class="mb-1 text-center d-grid">
                                                   <button class="btn btn-danger py-2" type="submit">Create Account</button>
                                              </div>
