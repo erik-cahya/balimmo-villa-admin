@@ -62,9 +62,9 @@
                          <div class="row">
                               <x-form-input className="col-lg-12" type="text" name="property_name" label="Properties Name"/>
                      
-                              <div class="col-lg-12 mb-3" id="group_property_address">
-                                   <label for="property_address" class="form-label">Description</label>
-                                   <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address"></textarea>
+                              <div class="col-lg-12 mb-3" id="group_property_description">
+                                   <label for="property_description" class="form-label">Description</label>
+                                   <textarea class="form-control" id="property_description" name="property_description" rows="3" placeholder="Enter address"></textarea>
                               </div>
                      
                               <div class="col-lg-6 mb-3" id="group_region">
@@ -121,7 +121,7 @@
 
                               <x-form-input className="col-lg-6" type="number" name="bedrooms" label="Bedrooms" />
                               <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" />
-                              <x-form-input className="col-lg-6" type="number" name="parking_area" label="Parking Area" />
+                              <x-form-input className="col-lg-6" type="text" name="parking_area" label="Parking Area" />
                               
                               <x-form-select className="col-lg-6" name="kitchen_type" label="Kitchen Type" 
                                    :options="['Closed Kitchen', 'Open Kitchen', 'Full Kitchen']"

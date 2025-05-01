@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('property_uuid');
             $table->string('property_name');
+            $table->text('property_description');
             $table->string('property_type');
             $table->string('region')->nullable();
             $table->string('sub_region')->nullable();

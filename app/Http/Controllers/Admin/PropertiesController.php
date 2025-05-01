@@ -37,16 +37,17 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'property_name' => 'required|unique:properties',
         ], [
             // 'property_name.required' => 'custom message',
         ]);
+        // dd($request->all());
         
         $properties = [
             '_token',
             'property_name',
+            'property_description',
             'property_type',
             'region',
             'subregion',
@@ -67,6 +68,7 @@ class PropertiesController extends Controller
         $property = PropertiesModel::create([
             'property_uuid' => Str::uuid(),
             'property_name' => $request->property_name,
+            'property_description' => $request->property_description,
             'property_type' => $request->property_type,
             'region' => $request->region,
             'sub_region' => $request->subregion,
