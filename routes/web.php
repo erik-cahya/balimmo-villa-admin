@@ -26,7 +26,19 @@ Route::post('/form-upload', [FormController::class, 'upload'])->name('form.uploa
 // handle form request
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing.index');
+});
+Route::get('/listing', function () {
+    return view('landing.listing');
+});
+Route::get('/blog', function () {
+    return view('landing.blog');
+});
+Route::get('/about', function () {
+    return view('landing.about');
+});
+Route::get('/contact', function () {
+    return view('landing.contact');
 });
 
 
