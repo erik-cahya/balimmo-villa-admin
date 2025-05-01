@@ -8,7 +8,7 @@
             <div class="page-title-box">
                 <h4 class="mb-0 fw-semibold">Listing List</h4>
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Real Estate</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Properties</a></li>
                     <li class="breadcrumb-item active">Listing List</li>
                 </ol>
             </div>
@@ -32,7 +32,6 @@
                              </div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mt-3">
-                             <p class="mb-0"><span class="text-success fw-medium mb-0"><i class="ri-arrow-up-line"></i>34.4%</span> vs last month</p>
                              <div>
                                   <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
 
@@ -57,8 +56,6 @@
                              </div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mt-3">
-                             <p class="mb-0"><span class="text-danger fw-medium mb-0"><i class="ri-arrow-down-line"></i>8.5%</span> vs last month</p>
-
                              <div>
                                   <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
 
@@ -74,7 +71,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                              <div>
                                   <h4 class="card-title mb-2 ">Unit Sold</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">893 Unit</p>
+                                  <p class="text-muted fw-medium fs-22 mb-0">{{ $property_sold_count }} Unit</p>
                              </div>
                              <div>
                                   <div class="avatar-md bg-primary bg-opacity-10 rounded">
@@ -83,7 +80,6 @@
                              </div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mt-3">
-                             <p class="mb-0"><span class="text-success fw-medium mb-0"><i class="ri-arrow-up-line"></i>17%</span> vs last month</p>
                              <div>
                                   <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
 
@@ -99,7 +95,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                              <div>
                                   <h4 class="card-title mb-2 ">Unit Rent</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">459 Unit</p>
+                                  <p class="text-muted fw-medium fs-22 mb-0">{{ $property_rent_count }} Unit</p>
                              </div>
                              <div>
                                   <div class="avatar-md bg-primary bg-opacity-10 rounded">
@@ -108,7 +104,6 @@
                              </div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mt-3">
-                             <p class="mb-0"><span class="text-danger fw-medium mb-0"><i class="ri-arrow-down-line"></i>12%</span> vs last month</p>
                              <div>
                                   <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
 
@@ -123,9 +118,9 @@
               <div class="card">
                    <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                         <div>
-                             <h4 class="card-title mb-0">All Properties List</h4>
+                             <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">{{ $data_property_count }}</span></h4>
                         </div>
-                        <div class="dropdown">
+                        {{-- <div class="dropdown">
                              <a href="#" class="dropdown-toggle btn btn-sm btn-outline-light rounded" data-bs-toggle="dropdown" aria-expanded="false">
                                   This Month
                              </a>
@@ -137,7 +132,7 @@
                                   <!-- item-->
                                   <a href="#!" class="dropdown-item">Import</a>
                              </div>
-                        </div>
+                        </div> --}}
                    </div>
                    <div class="table-responsive">
                         <table class="table align-middle text-nowrap table-hover table-centered mb-0">
@@ -171,7 +166,7 @@
                                        <td>
                                             <div class="d-flex align-items-center gap-2">
                                                  <div>
-                                                      <img src="{{ asset('admin') }}/assets/images/properties/p-1.jpg" alt="" class="avatar-md rounded border border-light border-3">
+                                                      <img src="{{ asset('admin') }}/uploads/images/{{ $property->featured_image }}" alt="" class="avatar-md rounded border border-light border-3">
                                                  </div>
                                                  <div>
                                                       <a href="#!" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
@@ -181,16 +176,16 @@
                                        </td>
                                        <td>{{ $property->internal_reference }}</td>
                                        <td class="text-capitalize">{{ $property->property_type }}</td>
-                                       <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">{{ isset($property->property_status) ? `$property->property_status` : 'Data Not Found' }}</span></td>
+                                       <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">{{ $property->property_status }}</span></td>
                                        <td>
                                             <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> 5</p>
                                        </td>
-                                       <td>{{ isset($property->region) ? `$property->region` : 'Data Not Found' }}</td>
+                                       <td class="text-capitalize">{{ $property->region }}</td>
                                        <td>$8,930.00</td>
                                        <td>
                                             <div class="d-flex gap-2">
-                                                 <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                                 <a href="{{ route('properties.details', $property->property_uuid) }}" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                 <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                 {{-- <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a> --}}
 
                                                  {{-- Delete Button --}}
                                                  <input type="hidden" class="propertyId" value="{{ $property->id }}">

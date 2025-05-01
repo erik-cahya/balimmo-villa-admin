@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('/properties', PropertiesController::class)->except('show');
-    Route::get('/properties/{uuid}', [PropertiesController::class, 'detail'])->name('properties.details');
+    Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details');
     Route::resource('/features', FeatureController::class);
 
     

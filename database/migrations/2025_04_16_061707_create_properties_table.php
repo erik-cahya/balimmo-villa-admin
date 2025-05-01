@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->uuid('property_uuid');
             $table->string('property_name');
+            $table->text('property_slug');
+            $table->text('property_description');
             $table->string('property_type');
             $table->string('region')->nullable();
             $table->string('sub_region')->nullable();
@@ -30,10 +31,10 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->string('extension_leasehold_possible')->nullable();
             $table->string('leasehold_extension')->nullable();
-            $table->integer('rent_price')->nullable();
-            $table->integer('price')->nullable();
-            $table->integer('annual_fees')->nullable();
-            $table->string('estimated_rental')->nullable();
+            $table->float('rent_price')->nullable();
+            $table->float('price')->nullable();
+            $table->float('annual_fees')->nullable();
+            $table->float('estimated_rental')->nullable();
             $table->timestamps();
         });
     }

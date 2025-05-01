@@ -31,7 +31,7 @@
 
 @endpush
 @section('content')
-<form action="{{ route('properties.store') }}" method="POST">
+<form action="{{ route('properties.store') }}" method="POST" enctype="multipart/form-data">
      @csrf
      <div class="container-fluid">
 
@@ -61,10 +61,10 @@
                      <div class="card-body">
                          <div class="row">
                               <x-form-input className="col-lg-12" type="text" name="property_name" label="Properties Name"/>
-                     
-                              <div class="col-lg-12 mb-3" id="group_property_address">
-                                   <label for="property_address" class="form-label">Description</label>
-                                   <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address"></textarea>
+                         
+                              <div class="col-lg-12 mb-3" id="group_property_description">
+                                   <label for="property_description" class="form-label">Description</label>
+                                   <textarea class="form-control" id="property_description" name="property_description" rows="3" placeholder="Enter address"></textarea>
                               </div>
                      
                               <div class="col-lg-6 mb-3" id="group_region">
@@ -97,12 +97,22 @@
                               <div class="col-lg-6 mb-3" id="group_internal_reference">
                                    <label for="internal_reference" class="form-label">Internal Reference</label>
                                    <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
-                                   <input type="hidden" id="internal_reference" name="internal_reference" class="form-control" placeholder="Internal Reference" readonly value="{{ Auth::user()->name }}">
+                                   <input type="hidden" id="internal_reference" name="internal_reference" class="form-control" placeholder="Internal Reference" readonly value="{{ Auth::user()->reference_code }}">
                               </div>
                      
                               <x-form-input className="col-lg-6" type="text" name="year_built" label="Year Built" placeholder="Input Year Built" />
                               <x-form-input className="col-lg-6" type="text" name="current_owner" label="Current Owner" placeholder="Input Current Owner" />
                               <x-form-input className="col-lg-6" type="text" name="owner_contact" label="Owner Contact" placeholder="Input Owner Contact" />
+                         
+                              <div class="col-lg-6 mb-3">
+                                   <label for="start_date" class="form-label">Start Date</label>
+                                   <input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start Date">
+                              </div>
+
+                              <div class="col-lg-6 mb-3">
+                                   <label for="end_date" class="form-label">End Date</label>
+                                   <input type="text" id="end_date" name="end_date" class="form-control" placeholder="Basic datepicker">
+                              </div>
                          </div>
                      
                      
@@ -121,7 +131,7 @@
 
                               <x-form-input className="col-lg-6" type="number" name="bedrooms" label="Bedrooms" />
                               <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" />
-                              <x-form-input className="col-lg-6" type="number" name="parking_area" label="Parking Area" />
+                              <x-form-input className="col-lg-6" type="text" name="parking_area" label="Parking Area" />
                               
                               <x-form-select className="col-lg-6" name="kitchen_type" label="Kitchen Type" 
                                    :options="['Closed Kitchen', 'Open Kitchen', 'Full Kitchen']"
@@ -153,11 +163,11 @@
                          <div class="row">
 
                               <x-form-multiple-select name="properties_view" label="Properties Views">
-                                   <option value="jungle">Jungle</option>
-                                   <option value="mountain">Mountain</option>
-                                   <option value="sky_city">Sky City</option>
-                                   <option value="sea">Sea</option>
-                                   <option value="rice_fields">Rice Fields</option>
+                                   <option value="Jungle">Jungle</option>
+                                   <option value="Mountain">Mountain</option>
+                                   <option value="Sky City">Sky City</option>
+                                   <option value="Sea">Sea</option>
+                                   <option value="Rice Fields">Rice Fields</option>
                               </x-form-multiple-select>
 
 
@@ -249,24 +259,28 @@
                     </div>
                     <div class="card-body">
                          <div class="col-lg-12 mb-3">
-                                   <label for="security" class="form-label">Gallery</label>
+                              <label for="featured_image" class="form-label">Featured Image</label>
+                              <input type="file" id="featured_image" name="featured_image" class="form-control" placeholder="">
+                         </div>
+                         {{-- <div class="col-lg-12 mb-3">
+                                   <label for="gallery" class="form-label">Gallery</label>
                                    <div class="dropzone" id="gallery-dropzone"></div>
                          </div>
 
                          <div class="col-lg-12 mb-3">
-                                   <label for="security" class="form-label">Property Plan</label>
-                                   <input type="file" id="property-bedroom" class="form-control" placeholder="">
+                                   <label for="property_plan" class="form-label">Property Plan</label>
+                                   <input type="file" id="property_plan" name="property_plan" class="form-control" placeholder="">
                          </div>
 
                          <div class="col-lg-12 mb-3">
-                              <label for="security" class="form-label">Ownership Certificate</label>
-                              <input type="file" id="property-bedroom" class="form-control" placeholder="">
+                              <label for="ownership_certificate" class="form-label">Ownership Certificate</label>
+                              <input type="file" id="ownership_certificate" name="ownership_certificate" class="form-control" placeholder="">
                          </div>
 
                          <div class="col-lg-12 mb-3">
-                              <label for="security" class="form-label">IMB/PBG</label>
-                              <input type="file" id="property-bedroom" class="form-control" placeholder="">
-                         </div>
+                              <label for="imb_pbg" class="form-label">IMB/PBG</label>
+                              <input type="file" id="imb_pbg" name="imb_pbg" class="form-control" placeholder="">
+                         </div> --}}
                          <x-form-input className="col-lg-6" type="text" name="virtual_tour" label="Virtual Tour (URL)" placeholder="Input URL Virtual Tour"/>
 
                          <x-form-select className="col-lg-6" name="monthly_charges" label="Monthly Charges"
@@ -470,11 +484,17 @@
      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/addons/cleave-phone.us.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 
      <script src="{{ asset('admin/assets/js/custom/custom-toggle.js') }}"></script>
      <script src="{{ asset('admin/assets/js/custom/currency-format.js') }}"></script>
 
-    
+    <script>
+          $("#start_date").flatpickr({dateFormat: "d-m-Y"});
+          $("#end_date").flatpickr({dateFormat: "d-m-Y"});
+
+    </script>
 
      <script>
           document.addEventListener('DOMContentLoaded', function () {
