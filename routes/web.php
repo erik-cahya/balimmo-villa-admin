@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,23 +26,12 @@ Route::post('/form-upload', [FormController::class, 'upload'])->name('form.uploa
 
 // handle form request
 
-Route::get('/', function () {
-    return view('landing.index');
-});
-Route::get('/listing', function () {
-    return view('landing.listing');
-});
-Route::get('/blog', function () {
-    return view('landing.blog');
-});
-Route::get('/about', function () {
-    return view('landing.about');
-});
-Route::get('/contact', function () {
-    return view('landing.contact');
-});
-
-
+Route::get('/', [LandingPageController::class, 'index'])->name('landing-page.index');
+Route::get('/contact', [LandingPageController::class, 'contact'])->name('landing-page.contact');
+Route::get('/about', [LandingPageController::class, 'about'])->name('landing-page.about');
+Route::get('/listing', [LandingPageController::class, 'listing'])->name('landing-page.listing');
+Route::get('/listing/detail', [LandingPageController::class, 'listingDetail'])->name('landing-page.listing.detail');
+Route::get('/blog', [LandingPageController::class, 'blog'])->name('landing-page.blog');
 
 
 Route::middleware('auth')->group(function () {
