@@ -1,0 +1,61 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: balimmo-villa-admin-app
+    container_name: balimmo-villa-admin-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    networks:
+      - balimmo-network
+
+  webserver:
+    image: nginx:alpine
+    container_name: balimmo-villa-admin-webserver
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./nginx:/etc/nginx/conf.d
+    networks:
+      - balimmo-network
+
+  db:
+    image: mysql:8.0
+    container_name: balimmo-villa-admin-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: db_balimmo_admin
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: balimmo
+      MYSQL_PASSWORD: balimmopassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - balimmo-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: balimmo-villa-admin-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - balimmo-network
+
+networks:
+  balimmo-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
