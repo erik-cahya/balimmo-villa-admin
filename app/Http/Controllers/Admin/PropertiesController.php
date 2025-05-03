@@ -58,14 +58,6 @@ class PropertiesController extends Controller
             // 'property_name.required' => 'custom message',
         ]);        
 
-        // Image Upload Handler
-        if ($request->foto_asesor === null) {
-            $fotoAsesor = null;
-        } else {
-            $fotoAsesor = 'foto_' . $request->nama_asesor . '.' . $request->foto_asesor->extension();
-            $request->foto_asesor->move(public_path('img/foto_asesor'), $fotoAsesor);
-        }
-
         $properties = [
             '_token',
             'property_name',

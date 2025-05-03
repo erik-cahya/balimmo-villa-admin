@@ -55,7 +55,7 @@
                {{-- Properties Information Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
                          <h4 class="card-title">Property Information</h4>
                      </div>
                      <div class="card-body">
@@ -123,7 +123,7 @@
                {{-- Main Features Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
                          <h4 class="card-title">Main Features</h4>
                     </div>
                     <div class="card-body">
@@ -156,7 +156,7 @@
                {{-- Location & Surrounding Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
                          <h4 class="card-title">Location & Surroundings</h4>
                     </div>
                     <div class="card-body">
@@ -227,7 +227,7 @@
                {{-- Investment Potential Section Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
                          <h4 class="card-title">Investment Potential</h4>
                     </div>
                     <div class="card-body">
@@ -254,7 +254,7 @@
                {{-- Document & Attachment Section Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
                          <h4 class="card-title">Document & Attachment</h4>
                     </div>
                     <div class="card-body">
@@ -296,7 +296,7 @@
                {{-- Legal & Finance Section Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
                          <h4 class="card-title">Legal & Finance Information</h4>
                     </div>
                     <div class="card-body">
@@ -333,7 +333,7 @@
                {{-- Dimension Properties Section Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
                          <h4 class="card-title">Dimension Properties</h4>
                     </div>
                     <div class="card-body">
@@ -359,7 +359,7 @@
                {{-- Properties Facility Section Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 20px 0px 20px 0px">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
                          <h4 class="card-title">Property Facilities</h4>
                     </div>
                     <div class="card-body">

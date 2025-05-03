@@ -14,8 +14,8 @@
             </div>
         </div>
     </div>
-    <!-- ========== Page Title End ========== -->
 
+    <!-- ========== Page Title End ========== -->
     <div class="row">
           <div class="col-lg-12">
                <div class="card">
@@ -40,21 +40,46 @@
                                   <div class="text-md-end mt-3 mt-md-0">
                                        <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-settings-2-line me-1"></i>More Setting</button>
                                        <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-filter-line me-1"></i> Filters</button>
-                                       <button type="button" class="btn btn-sm btn-outline-dark rounded me-1" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="ri-add-line me-1"></i> Add New Agent</button>
+                                       <button type="button" class="btn btn-sm btn-outline-dark rounded me-1" data-bs-toggle="collapse" data-bs-target="#addNewAgent" aria-expanded="false" aria-controls="addNewAgent"><i class="ri-add-line me-1"></i> Add New Agent</button>
                                   </div>
-                             </div><!-- end col-->
+                             </div>
 
                          </div>
                     </div>
                </div>
           </div>
-          <div class="collapse" id="collapseExample">
-               <div class="card mb-2">
+
+          <div class="collapse" id="addNewAgent">
+               <div class="card">
+                    <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
+                         <h5 class="card-title">Add Data Agent</h5>
+                    </div>
                     <div class="card-body">
-                         Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                         <div class="row">
+
+                              <x-form-input className="col-lg-6" type="text" name="property_name" label="Agent Name"/>
+                              <x-form-input className="col-lg-6" type="email" name="property_name" label="Email Agent"/>
+                              <x-form-input className="col-lg-4" type="number" name="property_name" label="Phone Number"/>
+                              <x-form-select className="col-lg-4" name="property_status" label="User Role" 
+                                   :options="['Agent', 'Master']"
+                              />
+                              <x-form-input className="col-lg-4" type="password" name="property_name" label="Password Login"/>
+
+                         </div>
+                         <div class="mb-3 rounded">
+                              <div class="row justify-content-end g-2">
+                                   <div class="col-lg-2">
+                                        <button type="submit" class="btn btn-outline-primary w-100">Create Product</button>
+                                   </div>
+                                   <div class="col-lg-2">
+                                        <a href="#!" class="btn btn-danger w-100">Cancel</a>
+                                   </div>
+                              </div>
+                         </div>
                     </div>
                </div>
           </div>
+          
      </div>
 
     <div class="row">
