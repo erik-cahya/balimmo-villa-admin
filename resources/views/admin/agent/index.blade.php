@@ -6,25 +6,25 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
-                <h4 class="mb-0 fw-semibold">Customer List</h4>
+                <h4 class="mb-0 fw-semibold">Agent List</h4>
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Customers</a></li>
-                    <li class="breadcrumb-item active">Customer List</li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Agents</a></li>
+                    <li class="breadcrumb-item active">Agent List</li>
                 </ol>
             </div>
         </div>
     </div>
     <!-- ========== Page Title End ========== -->
 
-    <div class="row d-none">
-         <div class="col-lg-12">
-              <div class="card">
+    <div class="row">
+          <div class="col-lg-12">
+               <div class="card">
                    <div class="card-header border-0">
                         <div class="row justify-content-between">
                              <div class="col-lg-6">
                                   <div class="row align-items-center">
                                        <div class="col-lg-6">
-                                            <form class="app-search d-none d-md-block me-auto">
+                                            <form class="app-search d-md-block me-auto">
                                                  <div class="position-relative">
                                                       <input type="search" class="form-control" placeholder="Search Customer" autocomplete="off" value="">
                                                       <iconify-icon icon="solar:magnifer-broken" class="search-widget-icon"></iconify-icon>
@@ -32,42 +32,42 @@
                                             </form>
                                        </div>
                                        <div class="col-lg-4">
-                                            <h5 class="text-dark fw-medium mb-0">501 <span class="text-muted"> Customers</span></h5>
+                                            <h5 class="text-dark fw-medium mb-0">{{ $count_agent }} <span class="text-muted"> Agent</span></h5>
                                        </div>
                                   </div>
                              </div>
                              <div class="col-lg-6">
                                   <div class="text-md-end mt-3 mt-md-0">
-                                       <button type="button" class="btn btn-outline-primary me-1"><i class="ri-settings-2-line me-1"></i>More Setting</button>
-                                       <button type="button" class="btn btn-outline-primary me-1"><i class="ri-filter-line me-1"></i> Filters</button>
-                                       <button type="button" class="btn btn-success me-1"><i class="ri-add-line"></i> New Customer</button>
+                                       <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-settings-2-line me-1"></i>More Setting</button>
+                                       <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-filter-line me-1"></i> Filters</button>
+                                       <button type="button" class="btn btn-sm btn-outline-dark rounded me-1" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="ri-add-line me-1"></i> Add New Agent</button>
                                   </div>
                              </div><!-- end col-->
-                        </div>
-                   </div>
-              </div>
-         </div>
-    </div>
+
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="collapse" id="collapseExample">
+               <div class="card mb-2">
+                    <div class="card-body">
+                         Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                    </div>
+               </div>
+          </div>
+     </div>
 
     <div class="row">
          <div class="col-xl-12">
               <div class="card">
                    <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                         <div>
-                             <h4 class="card-title">All Customer List</h4>
+                             <h4 class="card-title">All Agent List</h4>
                         </div>
                         <div class="dropdown">
-                             <a href="#" class="dropdown-toggle btn btn-sm btn-outline-light rounded" data-bs-toggle="dropdown" aria-expanded="false">
-                                  This Month
+                             <a href="#" class="btn btn-sm btn-outline-dark rounded" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-add-line"></i> New Agent
                              </a>
-                             <div class="dropdown-menu dropdown-menu-end">
-                                  <!-- item-->
-                                  <a href="#!" class="dropdown-item">Download</a>
-                                  <!-- item-->
-                                  <a href="#!" class="dropdown-item">Export</a>
-                                  <!-- item-->
-                                  <a href="#!" class="dropdown-item">Import</a>
-                             </div>
                         </div>
                    </div>
                    <div class="card-body p-0">
@@ -91,7 +91,7 @@
                                   </thead>
                                   <tbody>
                                    @foreach ($data_agent as $agent )
-                                       <tr>
+                                       <tr class="{{ Auth::user()->id === $agent->id ? 'table-light' : '' }}">
                                             <td>
                                                  <div class="form-check">
                                                       <input type="checkbox" class="form-check-input" id="customCheck2">
@@ -118,14 +118,17 @@
                                                  <div class="d-flex gap-2">
                                                       <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
                                                       <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                                                      <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+
+                                                      @if (Auth::user()->id !== $agent->id)
+                                                        <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                      @endif
                                                  </div>
                                             </td>
                                        </tr>
                                    @endforeach
 
 
-                                       
+
 
                                   </tbody>
                              </table>

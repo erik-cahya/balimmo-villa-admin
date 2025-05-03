@@ -55,13 +55,13 @@
                                                   <label class="form-label" for="email">Email</label>
                                                   <input type="email" id="email" name="email" class="form-control bg-light bg-opacity-50 border-light py-2" placeholder="Enter your email" value="{{ old('email') }}" required autofocus>
                                              </div>
-                                             
+
                                              <div class="mb-3">
-                                                  <a href="{{ route('password.request') }}" class="float-end text-muted text-unline-dashed ms-1">Reset password</a>
-                                                  <label class="form-label" for="password">Password</label>
-                                                  <input type="password" id="password" name="password" class="form-control bg-light bg-opacity-50 border-light py-2" placeholder="Enter your password" required>
+                                                 <label class="form-label" for="password">Password</label>
+                                                 <input type="password" id="password" name="password" class="form-control bg-light bg-opacity-50 border-light py-2" placeholder="Enter your password" required>
+                                                 <a href="{{ route('password.request') }}" class="float-end text-muted text-unline-dashed ms-1">Reset password</a>
                                              </div>
-                                             
+
                                              <div class="mb-3">
                                                   <div class="form-check">
                                                        <input type="checkbox" name="remember" class="form-check-input" id="checkbox-signin">
@@ -73,14 +73,6 @@
                                                   <button class="btn btn-danger py-2 fw-medium" type="submit">Sign In</button>
                                              </div>
                                         </form>
-
-                                        <p class="mt-3 fw-semibold no-span">OR sign with</p>
-
-                                        <div class="text-center">
-                                             <a href="javascript:void(0);" class="btn btn-outline-light shadow-none"><i class='bx bxl-google fs-20'></i></a>
-                                             <a href="javascript:void(0);" class="btn btn-outline-light shadow-none"><i class='ri-facebook-fill fs-20'></i></a>
-                                             <a href="javascript:void(0);" class="btn btn-outline-light shadow-none"><i class='bx bxl-github fs-20'></i></a>
-                                        </div>
                                    </div> <!-- end col -->
                               </div> <!-- end card-body -->
                          </div> <!-- end card -->

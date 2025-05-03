@@ -25,18 +25,20 @@ Route::get('/form', [FormController::class, 'index'])->name('form.index');
 Route::post('/form-submit', [FormController::class, 'submit'])->name('form.submit');
 Route::post('/form-upload', [FormController::class, 'upload'])->name('form.upload');
 
-// handle form request
-
+// ############################################################### Landing Page Controller
 Route::get('/', [LandingPageController::class, 'index'])->name('landing-page.index');
 Route::get('/contact', [LandingPageController::class, 'contact'])->name('landing-page.contact');
 Route::get('/about', [LandingPageController::class, 'about'])->name('landing-page.about');
 Route::get('/listing', [LandingPageController::class, 'listing'])->name('landing-page.listing');
 Route::get('/listing/detail', [LandingPageController::class, 'listingDetail'])->name('landing-page.listing.detail');
 Route::get('/blog', [LandingPageController::class, 'blog'])->name('landing-page.blog');
+Route::get('/landing-login', [LandingPageController::class, 'login'])->name('landing-page.login');
+Route::get('/landing-signup', [LandingPageController::class, 'signup'])->name('landing-page.sign-up');
 
 
 Route::middleware('auth')->group(function () {
 
+    // ############################################################### Admin Panel Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('/properties', PropertiesController::class)->except('show');
     Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details');
@@ -45,7 +47,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/features', FeatureController::class);
 
-    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

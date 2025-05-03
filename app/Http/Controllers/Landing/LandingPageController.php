@@ -30,4 +30,11 @@ class LandingPageController extends Controller
     public function blog(){
         return view('landing.blog.index');
     }
+
+    public function login(){
+        return view('landing.login.index');
+    }
+    public function signup(){
+        return view('landing.sign-up.index');
+    }
 }

@@ -21,7 +21,7 @@
 
               <div class="d-flex align-items-center gap-1">
                    <!-- Theme Color (Light/Dark) -->
-                   <span class="badge badge-soft-warning me-1 text-capitalize">{{ Auth::user()->role }} Users</span>
+                   <span class="badge badge-soft-primary me-1 text-capitalize">{{ Auth::user()->role }} Users</span>
 
                    <div class="topbar-item">
                         <button type="button" class="topbar-button" id="light-dark-mode">
@@ -55,7 +55,7 @@
                         <div class="dropdown-menu dropdown-menu-end">
                              <!-- item-->
                              <h6 class="dropdown-header">Welcome {{ Auth::user()->name }}!</h6>
-                   
+
                              <a class="dropdown-item" href="pages-calendar.html">
                                   <iconify-icon icon="solar:calendar-broken" class="align-middle me-2 fs-18"></iconify-icon><span class="align-middle">My Schedules</span>
                              </a>

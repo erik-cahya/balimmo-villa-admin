@@ -24,7 +24,7 @@
 
      <!-- Theme Config js (Require in all Page) -->
      <script src="{{ asset('admin') }}/assets/js/config.min.js"></script>
-     
+
      <style> .border-red{border-color: #d03f3f} </style>
 
 </head>
@@ -89,7 +89,7 @@
                                                   <label class="form-label" for="password_confirmation">Password Confirmation</label>
                                                   <input type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password" class="form-control bg-light bg-opacity-50 border-light py-2" placeholder="Enter your password">
                                              </div>
-                                             
+
                                              @error('password_confirmation')
                                                 <div class="invalid-tooltip d-block position-static mt-1">
                                                     {{ $message }}
@@ -110,13 +110,7 @@
                                                   <button class="btn btn-danger py-2" type="submit">Create Account</button>
                                              </div>
                                         </form>
-                                        <p class="mt-3 fw-semibold no-span">OR sign with</p>
 
-                                        <div class="text-center">
-                                             <a href="javascript:void(0);" class="btn btn-outline-light shadow-none"><i class='bx bxl-google fs-20'></i></a>
-                                             <a href="javascript:void(0);" class="btn btn-outline-light shadow-none"><i class='ri-facebook-fill fs-20'></i></a>
-                                             <a href="javascript:void(0);" class="btn btn-outline-light shadow-none"><i class='bx bxl-github fs-20'></i></a>
-                                        </div>
                                    </div> <!-- end col -->
                               </div> <!-- end card-body -->
                          </div> <!-- end card -->
