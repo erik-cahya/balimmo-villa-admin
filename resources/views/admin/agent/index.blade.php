@@ -64,11 +64,7 @@
                         <div>
                              <h4 class="card-title">All Agent List</h4>
                         </div>
-                        <div class="dropdown">
-                             <a href="#" class="btn btn-sm btn-outline-dark rounded" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="ri-add-line"></i> New Agent
-                             </a>
-                        </div>
+
                    </div>
                    <div class="card-body p-0">
                         <div class="table-responsive">
@@ -81,23 +77,29 @@
                                                       <label class="form-check-label" for="customCheck1"></label>
                                                  </div>
                                             </th>
+                                            <th>Reference ID</th>
+
                                             <th>Customer Photo & Name</th>
                                             <th>Email</th>
                                             <th>Contact</th>
-                                            <th>Reference ID</th>
+                                            <th>Listing Property</th>
                                             <th>Roles</th>
+                                            <th>Registered</th>
                                             <th>Action</th>
                                        </tr>
                                   </thead>
                                   <tbody>
                                    @foreach ($data_agent as $agent )
-                                       <tr class="{{ Auth::user()->id === $agent->id ? 'table-light' : '' }}">
+                                       <tr class="{{ Auth::user()->id === $agent->id ? 'table-active' : '' }}">
+
                                             <td>
                                                  <div class="form-check">
                                                       <input type="checkbox" class="form-check-input" id="customCheck2">
                                                       <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                                  </div>
                                             </td>
+                                            <td class="text-dark fw-medium">#{{ $agent->reference_code }}</td>
+
                                             <td>
                                                  <div class="d-flex align-items-center gap-2">
                                                       <div>
@@ -111,9 +113,11 @@
                                             </td>
                                             <td>{{ $agent->email }}</td>
                                             <td>+231 06-75820711</td>
-                                            <td><span class="badge badge-soft-secondary me-1">{{ $agent->reference_code }}</span>
-                                            </td>
+                                            <td>30 Property</td>
+                                            {{-- <td ><span class="badge badge-soft-secondary me-1">{{ $agent->reference_code }}</span></td> --}}
                                             <td class="text-capitalize"><span class="badge {{ ($agent->role === "master") ? "bg-danger" : "bg-primary" }} text-white fs-11">{{ $agent->role }}</span></td>
+                                            <td>{{ \Carbon\Carbon::parse($agent->created_at)->format('d F, Y') }}</td>
+
                                             <td>
                                                  <div class="d-flex gap-2">
                                                       <a href="#!" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
