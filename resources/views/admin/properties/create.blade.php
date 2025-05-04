@@ -243,10 +243,7 @@
                               <x-form-input className="col-lg-6" type="text" name="estimated_occupancy_rate" label="Estimated Occupancy Rate" placeholder="In Percent (Ex: 10%)"/>
                               <x-form-input className="col-lg-6" type="text" name="return_on_investment" label="ROI (Return on Investment) Potential" placeholder="Percentage per year (Ex: 12%)"/>
 
-                             
                          </div>
-
-
                     </div>
                </div>
 
@@ -258,34 +255,38 @@
                          <h4 class="card-title">Document & Attachment</h4>
                     </div>
                     <div class="card-body">
-                         <div class="col-lg-12 mb-3">
-                              <label for="featured_image" class="form-label">Featured Image</label>
-                              <input type="file" id="featured_image" name="featured_image" class="form-control" placeholder="">
-                         </div>
-                         {{-- <div class="col-lg-12 mb-3">
-                                   <label for="gallery" class="form-label">Gallery</label>
-                                   <div class="dropzone" id="gallery-dropzone"></div>
-                         </div>
+                         <div class="row">
 
-                         <div class="col-lg-12 mb-3">
-                                   <label for="property_plan" class="form-label">Property Plan</label>
-                                   <input type="file" id="property_plan" name="property_plan" class="form-control" placeholder="">
+                              <div class="col-lg-12 mb-3">
+                                   <label for="featured_image" class="form-label">Featured Image</label>
+                                   <input type="file" id="featured_image" name="featured_image" class="form-control" placeholder="">
+                              </div>
+                              {{-- <div class="col-lg-12 mb-3">
+                                        <label for="gallery" class="form-label">Gallery</label>
+                                        <div class="dropzone" id="gallery-dropzone"></div>
+                              </div>
+
+                              <div class="col-lg-12 mb-3">
+                                        <label for="property_plan" class="form-label">Property Plan</label>
+                                        <input type="file" id="property_plan" name="property_plan" class="form-control" placeholder="">
+                              </div>
+
+                              <div class="col-lg-12 mb-3">
+                                   <label for="ownership_certificate" class="form-label">Ownership Certificate</label>
+                                   <input type="file" id="ownership_certificate" name="ownership_certificate" class="form-control" placeholder="">
+                              </div>
+
+                              <div class="col-lg-12 mb-3">
+                                   <label for="imb_pbg" class="form-label">IMB/PBG</label>
+                                   <input type="file" id="imb_pbg" name="imb_pbg" class="form-control" placeholder="">
+                              </div> --}}
+
+                              <x-form-input className="col-lg-6" type="text" name="virtual_tour" label="Virtual Tour (URL)" placeholder="Input URL Virtual Tour"/>
+
+                              <x-form-select className="col-lg-6" name="monthly_charges" label="Monthly Charges"
+                                   :options="['Water', 'Internet', 'Electric']"
+                              />
                          </div>
-
-                         <div class="col-lg-12 mb-3">
-                              <label for="ownership_certificate" class="form-label">Ownership Certificate</label>
-                              <input type="file" id="ownership_certificate" name="ownership_certificate" class="form-control" placeholder="">
-                         </div>
-
-                         <div class="col-lg-12 mb-3">
-                              <label for="imb_pbg" class="form-label">IMB/PBG</label>
-                              <input type="file" id="imb_pbg" name="imb_pbg" class="form-control" placeholder="">
-                         </div> --}}
-                         <x-form-input className="col-lg-6" type="text" name="virtual_tour" label="Virtual Tour (URL)" placeholder="Input URL Virtual Tour"/>
-
-                         <x-form-select className="col-lg-6" name="monthly_charges" label="Monthly Charges"
-                              :options="['Water', 'Internet', 'Electric']"
-                         />
                     </div>
                </div>
           </div>

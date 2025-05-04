@@ -96,21 +96,21 @@
                              <table class="table align-middle text-nowrap table-hover table-centered mb-0">
                                   <thead class="bg-light-subtle">
                                        <tr>
-                                            <th style="width: 20px;">
-                                                 <div class="form-check">
-                                                      <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                      <label class="form-check-label" for="customCheck1"></label>
-                                                 </div>
-                                            </th>
-                                            <th>Reference ID</th>
+                                             <th style="width: 20px;">
+                                                  <div class="form-check">
+                                                       <input type="checkbox" class="form-check-input" id="customCheck1">
+                                                       <label class="form-check-label" for="customCheck1"></label>
+                                                  </div>
+                                             </th>
+                                             <th>Reference ID</th>
 
-                                            <th>Customer Photo & Name</th>
-                                            <th>Email</th>
-                                            <th>Contact</th>
-                                            <th>Listing Property</th>
-                                            <th>Roles</th>
-                                            <th>Registered</th>
-                                            <th>Action</th>
+                                             <th>Customer Photo & Name</th>
+                                             <th>Email</th>
+                                             <th>Contact</th>
+                                             <th>Listing Property</th>
+                                             <th>Roles</th>
+                                             <th>Registered</th>
+                                             <th>Action</th>
                                        </tr>
                                   </thead>
                                   <tbody>

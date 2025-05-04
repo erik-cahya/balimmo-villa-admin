@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
+            // Main Data
             $table->string('property_name');
             $table->text('property_slug');
             $table->text('property_description');
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('region')->nullable();
             $table->string('sub_region')->nullable();
             $table->text('property_address')->nullable();
+
             $table->string('internal_reference')->nullable();
             $table->string('property_status')->nullable();
 
@@ -27,8 +29,10 @@ return new class extends Migration
             $table->string('current_owner')->nullable();
             $table->string('owner_contact')->nullable();
             $table->string('property_category')->nullable();
+
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            
             $table->string('extension_leasehold_possible')->nullable();
             $table->string('leasehold_extension')->nullable();
             $table->float('rent_price')->nullable();
