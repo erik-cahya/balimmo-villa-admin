@@ -4427,8 +4427,8 @@ body.overlay__active::before,
 }
 
 .apartment__info--count {
-  width: 2.3rem;
-  height: 2.3rem;
+  /* width: 2.3rem;
+  height: 2.3rem; */
   text-align: center;
   line-height: 2.1rem;
   background: var(--color-background);
@@ -4443,6 +4443,7 @@ body.overlay__active::before,
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
   margin-bottom: 1rem;
+  padding: .45rem 1rem;
 }
 
 .apartment__info--title {

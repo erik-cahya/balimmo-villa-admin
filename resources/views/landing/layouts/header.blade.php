@@ -30,11 +30,7 @@
                             </li>
                             <li class="main__menu--items">
                                 <a class="main__menu--link" href="{{ route('landing-page.listing') }}"> Listing </a>                                      
-                            </li>                               
-                            <li class="main__menu--items">
-                                <a class="main__menu--link" href="{{ route('landing-page.blog') }}">News 
-                                </a>
-                            </li>
+                            </li>                                                           
                             <li class="main__menu--items">
                                 <a class="main__menu--link" href="{{ route('landing-page.about') }}">About Us</a>
                             </li>
