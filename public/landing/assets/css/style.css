@@ -2577,7 +2577,7 @@ body.overlay__active::before,
   color: var(--color-white);
 }
 .advance__option--btn:hover {
-  color: var(--color-hover);
+  color: var(--color-primary);
 }
 
 .advance__apeartment--area {
