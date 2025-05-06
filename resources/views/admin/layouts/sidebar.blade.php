@@ -59,7 +59,7 @@
                <li class="nav-item">
                     <a class="nav-link menu-arrow" href="#sidebarFeatures" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarFeatures">
                          <span class="nav-icon">
-                              <i class="ri-community-line"></i>
+                              <i class="ri-group-line"></i>
                          </span>
                          <span class="nav-text"> Agent </span>
                     </a>
@@ -74,6 +74,24 @@
                          </ul>
                     </div>
                </li>
+
+               <li class="nav-item">           
+                    <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="#">
+                         <span class="nav-icon">
+                              <i class="ri-user-shared-2-line"></i> 
+                         </span>
+                         <span class="nav-text">Leads</span>
+                    </a>                
+               </li>
+               
+               <!-- <li class="nav-item">                  
+                    <a class="nav-link {{ request()->routeIs('income.*') ? 'active' : '' }}" href="#">
+                         <span class="nav-icon">
+                              <i class="ri-wallet-3-line"></i>                         
+                         </span>
+                         <span class="nav-text"> Income </span>
+                    </a>             
+               </li> -->
 
          </ul>
     </div>

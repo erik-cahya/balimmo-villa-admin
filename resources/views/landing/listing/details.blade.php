@@ -39,7 +39,7 @@
 <!-- Hero section .\ -->
 
 <!-- Listing details section -->
-<section class="listing__details--section section--padding">
+<section class="listing__details--section section--padding" style="padding-bottom: 0rem">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
@@ -158,10 +158,10 @@
                                         </p>
                                     </div>
                                     <div class="apartment__info--list">
-                                        <span class="apartment__info--icon"><img src="{{ asset('landing') }}/assets/img/icon/set-square.png" alt="img"></span>
+                                        <span class="apartment__info--icon"><img src="{{ asset('landing') }}/assets/img/icon/land.png" alt="img"></span>
                                         <p>
-                                            <span class="apartment__info--count">3</span>
-                                            <span class="apartment__info--title">1300 m²</span>
+                                            <span class="apartment__info--count">300 m²</span>
+                                            <span class="apartment__info--title">Land</span>
                                         </p>
                                     </div>
                                 </div>
@@ -348,50 +348,24 @@
                             <div class="location__google--maps__info d-flex">
                                 <ul class="location__google--maps__info--step">
                                     <li class="location__google--maps__info--list d-flex">
-                                        <span class="location__google--maps__info--title">Address:</span>
-                                        <span class="location__google--maps__info--subtitle">Jl Pantai Canggu No 28</span>
-                                    </li>
-                                    <li class="location__google--maps__info--list d-flex">
                                         <span class="location__google--maps__info--title">Region: </span>
                                         <span class="location__google--maps__info--subtitle">Badung</span>
                                     </li>
                                     <li class="location__google--maps__info--list d-flex">
                                         <span class="location__google--maps__info--title">Subregion: </span>
                                         <span class="location__google--maps__info--subtitle">Canggu</span>
-                                    </li>
-                                    <li class="location__google--maps__info--list d-flex">
-                                        <span class="location__google--maps__info--title">City/Town:</span>
-                                        <span class="location__google--maps__info--subtitle">United States</span>
-                                    </li>
+                                    </li>             
                                 </ul>
                                 <ul class="location__google--maps__info--step">                                            
                                     <li class="location__google--maps__info--list d-flex">
-                                        <span class="location__google--maps__info--title">To Beach:  </span>
-                                        <span class="location__google--maps__info--subtitle">15 Minutes</span>
-                                    </li>
+                                        <span class="location__google--maps__info--title">Address:</span>
+                                        <span class="location__google--maps__info--subtitle">Jl Pantai Canggu No 28</span>
+                                    </li>                                         
                                     <li class="location__google--maps__info--list d-flex">
-                                        <span class="location__google--maps__info--title">To Restaurant:  </span>
-                                        <span class="location__google--maps__info--subtitle">10 Minutes</span>
-                                    </li>
-                                    <li class="location__google--maps__info--list d-flex">
-                                        <span class="location__google--maps__info--title">To School:  </span>
-                                        <span class="location__google--maps__info--subtitle">8 Minutes</span>
-                                    </li>
+                                        <span class="location__google--maps__info--title">View:  </span>
+                                        <span class="location__google--maps__info--subtitle">Beach</span>
+                                    </li>  
                                 </ul>
-                            </div>
-                        </div>
-                        <div class="listing__details--content__step mb-80">
-                            <h3 class="listing__details--content__title mb-40">Virtual Tour</h3>
-                            <div class="listing__details--video__thumbnail position-relative">
-                                <img src="{{ asset('landing') }}/assets/img/property/property-video-thumbnail.png" alt="img">
-                                <div class="bideo__play">
-                                    <a class="bideo__play--icon glightbox" href="https://vimeo.com/115041822" data-gallery="video">
-                                        <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor"/>
-                                        </svg>                                        
-                                        <span class="visually-hidden">Video Play</span>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                         <div class="listing__details--content__step mb-80">
@@ -408,6 +382,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="listing__details--content__step mb-80">
+                            <h3 class="listing__details--content__title mb-40">Virtual Tour</h3>
+                            <div class="listing__details--video__thumbnail position-relative">
+                                <img src="{{ asset('landing') }}/assets/img/property/property-video-thumbnail.png" alt="img">
+                                <div class="bideo__play">
+                                    <a class="bideo__play--icon glightbox" href="https://vimeo.com/115041822" data-gallery="video">
+                                        <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor"/>
+                                        </svg>                                        
+                                        <span class="visually-hidden">Video Play</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>                        
                         <div class="listing__details--content__step mb-80">
                             <h3 class="listing__details--content__title mb-40">Experience</h3>
                             <div class="listing__details--video__thumbnail position-relative">
@@ -580,276 +568,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="listing__details--content__step">
-                            <div class="properties__reviews--comment mb-80">
-                                <h3 class="listing__details--content__title mb-30">Recent Comment</h3>
-                                <div class="properties__reviews--comment__display mb-50 d-flex align-items-center justify-content-between">
-                                    <div class="reviews__comment--display__left d-flex align-items-center">
-                                        <span class="reviews__comment--display__text">6 Reviews</span>
-                                        <ul class="reviews__comment--display__rating d-flex">
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                            </svg>
-                                            </span>
-                                            </li>
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                            </svg>
-                                            </span>
-                                            </li>
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                            </svg>
-                                            </span>
-                                            </li>
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                            </svg>
-                                            </span>
-                                            </li>
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                </svg>                                                
-                                            </span>
-                                            </li>
-                                        </ul>
-                                        <span class="reviews__comment--display__text">(5 out of 5)</span>
-                                    </div>
-                                    
-                                    <a class="reviews__comment--write" href="#">Write a Review</a>
-                                </div>
-                                <div class="properties__reviews--comment__inner">
-                                    <div class="reviews__comment--step d-flex">
-                                        <div class="reviews__comment--thumb">
-                                            <img src="{{ asset('landing') }}/assets/img/other/comment-author1.jpg" alt="img">
-                                        </div>
-                                        <div class="reviews__comment--content">
-                                            <div class="reviews__comment--top d-flex ">
-                                                <div class="reviews__comment--author__title">
-                                                    <h3 class="reviews__comment--author__name">Rohan De Spond</h3>
-                                                    <span class="reviews__comment--author__date">25 january 2021</span>
-                                                </div>
-                                                <ul class="reviews__comment--rating d-flex">
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                        </svg>                                                
-                                                        </span>
-                                                    </li>
-                                                    </ul>
-                                            </div>
-                                            <p class="reviews__comment--desc">I live in a villa in the Caribbean and I love it. The villa is located on a beautiful stretch
-                                                I am a huge fan of the outdoors and I want to make my villa as nature-friendly as
-                                                I wanted to make a list of the things I've done to make my villa sustainable and so</p>
-                                        </div>
-                                    </div>
-                                    <div class="reviews__comment--step d-flex">
-                                        <div class="reviews__comment--thumb">
-                                            <img src="{{ asset('landing') }}/assets/img/other/comment-author2.png" alt="img">
-                                        </div>
-                                        <div class="reviews__comment--content">
-                                            <div class="reviews__comment--top d-flex ">
-                                                <div class="reviews__comment--author__title">
-                                                    <h3 class="reviews__comment--author__name">
-                                                        Laura Johnson</h3>
-                                                    <span class="reviews__comment--author__date">25 january 2021</span>
-                                                </div>
-                                                <ul class="reviews__comment--rating d-flex">
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                        </svg>                                                
-                                                        </span>
-                                                    </li>
-                                                    </ul>
-                                            </div>
-                                            <p class="reviews__comment--desc">I live in a villa in the Caribbean and I love it. The villa is located on a beautiful stretch
-                                                I am a huge fan of the outdoors and I want to make my villa as nature-friendly as
-                                                I wanted to make a list of the things I've done to make my villa sustainable and so</p>
-                                        </div>
-                                    </div>
-                                    <div class="reviews__comment--step d-flex">
-                                        <div class="reviews__comment--thumb">
-                                            <img src="{{ asset('landing') }}/assets/img/other/comment-author3.png" alt="img">
-                                        </div>
-                                        <div class="reviews__comment--content last__content">
-                                            <div class="reviews__comment--top d-flex ">
-                                                <div class="reviews__comment--author__title">
-                                                    <h3 class="reviews__comment--author__name">
-                                                        Richard Smith</h3>
-                                                    <span class="reviews__comment--author__date">25 january 2021</span>
-                                                </div>
-                                                <ul class="reviews__comment--rating d-flex">
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </li>
-                                                    <li>
-                                                        <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                        </svg>                                                
-                                                        </span>
-                                                    </li>
-                                                    </ul>
-                                            </div>
-                                            <p class="reviews__comment--desc">I live in a villa in the Caribbean and I love it. The villa is located on a beautiful stretch
-                                                I am a huge fan of the outdoors and I want to make my villa as nature-friendly as
-                                                I wanted to make a list of the things I've done to make my villa sustainable and so</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="properties__reviews--comment">
-                                <h3 class="listing__details--content__title mb-30">Leave A Comment</h3>
-                                <div class="properties__reviews--comment__display mb-30">
-                                    <div class="reviews__comment--display__left d-flex align-items-center">
-                                        <span class="reviews__comment--display__text">6 Reviews</span>
-                                        <ul class="reviews__comment--display__rating d-flex">
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                            </svg>
-                                            </span>
-                                            </li>
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                            </svg>
-                                            </span>
-                                            </li>
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                            </svg>
-                                            </span>
-                                            </li>
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#FFB820"></path>
-                                            </svg>
-                                            </span>
-                                            </li>
-                                            <li>
-                                            <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                </svg>                                                
-                                            </span>
-                                            </li>
-                                        </ul>
-                                        <span class="reviews__comment--display__text">(5 out of 5)</span>
-                                    </div>
-                                </div>
-                                <div class="reviews__comment--form">
-                                    <form action="#">
-                                        <div class="row mb--n30">
-                                            <div class="col-lg-6 mb-30">
-                                                <div class="reviews__comment--input">
-                                                    <input class="reviews__comment--input__field" placeholder="Enter your name*" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 mb-30">
-                                                <div class="reviews__comment--input">
-                                                    <input class="reviews__comment--input__field" placeholder="Enter your mail*" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 mb-30">
-                                                <div class="reviews__comment--input">
-                                                    <input class="reviews__comment--input__field" placeholder="Enter your  number*" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 mb-30">
-                                                <div class="reviews__comment--input">
-                                                    <input class="reviews__comment--input__field" placeholder="Website*" type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 mb-30">
-                                                <div class="reviews__comment--textarea">
-                                                    <textarea class="reviews__comment--textarea__field" placeholder="Write Your Review*"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="reviews__comment--btn solid__btn">Post Review <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M8 15.9992C12.4111 15.9992 16 12.4105 16 7.99962C16 3.58875 12.411 0 8 0C3.58901 0 0 3.58875 0 7.99962C0 12.4105 3.58901 15.9992 8 15.9992ZM4.19508 7.57155H7.57197V4.19439C7.57197 3.95805 7.76381 3.76636 8 3.76636C8.23634 3.76636 8.42804 3.95821 8.42804 4.19439V7.57155H11.8049C12.0413 7.57155 12.233 7.7634 12.233 7.99958C12.233 8.23592 12.0411 8.42762 11.8049 8.42762H8.42804V11.8046C8.42804 12.041 8.23619 12.2327 8 12.2327C7.76366 12.2327 7.57197 12.0408 7.57197 11.8046V8.42762H4.19508C3.95874 8.42762 3.76704 8.23577 3.76704 7.99958C3.76704 7.76324 3.9586 7.57155 4.19508 7.57155Z" fill="white"/>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -943,7 +662,7 @@
                                     <input class="widget__form--input__field" placeholder="Email Address" type="email">
                                 </div>
                                 <div class="widget__form--input mb-20">
-                                    <input class="widget__form--input__field" placeholder="$ Budget" type="number">
+                                    <input class="widget__form--input__field" placeholder="(IDR) Budget" type="number">
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Location" type="text">

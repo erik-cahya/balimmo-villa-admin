@@ -76,13 +76,13 @@
                                                 <path d="M7.08237 12.0522C7.43286 12.0522 7.71698 11.7444 7.71698 11.3647C7.71698 10.9851 7.43286 10.6772 7.08237 10.6772C6.73188 10.6772 6.44775 10.9851 6.44775 11.3647C6.44775 11.7444 6.73188 12.0522 7.08237 12.0522Z" fill="currentColor"/>
                                                 <path d="M19.7433 12.6777C19.5749 12.6777 19.4134 12.6053 19.2944 12.4764C19.1753 12.3474 19.1084 12.1726 19.1084 11.9902V5.02586C19.1067 4.68545 18.9811 4.35949 18.7588 4.11878C18.5365 3.87807 18.2355 3.74204 17.9211 3.74023H5.14005C4.97166 3.74023 4.81016 3.6678 4.69109 3.53887C4.57202 3.40994 4.50513 3.23507 4.50513 3.05273C4.50513 2.8704 4.57202 2.69553 4.69109 2.5666C4.81016 2.43767 4.97166 2.36523 5.14005 2.36523H17.9211C18.5723 2.36705 19.1963 2.64795 19.6567 3.14652C20.1172 3.64509 20.3766 4.32078 20.3782 5.02586V11.9902C20.3782 12.1726 20.3114 12.3474 20.1923 12.4764C20.0732 12.6053 19.9117 12.6777 19.7433 12.6777Z" fill="currentColor"/>
                                             </svg>
-                                            <a class="footer__widget--info__text" href="mailto:example@example.com">hello@balimmo.fr</a>
+                                            <a class="footer__widget--info__text" href="mailto:hello@balimmo.properties">hello@balimmo.properties</a>
                                         </li>
                                         <li class="footer__widget--info_list">
                                             <svg class="footer__widget--info__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M13.31 1.52371L18.6133 2.11296C18.6133 2.11296 19.2026 7.41627 13.31 13.3088C7.41748 19.2014 2.11303 18.6133 2.11303 18.6133L1.52377 13.31L5.64971 10.9529L7.71153 13.0148C7.71153 13.0148 9.18467 12.7201 10.9524 10.9524C12.7202 9.18461 13.0148 7.71147 13.0148 7.71147L10.953 5.64965L13.31 1.52371Z" stroke="currentColor" stroke-width="2"></path>
                                             </svg>
-                                            <a class="footer__widget--info__text" href="tel:+1234567898">: (+62) 85 333 777 500</a>
+                                            <a class="footer__widget--info__text" href="tel:+6285333777500">: (+62) 85 333 777 500</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -97,10 +97,10 @@
                                 </h2>
                                 <ul class="footer__widget--menu footer__widget--inner">
                                     
-                                    <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="./about.html">About Us</a></li>
-                                    <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="./listing.html">Listing</a></li>
-                                    <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="./blog.html">News</a></li>
-                                    <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="./contact.html">Contact Us</a></li>
+                                    <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('landing-page.about') }}">About Us</a></li>
+                                    <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('landing-page.listing') }}">Listing</a></li>
+                                    <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('landing-page.contact') }}">Contact Us</a></li>
+                                    <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('landing-page.login') }}">Login</a></li>
                                 </ul>
                             </div>
                         </div>
