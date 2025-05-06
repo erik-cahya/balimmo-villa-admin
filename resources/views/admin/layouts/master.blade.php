@@ -20,7 +20,23 @@
      <script src="{{ asset('admin') }}/assets/js/config.min.js"></script>
 
      {{-- Sweet Alert CDN --}}
-     <link href="{{ asset('style/sweetalert2.min.css') }}" rel="stylesheet">
+     <link href="{{ asset('admin') }}/assets/css/sweetalert2.min.css" rel="stylesheet">
+     <style>
+          .validation-form{
+            border-color: #e96767!important;
+        }
+
+        .validation-message{
+          top: 100%;
+          z-index: 5;
+          max-width: 100%;
+          padding: .3125rem .625rem;
+          font-size: .7875rem;
+          color: #fff;
+          background-color: var(--bs-danger);
+          border-radius: var(--bs-border-radius);
+        }
+     </style>
 
      @stack('style')
 </head>
@@ -53,7 +69,6 @@
      <script src="{{ asset('admin') }}/assets/js/app.js"></script>
 
      {{-- <script src="{{ asset('admin') }}/assets/js/components/form-flatepicker.js"></script> --}}
-
 
      <script>
           @if(session('flashData'))

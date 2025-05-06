@@ -4,21 +4,6 @@
     <!-- Link ke CSS Select2 -->
 
     <style>
-        .validation-form{
-            border-color: #e96767!important;
-        }
-
-        .validation-message{
-          top: 100%;
-          z-index: 5;
-          max-width: 100%;
-          padding: .3125rem .625rem;
-          font-size: .7875rem;
-          color: #fff;
-          background-color: var(--bs-danger);
-          border-radius: var(--bs-border-radius);
-        }
-
         .choices{
           margin-bottom: 0px;
         }
