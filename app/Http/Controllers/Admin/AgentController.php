@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 
 class AgentController extends Controller
 {
@@ -18,17 +20,18 @@ class AgentController extends Controller
     }
 
     public function store(Request $request){
-        // dd($request->all());
 
         $request->validate([
             'name' => 'required|unique:users',
             'email' => 'required|unique:users',
             'phone_number' => 'required',
+            'role' => 'required',
+            'initial_name' => 'required',
         ], [
             // 'property_name.required' => 'custom message',
         ]); 
-
-        $reference_code = $request->role == 'master' ? 'MSTR_' . random_int(100,999) : 'AGNT_' . random_int(100,999);
+        
+        $reference_code = $request->role === 'Master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
         User::create([
             'name' => $request->name,
             'email' => $request->email,

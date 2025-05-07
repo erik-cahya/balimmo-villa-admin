@@ -35,7 +35,7 @@ Docs
             .choices__inner{ border-color: #e96767!important;}
         </style>     
         
-        <div class="validation-message mt-1">
+        <div class="validation-message">
             {{ $message }}
         </div>
     @enderror

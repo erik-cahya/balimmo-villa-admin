@@ -55,8 +55,10 @@
                          <div class="card-body">
                               <div class="row">
 
-                                   <x-form-input className="col-lg-6" type="text" name="name" label="Agent Name"/>
-                                   <x-form-input className="col-lg-6" type="email" name="email" label="Email Agent"/>
+                                   <x-form-input className="col-lg-4" type="text" name="name" label="Agent Name"/>
+                                   <x-form-input className="col-lg-4" type="text" name="initial_name" label="Intial Name"/>
+                                   <x-form-input className="col-lg-4" type="email" name="email" label="Email Agent"/>
+
                                    <x-form-input className="col-lg-4" type="number" name="phone_number" label="Phone Number"/>
                                    <x-form-select className="col-lg-4" name="role" label="User Role" 
                                         :options="['Agent', 'Master']"
@@ -68,9 +70,6 @@
                                    <div class="row justify-content-end g-2">
                                         <div class="col-lg-2">
                                              <button type="submit" class="btn btn-outline-primary w-100">Add Agent</button>
-                                        </div>
-                                        <div class="col-lg-2">
-                                             <a href="#!" class="btn btn-danger w-100">Cancel</a>
                                         </div>
                                    </div>
                               </div>
@@ -104,7 +103,7 @@
                                              </th>
                                              <th>Reference ID</th>
 
-                                             <th>Customer Photo & Name</th>
+                                             <th>Agent Name</th>
                                              <th>Email</th>
                                              <th>Contact</th>
                                              <th>Listing Property</th>
@@ -180,6 +179,12 @@
               </div>
          </div>
 
+    </div>
+
+    <div class="row">
+     <div class="col-lg-12">
+
+     </div>
     </div>
 
 
