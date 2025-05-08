@@ -14,12 +14,18 @@ $(document).ready(function() {
           
 $(document).ready(function() {
 
+     $('#leasehold_group').hide();
+     $('#freehold_group').hide();
+
      // Property Category
-     $('#property_category').on('change', function() {
+     $('#legal_category').on('change', function() {
           if ($(this).val() === 'Leasehold') {
-               $('#lease_duration_group').attr('style', 'display: block !important');
+               $('#leasehold_group').attr('style', 'display: block !important');
+               $('#freehold_group').attr('style', 'display: none !important');
+
           } else {
-               $('#lease_duration_group').attr('style', 'display: none !important');
+               $('#leasehold_group').attr('style', 'display: none !important');
+               $('#freehold_group').attr('style', 'display: block !important');
           }
      });
 

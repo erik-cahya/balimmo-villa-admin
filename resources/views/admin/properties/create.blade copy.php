@@ -435,6 +435,7 @@
                                         <x-form-select className="col-lg-6" name="air_conditioning" label="Air Conditioning" />
                                         <x-form-input className="col-lg-6" type="text" name="number_air_conditioning" label="Number of Units" placeholder="Input Number Unit AC" />
                                         <x-form-select className="col-lg-6" name="ceiling_fans" label="Ceiling Fans" />
+                                        
                                         <x-form-select className="col-lg-6" name="water_heater" label="Water Heater" toggle="#group_water_heater_type" />
                                         <x-form-select className="col-lg-6 toggle-group" name="water_heater_type" label="Water Heater Type" 
                                              :options="['Electric', 'Solar']"

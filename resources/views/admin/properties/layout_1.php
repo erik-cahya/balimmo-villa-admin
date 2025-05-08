@@ -34,6 +34,7 @@
 
      <div class="row">
 
+          
           <div class="col-xl-6 col-lg-6 ">
                {{-- -------------------------------------------------------------------------  --}}
                {{-- Properties Information Form  --}}
@@ -95,6 +96,73 @@
                </div>
 
                {{-- -------------------------------------------------------------------------  --}}
+               {{-- Features & Amenities Form  --}}
+               {{-- -------------------------------------------------------------------------  --}}
+               <div class="card">
+                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
+                         <h4 class="card-title text-uppercase">Features & Amenities</h4>
+                    </div>
+                    <div class="card-body">
+                         <div class="row">
+
+                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
+                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Indoor Features</h5>
+                                   <hr>
+                                   <div class="my-3 row">
+
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Fully Furnished" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="equipped_kitchen" label="Equipped Kitchen (Fridge, Oven, Stove, Extractor Hood)" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="air_conditioning" label="Air Conditioning in All Room" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="wardobes_dressing_room" label="Dressing Room or Built-in Wardobes" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="master_bedroom_bathub" label="Bathub in Master Bedroom" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="laundry_room" label="Laundry Room with Washing Machine" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="home_cinema" label="Home Cinema or Projector" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="office_space" label="Office Space" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="installed_wifi" label="Installed Wi-Fi" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="safe_box" label="Safe Box" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="smart_home_system" label="Smart Home System" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="integrated_audio_system" label="Integrated Audio System" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="cctv" label="CCTV System" />
+
+                                   </div>
+                              </div>
+
+
+                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
+                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Outdoor Features</h5>
+                                   <hr>
+                                   <div class="my-3 row">
+
+                                             <div class="col-md-6">
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Infinity Pool" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Pool Deck / Sun Loungers Included" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Landscape Garden" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Gazebo / Outdoor Lounge" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Outdoor Shower" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Outdoor Kitchen or Barbeque Area" />
+                                             </div>
+
+                                             <div class="col-md-6">
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Garage / Carport" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Automatic Gate" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Ocean View" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Rice Field View" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Jungle View" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="West-facing (Sunset View)" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Direct Beach Access" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Rooftop Terrace" />
+                                             </div>
+
+                                   </div>
+                              </div>
+       
+                         </div>
+
+
+                    </div>
+               </div>
+
+               {{-- -------------------------------------------------------------------------  --}}
                {{-- Sale Price & Conditions Section Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
@@ -120,28 +188,8 @@
                     </div>
                </div>
 
-               {{-- -------------------------------------------------------------------------  --}}
-               {{-- Document & Attachment Section Form  --}}
-               {{-- -------------------------------------------------------------------------  --}}
-               <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                         <h4 class="card-title text-uppercase">Document & Attachment</h4>
-                    </div>
-                    <div class="card-body">
-                         <div class="row">
 
-                              <div class="col-lg-12 mb-3">
-                                   <label for="gallery" class="form-label">Property Gallery (min 4)</label>
-                                   <input type="file" id="gallery" name="gallery" class="form-control" placeholder="">
-                              </div>
 
-                              <x-form-input className="col-lg-12" type="text" name="virtual_tour" label="Virtual Tour Link" />
-                              <x-form-input className="col-lg-12" type="text" name="lifestyle" label="Lifestyle" />
-                              <x-form-input className="col-lg-12" type="text" name="experience" label="Experience" />
-
-                         </div>
-                    </div>
-               </div>
           </div>
 
           <div class="col-xl-6 col-lg-6 ">
@@ -252,14 +300,9 @@
                          <h4 class="card-title text-uppercase">Legal Status of the Property</h4>
                     </div>
                     <div class="card-body">
-
-                         <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category"
-                                   :options="['Leasehold', 'Freehold']"
-                              />
-                         
                          <div class="row">
 
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4" id="freehold_group">
+                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Freehold (Hak Milik)</h5>
                                    <hr>
                                    <div class="my-3 row">
@@ -269,23 +312,21 @@
                                              <input type="text" id="purchase_date" name="purchase_date" class="form-control" placeholder="Input Purchase Date">
                                         </div>
 
-                                        
-
                                         <x-form-input className="col-lg-6" type="text" name="certificate_number" label="Certificate Number" />
                                         <x-form-input className="col-lg-6" type="text" name="certificate_holder_name" label="Certificate Holder Name" />
 
                                         <div class="col-lg-6">
                                              <label for="" class="form-label">Zoning</label>
 
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_green_zone" label="Green Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_yellow_zone" label="Yellow Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_pink_zone" label="Pink Zone" />
+                                             <x-form-checkbox className="form-check mb-2" name="green_zone" label="Green Zone" />
+                                             <x-form-checkbox className="form-check mb-2" name="yellow_zone" label="Yellow Zone" />
+                                             <x-form-checkbox className="form-check mb-2" name="pink_zone" label="Pink Zone" />
                                         </div>
 
                                    </div>
                               </div>
 
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4" id="leasehold_group">
+                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Leasehold (Hak Sewa)</h5>
                                    <hr>
                                    <div class="my-3 row">
@@ -321,84 +362,55 @@
                                         <div class="col-lg-6">
                                              <label for="" class="form-label">Zoning</label>
 
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_green_zone" label="Green Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_yellow_zone" label="Yellow Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_pink_zone" label="Pink Zone" />
+                                             <x-form-checkbox className="form-check mb-2" name="green_zone" label="Green Zone" />
+                                             <x-form-checkbox className="form-check mb-2" name="yellow_zone" label="Yellow Zone" />
+                                             <x-form-checkbox className="form-check mb-2" name="pink_zone" label="Pink Zone" />
                                         </div>
+
                                    </div>
                               </div>
+
+
+                         </div>
+                    </div>
+               </div>
+
+               {{-- -------------------------------------------------------------------------  --}}
+               {{-- Document & Attachment Section Form  --}}
+               {{-- -------------------------------------------------------------------------  --}}
+               <div class="card">
+                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
+                         <h4 class="card-title text-uppercase">Document & Attachment</h4>
+                    </div>
+                    <div class="card-body">
+                         <div class="row">
+
+                              <div class="col-lg-12 mb-3">
+                                   <label for="gallery" class="form-label">Property Gallery (min 4)</label>
+                                   <input type="file" id="gallery" name="gallery" class="form-control" placeholder="">
+                              </div>
+
+                              <x-form-input className="col-lg-12" type="text" name="virtual_tour" label="Virtual Tour Link" />
+                              <x-form-input className="col-lg-12" type="text" name="lifestyle" label="Lifestyle" />
+                              <x-form-input className="col-lg-12" type="text" name="experience" label="Experience" />
+
+                         </div>
+                    </div>
+               </div>
+
+
+               <div class="mb-3 rounded">
+                    <div class="row justify-content-end g-2">
+                         <div class="col-lg-3">
+                              <button type="submit" class="btn btn-outline-primary w-100">Create Properties</button>
+                         </div>
+                         <div class="col-lg-2">
+                              <a href="#!" class="btn btn-danger w-100">Cancel</a>
                          </div>
                     </div>
                </div>
           </div>
-     </div>
 
-     <div class="row">
-          {{-- -------------------------------------------------------------------------  --}}
-          {{-- Features & Amenities Form  --}}
-          {{-- -------------------------------------------------------------------------  --}}
-          <div class="card">
-               <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                    <h4 class="card-title text-uppercase">Features & Amenities</h4>
-               </div>
-               <div class="card-body">
-                    <div class="row">
-                         <div class="col-lg-6">
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Indoor Features</h5>
-                                   <hr>
-                                   <div class="my-3 row">
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Fully Furnished" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="equipped_kitchen" label="Equipped Kitchen (Fridge, Oven, Stove, Extractor Hood)" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="air_conditioning" label="Air Conditioning in All Room" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="wardobes_dressing_room" label="Dressing Room or Built-in Wardobes" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="master_bedroom_bathub" label="Bathub in Master Bedroom" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="laundry_room" label="Laundry Room with Washing Machine" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="home_cinema" label="Home Cinema or Projector" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="office_space" label="Office Space" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="installed_wifi" label="Installed Wi-Fi" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="safe_box" label="Safe Box" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="smart_home_system" label="Smart Home System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="integrated_audio_system" label="Integrated Audio System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="cctv" label="CCTV System" />
-                                   </div>
-                              </div>
-                         </div>
-
-                         <div class="col-lg-6">
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Outdoor Features</h5>
-                                   <hr>
-                                   <div class="my-3 row">
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="infinity_pool" label="Infinity Pool" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="pool_deck_sun_lounger_included" label="Pool Deck / Sun Loungers Included" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="landscape_garden" label="Landscape Garden" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="gazebo_outdoor_lounge" label="Gazebo / Outdoor Lounge" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="outdoor_shower" label="Outdoor Shower" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="outdoor_kitchen_barbeque_area" label="Outdoor Kitchen or Barbeque Area" />
-
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="garage_carport" label="Garage / Carport" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="automatic_gate" label="Automatic Gate" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="ocean_view" label="Ocean View" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="rice_field_view" label="Rice Field View" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="jungle_view" label="Jungle View" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="west_facing" label="West-facing (Sunset View)" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="direct_beach_access" label="Direct Beach Access" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="rooftop_terrace" label="Rooftop Terrace" />
-                                   </div>
-                              </div>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </div>
-
-     <div class="mb-3 rounded">
-          <div class="row justify-content-end g-2">
-               <div class="col-lg-3">
-                    <button type="submit" class="btn btn-outline-primary w-100">Create Properties</button>
-               </div>
-          </div>
      </div>
 </form>
 

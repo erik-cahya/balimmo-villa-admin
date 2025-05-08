@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -46,11 +47,23 @@ class PropertiesController extends Controller
         return view('admin.properties.create', $data);
     }
 
+    private function getUSDtoIDRRate()
+    {
+        try {
+            $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
+            return $response['rates']['IDR'] ?? 15000; // fallback
+        } catch (\Exception $e) {
+            return 15000; // fallback jika API gagal
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+
+        // dd($this->getUSDtoIDRRate());
         dd($request->all());
 
         $reference_code = Auth::user()->reference_code;
