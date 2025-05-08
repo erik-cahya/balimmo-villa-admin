@@ -408,61 +408,79 @@
 
      {{-- Convert IDR to USD --}}
      <script>
-          document.getElementById('idr_price').addEventListener('input', async function() {
-               const idrValue = parseFloat(this.value.replace(/[^0-9]/g, ''));
-               let commisionPercent = parseFloat(document.getElementById('commision_rate').value) / 100;
-
-               if (!isNaN(idrValue)) {
-                    try {
-                         // ExchangeRate-API
-                         const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
-                         const rate = response.data.rates.IDR;
-                         
-                         document.getElementById('usd_price').value = '$ ' + (idrValue / rate).toFixed(2);
-                         document.getElementById('usd_price_raw').value = '$ ' + (idrValue / rate).toFixed(2);
-                    } catch (error) {
-                         console.error("Gagal mengambil kurs:", error);
-                         document.getElementById('usd_price').value = '$ ' + (idrValue / 15000).toFixed(2);
-                         document.getElementById('usd_price_raw').value = '$ ' + (idrValue / 15000).toFixed(2);
-                    }
-
-
-                    // IDR Estimate Commision Ammount
-                    const idrCommission = idrValue * commisionPercent;
-                    const idrNetSeller = idrValue - idrCommission;
-
-                    document.getElementById('estimated_commision_idr').value = new Intl.NumberFormat('id-ID', {
-                         style: 'currency',
-                         currency: 'IDR',
-                         minimumFractionDigits: 0
-                    }).format(idrCommission);
-
-                    document.getElementById('net_seller_price_idr').value = new Intl.NumberFormat('id-ID', {
-                         style: 'currency',
-                         currency: 'IDR',
-                         minimumFractionDigits: 0
-                    }).format(idrNetSeller);
-
-                    // USD Estimate Commision Ammount
-                    let usdValue = parseFloat(document.getElementById('usd_price_raw').value.replace(/[^0-9.]/g, ''));
-                    const usdCommision = usdValue * commisionPercent;
-                    const usdNetSeller = usdValue - usdCommision;
-
-                    document.getElementById('estimated_commision_usd').value = new Intl.NumberFormat('en-US', {
-                         style: 'currency',
-                         currency: 'USD',
-                         minimumFractionDigits: 2
-                    }).format(usdCommision);
-
-                    document.getElementById('net_seller_price_usd').value = new Intl.NumberFormat('en-US', {
-                         style: 'currency',
-                         currency: 'USD',
-                         minimumFractionDigits: 2
-                    }).format(usdNetSeller);
-
+          const fallbackRate = 15000;
+          const cacheKey = 'usd_to_idr_rate';
+          const cacheTimeKey = 'usd_to_idr_rate_time';
+          const cacheTTL = 10 * 60 * 1000; // 10 menit dalam ms
+     
+          function debounce(func, delay) {
+               let timeout;
+               return function (...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), delay);
+               };
+          }
+     
+          function formatCurrency(value, locale, currency, fraction = 2) {
+               return new Intl.NumberFormat(locale, {
+                    style: 'currency',
+                    currency: currency,
+                    minimumFractionDigits: fraction
+               }).format(value);
+          }
+     
+          async function getExchangeRate() {
+               const now = new Date().getTime();
+               const storedRate = localStorage.getItem(cacheKey);
+               const storedTime = localStorage.getItem(cacheTimeKey);
+     
+               if (storedRate && storedTime && (now - parseInt(storedTime)) < cacheTTL) {
+                    return parseFloat(storedRate);
                }
-          });
+     
+               try {
+                    const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
+                    const rate = response.data.rates.IDR;
+                    localStorage.setItem(cacheKey, rate);
+                    localStorage.setItem(cacheTimeKey, now);
+                    return rate;
+               } catch (error) {
+                    console.error("Gagal mengambil kurs dari API:", error);
+                    return fallbackRate;
+               }
+          }
+     
+          async function handleIDRInput() {
+               const idrInput = document.getElementById('idr_price');
+               const commissionRateInput = document.getElementById('commision_rate');
+               const idrValue = parseFloat(idrInput.value.replace(/[^0-9]/g, '')) || 0;
+               const commissionPercent = parseFloat(commissionRateInput.value) / 100 || 0;
+     
+               if (idrValue <= 0) return;
+     
+               const rate = await getExchangeRate();
+               const usdValue = idrValue / rate;
+     
+               // Update USD values
+               document.getElementById('usd_price').value = formatCurrency(usdValue, 'en-US', 'USD');
+               document.getElementById('usd_price_raw').value = usdValue.toFixed(2);
+     
+               // Komisi & Net Seller (IDR)
+               const idrCommission = idrValue * commissionPercent;
+               const idrNetSeller = idrValue - idrCommission;
+               document.getElementById('estimated_commision_idr').value = formatCurrency(idrCommission, 'id-ID', 'IDR', 0);
+               document.getElementById('net_seller_price_idr').value = formatCurrency(idrNetSeller, 'id-ID', 'IDR', 0);
+     
+               // Komisi & Net Seller (USD)
+               const usdCommission = usdValue * commissionPercent;
+               const usdNetSeller = usdValue - usdCommission;
+               document.getElementById('estimated_commision_usd').value = formatCurrency(usdCommission, 'en-US', 'USD');
+               document.getElementById('net_seller_price_usd').value = formatCurrency(usdNetSeller, 'en-US', 'USD');
+          }
+     
+          document.getElementById('idr_price').addEventListener('input', debounce(handleIDRInput, 400));
      </script>
+     
      {{-- /* Convert IDR to USD --}}
      
 
