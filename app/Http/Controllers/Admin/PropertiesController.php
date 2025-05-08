@@ -9,6 +9,7 @@ use App\Models\PropertiesModel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -50,8 +51,9 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
 
+        $reference_code = Auth::user()->reference_code;
         $request->validate([
             'property_name' => 'required|unique:properties',
         ], [
@@ -106,7 +108,7 @@ class PropertiesController extends Controller
             'region' => $request->region,
             'sub_region' => $request->subregion,
             'property_address' => $request->property_address,
-            'internal_reference' => $request->internal_reference,
+            'internal_reference' => $reference_code,
             'property_status' => $request->property_status,
             'year_built' => $request->year_built,
             'current_owner' => $request->current_owner,

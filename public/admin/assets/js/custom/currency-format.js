@@ -1,5 +1,7 @@
 const cleaveFields = [
-    { id: '#price', options: {} },
+    { id: '#idr_price', options: { prefix: 'IDR ' } },
+    { id: '#estimated_commision_idr', options: { prefix: 'IDR ' } },
+    { id: '#usd_price', options: {} },
     { id: '#cost_meter', options: { prefix: '$ ' } }, // contoh custom config
     { id: '#annual_fees', options: {} },
     { id: '#estimated_rental_income', options: {} }

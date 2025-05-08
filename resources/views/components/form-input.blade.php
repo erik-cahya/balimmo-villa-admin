@@ -1,17 +1,19 @@
 @props([
     'inputClassName' => null,
     'className' => null,
-    'name',
+    'name' => null,
     'label',
     'type',
     'disabled' => false,
+    'value',
+    'placeholder'
 ])
 
 {{-- Jika tidak diberikan atribut placeholder, maka akan menggunakan Input + label --}}
 <div class="{{ $className }} mb-3" id="group_{{ $name }}">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
     
-    <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ old($name)  }}" {{ $disabled ? 'disabled' : '' }}>
+    <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ isset($value) ? $value : old($name) }}" {{ $disabled ? 'disabled' : '' }}>
 
 
     @error($name)  

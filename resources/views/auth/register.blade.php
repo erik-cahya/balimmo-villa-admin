@@ -55,7 +55,12 @@
                                         @csrf
                                              <div class="mb-3">
                                                   <label class="form-label" for="name">Name</label>
-                                                  <input type="name" id="name" name="name" value="{{ old('name') }}"  class="form-control bg-light bg-opacity-50 border-light py-2" placeholder="Enter your name">
+                                                  <input type="text" id="name" name="name" value="{{ old('name') }}"  class="form-control bg-light bg-opacity-50 border-light py-2" placeholder="Enter your name">
+                                             </div>
+
+                                             <div class="mb-3">
+                                                  <label class="form-label" for="initial_name">Initial Name</label>
+                                                  <input type="text" id="initial_name" name="initial_name" value="{{ old('initial_name') }}"  class="form-control bg-light bg-opacity-50 border-light py-2" placeholder="Enter your name">
                                              </div>
 
                                             @error('name')

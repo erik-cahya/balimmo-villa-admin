@@ -13,8 +13,9 @@ class AgentController extends Controller
 {
     public function index(){
 
-        $data['data_agent'] = User::orderByRaw("id = ? DESC", [Auth::user()->id])->get();
-        $data['count_agent'] = User::count();
+        $loggedInUser = User::find(Auth::id());
+        $otherUsers = User::where('id', '!=', Auth::id())->get();        
+        $data['data_agent'] = collect([$loggedInUser])->merge($otherUsers);
 
         return view('admin.agent.index', $data);
     }

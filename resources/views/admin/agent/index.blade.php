@@ -29,7 +29,7 @@
                                              </form>
                                         </div>
                                         <div class="col-lg-4">
-                                             <h5 class="text-dark fw-medium mb-0">{{ $count_agent }} <span class="text-muted"> Agent</span></h5>
+                                             <h5 class="text-dark fw-medium mb-0">{{ $data_agent->count() }} <span class="text-muted"> Agent</span></h5>
                                         </div>
                                   </div>
                              </div>
