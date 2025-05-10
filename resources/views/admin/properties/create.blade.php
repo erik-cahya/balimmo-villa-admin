@@ -25,8 +25,8 @@
                <div class="page-title-box">
                     <h4 class="mb-0 fw-semibold">Add Property</h4>
                     <ol class="breadcrumb mb-0">
-                         <li class="breadcrumb-item"><a href="javascript: void(0);">Real Estate</a></li>
-                         <li class="breadcrumb-item active">Add Property</li>
+                         <li class="breadcrumb-item"><a href="javascript: void(0);">Properties </a></li>
+                         <li class="breadcrumb-item active">Listing Property</li>
                     </ol>
                </div>
           </div>
@@ -34,6 +34,7 @@
 
      <div class="row">
 
+          
           <div class="col-xl-6 col-lg-6 ">
                {{-- -------------------------------------------------------------------------  --}}
                {{-- Properties Information Form  --}}
@@ -50,10 +51,10 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <x-form-input className="col-lg-6" type="text" name="first_own_first_name" label="First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="first_own_last_name" label="Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="first_own_phone_number" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="first_own_email" label="Email" />
+                                        <x-form-input className="col-lg-6" type="text" name="owners[0][first_name]" label="First Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="owners[0][last_name]" label="Last Name" />
+                                        <x-form-input className="col-lg-6" type="number" name="owners[0][phone_number]" label="Phone Number" />
+                                        <x-form-input className="col-lg-6" type="email" name="owners[0][email]" label="Email" />
 
 
                                    </div>
@@ -64,17 +65,17 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <x-form-input className="col-lg-6" type="text" name="second_own_first_name" label="First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="second_own_last_name" label="Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="second_own_phone_number" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="second_own_email" label="Email" />
+                                        <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
+                                        <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
+                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Email" />
 
 
                                    </div>
                               </div>
 
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT. PMA</h5>
+                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA (property_legal)</h5>
                                    <hr>
                                    <div class="my-3 row">
 
@@ -95,53 +96,77 @@
                </div>
 
                {{-- -------------------------------------------------------------------------  --}}
-               {{-- Sale Price & Conditions Section Form  --}}
+               {{-- Features & Amenities Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
                     <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                         <h4 class="card-title text-uppercase">Sale Price & Conditions</h4>
+                         <h4 class="card-title text-uppercase">Features & Amenities</h4>
                     </div>
                     <div class="card-body">
                          <div class="row">
 
-                                   <x-form-input className="col-lg-6" type="text" name="idr_price" label="Desired Selling Price" />
-                                   <x-form-input className="col-lg-6" type="text" name="usd_price" label="Estimated USD Conversion" disabled="true" />
-                                   <input type="hidden" name="usd_price" id="usd_price_raw">
+                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
+                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Indoor Features</h5>
+                                   <hr>
+                                   <div class="my-3 row">
 
-                                   <x-form-input className="col-lg-4" type="text" name="commision_rate" label="Commision Rate (%)" value="4%" disabled="true" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Fully Furnished" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="equipped_kitchen" label="Equipped Kitchen (Fridge, Oven, Stove, Extractor Hood)" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="air_conditioning" label="Air Conditioning in All Room" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="wardobes_dressing_room" label="Dressing Room or Built-in Wardobes" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="master_bedroom_bathub" label="Bathub in Master Bedroom" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="laundry_room" label="Laundry Room with Washing Machine" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="home_cinema" label="Home Cinema or Projector" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="office_space" label="Office Space" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="installed_wifi" label="Installed Wi-Fi" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="safe_box" label="Safe Box" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="smart_home_system" label="Smart Home System" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="integrated_audio_system" label="Integrated Audio System" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="cctv" label="CCTV System" />
 
-                                   <x-form-input className="col-lg-4" type="text" name="estimated_commision_idr" label="Est. Commision Ammount" value="IDR 0" disabled="true" />
-                                   <x-form-input className="col-lg-4" type="text" name="estimated_commision_usd" label="Est. Commision Ammount" value="$0" disabled="true" />
-
-                                   <x-form-input className="col-lg-6" type="text" name="net_seller_price_idr" label="Net Seller price (Excluding Commision)" value="IDR 0" disabled="true" />
-                                   <x-form-input className="col-lg-6" type="text" name="net_seller_price_usd" label="Net Seller price (Excluding Commision)" value="$0" disabled="true" />
-
-                         </div>
-                    </div>
-               </div>
-
-               {{-- -------------------------------------------------------------------------  --}}
-               {{-- Document & Attachment Section Form  --}}
-               {{-- -------------------------------------------------------------------------  --}}
-               <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                         <h4 class="card-title text-uppercase">Document & Attachment</h4>
-                    </div>
-                    <div class="card-body">
-                         <div class="row">
-
-                              <div class="col-lg-12 mb-3">
-                                   <label for="gallery" class="form-label">Property Gallery (min 4)</label>
-                                   <input type="file" id="gallery" name="gallery" class="form-control" placeholder="">
+                                   </div>
                               </div>
 
-                              <x-form-input className="col-lg-12" type="text" name="virtual_tour" label="Virtual Tour Link" />
-                              <x-form-input className="col-lg-12" type="text" name="lifestyle" label="Lifestyle" />
-                              <x-form-input className="col-lg-12" type="text" name="experience" label="Experience" />
 
+                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
+                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Outdoor Features</h5>
+                                   <hr>
+                                   <div class="my-3 row">
+
+                                             <div class="col-md-6">
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="infinity_pool" label="Infinity Pool" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="pool_deck_sun_lounger_included" label="Pool Deck / Sun Loungers Included" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="landscape_garden" label="Landscape Garden" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="gazebo_outdoor_lounge" label="Gazebo / Outdoor Lounge" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="outdoor_shower" label="Outdoor Shower" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="outdoor_kitchen_barbeque_area" label="Outdoor Kitchen or Barbeque Area" />
+
+                                             </div>
+
+                                             <div class="col-md-6">
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="garage_carport" label="Garage / Carport" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="automatic_gate" label="Automatic Gate" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="ocean_view" label="Ocean View" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="rice_field_view" label="Rice Field View" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="jungle_view" label="Jungle View" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="west_facing" label="West-facing (Sunset View)" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="direct_beach_access" label="Direct Beach Access" />
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="rooftop_terrace" label="Rooftop Terrace" />
+                                             </div>
+
+                                   </div>
+                              </div>
+       
                          </div>
+
+
                     </div>
                </div>
+
+             
+
+
+
           </div>
 
           <div class="col-xl-6 col-lg-6 ">
@@ -207,13 +232,13 @@
                               <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" />
                               
                               <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" />
-                              <x-form-input className="col-lg-4" type="text" name="living_area" label="Pool Area (m²)" placeholder="Input Pool Area" />
+                              <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" />
 
-                              <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Bedroom" />
-                              <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Bathroom" />
+                              <x-form-input className="col-lg-6" type="text" name="bedroom" label="Bedroom" />
+                              <x-form-input className="col-lg-6" type="text" name="bathroom" label="Bathroom" />
 
-                              <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Year of Construction" placeholder="Input the Year of Construction" />
-                              <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
+                              <x-form-input className="col-lg-6" type="text" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" />
+                              <x-form-input className="col-lg-6" type="text" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
 
                              
                          </div>
@@ -251,28 +276,22 @@
                     <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
                          <h4 class="card-title text-uppercase">Legal Status of the Property</h4>
                     </div>
-                    <div class="card-body">
+                     <div class="card-body">
 
                          <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category"
                                    :options="['Leasehold', 'Freehold']"
-                              />
+                         />
                          
                          <div class="row">
-
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4" id="freehold_group">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Freehold (Hak Milik)</h5>
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <div class="col-lg-6 mb-3">
-                                             <label for="purchase_date" class="form-label">Purchase Date</label>
-                                             <input type="text" id="purchase_date" name="purchase_date" class="form-control" placeholder="Input Purchase Date">
-                                        </div>
+                                        <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" />
 
-                                        
-
-                                        <x-form-input className="col-lg-6" type="text" name="certificate_number" label="Certificate Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="certificate_holder_name" label="Certificate Holder Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
+                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
 
                                         <div class="col-lg-6">
                                              <label for="" class="form-label">Zoning</label>
@@ -290,33 +309,25 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <div class="col-lg-6 mb-3">
-                                             <label for="start_date" class="form-label">Start Date</label>
-                                             <input type="text" id="start_date" name="start_date" class="form-control" placeholder="Input Start Date">
-                                        </div>
-                                        <div class="col-lg-6 mb-3">
-                                             <label for="end_date" class="form-label">End Date</label>
-                                             <input type="text" id="end_date" name="end_date" class="form-control" placeholder="Input End Date">
-                                        </div>
+                                        
 
-                                        <x-form-input className="col-lg-6" type="text" name="contract_number" label="Contract Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="contract_holder_name" label="Contract Holder Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
+
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" />
 
                                    </div>
                               </div>
 
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
+                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4" id="extension_leasehold_group">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Extension Details</h5>
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <x-form-input className="col-lg-6" type="text" name="contract_number" label="Negotiation Extension Cost" />
-                                        <x-form-input className="col-lg-6" type="text" name="contract_holder_name" label="Purchase Cost" />
-
-                                        <div class="col-lg-6 mb-3">
-                                             <label for="deadline_payment" class="form-label">Deadline for Payment to Secure this Rate</label>
-                                             <input type="text" id="deadline_payment" name="deadline_payment" class="form-control" placeholder="Input Payment Deadline">
-                                        </div>
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
 
                                         <div class="col-lg-6">
                                              <label for="" class="form-label">Zoning</label>
@@ -330,75 +341,69 @@
                          </div>
                     </div>
                </div>
-          </div>
-     </div>
 
-     <div class="row">
-          {{-- -------------------------------------------------------------------------  --}}
-          {{-- Features & Amenities Form  --}}
-          {{-- -------------------------------------------------------------------------  --}}
-          <div class="card">
-               <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                    <h4 class="card-title text-uppercase">Features & Amenities</h4>
-               </div>
-               <div class="card-body">
-                    <div class="row">
-                         <div class="col-lg-6">
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Indoor Features</h5>
-                                   <hr>
-                                   <div class="my-3 row">
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Fully Furnished" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="equipped_kitchen" label="Equipped Kitchen (Fridge, Oven, Stove, Extractor Hood)" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="air_conditioning" label="Air Conditioning in All Room" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="wardobes_dressing_room" label="Dressing Room or Built-in Wardobes" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="master_bedroom_bathub" label="Bathub in Master Bedroom" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="laundry_room" label="Laundry Room with Washing Machine" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="home_cinema" label="Home Cinema or Projector" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="office_space" label="Office Space" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="installed_wifi" label="Installed Wi-Fi" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="safe_box" label="Safe Box" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="smart_home_system" label="Smart Home System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="integrated_audio_system" label="Integrated Audio System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="cctv" label="CCTV System" />
-                                   </div>
-                              </div>
+                 {{-- -------------------------------------------------------------------------  --}}
+               {{-- Sale Price & Conditions Section Form  --}}
+               {{-- -------------------------------------------------------------------------  --}}
+               <div class="card">
+                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
+                         <h4 class="card-title text-uppercase">Sale Price & Conditions</h4>
+                    </div>
+                    <div class="card-body">
+                         <div class="row">
+
+                                   <x-form-input className="col-lg-6" type="text" name="idr_price" label="Desired Selling Price" />
+                                   <x-form-input className="col-lg-6" type="text" name="usd_price" label="Estimated USD Conversion" disabled="true" />
+                                   <input type="hidden" name="usd_price" id="usd_price_raw">
+
+                                   <x-form-input className="col-lg-4" type="text" name="commision_rate" label="Commision Rate (%)" value="4%" disabled="true" />
+
+                                   <x-form-input className="col-lg-4" type="text" name="estimated_commision_idr" label="Est. Commision Ammount" value="IDR 0" disabled="true" />
+                                   <x-form-input className="col-lg-4" type="text" name="estimated_commision_usd" label="Est. Commision Ammount" value="$0" disabled="true" />
+
+                                   <x-form-input className="col-lg-6" type="text" name="net_seller_price_idr" label="Net Seller price (Excluding Commision)" value="IDR 0" disabled="true" />
+                                   <x-form-input className="col-lg-6" type="text" name="net_seller_price_usd" label="Net Seller price (Excluding Commision)" value="$0" disabled="true" />
+
                          </div>
+                    </div>
+               </div>
 
-                         <div class="col-lg-6">
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Outdoor Features</h5>
-                                   <hr>
-                                   <div class="my-3 row">
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="infinity_pool" label="Infinity Pool" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="pool_deck_sun_lounger_included" label="Pool Deck / Sun Loungers Included" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="landscape_garden" label="Landscape Garden" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="gazebo_outdoor_lounge" label="Gazebo / Outdoor Lounge" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="outdoor_shower" label="Outdoor Shower" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="outdoor_kitchen_barbeque_area" label="Outdoor Kitchen or Barbeque Area" />
+               {{-- -------------------------------------------------------------------------  --}}
+               {{-- Document & Attachment Section Form  --}}
+               {{-- -------------------------------------------------------------------------  --}}
+               <div class="card">
+                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
+                         <h4 class="card-title text-uppercase">Document & Attachment</h4>
+                    </div>
+                    <div class="card-body">
+                         <div class="row">
 
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="garage_carport" label="Garage / Carport" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="automatic_gate" label="Automatic Gate" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="ocean_view" label="Ocean View" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="rice_field_view" label="Rice Field View" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="jungle_view" label="Jungle View" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="west_facing" label="West-facing (Sunset View)" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="direct_beach_access" label="Direct Beach Access" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="rooftop_terrace" label="Rooftop Terrace" />
-                                   </div>
+                              <div class="col-lg-12 mb-3">
+                                   <label for="gallery" class="form-label">Property Gallery (min 4)</label>
+                                   <input type="file" id="gallery" name="gallery" class="form-control" placeholder="">
                               </div>
+
+                              <x-form-input className="col-lg-12" type="text" name="virtual_tour" label="Virtual Tour Link" />
+                              <x-form-input className="col-lg-12" type="text" name="lifestyle" label="Lifestyle" />
+                              <x-form-input className="col-lg-12" type="text" name="experience" label="Experience" />
+
+                         </div>
+                    </div>
+               </div>
+
+
+               <div class="mb-3 rounded">
+                    <div class="row justify-content-end g-2">
+                         <div class="col-lg-3">
+                              <button type="submit" class="btn btn-outline-primary w-100">Create Properties</button>
+                         </div>
+                         <div class="col-lg-2">
+                              <a href="#!" class="btn btn-danger w-100">Cancel</a>
                          </div>
                     </div>
                </div>
           </div>
-     </div>
 
-     <div class="mb-3 rounded">
-          <div class="row justify-content-end g-2">
-               <div class="col-lg-3">
-                    <button type="submit" class="btn btn-outline-primary w-100">Create Properties</button>
-               </div>
-          </div>
      </div>
 </form>
 
@@ -412,10 +417,64 @@
      <script src="{{ asset('admin/assets/js/cleave-phone.us.js') }}"></script>
      <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
 
-     <script src="{{ asset('admin/assets/js/custom/custom-toggle.js') }}"></script>
+     {{-- <script src="{{ asset('admin/assets/js/custom/custom-toggle.js') }}"></script> --}}
      <script src="{{ asset('admin/assets/js/custom/currency-format.js') }}"></script>
 
      <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
+
+     {{-- Custom Toggle --}}
+     <script>
+
+          $(document).ready(function() {
+               // Sembunyikan semua grup toggle
+               $('.toggle-group').hide();
+               
+               // Handle semua toggle sekaligus
+               $('[data-toggle-target]').on('change', function() {
+               const target = $(this).data('toggle-target');
+               const showCondition = $(this).val() === 'yes' || $(this).val() === 'Yes'; // Sesuaikan dengan value Anda
+               
+               $(target).toggle(showCondition);
+               });
+          });
+                    
+          $(document).ready(function() {
+
+          $('#leasehold_group').hide();
+          $('#freehold_group').hide();
+          $('#extension_leasehold_group').hide();
+
+          // Cek nilai old dari server
+          const oldLegalCategory = "{{ old('legal_category') }}";
+
+          console.log(oldLegalCategory);
+
+          if (oldLegalCategory === 'Leasehold') {
+               $('#leasehold_group').attr('style', 'display: block !important');
+               $('#freehold_group').attr('style', 'display: none !important');
+               $('#extension_leasehold_group').attr('style', 'display: block !important');
+          } else if (oldLegalCategory === 'Freehold') {
+               $('#leasehold_group').attr('style', 'display: none !important');
+               $('#freehold_group').attr('style', 'display: block !important');
+               $('#extension_leasehold_group').attr('style', 'display: none !important');
+          }
+
+          // Saat user mengganti pilihan
+          $('#legal_category').on('change', function() {
+               if ($(this).val() === 'Leasehold') {
+                    $('#leasehold_group').attr('style', 'display: block !important');
+                    $('#freehold_group').attr('style', 'display: none !important');
+                    $('#extension_leasehold_group').attr('style', 'display: block !important');
+               } else {
+                    $('#leasehold_group').attr('style', 'display: none !important');
+                    $('#freehold_group').attr('style', 'display: block !important');
+                    $('#extension_leasehold_group').attr('style', 'display: none !important');
+               }
+          });
+          });
+
+     </script>
+     {{-- /* Custom Toggle */--}}
 
      {{-- Convert IDR to USD --}}
      <script>
@@ -463,10 +522,21 @@
           }
      
           async function handleIDRInput() {
+               
                const idrInput = document.getElementById('idr_price');
                const commissionRateInput = document.getElementById('commision_rate');
                const idrValue = parseFloat(idrInput.value.replace(/[^0-9]/g, '')) || 0;
-               const commissionPercent = parseFloat(commissionRateInput.value) / 100 || 0;
+               let commissionPercent = parseFloat(commissionRateInput.value) / 100 || 0;
+
+               // Balimmo Properties Fees
+               if(idrValue <= '199999'){
+                    document.getElementById('commision_rate').value = '5%';
+                    commissionPercent = parseFloat(commissionRateInput.value) / 100;
+                    
+               }else if(idrValue >= '200000'){
+                    document.getElementById('commision_rate').value = '2.5%';
+                    commissionPercent = parseFloat(commissionRateInput.value) / 100;
+               }
      
                if (idrValue <= 0) return;
      
@@ -480,6 +550,7 @@
                // Komisi & Net Seller (IDR)
                const idrCommission = idrValue * commissionPercent;
                const idrNetSeller = idrValue - idrCommission;
+
                document.getElementById('estimated_commision_idr').value = formatCurrency(idrCommission, 'id-ID', 'IDR', 0);
                document.getElementById('net_seller_price_idr').value = formatCurrency(idrNetSeller, 'id-ID', 'IDR', 0);
      
@@ -492,12 +563,14 @@
      
           document.getElementById('idr_price').addEventListener('input', debounce(handleIDRInput, 400));
      </script>
-     
+          
      {{-- /* Convert IDR to USD --}}
 
     <script>
-          $("#start_date").flatpickr({dateFormat: "d-m-Y"});
-          $("#end_date").flatpickr({dateFormat: "d-m-Y"});
+          $("#leasehold_start_date").flatpickr({dateFormat: "d-m-Y"});
+          $("#leasehold_end_date").flatpickr({dateFormat: "d-m-Y"});
+          $("#freehold_purchase_date").flatpickr({dateFormat: "d-m-Y"});
+          $("#leasehold_deadline_payment").flatpickr({dateFormat: "d-m-Y"});
     </script>
 
      <script>

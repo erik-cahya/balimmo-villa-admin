@@ -38,11 +38,13 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $reference_code = $request->role === 'Master' || 'master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'reference_code' => $request->role == 'master' ? 'MSTR_' . random_int(100,999) : 'AGNT_' . random_int(100,999),
+            'reference_code' => $reference_code,
             'role' => $request->role
         ]);
 

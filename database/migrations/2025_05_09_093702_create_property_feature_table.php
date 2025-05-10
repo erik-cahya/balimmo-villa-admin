@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('properties_feature', function (Blueprint $table) {
+        Schema::create('property_feature', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('properties_id')->constrained()->on('properties')->onDelete('cascade');
-            $table->foreignId('properties_id');
-            $table->string('features_name');
-            $table->text('features_value');
+            $table->foreignId('properties_id')->comment('fk to properties table');
+            $table->foreignId('feature_id')->comment('fk to feature_list table');
+
             $table->timestamps();
         });
-
     }
 
     /**
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('villa_features');
+        Schema::dropIfExists('property_feature');
     }
 };

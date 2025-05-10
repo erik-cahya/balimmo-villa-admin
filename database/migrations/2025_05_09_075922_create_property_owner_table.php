@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gallery', function (Blueprint $table) {
+        Schema::create('property_owner', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('properties_id')->comment('fk to properties table');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('phone');
             $table->string('email');
+            $table->string('owner_order');
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gallery');
+        Schema::dropIfExists('property_owner');
     }
 };

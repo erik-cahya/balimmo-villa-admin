@@ -45,7 +45,20 @@
                                    </div>
 
                                    <h2 class="fw-bold text-uppercase text-center fs-18">Sign In</h2>
-                                   <p class="text-muted text-center mt-1 mb-4">Enter your email address and password to access admin panel.</p>
+                                   <p class="text-muted text-center mt-1 mb-2">Enter your email address and password to access admin panel.</p>
+
+                                   @error('email')
+                                   <div class="alert alert-danger alert-icon m-3" role="alert">
+                                        <div class="d-flex align-items-center">
+                                             <div class="avatar-sm rounded bg-danger d-flex justify-content-center align-items-center fs-18 me-2 flex-shrink-0">
+                                                  <i class="bx bx-info-circle text-white"></i>
+                                             </div>
+                                             <div class="flex-grow-1">
+                                                    {{ $message }}
+                                             </div>
+                                        </div>
+                                   </div>
+                                   @enderror
 
                                    <div class="px-4">
                                         <form method="POST" action="{{ route('login') }}">

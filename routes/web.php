@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Landing\LandingPageController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
 
 
 require __DIR__.'/auth.php';

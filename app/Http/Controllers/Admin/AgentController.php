@@ -32,7 +32,7 @@ class AgentController extends Controller
             // 'property_name.required' => 'custom message',
         ]); 
         
-        $reference_code = $request->role === 'Master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
+        $reference_code = $request->role === 'Master' || 'master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
         User::create([
             'name' => $request->name,
             'email' => $request->email,

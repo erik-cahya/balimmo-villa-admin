@@ -10,7 +10,7 @@
     <h2 style="font-weight: 700; text-align: center">Hi there 👋,</h2>
     <p style="text-align: center">here for the recommendation villa and fit with your information</p>
     
-    <div style="display: flex; flex-direction: row; justify-content: center">
+    {{-- <div style="display: flex; flex-direction: row; justify-content: center">
     @foreach ($villaData as $villa)
       
     <div style="width: 300px; border-radius: 12px; overflow: hidden; margin:10px;box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: white;">
@@ -39,7 +39,7 @@
     @endforeach
 
   </div>
-    <p style="text-align: center">Our agent will contact you, if you have question please contact us on :</p>
+    <p style="text-align: center">Our agent will contact you, if you have question please contact us on :</p> --}}
 
 
 </body>

@@ -10,7 +10,7 @@ class MailController extends Controller
     public function send()
     {
         Mail::to('erikcp38@gmail.com')->send(new NotifikasiEmail([
-            'nama' => 'John Doe'
+            // 'nama' => 'John Doe'
         ]));
 
         return "Email terkirim!";

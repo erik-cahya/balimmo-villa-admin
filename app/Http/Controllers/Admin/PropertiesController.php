@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\PropertiesFeatureModel;
 use App\Models\PropertiesFileModel;
 use App\Models\PropertiesModel;
+use App\Models\PropertyLegalModel;
+use App\Models\PropertyOwnerModel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,10 +26,7 @@ class PropertiesController extends Controller
     public function index()
     {
 
-        $data['property_rent_count'] = PropertiesModel::where('property_status', 'Rented')->count();
-        $data['property_sold_count'] = PropertiesModel::where('property_status', 'Sold')->count();
-        $data['data_property_count'] = PropertiesModel::count();
-        $data['data_property'] = PropertiesModel::join('properties_file', 'properties_file.properties_id', 'properties.id')->get();
+        $data['data_property'] = PropertiesModel::get();
 
         return view('admin.properties.index', $data);
     }
@@ -42,9 +41,9 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        $data['features'] = PropertiesFeatureModel::all();
+        // $data['features'] = PropertiesFeatureModel::all();
         // dd($data['features']);
-        return view('admin.properties.create', $data);
+        return view('admin.properties.create');
     }
 
     private function getUSDtoIDRRate()
@@ -64,106 +63,131 @@ class PropertiesController extends Controller
     {
 
         // dd($this->getUSDtoIDRRate());
-        dd($request->all());
+        // dd($request->all());
 
-        $reference_code = Auth::user()->reference_code;
+            if($request->legal_category === 'Freehold'){
+            $request->validate([
+                'freehold_purchase_date' => 'required',
+                'freehold_certificate_number' => 'required',
+                'freehold_certificate_holder_name' => 'required',
+                'freehold_green_zone' => 'required',
+                'freehold_yellow_zone' => 'required',
+                'freehold_pink_zone' => 'required',
+            ]);
+
+            $request->leasehold_start_date = null;
+            $request->leasehold_end_date = null;
+            $request->leasehold_contract_number = null;
+            $request->leasehold_contract_holder_name = null;
+            $request->leasehold_negotiation_ext_cost = null;
+            $request->leasehold_purchase_cost = null;
+            $request->leasehold_deadline_payment = null;
+            $request->leasehold_green_zone = null;
+            $request->leasehold_yellow_zone = null;
+            $request->leasehold_pink_zone = null;
+        }
+        elseif($request->legal_category === 'Leasehold'){
+            $request->validate([
+                'leasehold_start_date' => 'required',
+                'leasehold_end_date' => 'required',
+                'leasehold_contract_number' => 'required',
+                'leasehold_contract_holder_name' => 'required',
+                'leasehold_negotiation_ext_cost' => 'required',
+                'leasehold_purchase_cost' => 'required',
+                'leasehold_deadline_payment' => 'required',
+                'leasehold_green_zone' => 'required',
+                'leasehold_yellow_zone' => 'required',
+                'leasehold_pink_zone' => 'required',
+            ]);
+
+            $request->freehold_purchase_date = null;
+            $request->freehold_certificate_number = null;
+            $request->freehold_certificate_holder_name = null;
+            $request->freehold_green_zone = null;
+            $request->freehold_yellow_zone = null;
+            $request->freehold_pink_zone = null;
+        };
+
+
         $request->validate([
             'property_name' => 'required|unique:properties',
-        ], [
-            // 'property_name.required' => 'custom message',
-        ]);        
+            'description' => 'required',
+            'region' => 'required',
+            'subregion' => 'required',
+            'property_address' => 'required',
+            'land_size' => 'required',
+            'built_area' => 'required',
+            'pool_area' => 'required',
+            'bedroom' => 'required',
+            'bathroom' => 'required',
+            'year_construction' => 'required',
+            'year_renovated' => 'required',
+            'owners[0][first_name]' => 'required',
+            'owners[0][last_name]' => 'required',
+            'owners[0][email]' => 'required',
+            'owners[0][phone_number]' => 'required',
+        ],[
+            'owners[0][first_name].required' => 'The Owner Name field is required.',
+            'owners[0][last_name].required' => 'The Owner Last Name field is required.',
+            'owners[0][email].required' => 'The Email field is required.',
+            'owners[0][phone_number].required' => 'The Phone Number field is required.', 
+        ]); 
 
-        $properties = [
-            '_token',
-            'property_name',
-            'property_slug',
-            'property_type',
-            'property_description',
-            'region',
-            'subregion',
-            'property_address',
-            'internal_reference',
-            'property_status',
-            'year_built',
-            'current_owner',
-            'owner_contact',
-            'property_category',
-            'start_date',
-            'end_date',
-            'extension_leasehold_possible',
-            'leasehold_extension',
-            'rent_price',
-            'price',
-            'annual_fees',
-            'estimated_rental_income',
-
-            // image & file
-            'featured_image',
-            'property_plan',
-            'ownership_certificate',
-            'imb_pbg',
-        ];
-
-        $price = (float)str_replace(',', '', preg_replace('/[^0-9.]/', '', $request->price));
-        $rent_price = (float)str_replace(',', '', preg_replace('/[^0-9.]/', '', $request->rent_price));
-        $annual_fees = (float)str_replace(',', '', preg_replace('/[^0-9.]/', '', $request->annual_fees));
-        $estimated_rental_income = (float)str_replace(',', '', preg_replace('/[^0-9.]/', '', $request->estimated_rental_income));
-
-        $start_date = Carbon::createFromFormat('d-m-Y', $request->start_date)->format('Y-m-d');
-        $end_date = Carbon::createFromFormat('d-m-Y', $request->start_date)->format('Y-m-d');
-
-        // Insert Data to table properties 
-        $property = PropertiesModel::create([
+        // ########### Create Properties Data
+        $propertyCreate = PropertiesModel::create([
             'property_name' => $request->property_name,
             'property_slug' => Str::slug($request->property_name),
-            'property_description' => $request->property_description,
-            'property_type' => $request->property_type,
-            'region' => $request->region,
-            'sub_region' => $request->subregion,
+            'internal_reference' => Auth::user()->reference_code,
+            'property_description' => $request->description,
+            'region' => Str::title($request->region),
+            'sub_region' => Str::title($request->subregion),
             'property_address' => $request->property_address,
-            'internal_reference' => $reference_code,
-            'property_status' => $request->property_status,
-            'year_built' => $request->year_built,
-            'current_owner' => $request->current_owner,
-            'owner_contact' => $request->owner_contact,
-            'property_category' => $request->property_category,
-            'start_date' => $start_date,
-            'end_date' => $end_date,
-            'extension_leasehold_possible' => $request->extend_leasehold,
-            'leasehold_extension' => $request->duration_extend_leashold,
-            'rent_price' => $rent_price,
-            'price' => $price,
-            'annual_fees' => $annual_fees,
-            'estimated_rental' => $estimated_rental_income,
+            'total_land_area' => preg_replace('/[^0-9,]/', '', floatval($request->land_size)),
+            'villa_area' => preg_replace('/[^0-9,]/', '', floatval($request->built_area)),
+            'pool_area' => preg_replace('/[^0-9,]/', '', floatval($request->pool_area)),
+            'bedroom' => $request->bedroom,
+            'bathroom' => $request->bathroom,
+            'year_construction' => $request->year_construction,
+            'year_renovated' => $request->year_renovated,
         ]);
 
-        $formData = $request->all();
-        $propertiesData = collect($formData)->except($properties)->filter()
-        ->each(function ($value, $fieldName) use ($property) {
-            // dd($fieldName);
-            PropertiesFeatureModel::create([
-                'properties_id' => $property->id,
-                'features_name' => $fieldName,
-                'features_value' => is_array($value) ? json_encode($value) : json_encode([$value]),
+        // ########### Create Property Owner Data
+        foreach($request->owners as $index => $owner){
+            PropertyOwnerModel::create([
+                'properties_id' => $propertyCreate->id,
+                'first_name' => $owner['first_name'],
+                'last_name' => $owner['last_name'],
+                'phone' => $owner['phone_number'],
+                'email' => $owner['email'],
+                'owner_order' => $index + 1,
             ]);
-        });
+        };
 
-        // Image Upload Handler
-        if ($request->featured_image === null) {
-            $imageName = null;
-        } else {
-            $imageName = 'featured_img_' . Str::slug($request->property_name) . '.' . $request->featured_image->extension();
-            $request->featured_image->move(public_path('admin/uploads/images'), $imageName);
-        }
+        // ########### Create Properties Legal
+        PropertyLegalModel::create([
+            'properties_id' => $propertyCreate->id,
+            'company_name' => $request->company_name,
+            'rep_first_name' => $request->legal_rep_last_name,
+            'rep_last_name' => $request->legal_rep_first_name,
+            'phone' => $request->legal_rep_phone_number,
+            'email' => $request->legal_rep_email,
 
-        PropertiesFileModel::create([
-            'properties_id' => $property->id,
-            'featured_image' => $imageName,
-            'gallery' => null,
-            'property_plan' => null,
-            'ownership_certificate' => null,
-            'imb_pbg' => null,
+            // 'legal_status' => ,
+            // 'holder_name' => ,
+            // 'holder_number' => ,
+            // 'start_date' => ,
+            // 'end_date' => ,
+            // 'purchase_date' => ,
+            // 'extension_cost' => ,
+            // 'purchase_cost' => ,
+            // 'deadline_payment' => ,
+            // 'zoning' => ,
         ]);
+
+
+
+
+        // dd('done');
 
         $flashData = [
             'judul' => 'Create Property Success',
@@ -223,11 +247,11 @@ class PropertiesController extends Controller
     {
 
         // Delete Image Handler
-        if ($this->getFeaturedImage($id) != null) {
-            File::delete(public_path('admin/uploads/images/' . $this->getFeaturedImage($id)));
-        }
+        // if ($this->getFeaturedImage($id) != null) {
+        //     File::delete(public_path('admin/uploads/images/' . $this->getFeaturedImage($id)));
+        // }
 
-        PropertiesFeatureModel::where('properties_id', $id)->delete();
+        PropertyOwnerModel::where('properties_id', $id)->delete();
         PropertiesModel::destroy($id);
 
         $flashData = [

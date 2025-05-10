@@ -47,7 +47,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                              <div>
                                   <h4 class="card-title mb-2 ">Total Villas</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">{{ $data_property_count }} Unit</p>
+                                  <p class="text-muted fw-medium fs-22 mb-0">10 Unit</p>
                              </div>
                              <div>
                                   <div class="avatar-md bg-primary bg-opacity-10 rounded">
@@ -71,7 +71,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                              <div>
                                   <h4 class="card-title mb-2 ">Unit Sold</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">{{ $property_sold_count }} Unit</p>
+                                  <p class="text-muted fw-medium fs-22 mb-0">10 Unit</p>
                              </div>
                              <div>
                                   <div class="avatar-md bg-primary bg-opacity-10 rounded">
@@ -95,7 +95,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                              <div>
                                   <h4 class="card-title mb-2 ">Unit Rent</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">{{ $property_rent_count }} Unit</p>
+                                  <p class="text-muted fw-medium fs-22 mb-0">10 Unit</p>
                              </div>
                              <div>
                                   <div class="avatar-md bg-primary bg-opacity-10 rounded">
@@ -118,21 +118,8 @@
               <div class="card">
                    <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                         <div>
-                             <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">{{ $data_property_count }}</span></h4>
+                             <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">10 </span></h4>
                         </div>
-                        {{-- <div class="dropdown">
-                             <a href="#" class="dropdown-toggle btn btn-sm btn-outline-light rounded" data-bs-toggle="dropdown" aria-expanded="false">
-                                  This Month
-                             </a>
-                             <div class="dropdown-menu dropdown-menu-end">
-                                  <!-- item-->
-                                  <a href="#!" class="dropdown-item">Download</a>
-                                  <!-- item-->
-                                  <a href="#!" class="dropdown-item">Export</a>
-                                  <!-- item-->
-                                  <a href="#!" class="dropdown-item">Import</a>
-                             </div>
-                        </div> --}}
                    </div>
                    <div class="table-responsive">
                         <table class="table align-middle text-nowrap table-hover table-centered mb-0">

@@ -15,13 +15,11 @@
     
     <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ isset($value) ? $value : old($name) }}" {{ $disabled ? 'disabled' : '' }}>
 
-
     @error($name)  
-        <div class="validation-message mt-1">
+        <div class="alert alert-danger mt-1 p-1" role="alert">
             {{ $message }}
         </div>
     @enderror
-    
 </div>
 
 
