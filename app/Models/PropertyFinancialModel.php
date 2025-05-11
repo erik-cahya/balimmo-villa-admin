@@ -9,6 +9,6 @@ class PropertyFinancialModel extends Model
 {
     use HasFactory;
     protected $table = 'property_financial';
-    protected $guarded = ['id'];
     protected $primaryKey = 'id';
+    protected $guarded = ['id'];
 }

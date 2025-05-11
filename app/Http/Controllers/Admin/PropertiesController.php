@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\PropertiesFeatureModel;
 use App\Models\PropertiesFileModel;
 use App\Models\PropertiesModel;
+use App\Models\PropertyFinancialModel;
+use App\Models\PropertyGalleryImageModel;
+use App\Models\PropertyGalleryModel;
 use App\Models\PropertyLegalModel;
 use App\Models\PropertyOwnerModel;
 use App\Models\User;
@@ -60,53 +63,48 @@ class PropertiesController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {        
+        $slug = Str::slug($request->property_name);
+
+        // Gallery Handler
+        $gallery = PropertyGalleryModel::create([
+            'properties_id' => 1,
+            'description' => 'deskripsi',
+        ]);
+
+        if (!file_exists(public_path('gallery/' . $slug))) {
+            mkdir(public_path('gallery/' . $slug), 0755, true);
+        }
+
+        $order = explode(',', $request->order);
+
+        foreach ($order as $i => $index) {
+            if (isset($request->images[$index])) {
+                $image = $request->images[$index];
+                $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('gallery/' . $slug), $filename);
+
+                PropertyGalleryImageModel::create([
+                    'gallery_id' => $gallery->id,
+                    'image_path' => 'gallery/' . $slug . '/' . $filename,
+                    'order' => $i,
+                    'is_featured' => $i === 0,
+                ]);
+                // $gallery->images()->create([
+                //     'image_path' => 'gallery/' . $slug . '/' . $filename,
+                //     'order' => $i,
+                //     'is_featured' => $i === 0,
+                // ]);
+            }
+        }
+        // /* Gallery Handler
+
+        dd('upload gallery done');
 
         // dd($this->getUSDtoIDRRate());
-        // dd($request->all());
+        dd($request->images, $request->order);
 
-            if($request->legal_category === 'Freehold'){
-            $request->validate([
-                'freehold_purchase_date' => 'required',
-                'freehold_certificate_number' => 'required',
-                'freehold_certificate_holder_name' => 'required',
-                'freehold_green_zone' => 'required',
-                'freehold_yellow_zone' => 'required',
-                'freehold_pink_zone' => 'required',
-            ]);
-
-            $request->leasehold_start_date = null;
-            $request->leasehold_end_date = null;
-            $request->leasehold_contract_number = null;
-            $request->leasehold_contract_holder_name = null;
-            $request->leasehold_negotiation_ext_cost = null;
-            $request->leasehold_purchase_cost = null;
-            $request->leasehold_deadline_payment = null;
-            $request->leasehold_green_zone = null;
-            $request->leasehold_yellow_zone = null;
-            $request->leasehold_pink_zone = null;
-        }
-        elseif($request->legal_category === 'Leasehold'){
-            $request->validate([
-                'leasehold_start_date' => 'required',
-                'leasehold_end_date' => 'required',
-                'leasehold_contract_number' => 'required',
-                'leasehold_contract_holder_name' => 'required',
-                'leasehold_negotiation_ext_cost' => 'required',
-                'leasehold_purchase_cost' => 'required',
-                'leasehold_deadline_payment' => 'required',
-                'leasehold_green_zone' => 'required',
-                'leasehold_yellow_zone' => 'required',
-                'leasehold_pink_zone' => 'required',
-            ]);
-
-            $request->freehold_purchase_date = null;
-            $request->freehold_certificate_number = null;
-            $request->freehold_certificate_holder_name = null;
-            $request->freehold_green_zone = null;
-            $request->freehold_yellow_zone = null;
-            $request->freehold_pink_zone = null;
-        };
+        dd($request->all());
 
 
         $request->validate([
@@ -126,6 +124,15 @@ class PropertiesController extends Controller
             'owners[0][last_name]' => 'required',
             'owners[0][email]' => 'required',
             'owners[0][phone_number]' => 'required',
+
+            // ##### Rental Yield
+            'average_nightly_rate' => 'required',
+            'average_occupancy_rate' => 'required',
+            'month_rented_per_year' => 'required',
+            'estimated_annual_turnover' => 'required',
+
+            // ##### Gallery
+            'images.*' => 'required|image|max:2048',
         ],[
             'owners[0][first_name].required' => 'The Owner Name field is required.',
             'owners[0][last_name].required' => 'The Owner Last Name field is required.',
@@ -133,6 +140,60 @@ class PropertiesController extends Controller
             'owners[0][phone_number].required' => 'The Phone Number field is required.', 
         ]); 
 
+        
+
+          // Freehold
+        if($request->legal_category === 'Freehold'){
+            $request->validate([
+                'freehold_purchase_date' => 'required',
+                'freehold_certificate_number' => 'required',
+                'freehold_certificate_holder_name' => 'required',
+            ]);
+
+            $holder_name = $request->freehold_certificate_holder_name;
+            $holder_number = $request->freehold_certificate_number;
+
+            $request->merge([
+            'leasehold_start_date' => null,
+            'leasehold_end_date' => null,
+            'leasehold_contract_number' => null,
+            'leasehold_contract_holder_name' => null,
+            'leasehold_negotiation_ext_cost' => null,
+            'leasehold_purchase_cost' => null,
+            'leasehold_deadline_payment' => null,
+            'leasehold_green_zone' => null,
+            'leasehold_yellow_zone' => null,
+            'leasehold_pink_zone' => null,
+            ]);
+        }
+        // Leasehold
+        elseif($request->legal_category === 'Leasehold'){
+            $request->validate([
+                'leasehold_start_date' => 'required',
+                'leasehold_end_date' => 'required',
+                'leasehold_contract_number' => 'required',
+                'leasehold_contract_holder_name' => 'required',
+                'leasehold_negotiation_ext_cost' => 'required',
+                'leasehold_purchase_cost' => 'required',
+                'leasehold_deadline_payment' => 'required',
+                // 'leasehold_green_zone' => 'required',
+                // 'leasehold_yellow_zone' => 'required',
+                // 'leasehold_pink_zone' => 'required',
+            ]);
+
+            $holder_name = $request->leasehold_contract_holder_name;
+            $holder_number = $request->leasehold_contract_number;
+
+            $request->merge([
+                'freehold_purchase_date' => null,
+                'freehold_certificate_number' => null,
+                'freehold_certificate_holder_name' => null,
+                'freehold_green_zone' => null,
+                'freehold_yellow_zone' => null,
+                'freehold_pink_zone' => null,
+            ]);
+        };
+        
         // ########### Create Properties Data
         $propertyCreate = PropertiesModel::create([
             'property_name' => $request->property_name,
@@ -172,20 +233,36 @@ class PropertiesController extends Controller
             'phone' => $request->legal_rep_phone_number,
             'email' => $request->legal_rep_email,
 
-            // 'legal_status' => ,
-            // 'holder_name' => ,
-            // 'holder_number' => ,
-            // 'start_date' => ,
-            // 'end_date' => ,
-            // 'purchase_date' => ,
-            // 'extension_cost' => ,
-            // 'purchase_cost' => ,
-            // 'deadline_payment' => ,
-            // 'zoning' => ,
+            'legal_status' => $request->legal_category,
+            'holder_name' => $holder_name,
+            'holder_number' => $holder_number,
+            'start_date' => $request->leasehold_start_date == null ? null : Carbon::createFromFormat('d-m-Y', $request->leasehold_start_date)->format('Y-m-d'),
+            'end_date' =>  $request->leasehold_end_date == null ? null : Carbon::createFromFormat('d-m-Y', $request->leasehold_end_date)->format('Y-m-d'),
+            'purchase_date' => $request->freehold_purchase_date == null ? null : Carbon::createFromFormat('d-m-Y', $request->freehold_purchase_date)->format('Y-m-d'),
+            'extension_cost' => $request->leasehold_negotiation_ext_cost,
+            'purchase_cost' => $request->leasehold_purchase_cost,
+            'deadline_payment' => $request->leasehold_deadline_payment == null ? null : Carbon::createFromFormat('d-m-Y', $request->leasehold_deadline_payment)->format('Y-m-d'),
+             
+            'zoning' => null,
         ]);
 
+        // ########### Create Properties Financial
+        PropertyFinancialModel::create([
+            'properties_id' => $propertyCreate->id,
+            'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
+            'avg_occupancy_rate' => $request->average_occupancy_rate,
+            'months_rented' => $request->month_rented_per_year,
+            'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
+            'document_support' => null,
 
-
+            // ################ Sale Price & Conditions
+            'selling_price_idr' => null,
+            'selling_price_usd' => null,
+            'commision_ammount_idr' => null,
+            'commision_ammount_usd' => null,
+            'net_seller_idr' => null,
+            'net_seller_usd' => null,
+        ]);
 
         // dd('done');
 

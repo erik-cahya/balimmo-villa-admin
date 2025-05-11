@@ -16,7 +16,7 @@
 
 @endpush
 @section('content')
-<form action="{{ route('properties.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('properties.store') }}" method="POST" enctype="multipart/form-data" id="galleryForm">
      @csrf
      <div class="container-fluid">
 
@@ -255,14 +255,14 @@
                     <div class="card-body">
                          <div class="row">
 
-                              <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Average Nightly Rate (IDR)" />
-                              <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Average Occupancy Rate (%)" />
+                              <x-form-input className="col-lg-6" type="text" name="average_nightly_rate" label="Average Nightly Rate (IDR) *" />
+                              <x-form-input className="col-lg-6" type="text" name="average_occupancy_rate" label="Average Occupancy Rate (%) *" />
 
-                              <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Months Rented per Year" />
-                              <x-form-input className="col-lg-6" type="text" name="number_of_floors" label="Estimated Annual Turnover" />
+                              <x-form-input className="col-lg-6" type="text" name="month_rented_per_year" label="Months Rented per Year *" />
+                              <x-form-input className="col-lg-6" type="text" name="estimated_annual_turnover" label="Estimated Annual Turnover (IDR) *" />
                               <div class="col-lg-12 mb-3">
-                                   <label for="featured_image" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
-                                   <input type="file" id="featured_image" name="featured_image" class="form-control" placeholder="">
+                                   <label for="rental_support_docs" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
+                                   <input type="file" id="rental_support_docs" name="rental_support_docs" class="form-control" placeholder="">
                               </div>
                              
                          </div>
@@ -380,7 +380,13 @@
 
                               <div class="col-lg-12 mb-3">
                                    <label for="gallery" class="form-label">Property Gallery (min 4)</label>
-                                   <input type="file" id="gallery" name="gallery" class="form-control" placeholder="">
+                                   {{-- <input type="file" id="gallery" name="gallery" class="form-control" placeholder=""> --}}
+
+                                   <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-3">
+                                   <div id="previewContainer" class="d-flex flex-wrap gap-3"></div>
+
+                                   <input type="hidden" name="order" id="imageOrder">
+
                               </div>
 
                               <x-form-input className="col-lg-12" type="text" name="virtual_tour" label="Virtual Tour Link" />
@@ -614,4 +620,54 @@
                   });
           });
           </script>
+
+          {{-- ######################### Gallery Upload ######################### --}}
+          <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+          <script>
+          const imageInput = document.getElementById('imageInput');
+          const previewContainer = document.getElementById('previewContainer');
+          const imageOrder = document.getElementById('imageOrder');
+          const galleryForm = document.getElementById('galleryForm');
+          let files = [];
+
+          imageInput.addEventListener('change', (e) => {
+               files = Array.from(e.target.files);
+               previewContainer.innerHTML = '';
+
+               files.forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                         const imgDiv = document.createElement('div');
+                         imgDiv.classList.add('img-preview');
+                         imgDiv.setAttribute('data-index', index);
+                         imgDiv.innerHTML = `
+                              <img src="${event.target.result}" alt="Image Preview"
+                                   style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
+                              <p class="text-center mt-1">Image ${index + 1}</p>
+                         `;
+                         previewContainer.appendChild(imgDiv);
+                    };
+                    reader.readAsDataURL(file);
+               });
+
+               updateOrder();
+          });
+
+          function updateOrder() {
+               const items = document.querySelectorAll('.img-preview');
+               imageOrder.value = Array.from(items).map(item => item.getAttribute('data-index')).join(',');
+          }
+
+          new Sortable(previewContainer, {
+               animation: 150,
+               onEnd: () => updateOrder(),
+          });
+
+          // 👇 Tambahkan ini agar order selalu terupdate saat form disubmit
+          galleryForm.addEventListener('submit', function (e) {
+               updateOrder(); // pastikan order diperbarui dulu
+          });
+          </script>
+          {{-- /* Gallery Upload */ --}}
 @endpush

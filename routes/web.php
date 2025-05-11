@@ -56,5 +56,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
 
-
 require __DIR__.'/auth.php';

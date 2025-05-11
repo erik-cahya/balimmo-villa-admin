@@ -15,18 +15,18 @@ return new class extends Migration
             $table->id();
             $table->foreignId('properties_id')->comment('fk to properties table');
             
-            $table->float('avg_nightly_rate');
-            $table->float('avg_occupancy_rate');
-            $table->integer('months_rented');
-            $table->float('annual_turnover');
-            $table->text('document_support');
+            $table->integer('avg_nightly_rate')->nullable();
+            $table->float('avg_occupancy_rate')->nullable();
+            $table->integer('months_rented')->nullable();
+            $table->integer('annual_turnover')->nullable();
+            $table->text('document_support')->nullable();
 
-            $table->integer('selling_price_idr');
-            $table->float('selling_price_usd');
-            $table->integer('commision_ammount_idr');
-            $table->float('commision_ammount_usd');
-            $table->integer('net_seller_idr');
-            $table->float('net_seller_usd');
+            $table->integer('selling_price_idr')->nullable();
+            $table->float('selling_price_usd')->nullable();
+            $table->integer('commision_ammount_idr')->nullable();
+            $table->float('commision_ammount_usd')->nullable();
+            $table->integer('net_seller_idr')->nullable();
+            $table->float('net_seller_usd')->nullable();
             $table->timestamps();
         });
     }
