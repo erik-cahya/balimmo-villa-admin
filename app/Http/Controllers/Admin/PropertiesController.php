@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\GalleryImageModel;
 use App\Models\PropertiesFeatureModel;
 use App\Models\PropertiesFileModel;
 use App\Models\PropertiesModel;
@@ -29,7 +30,11 @@ class PropertiesController extends Controller
     public function index()
     {
 
-        $data['data_property'] = PropertiesModel::get();
+
+        $data['data_property'] = PropertiesModel::select('properties.id', 'property_name', 'property_slug', 'internal_reference', 'bedroom', 'bathroom')->with(['featuredImage' => function ($query) {
+            $query->select('image_path', 'property_gallery.id');
+            $query->where('is_featured', 1);
+        }])->get();
 
         return view('admin.properties.index', $data);
     }
@@ -64,81 +69,44 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {        
+        // dd($request->all());
         $slug = Str::slug($request->property_name);
 
-        // Gallery Handler
-        $gallery = PropertyGalleryModel::create([
-            'properties_id' => 1,
-            'description' => 'deskripsi',
-        ]);
-
-        if (!file_exists(public_path('gallery/' . $slug))) {
-            mkdir(public_path('gallery/' . $slug), 0755, true);
-        }
-
-        $order = explode(',', $request->order);
-
-        foreach ($order as $i => $index) {
-            if (isset($request->images[$index])) {
-                $image = $request->images[$index];
-                $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('gallery/' . $slug), $filename);
-
-                PropertyGalleryImageModel::create([
-                    'gallery_id' => $gallery->id,
-                    'image_path' => 'gallery/' . $slug . '/' . $filename,
-                    'order' => $i,
-                    'is_featured' => $i === 0,
-                ]);
-                // $gallery->images()->create([
-                //     'image_path' => 'gallery/' . $slug . '/' . $filename,
-                //     'order' => $i,
-                //     'is_featured' => $i === 0,
-                // ]);
-            }
-        }
-        // /* Gallery Handler
-
-        dd('upload gallery done');
-
         // dd($this->getUSDtoIDRRate());
-        dd($request->images, $request->order);
-
-        dd($request->all());
 
 
-        $request->validate([
-            'property_name' => 'required|unique:properties',
-            'description' => 'required',
-            'region' => 'required',
-            'subregion' => 'required',
-            'property_address' => 'required',
-            'land_size' => 'required',
-            'built_area' => 'required',
-            'pool_area' => 'required',
-            'bedroom' => 'required',
-            'bathroom' => 'required',
-            'year_construction' => 'required',
-            'year_renovated' => 'required',
-            'owners[0][first_name]' => 'required',
-            'owners[0][last_name]' => 'required',
-            'owners[0][email]' => 'required',
-            'owners[0][phone_number]' => 'required',
+        // $request->validate([
+        //     'property_name' => 'required|unique:properties',
+        //     'description' => 'required',
+        //     'region' => 'required',
+        //     'subregion' => 'required',
+        //     'property_address' => 'required',
+        //     'land_size' => 'required',
+        //     'built_area' => 'required',
+        //     'pool_area' => 'required',
+        //     'bedroom' => 'required',
+        //     'bathroom' => 'required',
+        //     'year_construction' => 'required',
+        //     'year_renovated' => 'required',
+        //     'owners[0][first_name]' => 'required',
+        //     'owners[0][last_name]' => 'required',
+        //     'owners[0][email]' => 'required',
+        //     'owners[0][phone_number]' => 'required',
 
-            // ##### Rental Yield
-            'average_nightly_rate' => 'required',
-            'average_occupancy_rate' => 'required',
-            'month_rented_per_year' => 'required',
-            'estimated_annual_turnover' => 'required',
+        //     // ##### Rental Yield
+        //     'average_nightly_rate' => 'required',
+        //     'average_occupancy_rate' => 'required',
+        //     'month_rented_per_year' => 'required',
+        //     'estimated_annual_turnover' => 'required',
 
-            // ##### Gallery
-            'images.*' => 'required|image|max:2048',
-        ],[
-            'owners[0][first_name].required' => 'The Owner Name field is required.',
-            'owners[0][last_name].required' => 'The Owner Last Name field is required.',
-            'owners[0][email].required' => 'The Email field is required.',
-            'owners[0][phone_number].required' => 'The Phone Number field is required.', 
-        ]); 
+        //     // ##### Gallery
+        //     'images.*' => 'required|image|max:2048',
+        // ],[
+        //     'owners[0][first_name].required' => 'The Owner Name field is required.',
+        //     'owners[0][last_name].required' => 'The Owner Last Name field is required.',
+        //     'owners[0][email].required' => 'The Email field is required.',
+        //     'owners[0][phone_number].required' => 'The Phone Number field is required.', 
+        // ]); 
 
         
 
@@ -152,6 +120,9 @@ class PropertiesController extends Controller
 
             $holder_name = $request->freehold_certificate_holder_name;
             $holder_number = $request->freehold_certificate_number;
+            $green_zone = $request->freehold_green_zone == 'on' ? 1 : 0;
+            $yellow_zone = $request->freehold_yellow_zone == 'on' ? 1 : 0;
+            $pink_zone = $request->freehold_pink_zone == 'on' ? 1 : 0;
 
             $request->merge([
             'leasehold_start_date' => null,
@@ -161,9 +132,9 @@ class PropertiesController extends Controller
             'leasehold_negotiation_ext_cost' => null,
             'leasehold_purchase_cost' => null,
             'leasehold_deadline_payment' => null,
-            'leasehold_green_zone' => null,
-            'leasehold_yellow_zone' => null,
-            'leasehold_pink_zone' => null,
+            'leasehold_green_zone' => 0,
+            'leasehold_yellow_zone' => 0,
+            'leasehold_pink_zone' => 0,
             ]);
         }
         // Leasehold
@@ -183,21 +154,25 @@ class PropertiesController extends Controller
 
             $holder_name = $request->leasehold_contract_holder_name;
             $holder_number = $request->leasehold_contract_number;
+            $green_zone = $request->leasehold_green_zone == 'on' ? 1 : 0;
+            $yellow_zone = $request->leasehold_yellow_zone == 'on' ? 1 : 0;
+            $pink_zone = $request->leasehold_pink_zone == 'on' ? 1 : 0;
+
 
             $request->merge([
                 'freehold_purchase_date' => null,
                 'freehold_certificate_number' => null,
                 'freehold_certificate_holder_name' => null,
-                'freehold_green_zone' => null,
-                'freehold_yellow_zone' => null,
-                'freehold_pink_zone' => null,
+                'freehold_green_zone' => 0,
+                'freehold_yellow_zone' => 0,
+                'freehold_pink_zone' => 0,
             ]);
         };
         
         // ########### Create Properties Data
         $propertyCreate = PropertiesModel::create([
             'property_name' => $request->property_name,
-            'property_slug' => Str::slug($request->property_name),
+            'property_slug' => $slug,
             'internal_reference' => Auth::user()->reference_code,
             'property_description' => $request->description,
             'region' => Str::title($request->region),
@@ -243,7 +218,9 @@ class PropertiesController extends Controller
             'purchase_cost' => $request->leasehold_purchase_cost,
             'deadline_payment' => $request->leasehold_deadline_payment == null ? null : Carbon::createFromFormat('d-m-Y', $request->leasehold_deadline_payment)->format('Y-m-d'),
              
-            'zoning' => null,
+            'green_zone' => $green_zone,
+            'yellow_zone' => $yellow_zone,
+            'pink_zone' => $pink_zone,
         ]);
 
         // ########### Create Properties Financial
@@ -263,6 +240,39 @@ class PropertiesController extends Controller
             'net_seller_idr' => null,
             'net_seller_usd' => null,
         ]);
+
+        // Gallery Handler
+        $gallery = PropertyGalleryModel::create([
+            'properties_id' => 1,
+            'description' => 'deskripsi',
+        ]);
+
+        if (!file_exists(public_path('admin/gallery/' . $slug))) {
+            mkdir(public_path('admin/gallery/' . $slug), 0755, true);
+        }
+
+        $order = explode(',', $request->order);
+
+        foreach ($order as $i => $index) {
+            if (isset($request->images[$index])) {
+                $image = $request->images[$index];
+                $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('admin/gallery/' . $slug), $filename);
+
+                PropertyGalleryImageModel::create([
+                    'gallery_id' => $gallery->id,
+                    'image_path' => 'admin/gallery/' . $slug . '/' . $filename,
+                    'order' => $i,
+                    'is_featured' => $i === 0,
+                ]);
+                // $gallery->images()->create([
+                //     'image_path' => 'gallery/' . $slug . '/' . $filename,
+                //     'order' => $i,
+                //     'is_featured' => $i === 0,
+                // ]);
+            }
+        }
+        // /* Gallery Handler
 
         // dd('done');
 

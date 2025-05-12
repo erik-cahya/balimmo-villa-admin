@@ -153,7 +153,7 @@
                                        <td>
                                             <div class="d-flex align-items-center gap-2">
                                                  <div>
-                                                      <img src="{{ asset('admin') }}/uploads/images/{{ $property->featured_image }}" alt="" class="avatar-md rounded border border-light border-3">
+                                                      <img src="{{ asset($property->featuredImage->image_path) }}" alt="" class="avatar-md rounded border border-light border-3" style="object-fit: cover">
                                                  </div>
                                                  <div>
                                                       <a href="#!" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>

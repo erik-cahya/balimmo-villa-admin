@@ -30,7 +30,10 @@ return new class extends Migration
             $table->string('extension_cost')->nullable();
             $table->string('purchase_cost')->nullable();
             $table->date('deadline_payment')->nullable();
-            $table->text('zoning')->nullable();
+            // $table->text('zoning')->nullable();
+            $table->boolean('green_zone')->nullable();
+            $table->boolean('yellow_zone')->nullable();
+            $table->boolean('pink_zone')->nullable();
         
 
 
