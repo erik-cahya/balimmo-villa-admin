@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('telp');
-            $table->string('email');
-            $table->integer('budget');
-            $table->integer('require_bedroom');
-            $table->string('localization');
-            $table->date('time');
+            $table->foreignId('properties_id')->comment('fk to properties table');
+            $table->string('agent_code')->nullable();
+            $table->string('cust_name');
+            $table->string('cust_telp');
+            $table->string('cust_email');
+            $table->integer('cust_budget')->nullable();
+            $table->integer('require_bedroom')->nullable();
+            $table->string('localization')->nullable();
+            $table->date('date')->nullable();
             $table->timestamps();
         });
     }

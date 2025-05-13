@@ -56,23 +56,35 @@
 
 
 
-               <li class="nav-item">
-                    <a class="nav-link menu-arrow" href="#sidebarFeatures" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarFeatures">
+              @if (Auth::user()->role === 'master')    
+                    <li class="nav-item">
+                         <a class="nav-link menu-arrow" href="#sidebarFeatures" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarFeatures">
+                              <span class="nav-icon">
+                                   <i class="ri-group-line"></i>
+                              </span>
+                              <span class="nav-text"> Agent </span>
+                         </a>
+                         <div class="collapse" id="sidebarFeatures">
+                              <ul class="nav sub-navbar-nav">
+                                   <li class="sub-nav-item">
+                                        <a class="sub-nav-link" href="{{ route('agent.index') }}">Agent List</a>
+                                   </li>
+                                   {{-- <li class="sub-nav-item">
+                                        <a class="sub-nav-link" href="{{ route('features.create') }}">Create Feature</a>
+                                   </li> --}}
+                              </ul>
+                         </div>
+                    </li>
+              @endif
+
+
+               <li class="nav-item">           
+                    <a class="nav-link {{ request()->routeIs('customers.*') ? 'active' : '' }}" href="{{ route('customer.index') }}">
                          <span class="nav-icon">
-                              <i class="ri-group-line"></i>
+                              <i class="ri-user-shared-2-line"></i> 
                          </span>
-                         <span class="nav-text"> Agent </span>
-                    </a>
-                    <div class="collapse" id="sidebarFeatures">
-                         <ul class="nav sub-navbar-nav">
-                              <li class="sub-nav-item">
-                                   <a class="sub-nav-link" href="{{ route('agent.index') }}">Agent List</a>
-                              </li>
-                              {{-- <li class="sub-nav-item">
-                                   <a class="sub-nav-link" href="{{ route('features.create') }}">Create Feature</a>
-                              </li> --}}
-                         </ul>
-                    </div>
+                         <span class="nav-text">Customers</span>
+                    </a>                
                </li>
 
                <li class="nav-item">           

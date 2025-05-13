@@ -17,28 +17,28 @@
           <div class="col-lg-12">
                <div class="card">
                     <div class="card-header border-0">
-                        <div class="row justify-content-between">
-                             <div class="col-lg-6">
+                         <div class="row justify-content-between">
+                              <div class="col-lg-6">
                                    <div class="row align-items-center">
                                         <div class="col-lg-6">
                                              <form class="app-search d-md-block me-auto">
-                                                 <div class="position-relative">
-                                                      <input type="search" class="form-control" placeholder="Search Agent" autocomplete="off" value="">
-                                                      <iconify-icon icon="solar:magnifer-broken" class="search-widget-icon"></iconify-icon>
-                                                 </div>
+                                                  <div class="position-relative">
+                                                       <input type="search" class="form-control" placeholder="Search Agent" autocomplete="off" value="">
+                                                       <iconify-icon icon="solar:magnifer-broken" class="search-widget-icon"></iconify-icon>
+                                                  </div>
                                              </form>
                                         </div>
                                         <div class="col-lg-4">
                                              <h5 class="text-dark fw-medium mb-0">{{ $data_agent->count() }} <span class="text-muted"> Agent</span></h5>
                                         </div>
-                                  </div>
-                             </div>
-                             <div class="col-lg-6">
-                                  <div class="text-md-end mt-3 mt-md-0">
-                                       <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-search-line me-1"></i> Search</button>
-                                       <button type="button" class="btn btn-sm btn-outline-dark rounded me-1" data-bs-toggle="collapse" data-bs-target="#addNewAgent" aria-expanded="false" aria-controls="addNewAgent"><i class="ri-add-line me-1"></i> Add New Agent</button>
-                                  </div>
-                             </div>
+                                   </div>
+                              </div>
+                              <div class="col-lg-6">
+                                   <div class="text-md-end mt-3 mt-md-0">
+                                        <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-search-line me-1"></i> Search</button>
+                                        <button type="button" class="btn btn-sm btn-outline-dark rounded me-1" data-bs-toggle="collapse" data-bs-target="#addNewAgent" aria-expanded="false" aria-controls="addNewAgent"><i class="ri-add-line me-1"></i> Add New Agent</button>
+                                   </div>
+                              </div>
 
                          </div>
                     </div>
@@ -181,11 +181,6 @@
 
     </div>
 
-    <div class="row">
-     <div class="col-lg-12">
-
-     </div>
-    </div>
 
 
 </div>

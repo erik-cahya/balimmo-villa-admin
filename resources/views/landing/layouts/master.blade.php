@@ -7,7 +7,7 @@
   <meta name="description" content="Morden Bootstrap HTML5 Template">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('landing') }}/assets/img/favicon.ico">
-    
+
    <!-- ======= All CSS Plugins here ======== -->
   <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/plugins/swiper-bundle.min.css">
 
@@ -22,6 +22,10 @@
   <!-- Custom Style CSS -->
   <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/style.css">
   <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/rtl.css">
+
+  @stack('style')
+
+
 
 </head>
 
@@ -186,6 +190,7 @@
   <!-- Customscript js -->
   <script src="{{ asset('landing') }}/assets/js/script.js"></script>
 
+  @stack('scripts')
 
   
 </body>

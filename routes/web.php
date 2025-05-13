@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AgentController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\PropertiesController;
@@ -32,12 +33,14 @@ Route::get('/contact', [LandingPageController::class, 'contact'])->name('landing
 Route::get('/about', [LandingPageController::class, 'about'])->name('landing-page.about');
 
 Route::get('/listing', [LandingPageController::class, 'listing'])->name('landing-page.listing');
-Route::get('/listing/detail/{slug}', [LandingPageController::class, 'listingDetail'])->name('landing-page.listing.detail');
+Route::get('/listing/{slug}', [LandingPageController::class, 'listingDetail'])->name('landing-page.listing.detail');
 
 Route::get('/blog', [LandingPageController::class, 'blog'])->name('landing-page.blog');
 Route::get('/landing-login', [LandingPageController::class, 'login'])->name('landing-page.login');
 Route::get('/landing-signup', [LandingPageController::class, 'signup'])->name('landing-page.sign-up');
 
+// ############################################################### Customer Booking Controller
+Route::post('listing/booking/{slug}', [CustomerController::class, 'booking'])->name('customer.booking');
 
 Route::middleware('auth')->group(function () {
 
@@ -49,6 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/agent', AgentController::class);
 
     Route::resource('/features', FeatureController::class);
+
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

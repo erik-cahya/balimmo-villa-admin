@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FeatureListModel;
 use App\Models\GalleryImageModel;
 use App\Models\PropertiesFeatureModel;
 use App\Models\PropertiesFileModel;
 use App\Models\PropertiesModel;
+use App\Models\PropertyFeatureModel;
 use App\Models\PropertyFinancialModel;
 use App\Models\PropertyGalleryImageModel;
 use App\Models\PropertyGalleryModel;
@@ -52,7 +54,10 @@ class PropertiesController extends Controller
     {
         // $data['features'] = PropertiesFeatureModel::all();
         // dd($data['features']);
-        return view('admin.properties.create');
+        $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
+        $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
+
+        return view('admin.properties.create', $data);
     }
 
     private function getUSDtoIDRRate()
@@ -70,41 +75,36 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {        
-        // dd($request->all());
         $slug = Str::slug($request->property_name);
+        // $request->validate([
+        //     'property_name' => 'required|unique:properties',
+        //     'description' => 'required',
+        //     'region' => 'required',
+        //     'subregion' => 'required',
+        //     'property_address' => 'required',
+        //     'land_size' => 'required',
+        //     'built_area' => 'required',
+        //     'pool_area' => 'required',
+        //     'bedroom' => 'required',
+        //     'bathroom' => 'required',
+        //     'year_construction' => 'required',
+        //     'year_renovated' => 'required',
 
-        // dd($this->getUSDtoIDRRate());
+        //     // 'owners[0][first_name]' => 'required',
+        //     // 'owners[0][last_name]' => 'required',
+        //     // 'owners[0][email]' => 'required',
+        //     // 'owners[0][phone_number]' => 'required',
 
-        $request->validate([
-            'property_name' => 'required|unique:properties',
-            'description' => 'required',
-            'region' => 'required',
-            'subregion' => 'required',
-            'property_address' => 'required',
-            'land_size' => 'required',
-            'built_area' => 'required',
-            'pool_area' => 'required',
-            'bedroom' => 'required',
-            'bathroom' => 'required',
-            'year_construction' => 'required',
-            'year_renovated' => 'required',
+        //     // ##### Rental Yield
+        //     'average_nightly_rate' => 'required',
+        //     'average_occupancy_rate' => 'required',
+        //     'month_rented_per_year' => 'required',
+        //     'estimated_annual_turnover' => 'required',
 
-            // 'owners[0][first_name]' => 'required',
-            // 'owners[0][last_name]' => 'required',
-            // 'owners[0][email]' => 'required',
-            // 'owners[0][phone_number]' => 'required',
+        //     // ##### Gallery
+        //     'images.*' => 'required|image|max:2048',
+        // ]); 
 
-            // ##### Rental Yield
-            'average_nightly_rate' => 'required',
-            'average_occupancy_rate' => 'required',
-            'month_rented_per_year' => 'required',
-            'estimated_annual_turnover' => 'required',
-
-            // ##### Gallery
-            'images.*' => 'required|image|max:2048',
-        ]); 
-
-        
 
           // Freehold
         if($request->legal_category === 'Freehold'){
@@ -219,7 +219,23 @@ class PropertiesController extends Controller
             'pink_zone' => $pink_zone,
         ]);
 
-        // ########### Create Properties Financial
+        // ############## Create Properties Financial
+        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
+        $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(),2);
+        
+        // Presentase
+        if($idrPrice <= 199999){
+            $commision = 5;
+        }else{
+            $commision = 2.5;
+        }
+
+        $commisionAmmountIDR = $idrPrice * $commision / 100;
+        $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
+        $netSellerIDR = $idrPrice - $commisionAmmountIDR;
+        $netSellerUSD = round($usdPrice - $commisionAmmountUSD, 2);
+
+
         PropertyFinancialModel::create([
             'properties_id' => $propertyCreate->id,
             'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
@@ -229,13 +245,22 @@ class PropertiesController extends Controller
             'document_support' => null,
 
             // ################ Sale Price & Conditions
-            'selling_price_idr' => null,
-            'selling_price_usd' => null,
-            'commision_ammount_idr' => null,
-            'commision_ammount_usd' => null,
-            'net_seller_idr' => null,
-            'net_seller_usd' => null,
+            'selling_price_idr' => $idrPrice,
+            'selling_price_usd' => $usdPrice,
+            'commision_ammount_idr' => $commisionAmmountIDR,
+            'commision_ammount_usd' => $commisionAmmountUSD,
+            'net_seller_idr' => $netSellerIDR,
+            'net_seller_usd' => $netSellerUSD,
         ]);
+
+        // ########### Create Property Feature Data
+        foreach($request->feature as $index => $feature){
+            $idFeature = FeatureListModel::select('id')->where('slug', $index)->first();
+            PropertyFeatureModel::create([
+                'properties_id' => $propertyCreate->id,
+                'feature_id' => $idFeature->id
+            ]);
+        }
 
         // Gallery Handler
         $gallery = PropertyGalleryModel::create([

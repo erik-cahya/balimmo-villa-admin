@@ -80,8 +80,8 @@
                                    <div class="my-3 row">
 
                                         <x-form-input className="col-lg-12" type="text" name="company_name" label="Company Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Legal Representative Last Name" />
                                         <x-form-input className="col-lg-6" type="text" name="legal_rep_first_name" label="Legal Representative First Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Legal Representative Last Name" />
                                         <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
                                         <x-form-input className="col-lg-6" type="email" name="legal_rep_email" label="Email" />
 
@@ -110,7 +110,11 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Fully Furnished" />
+                                        @foreach ($feature_list_indoor as $feature_indoor)
+                                             <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
+                                        @endforeach
+
+                                        {{-- <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Fully Furnished" />
                                         <x-form-checkbox className="form-check mb-2 mx-3" name="equipped_kitchen" label="Equipped Kitchen (Fridge, Oven, Stove, Extractor Hood)" />
                                         <x-form-checkbox className="form-check mb-2 mx-3" name="air_conditioning" label="Air Conditioning in All Room" />
                                         <x-form-checkbox className="form-check mb-2 mx-3" name="wardobes_dressing_room" label="Dressing Room or Built-in Wardobes" />
@@ -122,7 +126,7 @@
                                         <x-form-checkbox className="form-check mb-2 mx-3" name="safe_box" label="Safe Box" />
                                         <x-form-checkbox className="form-check mb-2 mx-3" name="smart_home_system" label="Smart Home System" />
                                         <x-form-checkbox className="form-check mb-2 mx-3" name="integrated_audio_system" label="Integrated Audio System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="cctv" label="CCTV System" />
+                                        <x-form-checkbox className="form-check mb-2 mx-3" name="cctv" label="CCTV System" /> --}}
 
                                    </div>
                               </div>
@@ -132,8 +136,11 @@
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Outdoor Features</h5>
                                    <hr>
                                    <div class="my-3 row">
+                                             @foreach ($feature_list_outdoor as $feature_outdoor)
+                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                             @endforeach
 
-                                             <div class="col-md-6">
+                                             {{-- <div class="col-md-6">
                                                   <x-form-checkbox className="form-check mb-2 mx-3" name="infinity_pool" label="Infinity Pool" />
                                                   <x-form-checkbox className="form-check mb-2 mx-3" name="pool_deck_sun_lounger_included" label="Pool Deck / Sun Loungers Included" />
                                                   <x-form-checkbox className="form-check mb-2 mx-3" name="landscape_garden" label="Landscape Garden" />
@@ -152,7 +159,7 @@
                                                   <x-form-checkbox className="form-check mb-2 mx-3" name="west_facing" label="West-facing (Sunset View)" />
                                                   <x-form-checkbox className="form-check mb-2 mx-3" name="direct_beach_access" label="Direct Beach Access" />
                                                   <x-form-checkbox className="form-check mb-2 mx-3" name="rooftop_terrace" label="Rooftop Terrace" />
-                                             </div>
+                                             </div> --}}
 
                                    </div>
                               </div>
@@ -543,7 +550,7 @@
                     document.getElementById('commision_rate').value = '2.5%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
                }
-     
+
                if (idrValue <= 0) return;
      
                const rate = await getExchangeRate();
