@@ -36,6 +36,7 @@ class PropertiesController extends Controller
             $query->where('is_featured', 1);
         }])->get();
 
+        // dd($data['data_property']);
         return view('admin.properties.index', $data);
     }
 
@@ -74,39 +75,34 @@ class PropertiesController extends Controller
 
         // dd($this->getUSDtoIDRRate());
 
+        $request->validate([
+            'property_name' => 'required|unique:properties',
+            'description' => 'required',
+            'region' => 'required',
+            'subregion' => 'required',
+            'property_address' => 'required',
+            'land_size' => 'required',
+            'built_area' => 'required',
+            'pool_area' => 'required',
+            'bedroom' => 'required',
+            'bathroom' => 'required',
+            'year_construction' => 'required',
+            'year_renovated' => 'required',
 
-        // $request->validate([
-        //     'property_name' => 'required|unique:properties',
-        //     'description' => 'required',
-        //     'region' => 'required',
-        //     'subregion' => 'required',
-        //     'property_address' => 'required',
-        //     'land_size' => 'required',
-        //     'built_area' => 'required',
-        //     'pool_area' => 'required',
-        //     'bedroom' => 'required',
-        //     'bathroom' => 'required',
-        //     'year_construction' => 'required',
-        //     'year_renovated' => 'required',
-        //     'owners[0][first_name]' => 'required',
-        //     'owners[0][last_name]' => 'required',
-        //     'owners[0][email]' => 'required',
-        //     'owners[0][phone_number]' => 'required',
+            // 'owners[0][first_name]' => 'required',
+            // 'owners[0][last_name]' => 'required',
+            // 'owners[0][email]' => 'required',
+            // 'owners[0][phone_number]' => 'required',
 
-        //     // ##### Rental Yield
-        //     'average_nightly_rate' => 'required',
-        //     'average_occupancy_rate' => 'required',
-        //     'month_rented_per_year' => 'required',
-        //     'estimated_annual_turnover' => 'required',
+            // ##### Rental Yield
+            'average_nightly_rate' => 'required',
+            'average_occupancy_rate' => 'required',
+            'month_rented_per_year' => 'required',
+            'estimated_annual_turnover' => 'required',
 
-        //     // ##### Gallery
-        //     'images.*' => 'required|image|max:2048',
-        // ],[
-        //     'owners[0][first_name].required' => 'The Owner Name field is required.',
-        //     'owners[0][last_name].required' => 'The Owner Last Name field is required.',
-        //     'owners[0][email].required' => 'The Email field is required.',
-        //     'owners[0][phone_number].required' => 'The Phone Number field is required.', 
-        // ]); 
+            // ##### Gallery
+            'images.*' => 'required|image|max:2048',
+        ]); 
 
         
 
@@ -243,7 +239,7 @@ class PropertiesController extends Controller
 
         // Gallery Handler
         $gallery = PropertyGalleryModel::create([
-            'properties_id' => 1,
+            'properties_id' => $propertyCreate->id,
             'description' => 'deskripsi',
         ]);
 
@@ -290,7 +286,7 @@ class PropertiesController extends Controller
     public function detail(string $slug)
     {
         // dd($slug);
-        $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();;
+        $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)->first();
 
 
