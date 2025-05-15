@@ -50,7 +50,7 @@
             <div class="container">
                 <div class="main__footer">
                     <div class="row ">
-                        <div class="col-xl-6 col-lg-5 col-md-6">
+                        <div class="col-xl-5 col-lg-4 col-md-5">
                             <div class="footer__widget">
                                 <h2 class="footer__widget--title about">About Us <button class="footer__widget--button" aria-label="footer widget button"></button>
                                     <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -92,15 +92,14 @@
                                 </div>
                             </div>
                         </div>                    
-                        <div class="col-xl-3  col-lg-3 col-md-3">
+                        <div class="col-xl-2 col-lg-2 col-md-3">
                             <div class="footer__widget">
                                 <h2 class="footer__widget--title ">Quick Links <button class="footer__widget--button" aria-label="footer widget button"></button>
                                     <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
                                         <path d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
                                     </svg>
                                 </h2>
-                                <ul class="footer__widget--menu footer__widget--inner">
-                                    
+                                <ul class="footer__widget--menu footer__widget--inner">                                    
                                     <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('landing-page.about') }}">About Us</a></li>
                                     <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('landing-page.listing') }}">Listing</a></li>
                                     <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="{{ route('landing-page.contact') }}">Contact Us</a></li>
@@ -108,13 +107,9 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-5 col-md-6">
+                        <div class="col-xl-2 col-lg-5 col-md-6 mb-4">
                             <div class="footer__widget">
-                                <h2 class="footer__widget--title ">Our Social Media<button class="footer__widget--button" aria-label="footer widget button"></button>
-                                    <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
-                                        <path d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
-                                    </svg>
-                                </h2>
+                                <h2 class="footer__widget--title ">Our Social Media</h2>
                                 <ul class=" footer__social d-flex align-items-center">
                                     <li class="footer__social--list">
                                         <a class="footer__social--icon" target="_blank" href="https://www.facebook.com/people/Balimmo/61557243686168/">
@@ -149,6 +144,14 @@
                                         </a>
                                     </li>                                    
                                 </ul>  
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-5 col-md-6">
+                            <div class="footer__widget">
+                                <h2 class="footer__widget--title ">Asosiasi Real Estate Broker Indonesia</h2>
+                                <img src="{{ asset('landing') }}/assets/img/logo/logo-arebi.png" alt="arebi logo" width="75" class="mb-4">
+                                <p class="footer__widget--desc">Member Number: 2025000055A</p>
                             </div>
                         </div>
                     </div>
