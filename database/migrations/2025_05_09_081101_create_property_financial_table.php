@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('avg_occupancy_rate')->nullable();
             $table->integer('months_rented')->nullable();
             $table->integer('annual_turnover')->nullable();
-            $table->text('document_support')->nullable();
+            // $table->text('document_support')->nullable();
 
             $table->integer('selling_price_idr')->nullable();
             $table->float('selling_price_usd')->nullable();

@@ -292,9 +292,9 @@
                         <div class="listing__details--content__step mb-80">
                             <h3 class="listing__details--content__title mb-40">Lifestyle</h3>
                             <div class="listing__details--video__thumbnail position-relative">
-                                <img src="{{ asset('landing') }}/assets/img/property/property-video-thumbnail.png" alt="img">
+                                <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="img">
                                 <div class="bideo__play">
-                                    <a class="bideo__play--icon glightbox" href="https://vimeo.com/115041822" data-gallery="video">
+                                    <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/dQw4w9WgXcQ" data-gallery="video">
                                         <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor"/>
                                         </svg>                                        

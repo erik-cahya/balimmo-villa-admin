@@ -15,16 +15,22 @@ class AgentController extends Controller
     
 
     private function checkMasterRole(){
-    if(Auth::check() && Auth::user()->role == 'agent'){
-        return redirect()->route('dashboard.index');
+        if(Auth::check() && Auth::user()->role == 'agent'){
+            return redirect()->route('dashboard.index');
+        }
     }
-}
+
+    public function __construct()
+    {
+        $this->middleware('role:master');
+
+    }
 
     public function index(){
 
-        if ($redirect = $this->checkMasterRole()) {
-            return $redirect;
-        }
+        // if ($redirect = $this->checkMasterRole()) {
+        //     return $redirect;
+        // }
 
         $loggedInUser = User::find(Auth::id());
         $otherUsers = User::where('id', '!=', Auth::id())->get();        
