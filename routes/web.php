@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\PropertiesController;
+use App\Http\Controllers\Admin\PropertiesFeatureController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\MailController;
@@ -47,11 +48,11 @@ Route::middleware('auth')->group(function () {
     // ############################################################### Admin Panel Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('/properties', PropertiesController::class)->except('show');
+    Route::get('/properties/features', [PropertiesFeatureController::class, 'index'])->name('properties.features');
     Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details');
 
     Route::resource('/agent', AgentController::class);
 
-    Route::resource('/features', FeatureController::class);
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 
@@ -59,7 +60,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
 

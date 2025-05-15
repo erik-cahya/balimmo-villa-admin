@@ -20,3 +20,4 @@ yarn-error.log
 
 /public/gallery
 /public/admin/gallery
+/public/admin/attachment

@@ -56,7 +56,6 @@
                                         <x-form-input className="col-lg-6" type="number" name="owners[0][phone_number]" label="Phone Number" />
                                         <x-form-input className="col-lg-6" type="email" name="owners[0][email]" label="Email" />
 
-
                                    </div>
                               </div>
 
@@ -69,7 +68,6 @@
                                         <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
                                         <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
                                         <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Email" />
-
 
                                    </div>
                               </div>
@@ -131,38 +129,15 @@
                                    </div>
                               </div>
 
-
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Outdoor Features</h5>
                                    <hr>
                                    <div class="my-3 row">
-                                             @foreach ($feature_list_outdoor as $feature_outdoor)
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
-                                             @endforeach
-
-                                             {{-- <div class="col-md-6">
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="infinity_pool" label="Infinity Pool" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="pool_deck_sun_lounger_included" label="Pool Deck / Sun Loungers Included" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="landscape_garden" label="Landscape Garden" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="gazebo_outdoor_lounge" label="Gazebo / Outdoor Lounge" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="outdoor_shower" label="Outdoor Shower" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="outdoor_kitchen_barbeque_area" label="Outdoor Kitchen or Barbeque Area" />
-
-                                             </div>
-
-                                             <div class="col-md-6">
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="garage_carport" label="Garage / Carport" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="automatic_gate" label="Automatic Gate" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="ocean_view" label="Ocean View" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="rice_field_view" label="Rice Field View" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="jungle_view" label="Jungle View" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="west_facing" label="West-facing (Sunset View)" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="direct_beach_access" label="Direct Beach Access" />
-                                                  <x-form-checkbox className="form-check mb-2 mx-3" name="rooftop_terrace" label="Rooftop Terrace" />
-                                             </div> --}}
-
+                                        @foreach ($feature_list_outdoor as $feature_outdoor)
+                                             <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                        @endforeach
                                    </div>
-                              </div>
+                              </div> 
        
                          </div>
 
@@ -268,8 +243,8 @@
                               <x-form-input className="col-lg-6" type="text" name="month_rented_per_year" label="Months Rented per Year *" />
                               <x-form-input className="col-lg-6" type="text" name="estimated_annual_turnover" label="Estimated Annual Turnover (IDR) *" />
                               <div class="col-lg-12 mb-3">
-                                   <label for="rental_support_docs" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
-                                   <input type="file" id="rental_support_docs" name="rental_support_docs" class="form-control" placeholder="">
+                                   <label for="file_rental_support" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
+                                   <input type="file" id="file_rental_support" name="file_rental_support" class="form-control" placeholder="">
                               </div>
                              
                          </div>
@@ -396,9 +371,9 @@
 
                               </div>
 
-                              <x-form-input className="col-lg-12" type="text" name="virtual_tour" label="Virtual Tour Link" />
-                              <x-form-input className="col-lg-12" type="text" name="lifestyle" label="Lifestyle" />
-                              <x-form-input className="col-lg-12" type="text" name="experience" label="Experience" />
+                              <x-form-input className="col-lg-12" type="text" name="url_virtual_tour" label="Virtual Tour Link" placeholder="Input Youtube URL" />
+                              <x-form-input className="col-lg-12" type="text" name="url_lifestyle" label="Lifestyle" placeholder="Input Youtube URL"/>
+                              <x-form-input className="col-lg-12" type="text" name="url_experience" label="Experience" placeholder="Input Youtube URL"/>
 
                          </div>
                     </div>

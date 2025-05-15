@@ -5,6 +5,7 @@
     'label',
     'type',
     'disabled' => false,
+    'required' => false,
     'value',
     'placeholder'
 ])
@@ -13,7 +14,7 @@
 <div class="{{ $className }} mb-3" id="group_{{ $name }}">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
     
-    <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ isset($value) ? $value : old($name) }}" {{ $disabled ? 'disabled' : '' }}>
+    <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ isset($value) ? $value : old($name) }}" {{ $disabled ? 'disabled' : '' }} {{ $required ? 'required' : '' }}>
 
     @error($name)  
         <div class="alert alert-danger mt-1 p-1" role="alert">

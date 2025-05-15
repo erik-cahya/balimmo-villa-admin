@@ -50,6 +50,12 @@
                              <li class="sub-nav-item">
                                   <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Properties Listing</a>
                              </li>
+                             
+                              @if (Auth::user()->role === 'master')    
+                             <li class="sub-nav-item">
+                                  <a class="sub-nav-link" href="{{ route('properties.features') }}">Feature & Amenities</a>
+                             </li>
+                             @endif
                         </ul>
                    </div>
               </li>
@@ -95,6 +101,7 @@
                          <span class="nav-text">Leads</span>
                     </a>                
                </li>
+
                
                <!-- <li class="nav-item">                  
                     <a class="nav-link {{ request()->routeIs('income.*') ? 'active' : '' }}" href="#">

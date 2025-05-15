@@ -12,9 +12,20 @@ class LandingPageController extends Controller
 {
     public function index(){
 
-        $data['data_property'] = 
-            PropertiesModel::select('properties.id','total_land_area', 'property_name', 'property_slug', 'internal_reference', 'bedroom', 'bathroom', 'property_address', 'users.name as agent_name')
+        $data['data_property'] = PropertiesModel::select(
+                'properties.id',
+                'total_land_area',
+                'property_name', 
+                'property_slug', 
+                'internal_reference', 
+                'bedroom', 
+                'bathroom', 
+                'property_address', 
+                'users.name as agent_name',
+                'property_financial.selling_price_idr as sellingPriceIDR'
+            )
             ->join('users', 'reference_code', '=', 'properties.internal_reference')
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')    
             ->with(['featuredImage' => function ($query) {
                 $query->select('image_path', 'property_gallery.id');
                 $query->where('is_featured', 1);
@@ -22,6 +33,9 @@ class LandingPageController extends Controller
             ->get();
 
         // dd($data['data_property']);
+        foreach ($data['data_property'] as $item) {
+            $item->formatted_price = $this->shortPriceIDR($item->sellingPriceIDR);
+        }
 
         return view('landing.index', $data);
     }
@@ -38,7 +52,7 @@ class LandingPageController extends Controller
         }
     }
 
-     public function listing(){
+    public function listing(){
         $data['data_property'] = 
             PropertiesModel::select(
                 'properties.id',
@@ -93,6 +107,7 @@ class LandingPageController extends Controller
             ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
             ->select('feature_list.name as feature_name')
             ->get();
+            
 
         return view('landing.listing.details', $data);
     }
@@ -104,8 +119,6 @@ class LandingPageController extends Controller
     public function about(){
         return view('landing.about.index');
     }
-
-   
 
     public function blog(){
         return view('landing.blog.index');

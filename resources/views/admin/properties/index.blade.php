@@ -165,32 +165,19 @@
                                        <td class="text-capitalize">{{ $property->property_type }}</td>
                                        <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">{{ $property->property_status }}</span></td>
                                        <td>
-                                            <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> 5</p>
+                                            <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> {{ $property->bedroom }}</p>
                                        </td>
                                        <td class="text-capitalize">{{ $property->region }}</td>
                                        <td>$8,930.00</td>
                                        <td>
                                             <div class="d-flex gap-2">
                                                  <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
-                                                 {{-- <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a> --}}
 
                                                  {{-- Delete Button --}}
                                                  <input type="hidden" class="propertyId" value="{{ $property->id }}">
                                                  <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->property_name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></button>
                                                  {{-- /. Delete Button --}}
                                             </div>
-
-                                            {{-- Delete Button
-                                            <form action="/asesor/{{ $asesor->id }}" method="POST" class="d-inline">
-                                             {{ csrf_field() }}
-                                             {{ method_field('DELETE') }}
-
-                                             <input type="hidden" id="idAsesor" name="id_asesor" value="{{ $asesor->id }}">
-
-                                             <span type="button" class="btn btn-md btn-danger deleteButton mx-1" data-nama="{{ $asesor->nama_asesor }}">
-                                                 <i class="ri-delete-bin-2-line"></i>
-                                             </span> --}}
-
 
                                          </form>
                                          {{-- End Delete Button --}}

@@ -14,6 +14,7 @@ use App\Models\PropertyGalleryImageModel;
 use App\Models\PropertyGalleryModel;
 use App\Models\PropertyLegalModel;
 use App\Models\PropertyOwnerModel;
+use App\Models\PropertyUrlAttachmentModel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,19 +33,36 @@ class PropertiesController extends Controller
     public function index()
     {
 
-
-        $data['data_property'] = PropertiesModel::select('properties.id', 'property_name', 'property_slug', 'internal_reference', 'bedroom', 'bathroom')->with(['featuredImage' => function ($query) {
-            $query->select('image_path', 'property_gallery.id');
-            $query->where('is_featured', 1);
-        }])->get();
-
-        // dd($data['data_property']);
+        if(Auth::user()->role == 'master')
+        {
+            $data['data_property'] = PropertiesModel::
+                select(
+                    'properties.id', 
+                    'property_name',
+                    'property_slug',
+                    'internal_reference',
+                    'bedroom',
+                    'bathroom')
+                ->with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'property_gallery.id');
+                    $query->where('is_featured', 1);
+                }])->get();
+        }
+        else{
+            $data['data_property'] = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
+                ->select(
+                    'properties.id', 
+                    'property_name', 
+                    'property_slug', 
+                    'internal_reference', 
+                    'bedroom', 
+                    'bathroom')
+                ->with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'property_gallery.id');
+                    $query->where('is_featured', 1);
+                }])->get();
+        }
         return view('admin.properties.index', $data);
-    }
-
-    // function get Foto Asesor
-    public function getFeaturedImage($id){
-        return PropertiesFileModel::where('properties_id', $id)->first()->featured_image;
     }
 
     /**
@@ -52,8 +70,6 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        // $data['features'] = PropertiesFeatureModel::all();
-        // dd($data['features']);
         $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
         $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
 
@@ -75,38 +91,39 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {        
+        
         $slug = Str::slug($request->property_name);
-        // $request->validate([
-        //     'property_name' => 'required|unique:properties',
-        //     'description' => 'required',
-        //     'region' => 'required',
-        //     'subregion' => 'required',
-        //     'property_address' => 'required',
-        //     'land_size' => 'required',
-        //     'built_area' => 'required',
-        //     'pool_area' => 'required',
-        //     'bedroom' => 'required',
-        //     'bathroom' => 'required',
-        //     'year_construction' => 'required',
-        //     'year_renovated' => 'required',
 
-        //     // 'owners[0][first_name]' => 'required',
-        //     // 'owners[0][last_name]' => 'required',
-        //     // 'owners[0][email]' => 'required',
-        //     // 'owners[0][phone_number]' => 'required',
+        $request->validate([
+            'property_name' => 'required|unique:properties',
+            'description' => 'required',
+            'region' => 'required',
+            'subregion' => 'required',
+            'property_address' => 'required',
+            'land_size' => 'required',
+            'built_area' => 'required',
+            'pool_area' => 'required',
+            'bedroom' => 'required',
+            'bathroom' => 'required',
+            'year_construction' => 'required',
+            'year_renovated' => 'required',
 
-        //     // ##### Rental Yield
-        //     'average_nightly_rate' => 'required',
-        //     'average_occupancy_rate' => 'required',
-        //     'month_rented_per_year' => 'required',
-        //     'estimated_annual_turnover' => 'required',
+            // 'owners[0][first_name]' => 'required',
+            // 'owners[0][last_name]' => 'required',
+            // 'owners[0][email]' => 'required',
+            // 'owners[0][phone_number]' => 'required',
 
-        //     // ##### Gallery
-        //     'images.*' => 'required|image|max:2048',
-        // ]); 
+            // ##### Rental Yield
+            'average_nightly_rate' => 'required',
+            'average_occupancy_rate' => 'required',
+            'month_rented_per_year' => 'required',
+            'estimated_annual_turnover' => 'required',
 
+            // ##### Gallery
+            // 'images.*' => 'required|image|max:2048',
+        ]); 
 
-          // Freehold
+        // Freehold
         if($request->legal_category === 'Freehold'){
             $request->validate([
                 'freehold_purchase_date' => 'required',
@@ -164,8 +181,9 @@ class PropertiesController extends Controller
                 'freehold_pink_zone' => 0,
             ]);
         };
-        
+        // ==========================================================================================================================================
         // ########### Create Properties Data
+        // ==========================================================================================================================================
         $propertyCreate = PropertiesModel::create([
             'property_name' => $request->property_name,
             'property_slug' => $slug,
@@ -183,7 +201,9 @@ class PropertiesController extends Controller
             'year_renovated' => $request->year_renovated,
         ]);
 
+        // ==========================================================================================================================================
         // ########### Create Property Owner Data
+        // ==========================================================================================================================================
         foreach($request->owners as $index => $owner){
             PropertyOwnerModel::create([
                 'properties_id' => $propertyCreate->id,
@@ -195,7 +215,9 @@ class PropertiesController extends Controller
             ]);
         };
 
+        // ==========================================================================================================================================
         // ########### Create Properties Legal
+        // ==========================================================================================================================================
         PropertyLegalModel::create([
             'properties_id' => $propertyCreate->id,
             'company_name' => $request->company_name,
@@ -219,7 +241,9 @@ class PropertiesController extends Controller
             'pink_zone' => $pink_zone,
         ]);
 
+        // ==========================================================================================================================================
         // ############## Create Properties Financial
+        // ==========================================================================================================================================
         $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(),2);
         
@@ -242,9 +266,8 @@ class PropertiesController extends Controller
             'avg_occupancy_rate' => $request->average_occupancy_rate,
             'months_rented' => $request->month_rented_per_year,
             'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
-            'document_support' => null,
 
-            // ################ Sale Price & Conditions
+            // Sale Price & Conditions
             'selling_price_idr' => $idrPrice,
             'selling_price_usd' => $usdPrice,
             'commision_ammount_idr' => $commisionAmmountIDR,
@@ -253,7 +276,9 @@ class PropertiesController extends Controller
             'net_seller_usd' => $netSellerUSD,
         ]);
 
+        // ==========================================================================================================================================
         // ########### Create Property Feature Data
+        // ==========================================================================================================================================
         foreach($request->feature as $index => $feature){
             $idFeature = FeatureListModel::select('id')->where('slug', $index)->first();
             PropertyFeatureModel::create([
@@ -262,7 +287,27 @@ class PropertiesController extends Controller
             ]);
         }
 
+        // ==========================================================================================================================================
+        // ########### Create Property URL & Attachment
+        // ==========================================================================================================================================
+        $fileName = $slug. '/' . $request->file_rental_support->getClientOriginalName();
+        $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileName);
+
+        // Create Property URL & Attachment
+        $dataURL = $request->only(['url_virtual_tour', 'url_lifestyle', 'url_experience']);
+        $dataURL['file_rental_support'] = $fileName;
+        
+        foreach($dataURL as $key => $value){
+            PropertyUrlAttachmentModel::create([
+                'properties_id' => $propertyCreate->id,
+                'name' => $key,
+                'path_attachment' => $value
+            ]);
+        }
+        
+        // ==========================================================================================================================================
         // Gallery Handler
+        // ==========================================================================================================================================
         $gallery = PropertyGalleryModel::create([
             'properties_id' => $propertyCreate->id,
             'description' => 'deskripsi',
@@ -286,16 +331,9 @@ class PropertiesController extends Controller
                     'order' => $i,
                     'is_featured' => $i === 0,
                 ]);
-                // $gallery->images()->create([
-                //     'image_path' => 'gallery/' . $slug . '/' . $filename,
-                //     'order' => $i,
-                //     'is_featured' => $i === 0,
-                // ]);
             }
         }
         // /* Gallery Handler
-
-        // dd('done');
 
         $flashData = [
             'judul' => 'Create Property Success',
@@ -312,23 +350,26 @@ class PropertiesController extends Controller
     {
         // dd($slug);
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
-        $data['data_properties'] = PropertiesModel::where('property_slug', $slug)->first();
-
-
+        // $data['data_properties'] = PropertiesModel::where('property_slug', $slug)->first();
         
-        // Features Data
-        $features = PropertiesFeatureModel::where('properties_id', $property->id)->get();
-        $featureMap = [];
+        $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
+            ->with(['featuredImage' => function ($query) {
+                        $query->select('image_path', 'property_gallery.id');
+                        $query->where('is_featured', 1);
+                    }])
+            ->first();
 
-        foreach ($features as $feature) {
-            $featureMap[$feature->features_name] = json_decode($feature->features_value, true);
-        }
-        $data['propertyFeatures'] = $featureMap;
-        $data['featuredImage'] = PropertiesFileModel::where('properties_id', $property->id)->select('featured_image')->first()['featured_image'];
+        $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['data_properties']->id)
+            ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
+            ->select('feature_list.name as feature_name')
+            ->get();
 
-        // Agent Data
+        // dd($data['data_properties']);
+
+        $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
+
+
         $data['agent_data'] = User::where('reference_code', $property->internal_reference)->first();
-
         return view('admin.properties.details', $data);
     }
 
