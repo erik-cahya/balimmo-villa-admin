@@ -248,12 +248,16 @@ class PropertiesController extends Controller
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(),2);
         
         // Presentase
-        if($idrPrice <= 199999){
+        if($idrPrice < 150000000000){
             $commision = 5;
+        }else if($idrPrice >= 150000000000 && $idrPrice <= 340000000000){
+            $commision = 4;
+        }else if($idrPrice > 340000000000 && $idrPrice <= 700000000000){
+            $commision = 3;
         }else{
             $commision = 2.5;
         }
-
+        
         $commisionAmmountIDR = $idrPrice * $commision / 100;
         $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
         $netSellerIDR = $idrPrice - $commisionAmmountIDR;

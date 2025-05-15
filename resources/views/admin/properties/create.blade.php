@@ -517,11 +517,19 @@
                let commissionPercent = parseFloat(commissionRateInput.value) / 100 || 0;
 
                // Balimmo Properties Fees
-               if(idrValue <= '199999'){
+               if(idrValue < '150000000000'){
                     document.getElementById('commision_rate').value = '5%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
                     
-               }else if(idrValue >= '200000'){
+               }else if(idrValue >= '150000000000' && idrValue <= '340000000000'){
+                    document.getElementById('commision_rate').value = '4%';
+                    commissionPercent = parseFloat(commissionRateInput.value) / 100;
+               }
+               else if(idrValue > '340000000000' && idrValue <= '700000000000'){
+                    document.getElementById('commision_rate').value = '4%';
+                    commissionPercent = parseFloat(commissionRateInput.value) / 100;
+               }
+               else{
                     document.getElementById('commision_rate').value = '2.5%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
                }

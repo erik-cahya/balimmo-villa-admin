@@ -159,7 +159,6 @@
                                                       <a href="#!" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
                                                  </div>
                                             </div>
-
                                        </td>
                                        <td>{{ $property->internal_reference }}</td>
                                        <td class="text-capitalize">{{ $property->property_type }}</td>
