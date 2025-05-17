@@ -64,11 +64,6 @@ class FeatureListSeeder extends Seeder
                     'type' => 'indoor',
                 ],
                 [
-                    'name' => 'Equipped Kitchen',
-                    'slug' => 'equipped-kitchen',
-                    'type' => 'indoor',
-                ],
-                [
                     'name' => 'Safe Box',
                     'slug' => 'safe-box',
                     'type' => 'outdoor',

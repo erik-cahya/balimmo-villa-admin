@@ -23,16 +23,12 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-
+use League\CommonMark\Normalizer\SlugNormalizer;
 
 class PropertiesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-
         if(Auth::user()->role == 'master')
         {
             $data['data_property'] = PropertiesModel::
@@ -65,9 +61,6 @@ class PropertiesController extends Controller
         return view('admin.properties.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
@@ -76,23 +69,10 @@ class PropertiesController extends Controller
         return view('admin.properties.create', $data);
     }
 
-    private function getUSDtoIDRRate()
-    {
-        try {
-            $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
-            return $response['rates']['IDR'] ?? 15000; // fallback
-        } catch (\Exception $e) {
-            return 15000; // fallback jika API gagal
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {        
-        
-        $slug = Str::slug($request->property_name);
+        dd($request->all());
+        $slug = $this->generatePropertiesSlug($request->property_name);
 
         $request->validate([
             'property_name' => 'required|unique:properties',
@@ -182,7 +162,7 @@ class PropertiesController extends Controller
             ]);
         };
         // ==========================================================================================================================================
-        // ########### Create Properties Data
+        // ########### Create Properties Data ##############
         // ==========================================================================================================================================
         $propertyCreate = PropertiesModel::create([
             'property_name' => $request->property_name,
@@ -202,9 +182,18 @@ class PropertiesController extends Controller
         ]);
 
         // ==========================================================================================================================================
-        // ########### Create Property Owner Data
+        // ########### Create Property Owner Data ##############
         // ==========================================================================================================================================
-        foreach($request->owners as $index => $owner){
+        foreach($request->owners as $index => $owner) {
+            // Cek apakah semua field bernilai null atau kosong
+            if (
+                empty($owner['first_name']) &&
+                empty($owner['last_name']) &&
+                empty($owner['phone_number']) &&
+                empty($owner['email'])
+            ) {
+                continue; // Lewati iterasi ini, jangan buat data ke DB
+            }
             PropertyOwnerModel::create([
                 'properties_id' => $propertyCreate->id,
                 'first_name' => $owner['first_name'],
@@ -213,10 +202,11 @@ class PropertiesController extends Controller
                 'email' => $owner['email'],
                 'owner_order' => $index + 1,
             ]);
-        };
+        }
+
 
         // ==========================================================================================================================================
-        // ########### Create Properties Legal
+        // ########### Create Properties Legal ##############
         // ==========================================================================================================================================
         PropertyLegalModel::create([
             'properties_id' => $propertyCreate->id,
@@ -229,12 +219,12 @@ class PropertiesController extends Controller
             'legal_status' => $request->legal_category,
             'holder_name' => $holder_name,
             'holder_number' => $holder_number,
-            'start_date' => $request->leasehold_start_date == null ? null : Carbon::createFromFormat('d-m-Y', $request->leasehold_start_date)->format('Y-m-d'),
-            'end_date' =>  $request->leasehold_end_date == null ? null : Carbon::createFromFormat('d-m-Y', $request->leasehold_end_date)->format('Y-m-d'),
-            'purchase_date' => $request->freehold_purchase_date == null ? null : Carbon::createFromFormat('d-m-Y', $request->freehold_purchase_date)->format('Y-m-d'),
+            'start_date' => $request->leasehold_start_date == null ? null : $this->dateConversion($request->leasehold_start_date),
+            'end_date' =>  $request->leasehold_end_date == null ? null : $this->dateConversion($request->leasehold_end_date),
+            'purchase_date' => $request->freehold_purchase_date == null ? null : $this->dateConversion($request->freehold_purchase_date),
             'extension_cost' => $request->leasehold_negotiation_ext_cost,
             'purchase_cost' => $request->leasehold_purchase_cost,
-            'deadline_payment' => $request->leasehold_deadline_payment == null ? null : Carbon::createFromFormat('d-m-Y', $request->leasehold_deadline_payment)->format('Y-m-d'),
+            'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
              
             'green_zone' => $green_zone,
             'yellow_zone' => $yellow_zone,
@@ -242,22 +232,22 @@ class PropertiesController extends Controller
         ]);
 
         // ==========================================================================================================================================
-        // ############## Create Properties Financial
+        // ############## Create Properties Financial ##############
         // ==========================================================================================================================================
         $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(),2);
         
         // Presentase
-        if($idrPrice < 150000000000){
+        if($idrPrice < 15000000000 ){
             $commision = 5;
-        }else if($idrPrice >= 150000000000 && $idrPrice <= 340000000000){
+        }else if($idrPrice >= 15000000000  && $idrPrice <= 34000000000 ){
             $commision = 4;
-        }else if($idrPrice > 340000000000 && $idrPrice <= 700000000000){
+        }else if($idrPrice > 34000000000  && $idrPrice <= 70000000000 ){
             $commision = 3;
         }else{
             $commision = 2.5;
         }
-        
+
         $commisionAmmountIDR = $idrPrice * $commision / 100;
         $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
         $netSellerIDR = $idrPrice - $commisionAmmountIDR;
@@ -292,14 +282,18 @@ class PropertiesController extends Controller
         }
 
         // ==========================================================================================================================================
-        // ########### Create Property URL & Attachment
+        // ########### Create Property URL & Attachment ##############
         // ==========================================================================================================================================
-        $fileName = $slug. '/' . $request->file_rental_support->getClientOriginalName();
-        $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileName);
+        $fileRentalSupport = $slug. '/' . $request->file_rental_support->getClientOriginalName();
+        $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileRentalSupport);
+        
+        $fileTypeMandate = $slug. '/' . $request->file_type_of_mandate->getClientOriginalName();
+        $request->file_type_of_mandate->move(public_path('admin/attachment/' . $slug), $fileTypeMandate);
 
         // Create Property URL & Attachment
-        $dataURL = $request->only(['url_virtual_tour', 'url_lifestyle', 'url_experience']);
-        $dataURL['file_rental_support'] = $fileName;
+        $dataURL = $request->only(['url_virtual_tour', 'url_lifestyle', 'url_experience', 'file_type_of_mandate']);
+        $dataURL['file_rental_support'] = $fileRentalSupport;
+        $dataURL['file_type_of_mandate'] = $fileTypeMandate;
         
         foreach($dataURL as $key => $value){
             PropertyUrlAttachmentModel::create([
@@ -310,7 +304,7 @@ class PropertiesController extends Controller
         }
         
         // ==========================================================================================================================================
-        // Gallery Handler
+        // ############## Gallery Handler ##############
         // ==========================================================================================================================================
         $gallery = PropertyGalleryModel::create([
             'properties_id' => $propertyCreate->id,
@@ -347,9 +341,6 @@ class PropertiesController extends Controller
         return redirect()->route('properties.index')->with('flashData', $flashData);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function detail(string $slug)
     {
         // dd($slug);
@@ -393,17 +384,8 @@ class PropertiesController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-
-        // Delete Image Handler
-        // if ($this->getFeaturedImage($id) != null) {
-        //     File::delete(public_path('admin/uploads/images/' . $this->getFeaturedImage($id)));
-        // }
-
         PropertyOwnerModel::where('properties_id', $id)->delete();
         PropertiesModel::destroy($id);
 
@@ -414,5 +396,31 @@ class PropertiesController extends Controller
         ];
 
         return response()->json($flashData);
+    }
+
+    private function getUSDtoIDRRate()
+    {
+        try {
+            $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
+            return $response['rates']['IDR'] ?? 15000; // fallback
+        } catch (\Exception $e) {
+            return 15000; // fallback jika API gagal
+        }
+    }
+
+    private function dateConversion($date){
+        return Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+    }
+
+    private function generatePropertiesSlug($name){
+        $baseSlug = Str::slug($name);
+        $slug = $baseSlug;
+        $counter = 2;
+
+        // Cek property slug if exist in database
+        while (PropertiesModel::where('property_slug', $slug)->exists()) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
     }
 }

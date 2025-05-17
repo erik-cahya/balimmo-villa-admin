@@ -11,9 +11,6 @@ use Illuminate\Support\Str;
 
 class AgentController extends Controller
 {
-
-    
-
     private function checkMasterRole(){
         if(Auth::check() && Auth::user()->role == 'agent'){
             return redirect()->route('dashboard.index');
@@ -51,12 +48,15 @@ class AgentController extends Controller
             // 'property_name.required' => 'custom message',
         ]); 
         
-        $reference_code = $request->role === 'Master' || 'master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
+        do {
+            $reference_code = 'BPM-' . Str::upper($request->initial_name) . '-' . random_int(1000, 9999);
+        } while (User::where('reference_code', $reference_code)->exists());
+
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'no_telp' => $request->phone_number,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'reference_code' => $reference_code,
             'role' => $request->role,
         ]);

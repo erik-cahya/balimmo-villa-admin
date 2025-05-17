@@ -238,9 +238,24 @@
                          <div class="row">
 
                               <x-form-input className="col-lg-6" type="text" name="average_nightly_rate" label="Average Nightly Rate (IDR) *" />
-                              <x-form-input className="col-lg-6" type="text" name="average_occupancy_rate" label="Average Occupancy Rate (%) *" />
 
-                              <x-form-input className="col-lg-6" type="text" name="month_rented_per_year" label="Months Rented per Year *" />
+                               <div class="col-md-6" id="group_average_occupancy_rate">
+                                   <label for="average_occupancy_rate" class="form-label">Average Occupancy Rate (%) *</label>
+                                   <div class="input-group">
+                                   <input type="number" name="average_occupancy_rate" class="form-control" placeholder="Input Avg Occupancy Rate">
+                                   <span class="input-group-text">%</span>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-6" id="group_month_rented_per_year">
+                                   <label for="month_rented_per_year" class="form-label">Months Rented per Year *</label>
+                                   <div class="input-group">
+                                   <input type="number" name="month_rented_per_year" class="form-control" min="1" max="120" placeholder="Months Rented per Year">
+                                   <span class="input-group-text">month(s)</span>
+                                   </div>
+                              </div>
+
+
                               <x-form-input className="col-lg-6" type="text" name="estimated_annual_turnover" label="Estimated Annual Turnover (IDR) *" />
                               <div class="col-lg-12 mb-3">
                                    <label for="file_rental_support" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
@@ -350,6 +365,41 @@
                     </div>
                </div>
 
+
+               {{-- -------------------------------------------------------------------------  --}}
+               {{-- Type of Mandate Section Form  --}}
+               {{-- -------------------------------------------------------------------------  --}}
+               <div class="card">
+                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
+                         <h4 class="card-title text-uppercase">Type of Mandate</h4>
+                    </div>
+                    <div class="card-body">
+                         <div class="row">
+
+                              <div class="col-lg-12 mb-3">
+                                   <div class="row">
+                                        <div class="col-12">
+                                             <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate">
+                                                  <label class="form-check-label" for="esstentials_mandate">Essentials Mandate</label>
+                                             </div>
+                                             <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate">
+                                                  <label class="form-check-label" for="booster_mandate">Booster Mandate</label>
+                                             </div>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="col-lg-12 mb-3">
+                                   <label for="file_type_of_mandate" class="form-label">Supporting Document</label>
+                                   <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
+                              </div>
+
+                         </div>
+                    </div>
+               </div>
+
                {{-- -------------------------------------------------------------------------  --}}
                {{-- Document & Attachment Section Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
@@ -359,7 +409,7 @@
                     </div>
                     <div class="card-body">
                          <div class="row">
-
+                              
                               <div class="col-lg-12 mb-3">
                                    <label for="gallery" class="form-label">Property Gallery (min 4)</label>
                                    {{-- <input type="file" id="gallery" name="gallery" class="form-control" placeholder=""> --}}
@@ -517,15 +567,15 @@
                let commissionPercent = parseFloat(commissionRateInput.value) / 100 || 0;
 
                // Balimmo Properties Fees
-               if(idrValue < '150000000000'){
+               if(idrValue < '15000000000'){
                     document.getElementById('commision_rate').value = '5%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
                     
-               }else if(idrValue >= '150000000000' && idrValue <= '340000000000'){
+               }else if(idrValue >= '15000000000' && idrValue <= '34000000000'){
                     document.getElementById('commision_rate').value = '4%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
                }
-               else if(idrValue > '340000000000' && idrValue <= '700000000000'){
+               else if(idrValue > '34000000000' && idrValue <= '70000000000'){
                     document.getElementById('commision_rate').value = '4%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
                }

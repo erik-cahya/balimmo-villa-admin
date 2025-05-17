@@ -160,6 +160,8 @@
                                                  </div>
                                             </div>
                                        </td>
+
+                                       
                                        <td>{{ $property->internal_reference }}</td>
                                        <td class="text-capitalize">{{ $property->property_type }}</td>
                                        <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">{{ $property->property_status }}</span></td>
