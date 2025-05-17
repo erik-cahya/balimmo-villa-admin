@@ -1,6 +1,6 @@
-{{-- 
-Docs 
-    - jika tidak memberikan options="", maka form select akan menjadi yes/no.. 
+{{--
+Docs
+    - jika tidak memberikan options="", maka form select akan menjadi yes/no..
     - jika memberikan options="[array]", akan menjadi value dari options tersebut
     - toggles="" : digunakan untuk memberikan toggling hide/show sebuah form dengan pointing ke id=#group_{{ $name }}
 --}}
@@ -21,19 +21,19 @@ Docs
     <select class="form-control" id="{{ $name }}" name="{{ $name }}" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
         <option value="" selected disabled>Choose {{ $label }}</option>
         @foreach(($options ?? $defaultOptions) as $key => $value)
-    <option value="{{ is_numeric($key) ? $value : $key }}" 
-        {{ (old($name, $selected) == (is_numeric($key) ? $value : $key)) ? 'selected' : '' }}>
-        {{ $value }}
-    </option>
-@endforeach
-         
+            <option value="{{ is_numeric($key) ? $value : $key }}"
+                {{ (old($name, $selected) === (is_numeric($key) ? $value : $key)) ? 'selected' : '' }}>
+                {{ $value }}
+            </option>
+        @endforeach
+
     </select>
 
     @error($name)
         <style>
             .choices__inner{ border-color: #e96767!important;}
-        </style>     
-        
+        </style>
+
         <div class="validation-message">
             {{ $message }}
         </div>
@@ -51,21 +51,21 @@ Docs
 <div class="{{ $className }} mb-3" id="group_{{ $name }}">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
     <select class="form-control" id="{{ $name }}" name="{{ $name }}" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}" >
-        
+
         @if($slot->isNotEmpty())
             {{ $slot }}
         @else
             <option value="No" selected>No</option>
             <option value="Yes">Yes</option>
         @endif
-        
+
     </select>
 
     @error($name)
         <style>
             .choices__inner{ border-color: #e96767!important;}
-        </style>     
-        
+        </style>
+
         <div class="validation-message mt-1">
             {{ $message }}
         </div>

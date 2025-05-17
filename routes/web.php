@@ -48,7 +48,9 @@ Route::middleware('auth')->group(function () {
     // ############################################################### Admin Panel Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('/properties', PropertiesController::class)->except('show');
-    Route::get('/properties/features', [PropertiesFeatureController::class, 'index'])->name('properties.features');
+
+    Route::resource('/properties/features', PropertiesFeatureController::class)->except(['show', 'create']);
+
     Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details');
 
     Route::resource('/agent', AgentController::class);

@@ -161,7 +161,7 @@
                                             </div>
                                        </td>
 
-                                       
+
                                        <td>{{ $property->internal_reference }}</td>
                                        <td class="text-capitalize">{{ $property->property_type }}</td>
                                        <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">{{ $property->property_status }}</span></td>
@@ -216,14 +216,14 @@
           document.addEventListener('DOMContentLoaded', function() {
               // Saat halaman sudah ready
               const deleteButtons = document.querySelectorAll('.deleteButton');
-      
+
               deleteButtons.forEach(button => {
                   button.addEventListener('click', function(e) {
                       e.preventDefault();
-      
+
                       let propertyName = this.getAttribute('data-nama');
                       let propertyId = this.parentElement.querySelector('.propertyId').value;
-      
+
                       Swal.fire({
                           title: 'Are you sure?',
                           text: "Delete property " + propertyName + "?",
@@ -265,7 +265,7 @@
               });
           });
       </script>
-      
+
  {{-- /* End Sweet Alert --}}
-     
+
 @endpush

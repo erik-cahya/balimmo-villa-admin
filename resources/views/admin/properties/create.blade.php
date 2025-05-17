@@ -34,7 +34,7 @@
 
      <div class="row">
 
-          
+
           <div class="col-xl-6 col-lg-6 ">
                {{-- -------------------------------------------------------------------------  --}}
                {{-- Properties Information Form  --}}
@@ -86,10 +86,10 @@
 
                                    </div>
                               </div>
-                    
+
                          </div>
-                     
-                     
+
+
                      </div>
                </div>
 
@@ -137,15 +137,15 @@
                                              <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
                                         @endforeach
                                    </div>
-                              </div> 
-       
+                              </div>
+
                          </div>
 
 
                     </div>
                </div>
 
-             
+
 
 
 
@@ -176,7 +176,7 @@
                                         <option value="" selected disabled>Select Region</option>
                                    </select>
                               </div>
-                     
+
                               <div class="col-lg-6 mb-3" id="group_region">
                                    <label for="region" class="form-label">Sub Region</label>
                                    <select id="subregion" class="form-select" name="subregion">
@@ -194,10 +194,10 @@
                                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description"></textarea>
                               </div>
 
-                
+
                          </div>
-                
-                
+
+
                     </div>
                 </div>
 
@@ -212,7 +212,7 @@
                          <div class="row">
 
                               <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" />
-                              
+
                               <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" />
                               <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" />
 
@@ -222,7 +222,7 @@
                               <x-form-input className="col-lg-6" type="text" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" />
                               <x-form-input className="col-lg-6" type="text" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
 
-                             
+
                          </div>
                     </div>
                </div>
@@ -261,7 +261,7 @@
                                    <label for="file_rental_support" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
                                    <input type="file" id="file_rental_support" name="file_rental_support" class="form-control" placeholder="">
                               </div>
-                             
+
                          </div>
                     </div>
                </div>
@@ -278,7 +278,7 @@
                          <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category"
                                    :options="['Leasehold', 'Freehold']"
                          />
-                         
+
                          <div class="row">
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4" id="freehold_group">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Freehold (Hak Milik)</h5>
@@ -306,7 +306,7 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        
+
 
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
@@ -409,7 +409,7 @@
                     </div>
                     <div class="card-body">
                          <div class="row">
-                              
+
                               <div class="col-lg-12 mb-3">
                                    <label for="gallery" class="form-label">Property Gallery (min 4)</label>
                                    {{-- <input type="file" id="gallery" name="gallery" class="form-control" placeholder=""> --}}
@@ -466,16 +466,16 @@
           $(document).ready(function() {
                // Sembunyikan semua grup toggle
                $('.toggle-group').hide();
-               
+
                // Handle semua toggle sekaligus
                $('[data-toggle-target]').on('change', function() {
                const target = $(this).data('toggle-target');
                const showCondition = $(this).val() === 'yes' || $(this).val() === 'Yes'; // Sesuaikan dengan value Anda
-               
+
                $(target).toggle(showCondition);
                });
           });
-                    
+
           $(document).ready(function() {
 
           $('#leasehold_group').hide();
@@ -520,7 +520,7 @@
           const cacheKey = 'usd_to_idr_rate';
           const cacheTimeKey = 'usd_to_idr_rate_time';
           const cacheTTL = 10 * 60 * 1000; // 10 minutes
-     
+
           // debounce / batasi eksekusi fungsi (ketika user ketik angka)
           function debounce(func, delay) {
                let timeout;
@@ -529,7 +529,7 @@
                     timeout = setTimeout(() => func.apply(this, args), delay);
                };
           }
-     
+
           function formatCurrency(value, locale, currency, fraction = 2) {
                return new Intl.NumberFormat(locale, {
                     style: 'currency',
@@ -537,16 +537,16 @@
                     minimumFractionDigits: fraction
                }).format(value);
           }
-     
+
           async function getExchangeRate() {
                const now = new Date().getTime();
                const storedRate = localStorage.getItem(cacheKey);
                const storedTime = localStorage.getItem(cacheTimeKey);
-     
+
                if (storedRate && storedTime && (now - parseInt(storedTime)) < cacheTTL) {
                     return parseFloat(storedRate);
                }
-     
+
                try {
                     const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
                     const rate = response.data.rates.IDR;
@@ -558,9 +558,9 @@
                     return defaultKurs;
                }
           }
-     
+
           async function handleIDRInput() {
-               
+
                const idrInput = document.getElementById('idr_price');
                const commissionRateInput = document.getElementById('commision_rate');
                const idrValue = parseFloat(idrInput.value.replace(/[^0-9]/g, '')) || 0;
@@ -570,7 +570,7 @@
                if(idrValue < '15000000000'){
                     document.getElementById('commision_rate').value = '5%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
-                    
+
                }else if(idrValue >= '15000000000' && idrValue <= '34000000000'){
                     document.getElementById('commision_rate').value = '4%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
@@ -585,31 +585,31 @@
                }
 
                if (idrValue <= 0) return;
-     
+
                const rate = await getExchangeRate();
                const usdValue = idrValue / rate;
-     
+
                // Update USD values
                document.getElementById('usd_price').value = formatCurrency(usdValue, 'en-US', 'USD');
                document.getElementById('usd_price_raw').value = usdValue.toFixed(2);
-     
+
                // Komisi & Net Seller (IDR)
                const idrCommission = idrValue * commissionPercent;
                const idrNetSeller = idrValue - idrCommission;
 
                document.getElementById('estimated_commision_idr').value = formatCurrency(idrCommission, 'id-ID', 'IDR', 0);
                document.getElementById('net_seller_price_idr').value = formatCurrency(idrNetSeller, 'id-ID', 'IDR', 0);
-     
+
                // Komisi & Net Seller (USD)
                const usdCommission = usdValue * commissionPercent;
                const usdNetSeller = usdValue - usdCommission;
                document.getElementById('estimated_commision_usd').value = formatCurrency(usdCommission, 'en-US', 'USD');
                document.getElementById('net_seller_price_usd').value = formatCurrency(usdNetSeller, 'en-US', 'USD');
           }
-     
+
           document.getElementById('idr_price').addEventListener('input', debounce(handleIDRInput, 400));
      </script>
-          
+
      {{-- /* Convert IDR to USD --}}
 
     <script>

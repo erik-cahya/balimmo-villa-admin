@@ -33,7 +33,7 @@ class PropertiesController extends Controller
         {
             $data['data_property'] = PropertiesModel::
                 select(
-                    'properties.id', 
+                    'properties.id',
                     'property_name',
                     'property_slug',
                     'internal_reference',
@@ -47,11 +47,11 @@ class PropertiesController extends Controller
         else{
             $data['data_property'] = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
                 ->select(
-                    'properties.id', 
-                    'property_name', 
-                    'property_slug', 
-                    'internal_reference', 
-                    'bedroom', 
+                    'properties.id',
+                    'property_name',
+                    'property_slug',
+                    'internal_reference',
+                    'bedroom',
                     'bathroom')
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
@@ -70,7 +70,7 @@ class PropertiesController extends Controller
     }
 
     public function store(Request $request)
-    {        
+    {
         dd($request->all());
         $slug = $this->generatePropertiesSlug($request->property_name);
 
@@ -101,7 +101,7 @@ class PropertiesController extends Controller
 
             // ##### Gallery
             // 'images.*' => 'required|image|max:2048',
-        ]); 
+        ]);
 
         // Freehold
         if($request->legal_category === 'Freehold'){
@@ -225,7 +225,7 @@ class PropertiesController extends Controller
             'extension_cost' => $request->leasehold_negotiation_ext_cost,
             'purchase_cost' => $request->leasehold_purchase_cost,
             'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
-             
+
             'green_zone' => $green_zone,
             'yellow_zone' => $yellow_zone,
             'pink_zone' => $pink_zone,
@@ -236,7 +236,7 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(),2);
-        
+
         // Presentase
         if($idrPrice < 15000000000 ){
             $commision = 5;
@@ -286,7 +286,7 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         $fileRentalSupport = $slug. '/' . $request->file_rental_support->getClientOriginalName();
         $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileRentalSupport);
-        
+
         $fileTypeMandate = $slug. '/' . $request->file_type_of_mandate->getClientOriginalName();
         $request->file_type_of_mandate->move(public_path('admin/attachment/' . $slug), $fileTypeMandate);
 
@@ -294,7 +294,7 @@ class PropertiesController extends Controller
         $dataURL = $request->only(['url_virtual_tour', 'url_lifestyle', 'url_experience', 'file_type_of_mandate']);
         $dataURL['file_rental_support'] = $fileRentalSupport;
         $dataURL['file_type_of_mandate'] = $fileTypeMandate;
-        
+
         foreach($dataURL as $key => $value){
             PropertyUrlAttachmentModel::create([
                 'properties_id' => $propertyCreate->id,
@@ -302,7 +302,7 @@ class PropertiesController extends Controller
                 'path_attachment' => $value
             ]);
         }
-        
+
         // ==========================================================================================================================================
         // ############## Gallery Handler ##############
         // ==========================================================================================================================================
@@ -346,7 +346,7 @@ class PropertiesController extends Controller
         // dd($slug);
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
         // $data['data_properties'] = PropertiesModel::where('property_slug', $slug)->first();
-        
+
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
             ->with(['featuredImage' => function ($query) {
                         $query->select('image_path', 'property_gallery.id');
