@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('property_financial', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('properties_id')->comment('fk to properties table');
+            $table->unsignedBigInteger('properties_id')->comment('fk to properties table');
             
             $table->integer('avg_nightly_rate')->nullable();
             $table->decimal('avg_occupancy_rate', 18, 2)->nullable();
@@ -28,6 +28,9 @@ return new class extends Migration
             $table->bigInteger('net_seller_idr')->nullable();
             $table->decimal('net_seller_usd', 18, 2)->nullable();
             $table->timestamps();
+
+            // Foreign Key Constraint with ON DELETE CASCADE
+            $table->foreign('properties_id')->references('id')->on('properties')->onDelete('cascade');
         });
     }
 

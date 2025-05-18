@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->bigInteger('gallery_id')->unsigned()->index()->nullable();
-        $table->foreign('gallery_id')->references('id')->on('property_gallery')->onDelete('cascade');
+            $table->foreign('gallery_id')->references('id')->on('property_gallery')->onDelete('cascade');
 
             $table->string('image_path');
             $table->string('caption')->nullable();

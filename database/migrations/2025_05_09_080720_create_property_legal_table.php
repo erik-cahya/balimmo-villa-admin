@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('property_legal', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('properties_id')->comment('fk to properties table');
+            $table->unsignedBigInteger('properties_id')->comment('fk to properties table');
 
             $table->string('company_name')->nullable();
             $table->string('rep_first_name')->nullable()->comment('representative first name');
@@ -38,6 +38,9 @@ return new class extends Migration
 
 
             $table->timestamps();
+
+            // Foreign Key Constraint with ON DELETE CASCADE
+            $table->foreign('properties_id')->references('id')->on('properties')->onDelete('cascade');
         });
     }
 

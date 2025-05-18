@@ -7,7 +7,7 @@
     'disabled' => false,
     'required' => false,
     'value',
-    'placeholder'
+    'placeholder', 
 ])
 
 {{-- Jika tidak diberikan atribut placeholder, maka akan menggunakan Input + label --}}

@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('property_url_attachment', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('properties_id')->comment('fk to properties table');
+            $table->unsignedBigInteger('properties_id')->comment('fk to properties table');
             $table->string('name')->nullable();
             $table->text('path_attachment')->nullable();
             $table->timestamps();
+
+            // Foreign Key Constraint with ON DELETE CASCADE
+            $table->foreign('properties_id')->references('id')->on('properties')->onDelete('cascade');
         });
     }
 

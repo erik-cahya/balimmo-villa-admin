@@ -73,7 +73,7 @@
                               </div>
 
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA (property_legal)</h5>
+                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
                                    <hr>
                                    <div class="my-3 row">
 
@@ -191,7 +191,8 @@
 
                               <div class="col-lg-12 mb-3" id="group_description">
                                    <label for="description" class="form-label">Description</label>
-                                   <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description"></textarea>
+                                   <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus accusamus ducimus nesciunt aperiam itaque iste minima similique architecto ipsa voluptas repellat totam quos consectetur cumque blanditiis, numquam alias officia doloremque odit iure unde nobis maiores dolorem. Nobis, cum odio laudantium repellat neque possimus quia voluptate magnam, totam rem doloribus eum nostrum facere a labore perferendis architecto quo fuga, amet saepe velit voluptatum exercitationem. Obcaecati laboriosam itaque alias quae modi sit repellendus neque quos et enim atque sed ullam laborum, labore similique voluptatibus voluptate odio? Voluptas laboriosam asperiores deserunt eius sapiente voluptatibus maxime reprehenderit, officia libero consequuntur tempore laudantium nam, nisi non doloribus quisquam iste molestiae voluptate explicabo magnam voluptates, placeat maiores perspiciatis? Iusto facilis odit soluta incidunt veritatis? Voluptate, qui nulla dolorem, aliquam dicta deleniti earum sint quas ratione quisquam reprehenderit eum? Voluptatem voluptates saepe totam in dolor esse corporis! A tempora minus ipsa, quia suscipit odit accusamus doloremque possimus dolorem iusto, deleniti accusantium sapiente hic aut eius consectetur temporibus amet architecto velit saepe adipisci veritatis perferendis. Id iure rem odit iste laboriosam necessitatibus dolores, facere consectetur voluptate eum. Deserunt qui nobis consequuntur dignissimos officia, sint in molestias animi error hic enim ut iste eveniet quaerat, voluptatibus assumenda est eum commodi expedita beatae fugit laboriosam culpa sit! Omnis ex at nostrum quae, atque architecto. Consectetur earum fugit tenetur. Pariatur totam perspiciatis, error quibusdam eum cumque illum aspernatur aperiam libero commodi cupiditate recusandae ipsa eos, soluta nobis. Alias perferendis voluptates in vitae aspernatur commodi dolore velit ratione magni eum dolorum a sunt quisquam adipisci esse quo rem, voluptatum asperiores expedita quod dicta. Hic necessitatibus magni, eligendi est ab quisquam maxime? Incidunt dolor eligendi itaque excepturi iste impedit voluptatum, porro maxime provident fugit expedita molestiae rerum asperiores commodi labore eveniet quaerat eum amet maiores error animi nostrum ullam debitis! Saepe vero eius vitae neque quisquam quasi quis dignissimos facere quaerat! Magni, nesciunt sunt officiis a ipsum temporibus, odio explicabo tenetur error ipsam obcaecati. Sit ipsum aut sequi eveniet quisquam at aperiam quod natus dolore facere ipsa delectus ducimus facilis, voluptate earum. Pariatur quidem quisquam sunt quod, recusandae maiores eius nulla, similique earum ea accusantium suscipit sequi totam! Dolorem reprehenderit, fugit sed in eligendi suscipit aliquid autem temporibus consequuntur quam voluptatem nemo, non, officia voluptate at corrupti quae. Saepe possimus consequatur sit dolore natus atque eligendi reprehenderit omnis? Reiciendis beatae, magni eius aliquid officia modi possimus nostrum soluta totam, explicabo illum, eligendi excepturi?
+                                   </textarea>
                               </div>
 
 
@@ -213,14 +214,15 @@
 
                               <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" />
 
+
                               <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" />
                               <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" />
 
-                              <x-form-input className="col-lg-6" type="text" name="bedroom" label="Bedroom" />
-                              <x-form-input className="col-lg-6" type="text" name="bathroom" label="Bathroom" />
+                              <x-form-input className="col-lg-6" type="number" name="bedroom" label="Bedroom" />
+                              <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" />
 
-                              <x-form-input className="col-lg-6" type="text" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" />
-                              <x-form-input className="col-lg-6" type="text" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
+                              <x-form-input className="col-lg-6" type="number" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" />
+                              <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
 
 
                          </div>

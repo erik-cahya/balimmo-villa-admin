@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyGalleryImageModel;
+use App\Models\PropertyUrlAttachmentModel;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
@@ -100,7 +101,7 @@ class LandingPageController extends Controller
                 $query->where('is_featured', 1);
             }])
             ->first();
-
+    
         $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['property']['featuredImage']->id)->get();
         
         $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['property']->id)
@@ -108,7 +109,24 @@ class LandingPageController extends Controller
             ->select('feature_list.name as feature_name')
             ->get();
             
+        $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['property']->id)->get(); 
 
+        foreach($url_attachment as $url){
+            if($url->name === 'url_virtual_tour'){
+                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
+
+                $url->path_attachment = $match[1];
+            }
+            elseif($url->name === 'url_lifestyle'){
+                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
+                $url->path_attachment = $match[1];
+            }
+            elseif($url->name === 'url_experience'){
+                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
+                $url->path_attachment = $match[1];
+            }
+        }
+        $data['attachment'] = collect($url_attachment)->except('name', 'url_vitrual_tour');
         return view('landing.listing.details', $data);
     }
 

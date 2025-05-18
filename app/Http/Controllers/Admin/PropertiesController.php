@@ -62,7 +62,7 @@ class PropertiesController extends Controller
     }
 
     public function create()
-    {
+    {   
         $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
         $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
 
@@ -71,11 +71,12 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
-        $slug = $this->generatePropertiesSlug($request->property_name);
+        // dd($request->property_name);
+        // dd($request->all());
 
+        $slug = $this->generatePropertiesSlug($request->property_name);
         $request->validate([
-            'property_name' => 'required|unique:properties',
+            'property_name' => 'required',
             'description' => 'required',
             'region' => 'required',
             'subregion' => 'required',
@@ -164,7 +165,12 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ########### Create Properties Data ##############
         // ==========================================================================================================================================
+        do {
+            $property_code = 'BLM-' . random_int(1000000000, 9999999999);
+        } while (PropertiesModel::where('property_code', $property_code)->exists());
+
         $propertyCreate = PropertiesModel::create([
+            'property_code' => $property_code,
             'property_name' => $request->property_name,
             'property_slug' => $slug,
             'internal_reference' => Auth::user()->reference_code,
@@ -172,9 +178,9 @@ class PropertiesController extends Controller
             'region' => Str::title($request->region),
             'sub_region' => Str::title($request->subregion),
             'property_address' => $request->property_address,
-            'total_land_area' => preg_replace('/[^0-9,]/', '', floatval($request->land_size)),
-            'villa_area' => preg_replace('/[^0-9,]/', '', floatval($request->built_area)),
-            'pool_area' => preg_replace('/[^0-9,]/', '', floatval($request->pool_area)),
+            'total_land_area' => $this->floatNumbering($request->land_size),
+            'villa_area' => $this->floatNumbering($request->built_area),
+            'pool_area' => $this->floatNumbering($request->pool_area),
             'bedroom' => $request->bedroom,
             'bathroom' => $request->bathroom,
             'year_construction' => $request->year_construction,
@@ -192,7 +198,7 @@ class PropertiesController extends Controller
                 empty($owner['phone_number']) &&
                 empty($owner['email'])
             ) {
-                continue; // Lewati iterasi ini, jangan buat data ke DB
+                continue;
             }
             PropertyOwnerModel::create([
                 'properties_id' => $propertyCreate->id,
@@ -284,10 +290,10 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ########### Create Property URL & Attachment ##############
         // ==========================================================================================================================================
-        $fileRentalSupport = $slug. '/' . $request->file_rental_support->getClientOriginalName();
+        $fileRentalSupport = $request->file_rental_support->getClientOriginalName();
         $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileRentalSupport);
 
-        $fileTypeMandate = $slug. '/' . $request->file_type_of_mandate->getClientOriginalName();
+        $fileTypeMandate = $request->file_type_of_mandate->getClientOriginalName();
         $request->file_type_of_mandate->move(public_path('admin/attachment/' . $slug), $fileTypeMandate);
 
         // Create Property URL & Attachment
@@ -343,10 +349,8 @@ class PropertiesController extends Controller
 
     public function detail(string $slug)
     {
-        // dd($slug);
-        $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
-        // $data['data_properties'] = PropertiesModel::where('property_slug', $slug)->first();
 
+        $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
             ->with(['featuredImage' => function ($query) {
                         $query->select('image_path', 'property_gallery.id');
@@ -358,8 +362,6 @@ class PropertiesController extends Controller
             ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
             ->select('feature_list.name as feature_name')
             ->get();
-
-        // dd($data['data_properties']);
 
         $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
 
@@ -386,7 +388,27 @@ class PropertiesController extends Controller
 
     public function destroy(string $id)
     {
-        PropertyOwnerModel::where('properties_id', $id)->delete();
+        // PropertyOwnerModel::where('properties_id', $id)->delete();
+        // PropertyLegalModel::where('properties_id', $id)->delete();
+        // PropertyGalleryModel::where('properties_id', $id)->delete();
+        // PropertyGalleryImageModel::where('properties_id', $id)->delete();
+
+        // PropertyUrlAttachmentModel::where('properties_id', $id)->delete();
+        // PropertyFeatureModel::where('properties_id', $id)->delete();
+        // PropertyFinancialModel::where('properties_id', $id)->delete();
+
+        $slug = PropertiesModel::where('id', $id)->first();
+
+        // Delete File Gallery
+        if (file_exists(public_path('admin/gallery/' . $slug->property_slug))) {
+            File::deleteDirectory(public_path('admin/gallery/' . $slug->property_slug));
+        };
+        
+        // Delete File Attachment
+        if (file_exists(public_path('admin/attachment/' . $slug->property_slug))) {
+            File::deleteDirectory(public_path('admin/attachment/' . $slug->property_slug));
+        };
+
         PropertiesModel::destroy($id);
 
         $flashData = [
@@ -397,6 +419,8 @@ class PropertiesController extends Controller
 
         return response()->json($flashData);
     }
+
+
 
     private function getUSDtoIDRRate()
     {
@@ -422,5 +446,29 @@ class PropertiesController extends Controller
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
+
+        return $slug;
+    }
+
+    private function floatNumbering($number) {
+        $number = trim($number);
+
+        // Hapus semua spasi
+        $number = str_replace(' ', '', $number);
+
+        // EU format: ada koma (,) sebagai desimal
+        if (preg_match('/\d+\.\d+,\d+/', $number) || preg_match('/\d+,\d+/', $number)) {
+            // Hapus titik sebagai ribuan, ganti koma jadi titik
+            $number = str_replace('.', '', $number);
+            $number = str_replace(',', '.', $number);
+        }
+
+        // US format: koma sebagai ribuan, titik sebagai desimal
+        elseif (preg_match('/\d+,\d+\.\d+/', $number) || preg_match('/\d+,\d{3}/', $number)) {
+            // Hapus koma sebagai ribuan
+            $number = str_replace(',', '', $number);
+        }
+
+        return floatval($number);
     }
 }
