@@ -1,4 +1,7 @@
 @extends('admin.layouts.master')
+@push('style')
+     <link rel="stylesheet" href="{{ asset('admin/assets/css/glightbox.min.css') }}" />
+@endpush
 @section('content')
 <div class="container-fluid">
 
@@ -57,7 +60,12 @@
                                   </ul>
                              </div>
                         </div>
-                        
+                         @foreach ($image_gallery as $gallery)     
+
+                              <a href="{{ asset($gallery->image_path) }}" class="glightbox" data-gallery="property-gallery">
+                              <img src="{{ asset($gallery->image_path) }}" width="130" style="margin:10px; border-radius:8px;">
+                         </a>
+                         @endforeach
                         <div class="bg-light-subtle p-2 mt-3 rounded border border-dashed">
                               <div class="row align-items-center text-center g-2">
                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
@@ -79,6 +87,8 @@
 
                               </div>
                          </div>
+
+                        
 
 
                         <h5 class="text-dark fw-medium mt-3">Some Facility :</h5>
@@ -270,3 +280,12 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script src="{{ asset('admin/assets/js/glightbox.min.js') }}"></script>
+     <script>
+    const lightbox = GLightbox({
+        selector: '.glightbox'
+    });
+</script>
+     
+@endpush

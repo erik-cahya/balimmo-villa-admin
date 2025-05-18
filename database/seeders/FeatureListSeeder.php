@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\FeatureListModel;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -158,6 +159,15 @@ class FeatureListSeeder extends Seeder
         foreach($dataFeature as $row){
             FeatureListModel::create($row);
         }
+
+        User::create([
+            'name' => 'Erik Cahya Pradana',
+            'email' => 'erikcp38@gmail.com',
+            'phone_number' => "089522648527",
+            'password' => bcrypt('howtoplay123'),
+            'reference_code' => 'BPM-ERIK-3213',
+            'role' => 'master',
+        ]);
 
 
     }

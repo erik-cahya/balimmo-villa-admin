@@ -40,4 +40,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function properties()
+    {
+        return $this->hasMany(PropertiesModel::class, 'internal_reference', 'reference_code');
+    }
 }

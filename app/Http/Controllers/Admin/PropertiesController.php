@@ -71,9 +71,6 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->property_name);
-        // dd($request->all());
-
         $slug = $this->generatePropertiesSlug($request->property_name);
         $request->validate([
             'property_name' => 'required',
@@ -185,6 +182,7 @@ class PropertiesController extends Controller
             'bathroom' => $request->bathroom,
             'year_construction' => $request->year_construction,
             'year_renovated' => $request->year_renovated,
+            'type_mandate' => $request->type_mandate,
         ]);
 
         // ==========================================================================================================================================
@@ -290,14 +288,25 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ########### Create Property URL & Attachment ##############
         // ==========================================================================================================================================
-        $fileRentalSupport = $request->file_rental_support->getClientOriginalName();
-        $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileRentalSupport);
+        
+        if($request->file_rental_support !== null){
 
-        $fileTypeMandate = $request->file_type_of_mandate->getClientOriginalName();
-        $request->file_type_of_mandate->move(public_path('admin/attachment/' . $slug), $fileTypeMandate);
+            $fileRentalSupport = $request->file_rental_support->getClientOriginalName();
+            $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileRentalSupport);
+        }else{
+            $fileRentalSupport = null;
+        }
+
+        if($request->file_type_of_mandate !== null){
+
+            $fileTypeMandate = $request->file_type_of_mandate->getClientOriginalName();
+            $request->file_type_of_mandate->move(public_path('admin/attachment/' . $slug), $fileTypeMandate);
+        }else{
+            $fileTypeMandate = null;
+        }
 
         // Create Property URL & Attachment
-        $dataURL = $request->only(['url_virtual_tour', 'url_lifestyle', 'url_experience', 'file_type_of_mandate']);
+        $dataURL = $request->only(['url_virtual_tour', 'url_lifestyle', 'url_experience']);
         $dataURL['file_rental_support'] = $fileRentalSupport;
         $dataURL['file_type_of_mandate'] = $fileTypeMandate;
 

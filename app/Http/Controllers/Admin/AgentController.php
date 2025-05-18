@@ -29,10 +29,12 @@ class AgentController extends Controller
         //     return $redirect;
         // }
 
-        $loggedInUser = User::find(Auth::id());
-        $otherUsers = User::where('id', '!=', Auth::id())->get();        
+        $loggedInUser = User::withCount('properties')->find(Auth::id());
+        $otherUsers = User::where('id', '!=', Auth::id())->withCount('properties')->get();     
         $data['data_agent'] = collect([$loggedInUser])->merge($otherUsers);
+        // $data['data_agent'] = collect([$loggedInUser]);
 
+        // dd($data['data_agent']);
         return view('admin.agent.index', $data);
     }
 
@@ -55,10 +57,10 @@ class AgentController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'no_telp' => $request->phone_number,
+            'phone_number' => $request->phone_number,
             'password' => bcrypt($request->password),
             'reference_code' => $reference_code,
-            'role' => $request->role,
+            'role' => strtolower($request->role),
         ]);
 
         $flashData = [

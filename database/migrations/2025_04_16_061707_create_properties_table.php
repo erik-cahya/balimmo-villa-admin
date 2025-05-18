@@ -29,30 +29,8 @@ return new class extends Migration
             $table->integer('bathroom')->nullable();
             $table->year('year_construction')->nullable();
             $table->year('year_renovated')->nullable();
+            $table->string('type_mandate')->nullable();
             $table->timestamps();
-
-
-
-
-
-
-            // $table->string('property_type');
-            // $table->string('property_status')->nullable();
-
-            // $table->string('year_built')->nullable();
-            // $table->string('current_owner')->nullable();
-            // $table->string('owner_contact')->nullable();
-            // $table->string('property_category')->nullable();
-
-            // $table->date('start_date')->nullable();
-            // $table->date('end_date')->nullable();
-            
-            // $table->string('extension_leasehold_possible')->nullable();
-            // $table->string('leasehold_extension')->nullable();
-            // $table->float('rent_price')->nullable();
-            // $table->float('price')->nullable();
-            // $table->float('annual_fees')->nullable();
-            // $table->float('estimated_rental')->nullable();
         });
     }
 
@@ -61,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('villa');
+        Schema::dropIfExists('properties');
     }
 };
