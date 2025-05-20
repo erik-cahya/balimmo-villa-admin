@@ -161,11 +161,11 @@ class FeatureListSeeder extends Seeder
         }
 
         User::create([
-            'name' => 'Erik Cahya Pradana',
-            'email' => 'erikcp38@gmail.com',
+            'name' => 'Master',
+            'email' => 'master@gmail.com',
             'phone_number' => "089522648527",
-            'password' => bcrypt('howtoplay123'),
-            'reference_code' => 'BPM-ERIK-3213',
+            'password' => bcrypt('master'),
+            'reference_code' => 'BPM-MASTER-3213',
             'role' => 'Master',
         ]);
 
