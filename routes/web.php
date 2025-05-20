@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
+use App\Http\Controllers\Admin\PropertiesLeadsController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\MailController;
@@ -47,6 +48,7 @@ Route::middleware('auth')->group(function () {
 
     // ############################################################### Admin Panel Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::post('/properties/change_acceptance/{slug}', [PropertiesController::class, 'changeAcceptance'])->name('properties.changeAcceptance');
     Route::resource('/properties', PropertiesController::class)->except(['show']);
 
     Route::resource('/properties/features', PropertiesFeatureController::class)->except(['show', 'create']);
@@ -55,6 +57,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/agent', AgentController::class);
 
+    Route::resource('/leads', PropertiesLeadsController::class);
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 

@@ -166,7 +166,7 @@ class FeatureListSeeder extends Seeder
             'phone_number' => "089522648527",
             'password' => bcrypt('howtoplay123'),
             'reference_code' => 'BPM-ERIK-3213',
-            'role' => 'master',
+            'role' => 'Master',
         ]);
 
 

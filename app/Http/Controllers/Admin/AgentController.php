@@ -12,14 +12,14 @@ use Illuminate\Support\Str;
 class AgentController extends Controller
 {
     private function checkMasterRole(){
-        if(Auth::check() && Auth::user()->role == 'agent'){
+        if(Auth::check() && Auth::user()->role == 'Agent'){
             return redirect()->route('dashboard.index');
         }
     }
 
     public function __construct()
     {
-        $this->middleware('role:master');
+        $this->middleware('role:Master');
 
     }
 

@@ -30,6 +30,8 @@ return new class extends Migration
             $table->year('year_construction')->nullable();
             $table->year('year_renovated')->nullable();
             $table->string('type_mandate')->nullable();
+
+            $table->enum('type_acceptance', ['accept', 'pending', 'decline']);
             $table->timestamps();
         });
     }

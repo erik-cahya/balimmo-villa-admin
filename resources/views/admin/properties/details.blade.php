@@ -46,158 +46,143 @@
 
     <div class="row">
          
-
-         <div class="col-xl-8 col-lg-7">
-              <div class="card">
-                   <div class="card-body">
-                        <div class="position-relative">
-                             <img src="{{ asset($data_properties->featuredImage->image_path) }}" alt="" class="img-fluid rounded" style="width: 100%; height: 30rem; object-fit: cover" >
-                             <span class="position-absolute top-0 start-0 p-2">
-                                  <span class="badge bg-warning text-light px-2 py-1 fs-16">For {{ $data_properties->property_status }}</span>
-                             </span>
-                        </div>
-                        <div class="d-flex flex-wrap justify-content-between my-3 gap-2">
-                             <div>
-                                  <a href="#!" class="fs-20 text-dark fw-medium text-capitalize">{{ $data_properties->property_name }} - {{ $data_properties->region }}</a>
-                                  <p class="d-flex align-items-center gap-1 mt-1 mb-0"><iconify-icon icon="solar:map-point-wave-bold-duotone" class="fs-18 text-primary"></iconify-icon>{{ isset($data_properties->property_address) ? $data_properties->property_address : 'Data Not Found' }}</p>
-                             </div>
-                             <div>
-                                  <ul class="list-inline float-end d-flex gap-1 mb-0 align-items-center">
-                                        <div class="d-flex align-items-center gap-2">
-                                             <div class="avatar-sm bg-success-subtle rounded">
-                                                  <iconify-icon icon="solar:wallet-money-bold-duotone" class="fs-24 text-success avatar-title"></iconify-icon>
-                                             </div>
-                                             <div class="d-flex flex-column align-items-end">
-                                                  <p class="fw-medium text-dark fs-14 mb-0">IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
-                                                  <p class="fw-medium text-dark fs-14 mb-0">$ {{ number_format($data_properties->selling_price_usd, 2, '.', ',') }} </p>
-                                             </div>
-                                        </div>
-                                        <li class="list-inline-item fs-20 dropdown d-none d-md-flex">
-                                             <a href="javascript: void(0);" class="dropdown-toggle arrow-none text-dark" data-bs-toggle="dropdown" aria-expanded="false">
-                                                  <i class="ri-more-2-fill"></i>
-                                             </a>
-                                             <div class="dropdown-menu dropdown-menu-end">
-                                                  <a class="dropdown-item" href="javascript: void(0);"><i class="ri-user-6-line me-2"></i>View Profile</a>
-                                                  <a class="dropdown-item" href="javascript: void(0);"><i class="ri-music-2-line me-2"></i>Media, Links and Docs</a>
-                                                  <a class="dropdown-item" href="javascript: void(0);"><i class="ri-search-2-line me-2"></i>Search</a>
-                                                  <a class="dropdown-item" href="javascript: void(0);"><i class="ri-image-line me-2"></i>Wallpaper</a>
-                                                  <a class="dropdown-item" href="javascript: void(0);"><i class="ri-arrow-right-circle-line me-2"></i>More</a>
-                                             </div>
-                                        </li>
-                                  </ul>
-                             </div>
-                        </div>
-                         @foreach ($image_gallery as $gallery)     
-                              <a href="{{ asset($gallery->image_path) }}" class="glightbox" data-gallery="property-gallery">
-                                   <img src="{{ asset($gallery->image_path) }}" width="130" style="margin:10px; border-radius:8px;">
-                              </a>
-                         @endforeach
-
-                        <div class="bg-light-subtle p-2 mt-3 rounded border border-dashed">
-                              <div class="row align-items-center text-center g-2">
-                                   <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted mb-0 fs-15 fw-medium d-flex align-items-center justify-content-center gap-1"><iconify-icon icon="solar:bed-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bedroom }} Bedroom
-                                        </p>
-                                   </div>
-                                   <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted mb-0 fs-15 fw-medium d-flex align-items-center justify-content-center gap-1"><iconify-icon icon="solar:bath-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bathroom }} Bathrooms
-                                        </p>
-                                   </div>
-                                   <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted mb-0 fs-15 fw-medium d-flex align-items-center justify-content-center gap-1"><iconify-icon icon="solar:scale-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->total_land_area }}m² area
-                                        </p>
-                                   </div>
-                                   <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted mb-0 fs-15 fw-medium d-flex align-items-center justify-content-center gap-1"><iconify-icon icon="solar:double-alt-arrow-up-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->pool_area }}m² Pool Area
-                                        </p>
-                                   </div>
+          <div class="col-xl-8 col-lg-5">
+               
+               @if (Auth::user()->role === 'Master')
+                    <div class="col-12">
+                         <div class="card">
+                              <div class="card-header bg-primary text-white">
+                                   <h4 class="card-title">Accept Listing Properties</h4>
+                              </div>
+                              <div class="card-body">
+                                   <form method="POST" action="{{ route('properties.changeAcceptance', $data_properties->property_slug) }}"  class="d-flex align-items-center flex-wrap">
+                                        @csrf
+                                        <x-form-select className="col-lg-6" name="type_acceptance" label="Accept Listing Properties"
+                                             :options="['Pending','Accept', 'Decline']" />
+                                        <button type="submit" class="btn btn-primary mx-4">Change Status</button>
+                                   </form>
                               </div>
                          </div>
+                    </div>
+               @endif
 
-                         <h5 class="text-dark fw-medium mt-3">Property Owner :</h5>
-                         <div class="row gap-3 mt-3">
-                              <div class="row">
-                                   @foreach ($property_owner as $owner)
-                                        <div class="col-xl-6 col-sm-12">
-                                             <div class="card bg-primary text-white">
-                                                  <div class="card-body">
-                                                       <div class="d-flex flex-wrap align-items-center gap-3">
-                                                            {{-- <img src="{{ asset('admin/assets/images/person-placeholder.png') }}" alt="" class=" bg-light avatar-lg rounded-3 border border-light border-3"> --}}
-                                                            <iconify-icon icon="solar:user-bold" class="text-white" style="font-size: 60px"></iconify-icon>
+               <div class="col-12">
+                    <div class="card">
+                         <div class="card-body">
+                              <div class="position-relative">
+                                   <img src="{{ asset($data_properties->featuredImage->image_path) }}" alt="" class="img-fluid rounded" style="width: 100%; height: 30rem; object-fit: cover" >
+                                   <span class="position-absolute top-0 start-0 p-2">
+                                        <span class="badge bg-warning text-light px-2 py-1 fs-16">For {{ $data_properties->property_status }}</span>
+                                   </span>
+                              </div>
+                              <div class="d-flex flex-wrap justify-content-between my-3 gap-2">
+                                   <div>
+                                        <a href="#!" class="fs-20 text-dark fw-medium text-capitalize">{{ $data_properties->property_name }} - {{ $data_properties->region }}</a>
+                                        <p class="d-flex align-items-center gap-1 mt-1 mb-0"><iconify-icon icon="solar:map-point-wave-bold-duotone" class="fs-18 text-primary"></iconify-icon>{{ isset($data_properties->property_address) ? $data_properties->property_address : 'Data Not Found' }}</p>
+                                   </div>
+                                   <div>
+                                        <ul class="list-inline float-end d-flex gap-1 mb-0 align-items-center">
+                                                  <div class="d-flex align-items-center gap-2">
+                                                       <div class="avatar-sm bg-success-subtle rounded">
+                                                            <iconify-icon icon="solar:wallet-money-bold-duotone" class="fs-24 text-success avatar-title"></iconify-icon>
+                                                       </div>
+                                                       <div class="d-flex flex-column align-items-end">
+                                                            <p class="fw-medium text-dark fs-14 mb-0">IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
+                                                            <p class="fw-medium text-dark fs-14 mb-0">$ {{ number_format($data_properties->selling_price_usd, 2, '.', ',') }} </p>
+                                                       </div>
+                                                  </div>
+                                                  <li class="list-inline-item fs-20 dropdown d-none d-md-flex">
+                                                       <a href="javascript: void(0);" class="dropdown-toggle arrow-none text-dark" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-2-fill"></i>
+                                                       </a>
+                                                       <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" href="javascript: void(0);"><i class="ri-user-6-line me-2"></i>View Profile</a>
+                                                            <a class="dropdown-item" href="javascript: void(0);"><i class="ri-music-2-line me-2"></i>Media, Links and Docs</a>
+                                                            <a class="dropdown-item" href="javascript: void(0);"><i class="ri-search-2-line me-2"></i>Search</a>
+                                                            <a class="dropdown-item" href="javascript: void(0);"><i class="ri-image-line me-2"></i>Wallpaper</a>
+                                                            <a class="dropdown-item" href="javascript: void(0);"><i class="ri-arrow-right-circle-line me-2"></i>More</a>
+                                                       </div>
+                                                  </li>
+                                        </ul>
+                                   </div>
+                              </div>
+                                   @foreach ($image_gallery as $gallery)     
+                                        <a href="{{ asset($gallery->image_path) }}" class="glightbox" data-gallery="property-gallery">
+                                             <img src="{{ asset($gallery->image_path) }}" width="130" style="margin:10px; border-radius:8px;">
+                                        </a>
+                                   @endforeach
 
-                                                            <div class="d-block">
-                                                                 <a href="#!" class="text-white fw-medium fs-16">{{ $owner->first_name }} {{ $owner->last_name }}</a>
-                                                                 <p class="mb-0">{{ $owner->email }}</p>
-                                                                 <hr style="border-color: #ffff">
-                                                                 <p class="mb-0 text-light text-white">#Owner {{ $owner->owner_order }}</p>
+                              <div class="bg-light-subtle p-2 mt-3 rounded border border-dashed">
+                                        <div class="row align-items-center text-center g-2">
+                                             <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                                  <p class="text-muted mb-0 fs-15 fw-medium d-flex align-items-center justify-content-center gap-1"><iconify-icon icon="solar:bed-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bedroom }} Bedroom
+                                                  </p>
+                                             </div>
+                                             <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                                  <p class="text-muted mb-0 fs-15 fw-medium d-flex align-items-center justify-content-center gap-1"><iconify-icon icon="solar:bath-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bathroom }} Bathrooms
+                                                  </p>
+                                             </div>
+                                             <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                                  <p class="text-muted mb-0 fs-15 fw-medium d-flex align-items-center justify-content-center gap-1"><iconify-icon icon="solar:scale-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->total_land_area }}m² area
+                                                  </p>
+                                             </div>
+                                             <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                                  <p class="text-muted mb-0 fs-15 fw-medium d-flex align-items-center justify-content-center gap-1"><iconify-icon icon="solar:double-alt-arrow-up-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->pool_area }}m² Pool Area
+                                                  </p>
+                                             </div>
+                                        </div>
+                                   </div>
+
+                                   <h5 class="text-dark fw-medium mt-3">Property Owner :</h5>
+                                   <div class="row gap-3 mt-3">
+                                        <div class="row">
+                                             @foreach ($property_owner as $owner)
+                                                  <div class="col-xl-6 col-sm-12">
+                                                       <div class="card bg-primary text-white">
+                                                            <div class="card-body">
+                                                                 <div class="d-flex flex-wrap align-items-center gap-3">
+                                                                      {{-- <img src="{{ asset('admin/assets/images/person-placeholder.png') }}" alt="" class=" bg-light avatar-lg rounded-3 border border-light border-3"> --}}
+                                                                      <iconify-icon icon="solar:user-bold" class="text-white" style="font-size: 60px"></iconify-icon>
+
+                                                                      <div class="d-block">
+                                                                           <a href="#!" class="text-white fw-medium fs-16">{{ $owner->first_name }} {{ $owner->last_name }}</a>
+                                                                           <p class="mb-0">{{ $owner->email }}</p>
+                                                                           <hr style="border-color: #ffff">
+                                                                           <p class="mb-0 text-light text-white">#Owner {{ $owner->owner_order }}</p>
+                                                                      </div>
+                                                                 </div>
                                                             </div>
                                                        </div>
                                                   </div>
-                                             </div>
+                                             @endforeach
                                         </div>
-                                   @endforeach
+                                   </div>
+
+                              <h5 class="text-dark fw-medium mt-3">Some Facility :</h5>
+                              <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+                                        @foreach ($feature_list as $feature)
+                                             <span class="badge bg-light-subtle text-muted border fw-medium fs-13 px-2 py-1 text-center">{{ $feature->feature_name }}</span>
+                                        @endforeach
                               </div>
-                         </div>
 
-                        <h5 class="text-dark fw-medium mt-3">Some Facility :</h5>
-                        <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
-                              @foreach ($feature_list as $feature)
-                                   <span class="badge bg-light-subtle text-muted border fw-medium fs-13 px-2 py-1 text-center">{{ $feature->feature_name }}</span>
-                              @endforeach
-                        </div>
-
-                        <div class="row my-3">
-                              <div class="col-xl-12 col-lg-12">
-                                   <div class="card mb-0 shadow-none border">
-                                        <div class="card-body">
-                                             <div class="row justify-content-between align-items-center">
-                                                  <div class="col-xl-12">
-                                                       <div class="avatar bg-primary bg-opacity-10 rounded mb-3">
-                                                            <iconify-icon icon="fa:legal" class="fs-28 text-danger avatar-title"></iconify-icon>
-                                                       </div>
-                                                       <div class="mt-4">
-                                                            
-                                                            @if ($data_properties->legal_status === 'Freehold')
-                                                            {{-- Freehold --}}
-                                                            <p class="mb-2"><span class="fw-medium text-dark">Legal Status</span><span class="mx-2">:</span>{{ isset($data_properties->legal_status) ? $data_properties->legal_status : '-' }}</p>
-                                                            <p class="mb-2"><span class="fw-medium text-dark">Certificate Name</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_name : '-' }}</p>
-                                                            <p class="mb-2"><span class="fw-medium text-dark">Certificate Number</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_number : '-' }}</p>
-                                                            <p class="mb-2"><span class="fw-medium text-dark">Purchase Date</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_date) ? $data_properties->purchase_date : '-' }}</p>
-
-                                                            <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
-                                                                 @if ($data_properties->green_zone == 1)
-                                                                      <span class="badge bg-success-subtle text-dark border fw-medium fs-12 px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Green Zone</span>
-                                                                 @endif
-
-                                                                 @if ($data_properties->yellow_zone == 1)
-                                                                      <span class="badge bg-success-subtle text-dark border fw-medium fs-12 px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Yellow Zone</span>
-                                                                 @endif
-                                                                 
-                                                                 @if ($data_properties->red_zone == 1)
-                                                                      <span class="badge bg-success-subtle text-dark border fw-medium fs-12 px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Red Zone</span>  
-                                                                 @endif
-                                                            </div>
-                                                            @else
-
-                                                            {{-- Leasehold --}}
-                                                            <div class="row">
-                                                                 <div class="col lg-6">
-                                                                      <h4 class="card-title mb-2">Legal Information :</h4>
-
-                                                                      <p class="mb-2"><span class="fw-medium text-dark">Legal Status</span><span class="mx-2">:</span>{{ isset($data_properties->legal_status) ? $data_properties->legal_status : '-' }}</p>
-                                                                      <p class="mb-2"><span class="fw-medium text-dark">Contract Holder Name</span><span class="mx-2">:</span>{{ isset($data_properties->holder_name) ? $data_properties->holder_name : '-' }}</p>
-                                                                      <p class="mb-2"><span class="fw-medium text-dark">Contract Number</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_number : '-' }}</p>
-                                                                      <p class="mb-2"><span class="fw-medium text-dark">Start Date</span><span class="mx-2">:</span>{{ isset($data_properties->start_date) ? $data_properties->start_date : '-' }}</p>
-                                                                      <p class="mb-2"><span class="fw-medium text-dark">End Date</span><span class="mx-2">:</span>{{ isset($data_properties->end_date) ? $data_properties->end_date : '-' }}</p>
+                              <div class="row my-3">
+                                        <div class="col-xl-12 col-lg-12">
+                                             <div class="card mb-0 shadow-none border">
+                                                  <div class="card-body">
+                                                       <div class="row justify-content-between align-items-center">
+                                                            <div class="col-xl-12">
+                                                                 <div class="avatar bg-primary bg-opacity-10 rounded mb-3">
+                                                                      <iconify-icon icon="fa:legal" class="fs-28 text-danger avatar-title"></iconify-icon>
                                                                  </div>
+                                                                 <div class="mt-4">
+                                                                      
+                                                                      @if ($data_properties->legal_status === 'Freehold')
+                                                                      {{-- Freehold --}}
+                                                                      <p class="mb-2"><span class="fw-medium text-dark">Legal Status</span><span class="mx-2">:</span>{{ isset($data_properties->legal_status) ? $data_properties->legal_status : '-' }}</p>
+                                                                      <p class="mb-2"><span class="fw-medium text-dark">Certificate Name</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_name : '-' }}</p>
+                                                                      <p class="mb-2"><span class="fw-medium text-dark">Certificate Number</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_number : '-' }}</p>
+                                                                      <p class="mb-2"><span class="fw-medium text-dark">Purchase Date</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_date) ? $data_properties->purchase_date : '-' }}</p>
 
-                                                                 <div class="col-lg-6">
-                                                                      <h4 class="card-title mb-2">Extension Details :</h4>
-                                                                      <p class="mb-2"><span class="fw-medium text-dark">Negotiation Extension Cost</span><span class="mx-2">:</span>IDR {{ isset($data_properties->extension_cost) ? $data_properties->extension_cost : '-' }}</p>
-                                                                      <p class="mb-2"><span class="fw-medium text-dark">Purchase Cost</span><span class="mx-2">:</span>IDR {{ isset($data_properties->purchase_cost) ? $data_properties->purchase_cost : '-' }}</p>
-                                                                      <p class="mb-2"><span class="fw-medium text-dark">Deadline for Payment to Secure Rate</span><span class="mx-2">:</span>{{ isset($data_properties->deadline_payment) ? $data_properties->deadline_payment : '-' }}</p>
-                                                                      
-                                                                      
                                                                       <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
                                                                            @if ($data_properties->green_zone == 1)
                                                                                 <span class="badge bg-success-subtle text-dark border fw-medium fs-12 px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Green Zone</span>
@@ -211,42 +196,77 @@
                                                                                 <span class="badge bg-success-subtle text-dark border fw-medium fs-12 px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Red Zone</span>  
                                                                            @endif
                                                                       </div>
+                                                                      @else
+
+                                                                      {{-- Leasehold --}}
+                                                                      <div class="row">
+                                                                           <div class="col lg-6">
+                                                                                <h4 class="card-title mb-2">Legal Information :</h4>
+
+                                                                                <p class="mb-2"><span class="fw-medium text-dark">Legal Status</span><span class="mx-2">:</span>{{ isset($data_properties->legal_status) ? $data_properties->legal_status : '-' }}</p>
+                                                                                <p class="mb-2"><span class="fw-medium text-dark">Contract Holder Name</span><span class="mx-2">:</span>{{ isset($data_properties->holder_name) ? $data_properties->holder_name : '-' }}</p>
+                                                                                <p class="mb-2"><span class="fw-medium text-dark">Contract Number</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_number : '-' }}</p>
+                                                                                <p class="mb-2"><span class="fw-medium text-dark">Start Date</span><span class="mx-2">:</span>{{ isset($data_properties->start_date) ? $data_properties->start_date : '-' }}</p>
+                                                                                <p class="mb-2"><span class="fw-medium text-dark">End Date</span><span class="mx-2">:</span>{{ isset($data_properties->end_date) ? $data_properties->end_date : '-' }}</p>
+                                                                           </div>
+
+                                                                           <div class="col-lg-6">
+                                                                                <h4 class="card-title mb-2">Extension Details :</h4>
+                                                                                <p class="mb-2"><span class="fw-medium text-dark">Negotiation Extension Cost</span><span class="mx-2">:</span>IDR {{ isset($data_properties->extension_cost) ? $data_properties->extension_cost : '-' }}</p>
+                                                                                <p class="mb-2"><span class="fw-medium text-dark">Purchase Cost</span><span class="mx-2">:</span>IDR {{ isset($data_properties->purchase_cost) ? $data_properties->purchase_cost : '-' }}</p>
+                                                                                <p class="mb-2"><span class="fw-medium text-dark">Deadline for Payment to Secure Rate</span><span class="mx-2">:</span>{{ isset($data_properties->deadline_payment) ? $data_properties->deadline_payment : '-' }}</p>
+                                                                                
+                                                                                
+                                                                                <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+                                                                                     @if ($data_properties->green_zone == 1)
+                                                                                          <span class="badge bg-success-subtle text-dark border fw-medium fs-12 px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Green Zone</span>
+                                                                                     @endif
+
+                                                                                     @if ($data_properties->yellow_zone == 1)
+                                                                                          <span class="badge bg-success-subtle text-dark border fw-medium fs-12 px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Yellow Zone</span>
+                                                                                     @endif
+                                                                                     
+                                                                                     @if ($data_properties->red_zone == 1)
+                                                                                          <span class="badge bg-success-subtle text-dark border fw-medium fs-12 px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Red Zone</span>  
+                                                                                     @endif
+                                                                                </div>
 
 
+                                                                           </div>
+                                                                      </div>
+                                                                      @endif
+
+                                                                      
+                                                                      
+                                                                      
                                                                  </div>
                                                             </div>
-                                                            @endif
 
-                                                            
-                                                            
-                                                            
                                                        </div>
                                                   </div>
-
                                              </div>
                                         </div>
+                              </div>
+                              
+                              <div class="container border-top border-bottom mt-3">
+                                   <h5 class="text-dark fw-medium mt-3">Property Details :</h5>
+                                   <p class="mt-2">{{ $data_properties->property_description }}</p>
                                    </div>
-                              </div>
-                        </div>
-                        
-                        <div class="container border-top border-bottom mt-3">
-                             <h5 class="text-dark fw-medium mt-3">Property Details :</h5>
-                             <p class="mt-2">{{ $data_properties->property_description }}</p>
+                                   
+                                   
+                              
+                              
+                              
+                              
+                                   <div class="d-flex align-items-center justify-content-end">
+                                        <div>
+                                             <p class="mb-0 d-flex align-items-center gap-1"><iconify-icon icon="solar:calendar-date-broken" class="fs-18 text-primary"></iconify-icon> {{ \Carbon\Carbon::parse($data_properties->created_at)->format('d F, Y') }}</p>
+                                        </div>
+                                   </div>
                          </div>
-                             
-                         
-                        
-                        
-                        
-                    
-                         <div class="d-flex align-items-center justify-content-end">
-                              <div>
-                                   <p class="mb-0 d-flex align-items-center gap-1"><iconify-icon icon="solar:calendar-date-broken" class="fs-18 text-primary"></iconify-icon> {{ \Carbon\Carbon::parse($data_properties->created_at)->format('d F, Y') }}</p>
-                              </div>
-                         </div>
-                   </div>
 
-              </div>
+                    </div>
+               </div>
          </div>
 
          <div class="col-xl-4 col-lg-5">

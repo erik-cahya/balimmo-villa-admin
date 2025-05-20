@@ -26,7 +26,7 @@ class PropertiesController extends Controller
 {
     public function index()
     {
-        if(Auth::user()->role == 'master')
+        if(Auth::user()->role == 'Master')
         {
             $data['data_property'] = PropertiesModel::
                 select(
@@ -38,6 +38,7 @@ class PropertiesController extends Controller
                     'property_code',
                     'property_address',
                     'type_mandate',
+                    'type_acceptance',
                     'bathroom')
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
@@ -54,6 +55,8 @@ class PropertiesController extends Controller
                     'bedroom',
                     'property_code',
                     'property_address',
+                    'type_mandate',
+                    'type_acceptance',
                     'bathroom')
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
@@ -198,6 +201,7 @@ class PropertiesController extends Controller
             'year_construction' => $request->year_construction,
             'year_renovated' => $request->year_renovated,
             'type_mandate' => $request->type_mandate,
+            'type_acceptance' => 'pending',
         ]);
 
         // ==========================================================================================================================================
@@ -388,7 +392,9 @@ class PropertiesController extends Controller
             ->select('feature_list.name as feature_name')
             ->get();
 
+        // dd($data['data_properties']);
         $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
+        
         $data['agent_data'] = User::where('reference_code', $property->internal_reference)->first();
         
         $data['property_owner'] = PropertyOwnerModel::where('properties_id', $data['data_properties']->id)->get();
@@ -539,5 +545,21 @@ class PropertiesController extends Controller
         }
 
         return floatval($number);
+    }
+
+    public function changeAcceptance(Request $request, $slug){
+
+        PropertiesModel::where('property_slug', $slug)->update(
+            [
+                'type_acceptance' => $request->type_acceptance
+            ]
+        );
+        $flashData = [
+            'judul' => 'Change Status Property Success',
+            'pesan' => 'Property Status Changed Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+        
+        return redirect()->route('properties.index')->with('flashData', $flashData);
     }
 }

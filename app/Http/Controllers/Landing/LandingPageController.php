@@ -24,7 +24,7 @@ class LandingPageController extends Controller
                 'property_address', 
                 'users.name as agent_name',
                 'property_financial.selling_price_idr as sellingPriceIDR'
-            )
+            )->where('type_acceptance', 'Accept')
             ->join('users', 'reference_code', '=', 'properties.internal_reference')
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')    
             ->with(['featuredImage' => function ($query) {
@@ -37,7 +37,6 @@ class LandingPageController extends Controller
         foreach ($data['data_property'] as $item) {
             $item->formatted_price = $this->shortPriceIDR($item->sellingPriceIDR);
         }
-
         return view('landing.index', $data);
     }
 
@@ -66,7 +65,7 @@ class LandingPageController extends Controller
                 'property_address',
                 'users.name as agent_name',
                 'property_financial.selling_price_idr as sellingPriceIDR'
-            )
+            )->where('properties.type_acceptance', 'accept')
             ->join('users', 'reference_code', '=', 'properties.internal_reference')
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')    
             ->with(['featuredImage' => function ($query) {
@@ -83,7 +82,6 @@ class LandingPageController extends Controller
     }
 
     public function listingDetail($slug){
-        // dd($slug);
         $data['property'] = PropertiesModel::where('property_slug', $slug)
             ->select(
                 'properties.*', 
@@ -91,7 +89,7 @@ class LandingPageController extends Controller
                 'users.reference_code as agent_code',
                 'users.email as agent_email',
                 'property_legal.legal_status as legalStatus',
-                'property_financial.selling_price_idr as sellingPriceIDR'
+                'property_financial.selling_price_idr as sellingPriceIDR',
             )
             ->join('users', 'reference_code', '=', 'properties.internal_reference')    
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')    
@@ -99,15 +97,13 @@ class LandingPageController extends Controller
             ->with(['featuredImage' => function ($query) {
                 $query->select('image_path', 'property_gallery.id');
                 $query->where('is_featured', 1);
-            }])
-            ->first();
+            }])->first();
     
         $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['property']['featuredImage']->id)->get();
         
         $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['property']->id)
             ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
-            ->select('feature_list.name as feature_name')
-            ->get();
+            ->select('feature_list.name as feature_name')->get();
             
         $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['property']->id)->get(); 
 
@@ -127,7 +123,11 @@ class LandingPageController extends Controller
         }
         $data['attachment'] = collect($url_attachment);
 
-        return view('landing.listing.details', $data);
+        if($data['property']->type_acceptance == 'accept'){
+            return view('landing.listing.details', $data);
+        }else{
+            return abort(404);
+        }
     }
 
     public function contact(){

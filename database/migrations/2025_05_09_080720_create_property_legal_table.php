@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('company_name')->nullable();
             $table->string('rep_first_name')->nullable()->comment('representative first name');
             $table->string('rep_last_name')->nullable()->comment('representative last name');
-            $table->string('phone');
-            $table->string('email');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
 
             $table->string('legal_status')->comment('Freehold/Leasehold');
             $table->string('holder_name')->nullable()->comment('certificate/contract name');

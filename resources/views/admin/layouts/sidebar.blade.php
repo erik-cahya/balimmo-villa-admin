@@ -51,7 +51,7 @@
                                   <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Properties Listing</a>
                              </li>
 
-                              @if (Auth::user()->role === 'master')
+                              @if (Auth::user()->role === 'Master')
                              <li class="sub-nav-item">
                                   <a class="sub-nav-link" href="{{ route('features.index') }}">Feature & Amenities</a>
                              </li>
@@ -62,7 +62,7 @@
 
 
 
-              @if (Auth::user()->role === 'master')
+              @if (Auth::user()->role === 'Master')
                     <li class="nav-item">
                          <a class="nav-link menu-arrow" href="#sidebarFeatures" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarFeatures">
                               <span class="nav-icon">
@@ -85,32 +85,13 @@
 
 
                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('customers.*') ? 'active' : '' }}" href="{{ route('customer.index') }}">
-                         <span class="nav-icon">
-                              <i class="ri-user-shared-2-line"></i>
-                         </span>
-                         <span class="nav-text">Customers</span>
-                    </a>
-               </li>
-
-               <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
                          <span class="nav-icon">
                               <i class="ri-user-shared-2-line"></i>
                          </span>
                          <span class="nav-text">Leads</span>
                     </a>
                </li>
-
-
-               <!-- <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('income.*') ? 'active' : '' }}" href="#">
-                         <span class="nav-icon">
-                              <i class="ri-wallet-3-line"></i>
-                         </span>
-                         <span class="nav-text"> Income </span>
-                    </a>
-               </li> -->
 
          </ul>
     </div>

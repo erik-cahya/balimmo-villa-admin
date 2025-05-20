@@ -8,6 +8,7 @@ use App\Models\CustomerModel;
 use App\Models\VillaModel;
 use App\Mail\NotifikasiEmail;
 use App\Models\PropertiesModel;
+use App\Models\PropertyLeadsModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -35,7 +36,7 @@ class CustomerController extends Controller
     public function booking($slug, Request $request){
         $property = PropertiesModel::where('property_slug', $slug)->first();
         // dd($request->all());
-        CustomerModel::create([
+        PropertyLeadsModel::create([
             'properties_id' => $property->id,
             'agent_code' => $request->agent_code,
             'cust_name' => $request->name,
@@ -45,6 +46,7 @@ class CustomerController extends Controller
             'require_bedroom' => $request->bedroom,
             'localization' => $request->location,
             'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+            'message' => null
         ]);
 
         return back();

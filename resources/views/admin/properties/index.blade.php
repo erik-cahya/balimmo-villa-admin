@@ -113,6 +113,7 @@
                                        <th>Mandates</th>
                                        <th>Bedrooms</th>
                                        <th>Location</th>
+                                       <th>Status Listing</th>
                                        <th>Action</th>
                                   </tr>
                              </thead>
@@ -144,6 +145,12 @@
                                              <p class="d-flex align-items-center gap-2 mb-1"><iconify-icon icon="cil:bathroom" class="fs-18 text-primary"></iconify-icon>{{ $property->bathroom }} Bathroom</p>
                                        </td>
                                        <td class="text-capitalize">{{ $property->property_address }}</td>
+
+                                       <td><span class="badge 
+                                             {{ $property->type_acceptance == 'pending' ? 'bg-warning' :
+                                             ($property->type_acceptance == 'accept' ? 'bg-success' : 'bg-danger')  }} 
+                                        text-light py-1 px-2 fs-12 text-capitalize">{{ $property->type_acceptance }}</span></td>
+
                                        <td>
                                             <div class="d-flex gap-2">
                                                  <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
