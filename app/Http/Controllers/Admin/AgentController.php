@@ -40,6 +40,7 @@ class AgentController extends Controller
 
     public function store(Request $request){
 
+        // dd($request->role);
         $request->validate([
             'name' => 'required|unique:users',
             'email' => 'required|unique:users',
@@ -51,7 +52,9 @@ class AgentController extends Controller
         ]); 
         
         do {
-            $reference_code = 'BPM-' . Str::upper($request->initial_name) . '-' . random_int(1000, 9999);
+            // $reference_code = 'BPM-' . Str::upper($request->initial_name) . '-' . random_int(1000, 9999);
+            $reference_code = $request->role == 'Master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
+
         } while (User::where('reference_code', $reference_code)->exists());
 
         User::create([

@@ -292,12 +292,32 @@
                                         <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
                                         <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                              <label for="" class="form-label">Zoning</label>
 
                                              <x-form-checkbox className="form-check mb-2" name="freehold_green_zone" label="Green Zone" />
                                              <x-form-checkbox className="form-check mb-2" name="freehold_yellow_zone" label="Yellow Zone" />
                                              <x-form-checkbox className="form-check mb-2" name="freehold_pink_zone" label="Pink Zone" />
+                                        </div> --}}
+
+                                        <div class="col-lg-6 mb-3">
+                                             <div class="row">
+                                                  <label for="" class="form-label">Zoning</label>
+                                                  <div class="col-12">
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone">
+                                                            <label class="form-check-label" for="freehold_green_zone">Green Zone</label>
+                                                       </div>
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone">
+                                                            <label class="form-check-label" for="freehold_yellow_zone">Yellow Zone</label>
+                                                       </div>
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone">
+                                                            <label class="form-check-label" for="freehold_pink_zone">Pink Zone</label>
+                                                       </div>
+                                                  </div>
+                                             </div>
                                         </div>
 
                                    </div>
@@ -328,12 +348,32 @@
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                              <label for="" class="form-label">Zoning</label>
 
                                              <x-form-checkbox className="form-check mb-2" name="leasehold_green_zone" label="Green Zone" />
                                              <x-form-checkbox className="form-check mb-2" name="leasehold_yellow_zone" label="Yellow Zone" />
                                              <x-form-checkbox className="form-check mb-2" name="leasehold_pink_zone" label="Pink Zone" />
+                                        </div> --}}
+
+                                        <div class="col-lg-6 mb-3">
+                                             <div class="row">
+                                                  <label for="" class="form-label">Zoning</label>
+                                                  <div class="col-12">
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone">
+                                                            <label class="form-check-label" for="leasehold_green_zone">Green Zone</label>
+                                                       </div>
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone">
+                                                            <label class="form-check-label" for="leasehold_yellow_zone">Yellow Zone</label>
+                                                       </div>
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone">
+                                                            <label class="form-check-label" for="leasehold_pink_zone">Pink Zone</label>
+                                                       </div>
+                                                  </div>
+                                             </div>
                                         </div>
                                    </div>
                               </div>
@@ -581,7 +621,7 @@
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
                }
                else if(idrValue > '34000000000' && idrValue <= '70000000000'){
-                    document.getElementById('commision_rate').value = '4%';
+                    document.getElementById('commision_rate').value = '3%';
                     commissionPercent = parseFloat(commissionRateInput.value) / 100;
                }
                else{

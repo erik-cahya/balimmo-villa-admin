@@ -16,8 +16,10 @@
 
 @endpush
 @section('content')
-<form action="{{ route('properties.store') }}" method="POST" enctype="multipart/form-data" id="galleryForm">
+<form action="{{ route('properties.update', $data_properties->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
      @csrf
+     @method('PUT')
+
      <div class="container-fluid">
 
      <div class="row">
@@ -46,31 +48,28 @@
                      <div class="card-body">
                          <div class="row">
 
+
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 1</h5>
+                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner {{ $property_owner[0]->owner_order }}</h5>
                                    <hr>
                                    <div class="my-3 row">
-
-                                        <x-form-input className="col-lg-6" type="text" name="owners[0][first_name]" label="First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="owners[0][last_name]" label="Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="owners[0][phone_number]" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="owners[0][email]" label="Email" />
-
+                                        <x-form-input className="col-lg-6" type="text" name="owners[0][first_name]" label="First Name" value="{{ $property_owner[0]->first_name }}" />
+                                        <x-form-input className="col-lg-6" type="text" name="owners[0][last_name]" label="Last Name" value="{{ $property_owner[0]->last_name }}" />
+                                        <x-form-input className="col-lg-6" type="number" name="owners[0][phone_number]" label="Phone Number" value="{{ $property_owner[0]->phone }}" />
+                                        <x-form-input className="col-lg-6" type="text" name="owners[0][email]" label="Email" value="{{ $property_owner[0]->email }}"/>
                                    </div>
                               </div>
 
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
-                                   <hr>
-                                   <div class="my-3 row">
-
-                                        <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Email" />
-
+                                    <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
+                                        <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
+                                        <hr>
+                                        <div class="my-3 row">
+                                             <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" value="{{ isset($property_owner[1]) ? $property_owner[1]->first_name : '-' }}" />
+                                             <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" value="{{ isset($property_owner[1]) ? $property_owner[1]->last_name : '-' }}" />
+                                             <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" value="{{ isset($property_owner[1]) ? $property_owner[1]->phone : 0 }}" />
+                                             <x-form-input className="col-lg-6" type="text" name="owners[1][email]" label="Email" value="{{ isset($property_owner[1]) ? $property_owner[1]->email : '-' }}"/>
+                                        </div>
                                    </div>
-                              </div>
 
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
@@ -454,6 +453,7 @@
                </div>
           </div>
 
+     </div>
      </div>
 </form>
 

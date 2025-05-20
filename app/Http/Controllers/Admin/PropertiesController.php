@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FeatureListModel;
+use App\Models\PropertiesFeatureModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyFinancialModel;
@@ -73,7 +74,7 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $slug = $this->generatePropertiesSlug($request->property_name);
         $request->validate([
             'property_name' => 'required',
@@ -104,7 +105,7 @@ class PropertiesController extends Controller
             // 'images.*' => 'required|image|max:2048',
         ]);
 
-        // Freehold
+         // Freehold
         if($request->legal_category === 'Freehold'){
             $request->validate([
                 'freehold_purchase_date' => 'required',
@@ -114,9 +115,12 @@ class PropertiesController extends Controller
 
             $holder_name = $request->freehold_certificate_holder_name;
             $holder_number = $request->freehold_certificate_number;
+
             $green_zone = $request->freehold_green_zone == 'on' ? 1 : 0;
             $yellow_zone = $request->freehold_yellow_zone == 'on' ? 1 : 0;
             $pink_zone = $request->freehold_pink_zone == 'on' ? 1 : 0;
+            $zoning = $request->freehold_zoning;
+
 
             $request->merge([
             'leasehold_start_date' => null,
@@ -151,6 +155,7 @@ class PropertiesController extends Controller
             $green_zone = $request->leasehold_green_zone == 'on' ? 1 : 0;
             $yellow_zone = $request->leasehold_yellow_zone == 'on' ? 1 : 0;
             $pink_zone = $request->leasehold_pink_zone == 'on' ? 1 : 0;
+            $zoning = $request->leasehold_zoning;
 
 
             $request->merge([
@@ -162,6 +167,13 @@ class PropertiesController extends Controller
                 'freehold_pink_zone' => 0,
             ]);
         };
+
+
+
+
+
+
+        
         // ==========================================================================================================================================
         // ########### Create Properties Data ##############
         // ==========================================================================================================================================
@@ -232,10 +244,7 @@ class PropertiesController extends Controller
             'extension_cost' => $request->leasehold_negotiation_ext_cost,
             'purchase_cost' => $request->leasehold_purchase_cost,
             'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
-
-            'green_zone' => $green_zone,
-            'yellow_zone' => $yellow_zone,
-            'pink_zone' => $pink_zone,
+            'zoning' => $zoning,
         ]);
 
         // ==========================================================================================================================================
@@ -416,22 +425,19 @@ class PropertiesController extends Controller
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
             ->first();
 
-        // dd($data['data_properties']);
 
+        // Property Owner
+        $data['property_owner'] = PropertyOwnerModel::where('properties_id', $data['data_properties']->id)->get();
 
-
-
-        // List Checkbox Properties
+        // Properties Feature
         $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
         $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
-
         // User Checked berdasarkan id
         $data['properties_feature'] = PropertyFeatureModel::where('properties_id', $data['data_properties']->id)->get();
-
         // Ambil ID fitur yang sudah dipilih
         $data['selected_feature_ids'] = $data['properties_feature']->pluck('feature_id')->toArray();
 
-        // dd($data['selected_feature_ids']);
+        // dd($data['property_owner']);
 
         return view('admin.properties.edit', $data);
     }
@@ -441,7 +447,21 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($id);
+
+        // ==========================================================================================================================================
+        // ############## Property Feature ##############
+        // ==========================================================================================================================================
+        PropertyFeatureModel::where('properties_id', $id)->delete();
+        foreach($request->feature as $key => $value){
+            PropertyFeatureModel::create([
+                'properties_id' => $id,
+                'feature_id' => $value
+            ]);
+        }
+
+        return back();
+
     }
 
     public function destroy(string $id)
