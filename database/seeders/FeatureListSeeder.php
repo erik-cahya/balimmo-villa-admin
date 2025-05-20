@@ -164,7 +164,7 @@ class FeatureListSeeder extends Seeder
             'name' => 'Master',
             'email' => 'master@gmail.com',
             'phone_number' => "089522648527",
-            'password' => bcrypt('master'),
+            'password' => bcrypt('master123'),
             'reference_code' => 'BPM-MASTER-3213',
             'role' => 'Master',
         ]);
