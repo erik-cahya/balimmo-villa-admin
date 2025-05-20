@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FeatureListModel;
-use App\Models\GalleryImageModel;
-use App\Models\PropertiesFeatureModel;
-use App\Models\PropertiesFileModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyFinancialModel;
@@ -22,8 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use League\CommonMark\Normalizer\SlugNormalizer;
+
 
 class PropertiesController extends Controller
 {
@@ -38,6 +34,9 @@ class PropertiesController extends Controller
                     'property_slug',
                     'internal_reference',
                     'bedroom',
+                    'property_code',
+                    'property_address',
+                    'type_mandate',
                     'bathroom')
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
@@ -52,12 +51,15 @@ class PropertiesController extends Controller
                     'property_slug',
                     'internal_reference',
                     'bedroom',
+                    'property_code',
+                    'property_address',
                     'bathroom')
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
                     $query->where('is_featured', 1);
                 }])->get();
         }
+
         return view('admin.properties.index', $data);
     }
 
@@ -71,6 +73,7 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
+        
         $slug = $this->generatePropertiesSlug($request->property_name);
         $request->validate([
             'property_name' => 'required',
@@ -290,7 +293,6 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         
         if($request->file_rental_support !== null){
-
             $fileRentalSupport = $request->file_rental_support->getClientOriginalName();
             $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileRentalSupport);
         }else{
@@ -360,12 +362,17 @@ class PropertiesController extends Controller
     {
 
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
+        
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
             ->with(['featuredImage' => function ($query) {
                         $query->select('image_path', 'property_gallery.id');
                         $query->where('is_featured', 1);
                     }])
             ->first();
+
+        // dd($data['data_properties']);
 
         $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['data_properties']->id)
             ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
@@ -373,18 +380,60 @@ class PropertiesController extends Controller
             ->get();
 
         $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
-
-
         $data['agent_data'] = User::where('reference_code', $property->internal_reference)->first();
+        
+        $data['property_owner'] = PropertyOwnerModel::where('properties_id', $data['data_properties']->id)->get();
+
+        $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['data_properties']->id)->get(); 
+
+        foreach($url_attachment as $url){
+            if($url->name === 'url_virtual_tour'){
+                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
+
+                $url->path_attachment = $match[1];
+            }
+            elseif($url->name === 'url_lifestyle'){
+                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
+                $url->path_attachment = $match[1];
+            }
+            elseif($url->name === 'url_experience'){
+                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
+                $url->path_attachment = $match[1];
+            }
+        }
+        $data['attachment'] = collect($url_attachment);
+
         return view('admin.properties.details', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $slug)
     {
-        //
+        $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+            ->first();
+
+        // dd($data['data_properties']);
+
+
+
+
+        // List Checkbox Properties
+        $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
+        $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
+
+        // User Checked berdasarkan id
+        $data['properties_feature'] = PropertyFeatureModel::where('properties_id', $data['data_properties']->id)->get();
+
+        // Ambil ID fitur yang sudah dipilih
+        $data['selected_feature_ids'] = $data['properties_feature']->pluck('feature_id')->toArray();
+
+        // dd($data['selected_feature_ids']);
+
+        return view('admin.properties.edit', $data);
     }
 
     /**
@@ -397,15 +446,6 @@ class PropertiesController extends Controller
 
     public function destroy(string $id)
     {
-        // PropertyOwnerModel::where('properties_id', $id)->delete();
-        // PropertyLegalModel::where('properties_id', $id)->delete();
-        // PropertyGalleryModel::where('properties_id', $id)->delete();
-        // PropertyGalleryImageModel::where('properties_id', $id)->delete();
-
-        // PropertyUrlAttachmentModel::where('properties_id', $id)->delete();
-        // PropertyFeatureModel::where('properties_id', $id)->delete();
-        // PropertyFinancialModel::where('properties_id', $id)->delete();
-
         $slug = PropertiesModel::where('id', $id)->first();
 
         // Delete File Gallery

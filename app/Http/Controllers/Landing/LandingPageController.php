@@ -114,7 +114,6 @@ class LandingPageController extends Controller
         foreach($url_attachment as $url){
             if($url->name === 'url_virtual_tour'){
                 preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
-
                 $url->path_attachment = $match[1];
             }
             elseif($url->name === 'url_lifestyle'){
@@ -126,7 +125,8 @@ class LandingPageController extends Controller
                 $url->path_attachment = $match[1];
             }
         }
-        $data['attachment'] = collect($url_attachment)->except('name', 'url_vitrual_tour');
+        $data['attachment'] = collect($url_attachment);
+
         return view('landing.listing.details', $data);
     }
 

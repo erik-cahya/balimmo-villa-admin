@@ -77,12 +77,11 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <x-form-input className="col-lg-12" type="text" name="company_name" label="Company Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_first_name" label="Legal Representative First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Legal Representative Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="legal_rep_email" label="Email" />
-
+                                        <x-form-input className="col-lg-12" type="text" name="company_name" label="Company Name" value="{{ $data_properties->company_name }}" />
+                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_first_name" label="Legal Representative First Name" value="{{ $data_properties->rep_first_name }}" />
+                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Legal Representative Last Name" value="{{ $data_properties->rep_last_name }}" />
+                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" value="{{ $data_properties->phone }}" />
+                                        <x-form-input className="col-lg-6" type="email" name="legal_rep_email" label="Email" value="{{ $data_properties->email }}" />
 
                                    </div>
                               </div>
@@ -108,23 +107,25 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        @foreach ($feature_list_indoor as $feature_indoor)
-                                             <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
-                                        @endforeach
+                                        {{-- @foreach ($feature_list_indoor as $feature_indoor) --}}
+                                             {{-- <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" /> --}}
+                                             
+                                                  {{-- <div class="form-check mb-2 mx-3">
+                                                  <input type="checkbox" class="form-check-input" id="feature[{{ $feature_indoor->slug }}]" name="feature[{{ $feature_indoor->slug }}]" >
+                                                  <label class="form-check-label" for="feature[{{ $feature_indoor->slug }}]">{{ $feature_indoor->name }}</label>
+                                             </div> --}}
+                                        {{-- @endforeach --}}
 
-                                        {{-- <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Fully Furnished" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="equipped_kitchen" label="Equipped Kitchen (Fridge, Oven, Stove, Extractor Hood)" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="air_conditioning" label="Air Conditioning in All Room" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="wardobes_dressing_room" label="Dressing Room or Built-in Wardobes" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="master_bedroom_bathub" label="Bathub in Master Bedroom" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="laundry_room" label="Laundry Room with Washing Machine" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="home_cinema" label="Home Cinema or Projector" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="office_space" label="Office Space" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="installed_wifi" label="Installed Wi-Fi" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="safe_box" label="Safe Box" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="smart_home_system" label="Smart Home System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="integrated_audio_system" label="Integrated Audio System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="cctv" label="CCTV System" /> --}}
+                                        @foreach ($feature_list_indoor as $featureIndoor)
+                                             <div class="form-check mb-2 mx-3">
+                                                  
+                                                  <input type="checkbox" id="feature[{{ $featureIndoor->slug }}]" name="feature[{{ $featureIndoor->slug }}]" value="{{ $featureIndoor->id }}" class="form-check-input"
+                                                            {{ in_array($featureIndoor->id, $selected_feature_ids) ? 'checked' : '' }}>
+                                                  
+                                                  <label class="form-check-label" for="feature[{{ $featureIndoor->slug }}]">{{ $featureIndoor->name }}</label>
+                                                  
+                                             </div>
+                                        @endforeach
 
                                    </div>
                               </div>
@@ -133,8 +134,15 @@
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Outdoor Features</h5>
                                    <hr>
                                    <div class="my-3 row">
-                                        @foreach ($feature_list_outdoor as $feature_outdoor)
-                                             <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                        @foreach ($feature_list_outdoor as $featureOutdoor)
+                                             <div class="form-check mb-2 mx-3">
+                                                  
+                                                  <input type="checkbox" id="feature[{{ $featureOutdoor->slug }}]" name="feature[{{ $featureOutdoor->slug }}]" value="{{ $featureOutdoor->id }}" class="form-check-input"
+                                                            {{ in_array($featureOutdoor->id, $selected_feature_ids) ? 'checked' : '' }}>
+                                                  
+                                                  <label class="form-check-label" for="feature[{{ $featureOutdoor->slug }}]">{{ $featureOutdoor->name }}</label>
+                                                  
+                                             </div>
                                         @endforeach
                                    </div>
                               </div>
@@ -168,7 +176,7 @@
                                    <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
                               </div>
 
-                              <x-form-input className="col-lg-12" type="text" name="property_name" label="Property Name" />
+                              <x-form-input className="col-lg-12" type="text" name="property_name" label="Property Name" value="{{ $data_properties->property_name }}" />
 
                               <div class="col-lg-6 mb-3" id="group_region">
                                    <label for="region" class="form-label">Region</label>
@@ -186,13 +194,12 @@
 
                               <div class="col-lg-12 mb-3" id="group_property_address">
                                    <label for="property_address" class="form-label">Property Address</label>
-                                   <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address"></textarea>
+                                   <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address">{{ $data_properties->property_address }}</textarea>
                               </div>
 
                               <div class="col-lg-12 mb-3" id="group_description">
                                    <label for="description" class="form-label">Description</label>
-                                   <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus accusamus ducimus nesciunt aperiam itaque iste minima similique architecto ipsa voluptas repellat totam quos consectetur cumque blanditiis, numquam alias officia doloremque odit iure unde nobis maiores dolorem. Nobis, cum odio laudantium repellat neque possimus quia voluptate magnam, totam rem doloribus eum nostrum facere a labore perferendis architecto quo fuga, amet saepe velit voluptatum exercitationem. Obcaecati laboriosam itaque alias quae modi sit repellendus neque quos et enim atque sed ullam laborum, labore similique voluptatibus voluptate odio? Voluptas laboriosam asperiores deserunt eius sapiente voluptatibus maxime reprehenderit, officia libero consequuntur tempore laudantium nam, nisi non doloribus quisquam iste molestiae voluptate explicabo magnam voluptates, placeat maiores perspiciatis? Iusto facilis odit soluta incidunt veritatis? Voluptate, qui nulla dolorem, aliquam dicta deleniti earum sint quas ratione quisquam reprehenderit eum? Voluptatem voluptates saepe totam in dolor esse corporis! A tempora minus ipsa, quia suscipit odit accusamus doloremque possimus dolorem iusto, deleniti accusantium sapiente hic aut eius consectetur temporibus amet architecto velit saepe adipisci veritatis perferendis. Id iure rem odit iste laboriosam necessitatibus dolores, facere consectetur voluptate eum. Deserunt qui nobis consequuntur dignissimos officia, sint in molestias animi error hic enim ut iste eveniet quaerat, voluptatibus assumenda est eum commodi expedita beatae fugit laboriosam culpa sit! Omnis ex at nostrum quae, atque architecto. Consectetur earum fugit tenetur. Pariatur totam perspiciatis, error quibusdam eum cumque illum aspernatur aperiam libero commodi cupiditate recusandae ipsa eos, soluta nobis. Alias perferendis voluptates in vitae aspernatur commodi dolore velit ratione magni eum dolorum a sunt quisquam adipisci esse quo rem, voluptatum asperiores expedita quod dicta. Hic necessitatibus magni, eligendi est ab quisquam maxime? Incidunt dolor eligendi itaque excepturi iste impedit voluptatum, porro maxime provident fugit expedita molestiae rerum asperiores commodi labore eveniet quaerat eum amet maiores error animi nostrum ullam debitis! Saepe vero eius vitae neque quisquam quasi quis dignissimos facere quaerat! Magni, nesciunt sunt officiis a ipsum temporibus, odio explicabo tenetur error ipsam obcaecati. Sit ipsum aut sequi eveniet quisquam at aperiam quod natus dolore facere ipsa delectus ducimus facilis, voluptate earum. Pariatur quidem quisquam sunt quod, recusandae maiores eius nulla, similique earum ea accusantium suscipit sequi totam! Dolorem reprehenderit, fugit sed in eligendi suscipit aliquid autem temporibus consequuntur quam voluptatem nemo, non, officia voluptate at corrupti quae. Saepe possimus consequatur sit dolore natus atque eligendi reprehenderit omnis? Reiciendis beatae, magni eius aliquid officia modi possimus nostrum soluta totam, explicabo illum, eligendi excepturi?
-                                   </textarea>
+                                   <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ $data_properties->property_description }}</textarea>
                               </div>
 
 
@@ -212,17 +219,17 @@
                     <div class="card-body">
                          <div class="row">
 
-                              <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" />
+                              <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" value="{{ $data_properties->total_land_area }}" />
 
 
-                              <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" />
-                              <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" />
+                              <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" value="{{ $data_properties->villa_area }}" />
+                              <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" value="{{ $data_properties->pool_area }}" />
 
-                              <x-form-input className="col-lg-6" type="number" name="bedroom" label="Bedroom" />
-                              <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" />
+                              <x-form-input className="col-lg-6" type="number" name="bedroom" label="Bedroom" value="{{ $data_properties->bedroom }}" />
+                              <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" value="{{ $data_properties->bathroom }}" />
 
-                              <x-form-input className="col-lg-6" type="number" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" />
-                              <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
+                              <x-form-input className="col-lg-6" type="number" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" value="{{ $data_properties->year_construction }}" />
+                              <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" value="{{ $data_properties->year_renovated }}" />
 
 
                          </div>
@@ -239,12 +246,12 @@
                     <div class="card-body">
                          <div class="row">
 
-                              <x-form-input className="col-lg-6" type="text" name="average_nightly_rate" label="Average Nightly Rate (IDR) *" />
+                              <x-form-input className="col-lg-6" type="text" name="average_nightly_rate" label="Average Nightly Rate (IDR) *" value="{{ $data_properties->avg_nightly_rate }}" />
 
                                <div class="col-md-6" id="group_average_occupancy_rate">
                                    <label for="average_occupancy_rate" class="form-label">Average Occupancy Rate (%) *</label>
                                    <div class="input-group">
-                                   <input type="number" name="average_occupancy_rate" class="form-control" placeholder="Input Avg Occupancy Rate">
+                                   <input type="number" name="average_occupancy_rate" class="form-control" placeholder="Input Avg Occupancy Rate" value="{{ round($data_properties->avg_occupancy_rate, 0) }}">
                                    <span class="input-group-text">%</span>
                                    </div>
                               </div>
@@ -252,13 +259,13 @@
                               <div class="col-md-6" id="group_month_rented_per_year">
                                    <label for="month_rented_per_year" class="form-label">Months Rented per Year *</label>
                                    <div class="input-group">
-                                   <input type="number" name="month_rented_per_year" class="form-control" min="1" max="120" placeholder="Months Rented per Year">
+                                   <input type="number" name="month_rented_per_year" class="form-control" min="1" max="120" placeholder="Months Rented per Year" value="{{ $data_properties->months_rented }}">
                                    <span class="input-group-text">month(s)</span>
                                    </div>
                               </div>
 
 
-                              <x-form-input className="col-lg-6" type="text" name="estimated_annual_turnover" label="Estimated Annual Turnover (IDR) *" />
+                              <x-form-input className="col-lg-6" type="text" name="estimated_annual_turnover" label="Estimated Annual Turnover (IDR) *" value="{{ $data_properties->annual_turnover }}" />
                               <div class="col-lg-12 mb-3">
                                    <label for="file_rental_support" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
                                    <input type="file" id="file_rental_support" name="file_rental_support" class="form-control" placeholder="">
@@ -341,7 +348,7 @@
                     </div>
                </div>
 
-                 {{-- -------------------------------------------------------------------------  --}}
+               {{-- -------------------------------------------------------------------------  --}}
                {{-- Sale Price & Conditions Section Form  --}}
                {{-- -------------------------------------------------------------------------  --}}
                <div class="card">
@@ -351,18 +358,20 @@
                     <div class="card-body">
                          <div class="row">
 
-                                   <x-form-input className="col-lg-6" type="text" name="idr_price" label="Desired Selling Price" />
+                                   <x-form-input className="col-lg-6" type="text" name="idr_price" label="Desired Selling Price" value="{{ $data_properties->selling_price_idr }}" />
+                                   {{-- <x-form-input className="col-lg-6" type="text" name="usd_price" label="Estimated USD Conversion" value="{{ $data_properties->selling_price_usd }}" disabled="true" /> --}}
                                    <x-form-input className="col-lg-6" type="text" name="usd_price" label="Estimated USD Conversion" disabled="true" />
+                                   
                                    <input type="hidden" name="usd_price" id="usd_price_raw">
 
                                    <x-form-input className="col-lg-4" type="text" name="commision_rate" label="Commision Rate (%)" value="4%" disabled="true" />
 
-                                   <x-form-input className="col-lg-4" type="text" name="estimated_commision_idr" label="Est. Commision Ammount" value="IDR 0" disabled="true" />
+                                   <x-form-input className="col-lg-4" type="text" name="estimated_commision_idr" label="Est. Commision Ammount" value="0" disabled="true" />
                                    <x-form-input className="col-lg-4" type="text" name="estimated_commision_usd" label="Est. Commision Ammount" value="$0" disabled="true" />
 
                                    <x-form-input className="col-lg-6" type="text" name="net_seller_price_idr" label="Net Seller price (Excluding Commision)" value="IDR 0" disabled="true" />
                                    <x-form-input className="col-lg-6" type="text" name="net_seller_price_usd" label="Net Seller price (Excluding Commision)" value="$0" disabled="true" />
-                                   <p id="exchange_rate_info" class="text-muted"></p>
+                                   <p id="exchange_rate_info">Loading exchange rate...</p>
 
                          </div>
                     </div>
@@ -517,106 +526,106 @@
      </script>
      {{-- /* Custom Toggle */--}}
 
-     
-
      {{-- Convert IDR to USD --}}
      <script>
-          const defaultKurs = 15000;
-          const cacheKey = 'usd_to_idr_rate';
-          const cacheTimeKey = 'usd_to_idr_rate_time';
-          const cacheTTL = 10 * 60 * 1000; // 10 minutes
+     const defaultKurs = 15000;
+     const cacheKey = 'usd_to_idr_rate';
+     const cacheTimeKey = 'usd_to_idr_rate_time';
+     const cacheTTL = 10 * 60 * 1000; // 10 minutes
 
-          // debounce / batasi eksekusi fungsi (ketika user ketik angka)
-          function debounce(func, delay) {
-               let timeout;
-               return function (...args) {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(this, args), delay);
-               };
+     function debounce(func, delay) {
+          let timeout;
+          return function (...args) {
+               clearTimeout(timeout);
+               timeout = setTimeout(() => func.apply(this, args), delay);
+          };
+     }
+
+     function formatCurrency(value, locale, currency, fraction = 2) {
+          return new Intl.NumberFormat(locale, {
+               style: 'currency',
+               currency: currency,
+               minimumFractionDigits: fraction
+          }).format(value);
+     }
+
+     async function getExchangeRate() {
+          const now = new Date().getTime();
+          const storedRate = localStorage.getItem(cacheKey);
+          const storedTime = localStorage.getItem(cacheTimeKey);
+
+          if (storedRate && storedTime && (now - parseInt(storedTime)) < cacheTTL) {
+               return parseFloat(storedRate);
           }
 
-          function formatCurrency(value, locale, currency, fraction = 2) {
-               return new Intl.NumberFormat(locale, {
-                    style: 'currency',
-                    currency: currency,
-                    minimumFractionDigits: fraction
-               }).format(value);
+          try {
+               const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
+               const rate = response.data.rates.IDR;
+               localStorage.setItem(cacheKey, rate);
+               localStorage.setItem(cacheTimeKey, now);
+               return rate;
+          } catch (error) {
+               console.error("Gagal mengambil kurs dari API:", error);
+               return defaultKurs;
+          }
+     }
+
+     async function handleIDRInput() {
+          const idrInput = document.getElementById('idr_price');
+          const commissionRateInput = document.getElementById('commision_rate');
+          const idrValue = parseFloat(idrInput.value.replace(/[^0-9]/g, '')) || 0;
+          let commissionPercent = parseFloat(commissionRateInput.value) / 100 || 0;
+
+          // Balimmo Properties Fees
+          if (idrValue < 15000000000) {
+               commissionRateInput.value = '5%';
+               commissionPercent = 0.05;
+          } else if (idrValue >= 15000000000 && idrValue <= 34000000000) {
+               commissionRateInput.value = '4%';
+               commissionPercent = 0.04;
+          } else if (idrValue > 34000000000 && idrValue <= 70000000000) {
+               commissionRateInput.value = '4%';
+               commissionPercent = 0.04;
+          } else {
+               commissionRateInput.value = '2.5%';
+               commissionPercent = 0.025;
           }
 
-          async function getExchangeRate() {
-               const now = new Date().getTime();
-               const storedRate = localStorage.getItem(cacheKey);
-               const storedTime = localStorage.getItem(cacheTimeKey);
+          if (idrValue <= 0) return;
 
-               if (storedRate && storedTime && (now - parseInt(storedTime)) < cacheTTL) {
-                    return parseFloat(storedRate);
-               }
+          const rate = await getExchangeRate();
+          document.getElementById('exchange_rate_info').textContent = `1 USD = ${formatCurrency(rate, 'id-ID', 'IDR', 0)}`;
+          const usdValue = idrValue / rate;
 
-               try {
-                    const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
-                    const rate = response.data.rates.IDR;
-                    localStorage.setItem(cacheKey, rate);
-                    localStorage.setItem(cacheTimeKey, now);
-                    return rate;
-               } catch (error) {
-                    console.error("Gagal mengambil kurs dari API:", error);
-                    return defaultKurs;
-               }
+          // Update USD values
+          document.getElementById('usd_price').value = formatCurrency(usdValue, 'en-US', 'USD');
+          document.getElementById('usd_price_raw').value = usdValue.toFixed(2);
+
+          // Komisi & Net Seller (IDR)
+          const idrCommission = idrValue * commissionPercent;
+          const idrNetSeller = idrValue - idrCommission;
+
+          document.getElementById('estimated_commision_idr').value = formatCurrency(idrCommission, 'id-ID', 'IDR', 0);
+          document.getElementById('net_seller_price_idr').value = formatCurrency(idrNetSeller, 'id-ID', 'IDR', 0);
+
+          // Komisi & Net Seller (USD)
+          const usdCommission = usdValue * commissionPercent;
+          const usdNetSeller = usdValue - usdCommission;
+          document.getElementById('estimated_commision_usd').value = formatCurrency(usdCommission, 'en-US', 'USD');
+          document.getElementById('net_seller_price_usd').value = formatCurrency(usdNetSeller, 'en-US', 'USD');
+     }
+
+     document.addEventListener('DOMContentLoaded', () => {
+          const idrInput = document.getElementById('idr_price');
+          if (idrInput && idrInput.value) {
+               // Panggil langsung saat halaman edit terbuka
+               handleIDRInput();
           }
 
-          async function handleIDRInput() {
+          idrInput.addEventListener('input', debounce(handleIDRInput, 400));
+     });
+</script>
 
-               const idrInput = document.getElementById('idr_price');
-               const commissionRateInput = document.getElementById('commision_rate');
-               const idrValue = parseFloat(idrInput.value.replace(/[^0-9]/g, '')) || 0;
-               let commissionPercent = parseFloat(commissionRateInput.value) / 100 || 0;
-
-               // Balimmo Properties Fees
-               if(idrValue < '15000000000'){
-                    document.getElementById('commision_rate').value = '5%';
-                    commissionPercent = parseFloat(commissionRateInput.value) / 100;
-
-               }else if(idrValue >= '15000000000' && idrValue <= '34000000000'){
-                    document.getElementById('commision_rate').value = '4%';
-                    commissionPercent = parseFloat(commissionRateInput.value) / 100;
-               }
-               else if(idrValue > '34000000000' && idrValue <= '70000000000'){
-                    document.getElementById('commision_rate').value = '4%';
-                    commissionPercent = parseFloat(commissionRateInput.value) / 100;
-               }
-               else{
-                    document.getElementById('commision_rate').value = '2.5%';
-                    commissionPercent = parseFloat(commissionRateInput.value) / 100;
-               }
-
-               if (idrValue <= 0) return;
-
-               const rate = await getExchangeRate();
-               document.getElementById('exchange_rate_info').textContent = `1 USD = ${formatCurrency(rate, 'id-ID', 'IDR', 0)}`;
-               const usdValue = idrValue / rate;
-
-               // Update USD values
-               document.getElementById('usd_price').value = formatCurrency(usdValue, 'en-US', 'USD');
-               document.getElementById('usd_price_raw').value = usdValue.toFixed(2);
-
-               // Komisi & Net Seller (IDR)
-               const idrCommission = idrValue * commissionPercent;
-               const idrNetSeller = idrValue - idrCommission;
-
-               document.getElementById('estimated_commision_idr').value = formatCurrency(idrCommission, 'id-ID', 'IDR', 0);
-               document.getElementById('net_seller_price_idr').value = formatCurrency(idrNetSeller, 'id-ID', 'IDR', 0);
-
-               // Komisi & Net Seller (USD)
-               const usdCommission = usdValue * commissionPercent;
-               const usdNetSeller = usdValue - usdCommission;
-               document.getElementById('estimated_commision_usd').value = formatCurrency(usdCommission, 'en-US', 'USD');
-               document.getElementById('net_seller_price_usd').value = formatCurrency(usdNetSeller, 'en-US', 'USD');
-          }
-
-          document.getElementById('idr_price').addEventListener('input', debounce(handleIDRInput, 400));
-     </script>
-
-     
 
      {{-- /* Convert IDR to USD --}}
 

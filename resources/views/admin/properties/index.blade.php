@@ -16,103 +16,80 @@
     </div>
     <!-- ========== Page Title End ========== -->
 
-    <div class="row">
-         <div class="col-md-6 col-xl-3">
-              <div class="card">
-                   <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                             <div>
-                                  <h4 class="card-title mb-2 ">Total Incomes</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">$12,7812.09</p>
-                             </div>
-                             <div>
-                                  <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                       <iconify-icon icon="solar:wallet-money-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
-                                  </div>
-                             </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mt-3">
-                             <div>
-                                  <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
+     <div class="row">
+          <div class="col-md-6 col-xl-3">
+               <div class="card">
+                    <div class="card-body">
+                         <div class="d-flex align-items-center justify-content-between">
+                              <div>
+                              <p class="mb-2 fs-15 fw-medium">Earn of the Month</p>
+                              <h3 class="text-dark fw-bold d-flex align-items-center gap-2 mb-0">$3548.09</h3>
+                              </div>
+                              <div>
+                              <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                   <iconify-icon icon="solar:calendar-date-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
+                              </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-6 col-xl-3">
+               <div class="card">
+                    <div class="card-body">
+                         <div class="d-flex align-items-center justify-content-between">
+                              <div>
+                              <p class="mb-2 fs-15 fw-medium d-flex align-items-center gap-2">Earn Growth <span class="badge text-success bg-success-subtle fs-11"><i class="ri-arrow-up-line"></i>44%</span></p>
+                              <h3 class="text-dark fw-bold d-flex align-items-center gap-2 mb-0">$67435.00</h3>
+                              </div>
+                              <div>
+                              <div class="avatar-md bg-success bg-opacity-10 rounded">
+                                   <iconify-icon icon="solar:graph-new-broken" class="fs-32 text-success avatar-title"></iconify-icon>
+                              </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-6 col-xl-3">
+               <div class="card">
+                    <div class="card-body">
+                         <div class="d-flex align-items-center justify-content-between">
+                              <div>
+                              <p class="mb-2 fs-15 fw-medium">Conversation Rate</p>
+                              <h3 class="text-dark fw-bold d-flex align-items-center gap-2 mb-0">78.8%</h3>
+                              </div>
+                              <div>
+                              <div class="avatar-md bg-warning bg-opacity-10 rounded">
+                                   <iconify-icon icon="solar:user-plus-broken" class="fs-32 text-warning avatar-title"></iconify-icon>
+                              </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-6 col-xl-3">
+               <div class="card">
+                    <div class="card-body">
+                         <div class="d-flex align-items-center justify-content-between">
+                              <div>
+                              <p class="mb-2 fs-15 fw-medium">Gross Profit Margin</p>
+                              <h3 class="text-dark fw-bold d-flex align-items-center gap-2 mb-0">34.00%</h3>
+                              </div>
+                              <div>
+                              <div class="avatar-md bg-info bg-opacity-10 rounded">
+                                   <iconify-icon icon="solar:chart-2-broken" class="fs-32 text-info avatar-title"></iconify-icon>
+                              </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
 
-                             </div>
-                        </div>
-                   </div>
-              </div>
-         </div>
+     </div>
 
-         <div class="col-md-6 col-xl-3">
-              <div class="card">
-                   <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                             <div>
-                                  <h4 class="card-title mb-2 ">Total Villas</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">10 Unit</p>
-                             </div>
-                             <div>
-                                  <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                       <iconify-icon icon="solar:home-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
-                                  </div>
-                             </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mt-3">
-                             <div>
-                                  <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
 
-                             </div>
-                        </div>
-                   </div>
-              </div>
-         </div>
 
-         <div class="col-md-6 col-xl-3">
-              <div class="card">
-                   <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                             <div>
-                                  <h4 class="card-title mb-2 ">Unit Sold</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">10 Unit</p>
-                             </div>
-                             <div>
-                                  <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                       <iconify-icon icon="solar:dollar-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
-                                  </div>
-                             </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mt-3">
-                             <div>
-                                  <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
-
-                             </div>
-                        </div>
-                   </div>
-              </div>
-         </div>
-
-         <div class="col-md-6 col-xl-3">
-              <div class="card">
-                   <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                             <div>
-                                  <h4 class="card-title mb-2 ">Unit Rent</h4>
-                                  <p class="text-muted fw-medium fs-22 mb-0">10 Unit</p>
-                             </div>
-                             <div>
-                                  <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                       <iconify-icon icon="solar:key-minimalistic-square-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
-                                  </div>
-                             </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mt-3">
-                             <div>
-                                  <a href="#!" class="link-primary fw-medium">See Details <i class='ri-arrow-right-line align-middle'></i></a>
-
-                             </div>
-                        </div>
-                   </div>
-              </div>
-         </div>
-    </div>
     <div class="row">
          <div class="col-xl-12">
               <div class="card">
@@ -122,7 +99,7 @@
                         </div>
                    </div>
                    <div class="table-responsive">
-                        <table class="table align-middle text-nowrap table-hover table-centered mb-0">
+                        <table class="table align-middle text-nowrap table-hover table-centered mb-0 fs-13">
                              <thead class="bg-light-subtle">
                                   <tr>
                                        <th style="width: 20px;">
@@ -132,12 +109,10 @@
                                             </div>
                                        </th>
                                        <th>Properties Photo & Name</th>
-                                       <th>Internal Reference</th>
-                                       <th>Property Type</th>
-                                       <th>Rent/Sale</th>
+                                       <th>Agent</th>
+                                       <th>Mandates</th>
                                        <th>Bedrooms</th>
                                        <th>Location</th>
-                                       <th>Price</th>
                                        <th>Action</th>
                                   </tr>
                              </thead>
@@ -150,29 +125,29 @@
                                                  <label class="form-check-label" for="customCheck2">&nbsp;</label>
                                             </div>
                                        </td>
+
                                        <td>
                                             <div class="d-flex align-items-center gap-2">
                                                  <div>
                                                       <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md rounded border border-light border-3" style="object-fit: cover">
                                                  </div>
-                                                 <div>
+                                                 <div class="d-flex flex-column">
                                                       <a href="#!" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
+                                                      <span class="fst-italic">{{ $property->property_code }}</span>
                                                  </div>
                                             </div>
                                        </td>
-
-
-                                       <td>{{ $property->internal_reference }}</td>
-                                       <td class="text-capitalize">{{ $property->property_type }}</td>
-                                       <td> <span class="badge bg-success-subtle text-success py-1 px-2 fs-13">{{ $property->property_status }}</span></td>
+                                       <td><span class="badge bg-dark text-light py-1 px-2 fs-12">{{ $property->internal_reference }}</span></td>
+                                       <td><span class="badge bg-primary-subtle text-primary py-1 px-2 fs-12">{{ $property->type_mandate }}</span></td>
                                        <td>
-                                            <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> {{ $property->bedroom }}</p>
+                                             <p class="d-flex align-items-center gap-2 mb-1"><iconify-icon icon="solar:bed-broken" class="fs-18 text-primary"></iconify-icon>{{ $property->bedroom }} Bedroom</p>
+                                             <p class="d-flex align-items-center gap-2 mb-1"><iconify-icon icon="cil:bathroom" class="fs-18 text-primary"></iconify-icon>{{ $property->bathroom }} Bathroom</p>
                                        </td>
-                                       <td class="text-capitalize">{{ $property->region }}</td>
-                                       <td>$8,930.00</td>
+                                       <td class="text-capitalize">{{ $property->property_address }}</td>
                                        <td>
                                             <div class="d-flex gap-2">
                                                  <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                 <a href="{{ route('properties.edit', $property->property_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="align-middle fs-18"></iconify-icon></a>
 
                                                  {{-- Delete Button --}}
                                                  <input type="hidden" class="propertyId" value="{{ $property->id }}">
@@ -206,6 +181,8 @@
          </div>
 
     </div>
+
+    
 
 
 </div>
