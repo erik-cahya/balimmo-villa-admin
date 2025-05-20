@@ -19,8 +19,8 @@ class PropertiesLeadsController extends Controller
             $data['data_customers'] = PropertyLeadsModel::select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
             ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')->get();
         }else{
-            $data['data_customers'] = PropertyLeadsModel::where('customers.agent_code', Auth::user()->reference_code)
-            ->select('customers.*', 'properties.id as properties_id', 'properties.property_name')
+            $data['data_customers'] = PropertyLeadsModel::where('property_leads.agent_code', Auth::user()->reference_code)
+            ->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
             ->join('properties', 'properties.id', '=', 'property_leads.properties_id')->get();
         }
 
