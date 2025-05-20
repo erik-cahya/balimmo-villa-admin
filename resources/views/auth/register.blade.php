@@ -105,8 +105,8 @@
                                                   <label class="form-label" for="password_confirmation">Select Role</label>
                                                   <select name="role" id="role" class="form-control" required>
                                                        <option value="" selected>Select Role User</option>
-                                                       <option value="master">Master</option>
-                                                       <option value="agent">Agent</option>
+                                                       <option value="Master">Master</option>
+                                                       <option value="Agent">Agent</option>
                                                   </select>
 
                                             </div>
