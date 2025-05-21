@@ -52,36 +52,24 @@
                              </li>
 
                               @if (Auth::user()->role === 'Master')
-                             <li class="sub-nav-item">
-                                  <a class="sub-nav-link" href="{{ route('features.index') }}">Feature & Amenities</a>
-                             </li>
-                             @endif
+                                   <li class="sub-nav-item">
+                                        <a class="sub-nav-link" href="{{ route('features.index') }}">Feature & Amenities</a>
+                                   </li>
+                              @endif
                         </ul>
                    </div>
               </li>
 
-
-
-              @if (Auth::user()->role === 'Master')
+              @if (Auth::user()->role === 'Master')               
                     <li class="nav-item">
-                         <a class="nav-link menu-arrow" href="#sidebarFeatures" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarFeatures">
+                         <a class="nav-link {{ request()->routeIs('agent.*') ? 'active' : '' }}" href="{{ route('agent.index') }}">
                               <span class="nav-icon">
                                    <i class="ri-group-line"></i>
                               </span>
-                              <span class="nav-text"> Agent </span>
+                              <span class="nav-text">Agent</span>
                          </a>
-                         <div class="collapse" id="sidebarFeatures">
-                              <ul class="nav sub-navbar-nav">
-                                   <li class="sub-nav-item">
-                                        <a class="sub-nav-link" href="{{ route('agent.index') }}">Agent List</a>
-                                   </li>
-                                   {{-- <li class="sub-nav-item">
-                                        <a class="sub-nav-link" href="{{ route('features.create') }}">Create Feature</a>
-                                   </li> --}}
-                              </ul>
-                         </div>
                     </li>
-              @endif
+               @endif
 
 
                <li class="nav-item">

@@ -89,14 +89,79 @@
                                              <p class="mb-0"><iconify-icon icon="tdesign:money-filled" class="align-middle fs-16"></iconify-icon> IDR {{ number_format($customer->cust_budget, 2, ',', '.') }}</p>
                                         </td>
                                         <td>
-                                             <div class="d-block">
-                                                  <p class="fs-13 mb-0 text-dark fw-medium">{{ $customer->property_name }}</p>
-                                                  <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p>
-                                             </div>
+                                             @if (isset($customer->property_name) || isset($customer->require_bedroom))
+                                                  <div class="d-block">
+                                                       <p class="fs-13 mb-0 text-dark fw-medium">{{ $customer->property_name }}</p>
+                                                       <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p>
+                                                  </div>
+                                             @else
+                                                  
+                                                  <span class="badge bg-danger text-light py-1 px-2 fs-12">Property Not Specified</span>
+                                             @endif
                                         </td>
-                                        <td>Badung Kedongaan</td>
-                                        <td>20 Mei 2022</td>
-                                        <td><a href="#!" class="btn btn-primary btn-sm w-100">Edit</a></td>
+                                        <td><iconify-icon icon="flowbite:map-pin-solid" class="align-middle fs-16"></iconify-icon> {{ $customer->localization }}</td>
+                                        <td><iconify-icon icon="uiw:date" class="align-middle fs-16"></iconify-icon> {{ $customer->date }}</td>
+                                        <td>
+                                             {{-- <a href="#!" class="btn btn-primary btn-sm w-100">Edit</a> --}}
+
+                                             {{-- <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="collapse" data-bs-target="#villasForCustomer{{ $customer->id }}">
+                            Tampilkan {{ $matchProperties[$customer->id]->count() }} Villa
+                        </button> --}}
+
+                        <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="collapse" data-bs-target="#villasForCustomer{{ $customer->id }}" aria-expanded="false" aria-controls="flush-collapseOne">
+                         Tampilkan {{ $matchProperties[$customer->id]->count() }} Villa
+                         </button>
+            
+                                        </td>
+                                        </tr>
+                                        
+                                        <tr id="villasForCustomer{{ $customer->id }}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+
+                                             <td colspan="8" class="accordion-body">
+                                                  <div class="row">
+                                                       <div class="col-12">
+                                                            <div class="page-title-box">
+                                                                 <h4 class="mb-0 fw-semibold mx-4">Properties Recomendation</h4>
+                                                            </div>
+                                                       </div>
+                                                  </div>
+
+                                                  <div class="row">
+                                                       @foreach ($matchProperties[$customer->id] as $properties)
+                                                                 <div class="col-md-6 col-xl-3">
+                                                                      <div class="card">
+                                                                           <div class="card-body">
+                                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                                     <div>
+                                                                                          <h4 class="card-title mb-2 ">{{ $properties->property_name }}</h4>
+                                                                                          <p class="text-muted fw-medium fs-22 mb-0">$12,7812.09</p>
+                                                                                     </div>
+                                                                                     <div>
+                                                                                          <div class="avatar-md bg-primary bg-opacity-10 rounded">
+                                                                                               <iconify-icon icon="solar:wallet-money-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
+                                                                                          </div>
+                                                                                     </div>
+                                                                                </div>
+                                                                                <div class="d-flex align-items-center justify-content-between mt-3">
+                                                                                     <span class="d-flex">
+                                                                                          <p class="mb-0 mx-1"><span class="text-success fw-medium mb-0"><i class="bx bx-bed"></i> 4</span></p>
+                                                                                          <p class="mb-0 mx-1"><span class="text-success fw-medium mb-0"><i class="bx bx-shower"></i> 4</span></p>
+                                                                                     </span>
+                                                                                     <div>
+                                                                                          <a href="#!" class="link-primary fw-medium">See Details <i class="ri-arrow-right-line align-middle"></i></a>
+
+                                                                                     </div>
+                                                                                </div>
+                                                                           </div>
+                                                                 </div>
+                                                            </div>
+                                                            
+                                                       @endforeach
+
+
+                                                  </div>
+                                             </td>
                                         </tr>
                                    @endforeach
 
@@ -119,9 +184,39 @@
          </div>
 
     </div>
+    <div class="row">
+
+   
+          <div class="accordion-item">
+
+                    
+
+               
+          </div>
+
+    </div>
 
 </div>
 
+<script>
+  // Script untuk animasi tombol toggle
+  document.querySelectorAll('.toggle-villas').forEach(button => {
+      button.addEventListener('click', function() {
+          const icon = this.querySelector('i');
+          if (icon) {
+              icon.classList.toggle('ri-arrow-down-s-line');
+              icon.classList.toggle('ri-arrow-up-s-line');
+          } else {
+              // Jika tidak ada icon, ubah teks tombol
+              if (this.textContent.includes('Tampilkan')) {
+                  this.textContent = this.textContent.replace('Tampilkan', 'Sembunyikan');
+              } else {
+                  this.textContent = this.textContent.replace('Sembunyikan', 'Tampilkan');
+              }
+          }
+      });
+  });
+</script>
 
 @endsection
 @push('scripts')

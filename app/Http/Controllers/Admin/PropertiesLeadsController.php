@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PropertiesModel;
 use App\Models\PropertyLeadsModel;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -18,11 +19,20 @@ class PropertiesLeadsController extends Controller
         if(Auth::user()->role == 'Master'){
             $data['data_customers'] = PropertyLeadsModel::select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
             ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')->get();
-        }else{
+        } else {
             $data['data_customers'] = PropertyLeadsModel::where('property_leads.agent_code', Auth::user()->reference_code)
-            ->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-            ->join('properties', 'properties.id', '=', 'property_leads.properties_id')->get();
+                ->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+                ->join('properties', 'properties.id', '=', 'property_leads.properties_id')->get();
         }
+        $leads = PropertyLeadsModel::all();
+       
+        $data['matchProperties'] = [];
+
+        foreach($leads as $lead){
+            $data['matchProperties'][$lead->id] = PropertiesModel::where('region', $lead->localization)->get();
+        }
+
+        // dd($data['matchProperties']);
 
         // dd($data['data_customers']);
         //  $data['data_customers'] = PropertyLeadsModel::get();
@@ -43,26 +53,7 @@ class PropertiesLeadsController extends Controller
      */
     public function store(Request $request)
     {
-        PropertyLeadsModel::create([
-            'properties_id' => null,
-            'agent_code' => null,
-            'cust_name' => $request->name,
-            'cust_telp' => $request->number,
-            'cust_email' => $request->email,
-            'cust_budget' => (int)preg_replace('/[^0-9]/', '', $request->budget),
-            'require_bedroom' => null,
-            'localization' => $request->location,
-            'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
-            'message' => $request->message,
-        ]);
 
-        $flashData = [
-            'judul' => 'Form Submit Success',
-            'pesan' => 'Thank you, we have received your data.',
-            'swalFlashIcon' => 'success',
-        ];
-        
-        return redirect()->route('landing-page.index')->with('flashData', $flashData);
     }
 
     /**
@@ -95,5 +86,40 @@ class PropertiesLeadsController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function booking(Request $request, $slug = null)
+    {
+        $request->validate([
+            'name' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required',
+            'bedroom' => 'required',
+            'location' => 'required',
+            'timing' => 'required',
+        ]);
+
+        $property = PropertiesModel::where('property_slug', $slug)->first();
+        PropertyLeadsModel::create([
+            'properties_id' => $slug == null ? null : $property->id,
+            'agent_code' => $slug == null ? null : $property->internal_reference,
+            'cust_name' => $request->name,
+            'cust_telp' => $request->phone_number,
+            'cust_email' => $request->email,
+            'cust_budget' => (int)preg_replace('/[^0-9]/', '', $request->budget),
+            'require_bedroom' => $slug == null ? null : $request->bedroom,
+            'localization' => $request->location,
+            'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+            'message' => $request->message,
+        ]);
+
+
+        $flashData = [
+            'judul' => 'Form Submit Success',
+            'pesan' => 'Thank you, we have received your data.',
+            'swalFlashIcon' => 'success',
+        ];
+        
+        return back()->with('flashData', $flashData);
     }
 }

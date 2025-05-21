@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('cust_name');
             $table->string('cust_telp');
             $table->string('cust_email');
-            $table->integer('cust_budget')->nullable();
+            $table->bigInteger('cust_budget')->nullable();
             $table->integer('require_bedroom')->nullable();
             $table->string('localization')->nullable();
             $table->date('date')->nullable();

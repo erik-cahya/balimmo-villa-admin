@@ -564,9 +564,8 @@
                     <div class="widget__step mb-30">
                         <h2 class="widget__step--title">Booking Properties</h2>
                         <div class="widget__form">
-                            <form action="{{ route('customer.booking', $property->property_slug)}}" method="POST">
+                            <form action="{{ route('booking.slug', $property->property_slug)}}" method="POST">
                                 @csrf
-                                <input type="hidden" name="agent_code" value="{{ $property->agent_code }}">
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Name" name="name" type="text">
                                 </div>
@@ -591,7 +590,7 @@
                                         {{-- <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" /> --}}
                                 </div>
                                 <div class="widget__form--input">
-                                    <textarea class="widget__form--textarea__field" name="message" placeholder="Write You Messege"></textarea>
+                                    <textarea class="widget__form--textarea__field" name="mes2sage" placeholder="Write You Messege"></textarea>
                                 </div>
                                 <button class="widget__form--btn solid__btn" type="submit">Send Messege</button>
                             </form>

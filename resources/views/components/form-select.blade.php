@@ -16,7 +16,7 @@ Docs
     ]
 )
 
-<div class="{{ $className }} mb-3" id="group_{{ $name }}">
+<div class="{{ $className }} mb-3 text-capitalize" id="group_{{ $name }}">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
     <select class="form-control" id="{{ $name }}" name="{{ $name }}" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
         <option value="" selected disabled>Choose {{ $label }}</option>

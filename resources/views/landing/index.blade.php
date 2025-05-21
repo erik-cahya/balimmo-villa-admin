@@ -653,7 +653,7 @@
                 </div>
             </div>
             <div class="contact__property--form" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
-                <form action="{{ route('leads.store') }}" method="POST">
+                <form action="{{ route('booking') }}" method="POST">
                     @csrf
                     <h3 class="contact__property--form__title">Contact Us</h3>
                     <div class="contact__property--form__inner">
@@ -662,8 +662,8 @@
                             <input id="name" name="name" placeholder="Enter your name" type="text">
                         </div>
                         <div class="contact__property--form__input">
-                            <label for="number">Number*</label>
-                            <input id="number" name="number" placeholder="Enter your number" type="tel">
+                            <label for="phone_number">Number *</label>
+                            <input id="phone_number" name="phone_number" placeholder="Enter your number" type="tel">
                         </div>
                         <div class="contact__property--form__input">
                             <label for="email">Email*</label>

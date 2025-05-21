@@ -42,6 +42,8 @@ Route::get('/landing-login', [LandingPageController::class, 'login'])->name('lan
 Route::get('/landing-signup', [LandingPageController::class, 'signup'])->name('landing-page.sign-up');
 
 // ############################################################### Customer Booking Controller
+Route::post('/booking', [PropertiesLeadsController::class, 'booking'])->name('booking');
+Route::post('/booking/{slug}', [PropertiesLeadsController::class, 'booking'])->name('booking.slug');
 Route::post('listing/booking/{slug}', [CustomerController::class, 'booking'])->name('customer.booking');
 
 Route::middleware('auth')->group(function () {

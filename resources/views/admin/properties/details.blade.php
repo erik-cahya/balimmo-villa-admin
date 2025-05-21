@@ -58,7 +58,8 @@
                                    <form method="POST" action="{{ route('properties.changeAcceptance', $data_properties->property_slug) }}"  class="d-flex align-items-center flex-wrap">
                                         @csrf
                                         <x-form-select className="col-lg-6" name="type_acceptance" label="Accept Listing Properties"
-                                             :options="['Pending','Accept', 'Decline']" />
+                                             :options="['pending','accept', 'decline']"  :selected="old('type_acceptance', $data_properties->type_acceptance ?? '')"
+ />
                                         <button type="submit" class="btn btn-primary mx-4">Change Status</button>
                                    </form>
                               </div>
@@ -72,7 +73,7 @@
                               <div class="position-relative">
                                    <img src="{{ asset($data_properties->featuredImage->image_path) }}" alt="" class="img-fluid rounded" style="width: 100%; height: 30rem; object-fit: cover" >
                                    <span class="position-absolute top-0 start-0 p-2">
-                                        <span class="badge bg-warning text-light px-2 py-1 fs-16">For {{ $data_properties->property_status }}</span>
+                                        <span class="badge bg-warning text-light px-2 py-1 fs-16 text-capitalize">{{ $data_properties->type_acceptance }}</span>
                                    </span>
                               </div>
                               <div class="d-flex flex-wrap justify-content-between my-3 gap-2">

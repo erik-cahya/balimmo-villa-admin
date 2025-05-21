@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/plugins/glightbox.min.css">
   <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/plugins/aos.css">
 
+
   <!-- Custom Style CSS -->
   <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/style.css">
   <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/rtl.css">
@@ -189,9 +190,14 @@
    <script src="{{ asset('landing') }}/assets/js/plugins/glightbox.min.js"></script>
    <script src="{{ asset('landing') }}/assets/js/plugins//aos.js"></script>
 
+   
+   
+   
+    <!-- Customscript js -->
+    <script src="{{ asset('landing') }}/assets/js/script.js"></script>
 
-  <!-- Customscript js -->
-  <script src="{{ asset('landing') }}/assets/js/script.js"></script>
+
+
 
   @stack('scripts')
 
