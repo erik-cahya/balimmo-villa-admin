@@ -71,79 +71,79 @@
                               <tbody>
                                    @foreach ($data_customers as $customer)     
                                         <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>
-                                             <div class="d-flex align-items-center gap-1">
-                                                  <img src="{{ asset('admin') }}/assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded-circle me-1">
-                                                  <div class="d-block">
-                                                       <h5 class="mb-0 text-dark fw-medium">{{ $customer->cust_name }}</h5>
-                                                       <p class="fs-13 mb-0">{{ $customer->cust_email }}</p>
+                                             <td>{{ $loop->iteration }}</td>
+                                             <td>
+                                                  <div class="d-flex align-items-center gap-1">
+                                                       <img src="{{ asset('admin') }}/assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded-circle me-1">
+                                                       <div class="d-block">
+                                                            <h5 class="mb-0 text-dark fw-medium">{{ $customer->cust_name }}</h5>
+                                                            <p class="fs-13 mb-0">{{ $customer->cust_email }}</p>
+                                                       </div>
                                                   </div>
-                                             </div>
-                                        </td>
-                                        <td>
-                                             <p class="mb-0"><iconify-icon icon="mdi:phone" class="align-middle fs-16"></iconify-icon> {{ $customer->cust_telp }}</p>
+                                             </td>
+                                             <td>
+                                                  <p class="mb-0"><iconify-icon icon="mdi:phone" class="align-middle fs-16"></iconify-icon> {{ $customer->cust_telp }}</p>
 
-                                        </td>
-                                        <td>
-                                             <p class="mb-0"><iconify-icon icon="tdesign:money-filled" class="align-middle fs-16"></iconify-icon> IDR {{ number_format($customer->cust_budget, 2, ',', '.') }}</p>
-                                        </td>
-                                        <td>
-                                             @if (isset($customer->property_name) || isset($customer->require_bedroom))
-                                                  <div class="d-block">
-                                                       <p class="fs-13 mb-0 text-dark fw-medium">{{ $customer->property_name }}</p>
-                                                       <p class="mb-0 mx-1 d-inline">Require : <iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p>
-                                                       {{-- <p class="mb-0 mx-1 d-inline"><iconify-icon icon="cil:shower" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p> --}}
+                                             </td>
+                                             <td>
+                                                  <p class="mb-0"><iconify-icon icon="tdesign:money-filled" class="align-middle fs-16"></iconify-icon> IDR {{ number_format($customer->cust_budget, 2, ',', '.') }}</p>
+                                             </td>
+                                             <td>
+                                                  @if (isset($customer->property_name) || isset($customer->require_bedroom))
+                                                       <div class="d-block">
+                                                            <p class="fs-13 mb-0 text-dark fw-medium">{{ $customer->property_name }}</p>
+                                                            <p class="mb-0 mx-1 d-inline">Require : <iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p>
+                                                            {{-- <p class="mb-0 mx-1 d-inline"><iconify-icon icon="cil:shower" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p> --}}
 
-                                                  </div>
-                                             @else
+                                                       </div>
+                                                  @else
+                                                       
+                                                       <span class="badge bg-danger text-light py-1 px-2 fs-12">Property Not Specified</span>
+                                                  @endif
+                                             </td>
+                                             <td><iconify-icon icon="flowbite:map-pin-solid" class="align-middle fs-16"></iconify-icon> {{ $customer->localization }}</td>
+                                             <td><iconify-icon icon="uiw:date" class="align-middle fs-16"></iconify-icon> {{ \Carbon\Carbon::parse($customer->date)->format('d F, Y') }}</td>
+                                             <td>
+                                                  {{-- <a href="#!" class="btn btn-primary btn-sm w-100">Edit</a> --}}
+
                                                   
-                                                  <span class="badge bg-danger text-light py-1 px-2 fs-12">Property Not Specified</span>
-                                             @endif
-                                        </td>
-                                        <td><iconify-icon icon="flowbite:map-pin-solid" class="align-middle fs-16"></iconify-icon> {{ $customer->localization }}</td>
-                                        <td><iconify-icon icon="uiw:date" class="align-middle fs-16"></iconify-icon> {{ \Carbon\Carbon::parse($customer->date)->format('d F, Y') }}</td>
-                                        <td>
-                                             {{-- <a href="#!" class="btn btn-primary btn-sm w-100">Edit</a> --}}
 
-                                             
+                                                  <div class="d-flex">
+                                                  @if ($matchProperties[$customer->id]->count() == 0)
+                                                       <span class="btn btn-sm btn-primary">No Match Properties</span>
+                                                  @else
+                                                       <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="collapse" data-bs-target="#villasForCustomer{{ $customer->id }}" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                            Show {{ $matchProperties[$customer->id]->count() }} Properties
+                                                       </button>
+                                                  @endif
+                                                  <div class="dropdown">
+                                                       <a href="#" class="dropdown-toggle btn btn-sm btn-outline-dark rounded mx-2" data-bs-toggle="dropdown" aria-expanded="true">
+                                                            More
+                                                       </a>
+                                                       <div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 33.3333px, 0px);" data-popper-placement="bottom-end">
+                                                       
+                                                            @if ($matchProperties[$customer->id]->count() >= 1)
+                                                                 <form action="{{ route('leads.sendmail') }}" method="POST">
+                                                                      @csrf
+                                                                      @foreach ($matchProperties[$customer->id] as $properties)
+                                                                           <input type="hidden" name="property_name[]" value="{{ $properties->property_name }}">
+                                                                           <input type="hidden" name="selling_price[]" value="{{ number_format($properties->selling_price_idr, 2, ',', '.') }}">
+                                                                      @endforeach
+                                                                      <input type="hidden" name="cust_email" value="{{ $customer->cust_email }}">
+                                                                      <button type="submit" class="dropdown-item pt-2 pb-2">Send Email To Customer</button>
+                                                                 </form>
+                                                            @endif
 
-                                             <div class="d-flex">
-                                             @if ($matchProperties[$customer->id]->count() == 0)
-                                                  <span class="btn btn-sm btn-primary">No Match Properties</span>
-                                             @else
-                                                  <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="collapse" data-bs-target="#villasForCustomer{{ $customer->id }}" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                       Show {{ $matchProperties[$customer->id]->count() }} Properties
-                                                  </button>
-                                             @endif
-
-                                             <div class="dropdown">
-                                                  <a href="#" class="dropdown-toggle btn btn-sm btn-outline-dark rounded mx-2" data-bs-toggle="dropdown" aria-expanded="true">
-                                                       More
-                                                  </a>
-                                                  <div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 33.3333px, 0px);" data-popper-placement="bottom-end">
-                                                      
-                                                       <form action="{{ route('leads.sendmail') }}" method="POST">
-                                                            @csrf
-
-                                                            <input type="hidden" name="cust_email" value="{{ $customer->cust_email }}">
-                                                            <input type="hidden" name="cust_id" value="{{ $customer->id }}">
-                                                           {{-- <a href="javascript:void(0);" class="dropdown-item pt-2 pb-2">Send Email To Customer</a> --}}
-                                                           <button type="submit" class="dropdown-item pt-2 pb-2">Send Email To Customer</button>
-                                                       </form>
-
-                                                       <a href="javascript:void(0);" class="dropdown-item pt-2 pb-2">Detail</a>
+                                                            <a href="javascript:void(0);" class="dropdown-item pt-2 pb-2">Detail</a>
+                                                       </div>
                                                   </div>
-                                             </div>
-                                             </div>
-                       
-            
-                                        </td>
+                                                  </div>
+                         
+               
+                                             </td>
                                         </tr>
                                         
                                         <tr id="villasForCustomer{{ $customer->id }}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-
-
                                              <td colspan="8" class="accordion-body">
                                                   <div class="row">
                                                        <div class="col-12">
@@ -152,7 +152,6 @@
                                                             </div>
                                                        </div>
                                                   </div>
-
                                                   <div class="row">
                                                        @foreach ($matchProperties[$customer->id] as $properties)
                                                                  <div class="col-md-6 col-xl-4">
@@ -171,7 +170,7 @@
                                                                                                               </span>
                                                                                                          </div>
                                                                                                          <div class="d-block">
-                                                                                                              <h5 class="text-white fw-medium mb-0">3</h5>
+                                                                                                              <h5 class="text-white fw-medium mb-0">{{ $properties->bedroom }}</h5>
                                                                                                               <p class="mb-0 text-white-50">Bedroom</p>
                                                                                                          </div>
                                                                                                     </div>
@@ -184,7 +183,7 @@
                                                                                                               </span>
                                                                                                          </div>
                                                                                                          <div class="d-block">
-                                                                                                              <h5 class="text-white fw-medium mb-0">2</h5>
+                                                                                                              <h5 class="text-white fw-medium mb-0">{{ $properties->bathroom }}</h5>
                                                                                                               <p class="mb-0 text-white-50">Bathrom</p>
                                                                                                          </div>
                                                                                                     </div>
@@ -204,10 +203,6 @@
                                                                       </div>
                                                                  </div>
                                                        @endforeach
-                                                  </div>
-
-
-
                                                   </div>
                                              </td>
                                         </tr>

@@ -16,28 +16,48 @@ class PropertiesLeadsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+   public function index()
     {
-        if(Auth::user()->role == 'Master'){
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        if (Auth::user()->role == 'Master') {
             $data['data_customers'] = PropertyLeadsModel::select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-            ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')->get();
+                ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+                ->get();
         } else {
             $data['data_customers'] = PropertyLeadsModel::where('property_leads.agent_code', Auth::user()->reference_code)
                 ->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-                ->join('properties', 'properties.id', '=', 'property_leads.properties_id')->get();
-        }
-        $leads = PropertyLeadsModel::all();
-        $data['matchProperties'] = [];
-
-        // Cari data properties berdasarkan lokasi customer dan harga yang kurang dari sama dengan budget customer
-        foreach($leads as $lead){
-            $data['matchProperties'][$lead->id] = PropertiesModel::where('region', $lead->localization)
-                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                ->where('selling_price_idr', '<=', $lead->cust_budget)
+                ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
                 ->get();
         }
 
-        //  $data['data_customers'] = PropertyLeadsModel::get();
+        $leads = $data['data_customers'];
+        $data['matchProperties'] = [];
+
+        // Ambil semua lokasi & budget maksimum
+        $regions = $leads->pluck('localization')->unique()->toArray();
+        $maxBudget = $leads->max('cust_budget');
+
+        // Ambil semua properti yang mungkin cocok sekaligus
+        $properties = PropertiesModel::whereIn('region', $regions)
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->where('selling_price_idr', '<=', $maxBudget)
+            ->get();
+
+        // Kelompokkan properti berdasarkan region
+        $groupedProperties = $properties->groupBy('region');
+
+        // Kelompokkan kembali sesuai budget masing-masing lead
+        foreach ($leads as $lead) {
+            $regionProps = $groupedProperties[$lead->localization] ?? collect();
+
+            $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
+                return $property->selling_price_idr <= $lead->cust_budget;
+            })->values(); // reset index
+        }
+
 
         return view('admin.leads.index', $data);
     }
@@ -147,23 +167,21 @@ class PropertiesLeadsController extends Controller
     }
 
     public function sendMail(Request $request){
-        dd($request->all());
+        $data = $request->all();
 
-        $data['matchProperties'] = [];
+        $propertyNames = $data['property_name'];
+        $sellingPrices = $data['selling_price'];
+        
+        $combined = [];
 
-        // Cari data properties berdasarkan lokasi customer dan harga yang kurang dari sama dengan budget customer
-        foreach($leads as $lead){
-            $matchProperties = PropertiesModel::where('region', $lead->localization)
-                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                ->where('selling_price_idr', '<=', $lead->cust_budget)
-                ->get();
+        foreach ($propertyNames as $index => $name) {
+            $combined[] = [
+                'name' => $name,
+                'selling_price' => $sellingPrices[$index],
+            ];
         }
-
-        $dataLead = PropertyLeadsModel::get();
-
-        Mail::to($email)->send(new NotifikasiEmail([
-            'nama' => 'John Doe',
-            'leads' => $dataLead,
+        Mail::to($request->cust_email)->send(new NotifikasiEmail([
+            'properties' => $combined,
         ]));
 
 

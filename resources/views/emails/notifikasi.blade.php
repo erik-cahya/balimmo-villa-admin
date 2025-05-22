@@ -1,5 +1,5 @@
 {{-- @php
-  dd($leads);
+  dd($properties);
 @endphp --}}
 <!DOCTYPE html>
 <html>
@@ -14,8 +14,7 @@
     <p style="text-align: center">here for the recommendation villa and fit with your information</p>
     
     <div style="display: flex; flex-direction: row; justify-content: center">
-    @foreach ($leads as $lead)
-      
+    @foreach ($properties as $property)
     <div style="width: 300px; border-radius: 12px; overflow: hidden; margin:10px;box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: white;">
 
         <div style="position: relative; height: 180px; overflow: hidden;">
@@ -27,7 +26,7 @@
 
         <!-- Info Villa -->
         <div style="padding: 16px;">
-            <h3 style="font-size: 18px; font-weight: 700; color: #333; margin-bottom: 6px;">Villa Name</h3>
+            <h3 style="font-size: 18px; font-weight: 700; color: #333; margin-bottom: 6px;">{{ $property['name'] }}</h3>
             <div style="display: flex; align-items: center; font-size: 14px; color: #666; margin-bottom: 10px;">
                 <span style="margin-right: 5px;">📍</span>
                 <span>Sanur Denpasar, Bali</span>
