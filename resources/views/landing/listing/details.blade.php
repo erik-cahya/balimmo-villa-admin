@@ -568,29 +568,60 @@
                                 @csrf
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Name" name="name" type="text">
+
+                                    @error('name')  
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Phone Number" name="phone_number" type="tel">
+
+                                    @error('phone_number')  
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Email Address" name="email" type="email">
+
+                                    @error('email')  
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" id="budget" placeholder="(IDR) Budget" name="budget" type="text">
 
+                                    @error('budget')  
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Require Bedroom" name="bedroom" type="number">
+
+                                    @error('bedroom')  
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Location" name="location" type="text">
+
+                                    @error('location')  
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" id="timing"  placeholder="Timing" name="timing" type="text">
-                                        {{-- <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" /> --}}
+
+                                    @error('timing')  
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <div class="widget__form--input">
-                                    <textarea class="widget__form--textarea__field" name="mes2sage" placeholder="Write You Messege"></textarea>
+                                    <textarea class="widget__form--textarea__field" name="message" placeholder="Write You Messege"></textarea>
+
+                                    @error('message')  
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 <button class="widget__form--btn solid__btn" type="submit">Send Messege</button>
                             </form>

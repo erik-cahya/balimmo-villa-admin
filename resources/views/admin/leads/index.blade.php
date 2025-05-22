@@ -55,7 +55,7 @@
                    </div>
                    <div class="card-body p-0">
                         <div class="table-responsive">
-                          <table class="table table-hover table-centered">
+                          <table class="table table-hover text-nowrap table-centered">
                               <thead class="table-light">
                                     <tr>
                                         <th scope="col">No</th>
@@ -92,7 +92,9 @@
                                              @if (isset($customer->property_name) || isset($customer->require_bedroom))
                                                   <div class="d-block">
                                                        <p class="fs-13 mb-0 text-dark fw-medium">{{ $customer->property_name }}</p>
-                                                       <p class="mb-0"><iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p>
+                                                       <p class="mb-0 mx-1 d-inline">Require : <iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p>
+                                                       {{-- <p class="mb-0 mx-1 d-inline"><iconify-icon icon="cil:shower" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p> --}}
+
                                                   </div>
                                              @else
                                                   
@@ -100,17 +102,41 @@
                                              @endif
                                         </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="align-middle fs-16"></iconify-icon> {{ $customer->localization }}</td>
-                                        <td><iconify-icon icon="uiw:date" class="align-middle fs-16"></iconify-icon> {{ $customer->date }}</td>
+                                        <td><iconify-icon icon="uiw:date" class="align-middle fs-16"></iconify-icon> {{ \Carbon\Carbon::parse($customer->date)->format('d F, Y') }}</td>
                                         <td>
                                              {{-- <a href="#!" class="btn btn-primary btn-sm w-100">Edit</a> --}}
 
-                                             {{-- <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="collapse" data-bs-target="#villasForCustomer{{ $customer->id }}">
-                            Tampilkan {{ $matchProperties[$customer->id]->count() }} Villa
-                        </button> --}}
+                                             
 
-                        <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="collapse" data-bs-target="#villasForCustomer{{ $customer->id }}" aria-expanded="false" aria-controls="flush-collapseOne">
-                         Tampilkan {{ $matchProperties[$customer->id]->count() }} Villa
-                         </button>
+                                             <div class="d-flex">
+                                             @if ($matchProperties[$customer->id]->count() == 0)
+                                                  <span class="btn btn-sm btn-primary">No Match Properties</span>
+                                             @else
+                                                  <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="collapse" data-bs-target="#villasForCustomer{{ $customer->id }}" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                       Show {{ $matchProperties[$customer->id]->count() }} Properties
+                                                  </button>
+                                             @endif
+
+                                             <div class="dropdown">
+                                                  <a href="#" class="dropdown-toggle btn btn-sm btn-outline-dark rounded mx-2" data-bs-toggle="dropdown" aria-expanded="true">
+                                                       More
+                                                  </a>
+                                                  <div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 33.3333px, 0px);" data-popper-placement="bottom-end">
+                                                      
+                                                       <form action="{{ route('leads.sendmail') }}" method="POST">
+                                                            @csrf
+
+                                                            <input type="hidden" name="cust_email" value="{{ $customer->cust_email }}">
+                                                            <input type="hidden" name="cust_id" value="{{ $customer->id }}">
+                                                           {{-- <a href="javascript:void(0);" class="dropdown-item pt-2 pb-2">Send Email To Customer</a> --}}
+                                                           <button type="submit" class="dropdown-item pt-2 pb-2">Send Email To Customer</button>
+                                                       </form>
+
+                                                       <a href="javascript:void(0);" class="dropdown-item pt-2 pb-2">Detail</a>
+                                                  </div>
+                                             </div>
+                                             </div>
+                       
             
                                         </td>
                                         </tr>
@@ -129,35 +155,57 @@
 
                                                   <div class="row">
                                                        @foreach ($matchProperties[$customer->id] as $properties)
-                                                                 <div class="col-md-6 col-xl-3">
-                                                                      <div class="card">
+                                                                 <div class="col-md-6 col-xl-4">
+                                                                      <div class="card bg-primary bg-gradient">
                                                                            <div class="card-body">
-                                                                                <div class="d-flex align-items-center justify-content-between">
-                                                                                     <div>
-                                                                                          <h4 class="card-title mb-2 ">{{ $properties->property_name }}</h4>
-                                                                                          <p class="text-muted fw-medium fs-22 mb-0">$12,7812.09</p>
-                                                                                     </div>
-                                                                                     <div>
-                                                                                          <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                                                                                               <iconify-icon icon="solar:wallet-money-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
+                                                                                <div class="row align-items-center justify-content-between">
+                                                                                     <div class="col-xl-7 col-lg-6 col-md-6">
+                                                                                          <h3 class="text-white fw-bold fs-18">{{ $properties->property_name }}</h3>
+                                                                                          <hr>
+                                                                                          <div class="row">
+                                                                                               <div class="col-lg-6 col-lg-6 col-md-6 col-6">
+                                                                                                    <div class="d-flex gap-2">
+                                                                                                         <div class="avatar-sm flex-shrink-0">
+                                                                                                              <span class="avatar-title bg-success bg-opacity-50 text-white rounded">
+                                                                                                                   <iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> 
+                                                                                                              </span>
+                                                                                                         </div>
+                                                                                                         <div class="d-block">
+                                                                                                              <h5 class="text-white fw-medium mb-0">3</h5>
+                                                                                                              <p class="mb-0 text-white-50">Bedroom</p>
+                                                                                                         </div>
+                                                                                                    </div>
+                                                                                               </div>
+                                                                                               <div class="col-lg-6 col-lg-6 col-md-6 col-6">
+                                                                                                    <div class="d-flex gap-2">
+                                                                                                         <div class="avatar-sm flex-shrink-0">
+                                                                                                              <span class="avatar-title bg-danger bg-opacity-50 text-white rounded">
+                                                                                                                   <iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon>
+                                                                                                              </span>
+                                                                                                         </div>
+                                                                                                         <div class="d-block">
+                                                                                                              <h5 class="text-white fw-medium mb-0">2</h5>
+                                                                                                              <p class="mb-0 text-white-50">Bathrom</p>
+                                                                                                         </div>
+                                                                                                    </div>
+                                                                                               </div>
                                                                                           </div>
-                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="d-flex align-items-center justify-content-between mt-3">
-                                                                                     <span class="d-flex">
-                                                                                          <p class="mb-0 mx-1"><span class="text-success fw-medium mb-0"><i class="bx bx-bed"></i> 4</span></p>
-                                                                                          <p class="mb-0 mx-1"><span class="text-success fw-medium mb-0"><i class="bx bx-shower"></i> 4</span></p>
-                                                                                     </span>
-                                                                                     <div>
-                                                                                          <a href="#!" class="link-primary fw-medium">See Details <i class="ri-arrow-right-line align-middle"></i></a>
+                                                                                          <hr>
+                                                                                          <h3 class="text-white fw-normal fs-16 fst-italic">IDR {{ number_format($properties->selling_price_idr, 2, ',', '.') }}</h3>
+                                                                                          <h3 class="text-white fw-normal fs-16 fst-italic">Gianyar</h3>
 
+                                                                                          
+                                                                                     </div>
+                                                                                     <div class="col-xl-5 col-lg-4 col-md-4">
+                                                                                          <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
                                                                                      </div>
                                                                                 </div>
                                                                            </div>
+                                                                      </div>
                                                                  </div>
-                                                            </div>
-                                                            
                                                        @endforeach
+                                                  </div>
+
 
 
                                                   </div>
@@ -208,10 +256,10 @@
               icon.classList.toggle('ri-arrow-up-s-line');
           } else {
               // Jika tidak ada icon, ubah teks tombol
-              if (this.textContent.includes('Tampilkan')) {
-                  this.textContent = this.textContent.replace('Tampilkan', 'Sembunyikan');
+              if (this.textContent.includes('Show')) {
+                  this.textContent = this.textContent.replace('Show', 'Hide');
               } else {
-                  this.textContent = this.textContent.replace('Sembunyikan', 'Tampilkan');
+                  this.textContent = this.textContent.replace('Hide', 'Show');
               }
           }
       });

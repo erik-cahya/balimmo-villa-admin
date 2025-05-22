@@ -660,30 +660,57 @@
                         <div class="contact__property--form__input">
                             <label for="name">Name*</label>
                             <input id="name" name="name" placeholder="Enter your name" type="text">
+                            @error('name')  
+                                    <p class="text-danger my-2">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="contact__property--form__input">
                             <label for="phone_number">Number *</label>
                             <input id="phone_number" name="phone_number" placeholder="Enter your number" type="tel">
+                            @error('name')  
+                                    <p class="text-danger my-2">{{ $message }}</p>
+                            @enderror
                         </div>
+
                         <div class="contact__property--form__input">
                             <label for="email">Email*</label>
                             <input id="email" name="email" placeholder="Enter your email" type="text">
+                            @error('email')  
+                                    <p class="text-danger my-2">{{ $message }}</p>
+                            @enderror
                         </div>                                
                         <div class="contact__property--form__input">
                             <label for="budget">Budget*</label>
                             <input id="budget" name="budget" placeholder="IDR Enter your budget" type="text">
+
+                            @error('budget')  
+                                <p class="text-danger my-2">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="contact__property--form__input">
                             <label for="location">Location*</label>
                             <input id="location" name="location" placeholder="Location" type="text">
+
+                            @error('location')  
+                                <p class="text-danger my-2">{{ $message }}</p>
+                            @enderror
                         </div>
+                        
                         <div class="contact__property--form__input">
                             <label for="timing">Timing*</label>
                             <input id="timing" name="timing" placeholder="Timing" type="text">
+
+                            @error('timing')  
+                                <p class="text-danger my-2">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="contact__property--form__input">
                             <label for="email">Message</label>
                             <textarea id="text" name="message" placeholder="Enter your message"></textarea>
+
+                            @error('message')  
+                                <p class="text-danger my-2">{{ $message }}</p>
+                            @enderror
                         </div>
                         <button class="contact__property--btn solid__btn" type="submit">Send Messege</button>
                     </div>

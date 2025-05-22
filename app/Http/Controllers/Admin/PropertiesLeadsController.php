@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NotifikasiEmail;
 use App\Models\PropertiesModel;
 use App\Models\PropertyLeadsModel;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class PropertiesLeadsController extends Controller
 {
@@ -25,16 +27,16 @@ class PropertiesLeadsController extends Controller
                 ->join('properties', 'properties.id', '=', 'property_leads.properties_id')->get();
         }
         $leads = PropertyLeadsModel::all();
-       
         $data['matchProperties'] = [];
 
+        // Cari data properties berdasarkan lokasi customer dan harga yang kurang dari sama dengan budget customer
         foreach($leads as $lead){
-            $data['matchProperties'][$lead->id] = PropertiesModel::where('region', $lead->localization)->get();
+            $data['matchProperties'][$lead->id] = PropertiesModel::where('region', $lead->localization)
+                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+                ->where('selling_price_idr', '<=', $lead->cust_budget)
+                ->get();
         }
 
-        // dd($data['matchProperties']);
-
-        // dd($data['data_customers']);
         //  $data['data_customers'] = PropertyLeadsModel::get();
 
         return view('admin.leads.index', $data);
@@ -90,14 +92,35 @@ class PropertiesLeadsController extends Controller
 
     public function booking(Request $request, $slug = null)
     {
-        $request->validate([
-            'name' => 'required',
-            'phone_number' => 'required',
-            'email' => 'required',
-            'bedroom' => 'required',
-            'location' => 'required',
-            'timing' => 'required',
-        ]);
+        // dd($slug);
+        // dd($request->all());
+
+        
+
+        if ($slug !== null) {
+            $request->validate([
+                'name' => 'required',
+                'phone_number' => 'required',
+                'email' => 'required',
+                'budget' => 'required',
+                'location' => 'required',
+                'timing' => 'required',
+                'bedroom' => 'required',
+            ]);
+        }else{
+            // Form di landing page
+            $request->validate([
+                'name' => 'required',
+                'phone_number' => 'required',
+                'email' => 'required',
+                'budget' => 'required',
+                'location' => 'required',
+                'timing' => 'required',
+            ]);
+        }
+
+        // dd($request->all());
+
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
         PropertyLeadsModel::create([
@@ -121,5 +144,34 @@ class PropertiesLeadsController extends Controller
         ];
         
         return back()->with('flashData', $flashData);
+    }
+
+    public function sendMail(Request $request){
+        dd($request->all());
+
+        $data['matchProperties'] = [];
+
+        // Cari data properties berdasarkan lokasi customer dan harga yang kurang dari sama dengan budget customer
+        foreach($leads as $lead){
+            $matchProperties = PropertiesModel::where('region', $lead->localization)
+                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+                ->where('selling_price_idr', '<=', $lead->cust_budget)
+                ->get();
+        }
+
+        $dataLead = PropertyLeadsModel::get();
+
+        Mail::to($email)->send(new NotifikasiEmail([
+            'nama' => 'John Doe',
+            'leads' => $dataLead,
+        ]));
+
+
+        $flashData = [
+            'judul' => 'Success',
+            'pesan' => 'Recommendation email successfully sent to customer',
+            'swalFlashIcon' => 'success',
+        ];
+        return redirect()->route('leads.index')->with('flashData', $flashData);
     }
 }

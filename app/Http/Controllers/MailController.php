@@ -13,6 +13,15 @@ class MailController extends Controller
             // 'nama' => 'John Doe'
         ]));
 
+
+        $flashData = [
+            'judul' => 'Success',
+            'pesan' => 'Recommendation email successfully sent to customer',
+            'swalFlashIcon' => 'success',
+        ];
+        return redirect()->route('leads.index')->with('flashData', $flashData);
+
         return "Email terkirim!";
     }
+
 }

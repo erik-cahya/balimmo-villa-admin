@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/agent', AgentController::class);
 
+    Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');
     Route::resource('/leads', PropertiesLeadsController::class);
 
     Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
