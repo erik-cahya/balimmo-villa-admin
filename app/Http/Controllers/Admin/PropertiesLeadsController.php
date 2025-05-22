@@ -36,29 +36,33 @@ class PropertiesLeadsController extends Controller
         $leads = $data['data_customers'];
         $data['matchProperties'] = [];
 
-        // Ambil semua lokasi & budget maksimum
-        $regions = $leads->pluck('localization')->unique()->toArray();
-        $maxBudget = $leads->max('cust_budget');
+        if ($leads->isNotEmpty()) {
+            // Ambil semua lokasi & budget maksimum
+            $regions = $leads->pluck('localization')->unique()->toArray();
+            $maxBudget = $leads->max('cust_budget');
 
-        // Ambil semua properti yang mungkin cocok sekaligus
-        $properties = PropertiesModel::whereIn('region', $regions)
-            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-            ->where('selling_price_idr', '<=', $maxBudget)
-            ->get();
+            // Ambil semua properti yang mungkin cocok sekaligus
+            $properties = PropertiesModel::whereIn('region', $regions)
+                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+                ->where('selling_price_idr', '<=', $maxBudget)
+                ->get();
 
-        // Kelompokkan properti berdasarkan region
-        $groupedProperties = $properties->groupBy('region');
+            // Kelompokkan properti berdasarkan region
+            $groupedProperties = $properties->groupBy('region');
 
-        // Kelompokkan kembali sesuai budget masing-masing lead
-        foreach ($leads as $lead) {
-            $regionProps = $groupedProperties[$lead->localization] ?? collect();
+            // Kelompokkan kembali sesuai budget masing-masing lead
+            foreach ($leads as $lead) {
+                $regionProps = $groupedProperties[$lead->localization] ?? collect();
 
-            $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
-                return $property->selling_price_idr <= $lead->cust_budget;
-            })->values(); // reset index
+                $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
+                    return $property->selling_price_idr <= $lead->cust_budget;
+                })->values(); // reset index
+            }
+        } else {
+            // Kosongkan jika tidak ada leads
+            $data['matchProperties'] = [];
         }
-
-
+        
         return view('admin.leads.index', $data);
     }
 
