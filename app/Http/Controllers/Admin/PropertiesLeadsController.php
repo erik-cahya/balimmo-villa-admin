@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\BookingCreated;
 use App\Http\Controllers\Controller;
 use App\Mail\NotifikasiEmail;
 use App\Models\PropertiesModel;
@@ -147,7 +148,8 @@ class PropertiesLeadsController extends Controller
 
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
-        PropertyLeadsModel::create([
+        
+        $booking = PropertyLeadsModel::create([
             'properties_id' => $slug == null ? null : $property->id,
             'agent_code' => $slug == null ? null : $property->internal_reference,
             'cust_name' => $request->name,
@@ -159,6 +161,8 @@ class PropertiesLeadsController extends Controller
             'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
             'message' => $request->message,
         ]);
+
+        event(new BookingCreated($booking));
 
 
         $flashData = [
