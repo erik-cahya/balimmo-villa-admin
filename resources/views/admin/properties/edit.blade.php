@@ -105,24 +105,13 @@
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Indoor Features</h5>
                                    <hr>
                                    <div class="my-3 row">
-
-                                        {{-- @foreach ($feature_list_indoor as $feature_indoor) --}}
-                                             {{-- <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" /> --}}
-                                             
-                                                  {{-- <div class="form-check mb-2 mx-3">
-                                                  <input type="checkbox" class="form-check-input" id="feature[{{ $feature_indoor->slug }}]" name="feature[{{ $feature_indoor->slug }}]" >
-                                                  <label class="form-check-label" for="feature[{{ $feature_indoor->slug }}]">{{ $feature_indoor->name }}</label>
-                                             </div> --}}
-                                        {{-- @endforeach --}}
-
                                         @foreach ($feature_list_indoor as $featureIndoor)
                                              <div class="form-check mb-2 mx-3">
-                                                  
+
                                                   <input type="checkbox" id="feature[{{ $featureIndoor->slug }}]" name="feature[{{ $featureIndoor->slug }}]" value="{{ $featureIndoor->id }}" class="form-check-input"
                                                             {{ in_array($featureIndoor->id, $selected_feature_ids) ? 'checked' : '' }}>
-                                                  
                                                   <label class="form-check-label" for="feature[{{ $featureIndoor->slug }}]">{{ $featureIndoor->name }}</label>
-                                                  
+
                                              </div>
                                         @endforeach
 
@@ -135,27 +124,18 @@
                                    <div class="my-3 row">
                                         @foreach ($feature_list_outdoor as $featureOutdoor)
                                              <div class="form-check mb-2 mx-3">
-                                                  
+
                                                   <input type="checkbox" id="feature[{{ $featureOutdoor->slug }}]" name="feature[{{ $featureOutdoor->slug }}]" value="{{ $featureOutdoor->id }}" class="form-check-input"
                                                             {{ in_array($featureOutdoor->id, $selected_feature_ids) ? 'checked' : '' }}>
-                                                  
                                                   <label class="form-check-label" for="feature[{{ $featureOutdoor->slug }}]">{{ $featureOutdoor->name }}</label>
-                                                  
+
                                              </div>
                                         @endforeach
                                    </div>
                               </div>
-
                          </div>
-
-
                     </div>
                </div>
-
-
-
-
-
           </div>
 
           <div class="col-xl-6 col-lg-6 ">
@@ -284,7 +264,8 @@
                      <div class="card-body">
 
                          <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category"
-                                   :options="['Leasehold', 'Freehold']"
+                                   :options="['Leasehold', 'Freehold']" :selected="old('legal_category', $data_properties->legal_status ?? '')"
+
                          />
 
                          <div class="row">
@@ -293,17 +274,29 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" />
+                                        <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" value="{{ $data_properties->purchase_date }}" />
 
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" value="{{ $data_properties->holder_number }}"  />
+                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" value="{{ $data_properties->holder_name }}" />
 
-                                        <div class="col-lg-6">
-                                             <label for="" class="form-label">Zoning</label>
-
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_green_zone" label="Green Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_yellow_zone" label="Yellow Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_pink_zone" label="Pink Zone" />
+                                         <div class="col-lg-6 mb-3">
+                                             <div class="row">
+                                                  <label for="" class="form-label">Zoning</label>
+                                                  <div class="col-12">
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone" {{ $data_properties->zoning == 'Green Zone' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="freehold_green_zone">Green Zone</label>
+                                                       </div>
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone" {{ $data_properties->zoning == 'Yellow Zone' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="freehold_yellow_zone">Yellow Zone</label>
+                                                       </div>
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone" {{ $data_properties->zoning == 'Pink Zone' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="freehold_pink_zone">Pink Zone</label>
+                                                       </div>
+                                                  </div>
+                                             </div>
                                         </div>
 
                                    </div>
@@ -314,13 +307,10 @@
                                    <hr>
                                    <div class="my-3 row">
 
-
-
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
-
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" value="{{ $data_properties->start_date }}"/>
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" value="{{ $data_properties->end_date }}" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" value="{{ $data_properties->holder_number }}"/>
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" value="{{ $data_properties->holder_name }}" />
 
                                    </div>
                               </div>
@@ -330,16 +320,28 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" value="{{ $data_properties->extension_cost }}"/>
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" value="{{ $data_properties->purchase_cost }}" />
+                                        <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" value="{{ $data_properties->deadline_payment }}" />
 
-                                        <div class="col-lg-6">
-                                             <label for="" class="form-label">Zoning</label>
-
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_green_zone" label="Green Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_yellow_zone" label="Yellow Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_pink_zone" label="Pink Zone" />
+                                       <div class="col-lg-6 mb-3">
+                                             <div class="row">
+                                                  <label for="" class="form-label">Zoning</label>
+                                                  <div class="col-12">
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone" {{ $data_properties->zoning == 'Green Zone' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="leasehold_green_zone">Green Zone</label>
+                                                       </div>
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone" {{ $data_properties->zoning == 'Yellow Zone' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="leasehold_yellow_zone">Yellow Zone</label>
+                                                       </div>
+                                                       <div class="form-check form-check">
+                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone" {{ $data_properties->zoning == 'Pink Zone' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="leasehold_pink_zone">Pink Zone</label>
+                                                       </div>
+                                                  </div>
+                                             </div>
                                         </div>
                                    </div>
                               </div>
@@ -360,7 +362,7 @@
                                    <x-form-input className="col-lg-6" type="text" name="idr_price" label="Desired Selling Price" value="{{ $data_properties->selling_price_idr }}" />
                                    {{-- <x-form-input className="col-lg-6" type="text" name="usd_price" label="Estimated USD Conversion" value="{{ $data_properties->selling_price_usd }}" disabled="true" /> --}}
                                    <x-form-input className="col-lg-6" type="text" name="usd_price" label="Estimated USD Conversion" disabled="true" />
-                                   
+
                                    <input type="hidden" name="usd_price" id="usd_price_raw">
 
                                    <x-form-input className="col-lg-4" type="text" name="commision_rate" label="Commision Rate (%)" value="4%" disabled="true" />
@@ -405,6 +407,9 @@
                               <div class="col-lg-12 mb-3">
                                    <label for="file_type_of_mandate" class="form-label">Supporting Document</label>
                                    <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
+
+                                   <a href="">BERITA ACARA VERIFIKASI-update.pdf</a>
+
                               </div>
 
                          </div>
@@ -495,7 +500,8 @@
           $('#extension_leasehold_group').hide();
 
           // Cek nilai old dari server
-          const oldLegalCategory = "{{ old('legal_category') }}";
+        //   const oldLegalCategory = "{{ old('legal_category') }}";
+          const oldLegalCategory = "{{ $data_properties->legal_status }}";
 
           console.log(oldLegalCategory);
 

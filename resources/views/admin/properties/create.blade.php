@@ -1,8 +1,5 @@
 @extends('admin.layouts.master')
 @push('style')
-
-    <!-- Link ke CSS Select2 -->
-
     <style>
         .choices{
           margin-bottom: 0px;
@@ -11,7 +8,6 @@
         #lease_duration_group{
           display: none!important;
         }
-
     </style>
 
 @endpush
@@ -102,6 +98,19 @@
                     <div class="card-body">
                          <div class="row">
 
+                                @error('feature')
+                                    <div class="alert alert-danger alert-icon" role="alert">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-sm rounded bg-danger d-flex justify-content-center align-items-center fs-18 me-2 flex-shrink-0">
+                                                <i class="bx bx-info-circle text-white"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                {{ $message }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @enderror
+
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Indoor Features</h5>
                                    <hr>
@@ -110,20 +119,6 @@
                                         @foreach ($feature_list_indoor as $feature_indoor)
                                              <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
                                         @endforeach
-
-                                        {{-- <x-form-checkbox className="form-check mb-2 mx-3" name="fully_furnished" label="Fully Furnished" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="equipped_kitchen" label="Equipped Kitchen (Fridge, Oven, Stove, Extractor Hood)" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="air_conditioning" label="Air Conditioning in All Room" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="wardobes_dressing_room" label="Dressing Room or Built-in Wardobes" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="master_bedroom_bathub" label="Bathub in Master Bedroom" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="laundry_room" label="Laundry Room with Washing Machine" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="home_cinema" label="Home Cinema or Projector" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="office_space" label="Office Space" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="installed_wifi" label="Installed Wi-Fi" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="safe_box" label="Safe Box" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="smart_home_system" label="Smart Home System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="integrated_audio_system" label="Integrated Audio System" />
-                                        <x-form-checkbox className="form-check mb-2 mx-3" name="cctv" label="CCTV System" /> --}}
 
                                    </div>
                               </div>
@@ -185,12 +180,12 @@
 
                               <div class="col-lg-12 mb-3" id="group_property_address">
                                    <label for="property_address" class="form-label">Property Address</label>
-                                   <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address"></textarea>
+                                   <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address">{{ old('property_address') }}</textarea>
                               </div>
 
                               <div class="col-lg-12 mb-3" id="group_description">
                                    <label for="description" class="form-label">Description</label>
-                                   <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description"></textarea>
+                                   <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ old('description') }}</textarea>
                               </div>
 
 
@@ -242,7 +237,7 @@
                                <div class="col-md-6" id="group_average_occupancy_rate">
                                    <label for="average_occupancy_rate" class="form-label">Average Occupancy Rate (%) *</label>
                                    <div class="input-group">
-                                   <input type="number" name="average_occupancy_rate" class="form-control" placeholder="Input Avg Occupancy Rate">
+                                   <input type="number" name="average_occupancy_rate" class="form-control" placeholder="Input Avg Occupancy Rate" value="{{ old('average_occupancy_rate') }}">
                                    <span class="input-group-text">%</span>
                                    </div>
                               </div>
@@ -250,7 +245,7 @@
                               <div class="col-md-6" id="group_month_rented_per_year">
                                    <label for="month_rented_per_year" class="form-label">Months Rented per Year *</label>
                                    <div class="input-group">
-                                   <input type="number" name="month_rented_per_year" class="form-control" min="1" max="120" placeholder="Months Rented per Year">
+                                   <input type="number" name="month_rented_per_year" class="form-control" min="1" max="120" placeholder="Months Rented per Year" value="{{ old('month_rented_per_year') }}">
                                    <span class="input-group-text">month(s)</span>
                                    </div>
                               </div>
@@ -290,14 +285,6 @@
                                         <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
                                         <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
 
-                                        {{-- <div class="col-lg-6">
-                                             <label for="" class="form-label">Zoning</label>
-
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_green_zone" label="Green Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_yellow_zone" label="Yellow Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="freehold_pink_zone" label="Pink Zone" />
-                                        </div> --}}
-
                                         <div class="col-lg-6 mb-3">
                                              <div class="row">
                                                   <label for="" class="form-label">Zoning</label>
@@ -326,8 +313,6 @@
                                    <hr>
                                    <div class="my-3 row">
 
-
-
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
 
@@ -345,14 +330,6 @@
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" />
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
                                         <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
-
-                                        {{-- <div class="col-lg-6">
-                                             <label for="" class="form-label">Zoning</label>
-
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_green_zone" label="Green Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_yellow_zone" label="Yellow Zone" />
-                                             <x-form-checkbox className="form-check mb-2" name="leasehold_pink_zone" label="Pink Zone" />
-                                        </div> --}}
 
                                         <div class="col-lg-6 mb-3">
                                              <div class="row">
@@ -453,12 +430,17 @@
 
                               <div class="col-lg-12 mb-3">
                                    <label for="gallery" class="form-label">Property Gallery (min 4)</label>
-                                   {{-- <input type="file" id="gallery" name="gallery" class="form-control" placeholder=""> --}}
 
-                                   <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-3">
+                                   <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
                                    <div id="previewContainer" class="d-flex flex-wrap gap-3"></div>
 
                                    <input type="hidden" name="order" id="imageOrder">
+
+                                   @error('images')
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
 
                               </div>
 
@@ -555,14 +537,14 @@
      </script>
      {{-- /* Custom Toggle */--}}
 
-     
+
 
      {{-- Convert IDR to USD --}}
      <script>
           const defaultKurs = 15000;
           const cacheKey = 'usd_to_idr_rate';
           const cacheTimeKey = 'usd_to_idr_rate_time';
-          const cacheTTL = 10 * 60 * 1000; // 10 minutes
+          const cacheTTL = 10 * 60 * 2000; // 20 minutes
 
           // debounce / batasi eksekusi fungsi (ketika user ketik angka)
           function debounce(func, delay) {
@@ -654,7 +636,7 @@
           document.getElementById('idr_price').addEventListener('input', debounce(handleIDRInput, 400));
      </script>
 
-     
+
 
      {{-- /* Convert IDR to USD --}}
 

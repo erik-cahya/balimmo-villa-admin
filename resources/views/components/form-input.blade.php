@@ -7,16 +7,16 @@
     'disabled' => false,
     'required' => false,
     'value',
-    'placeholder', 
+    'placeholder',
 ])
 
 {{-- Jika tidak diberikan atribut placeholder, maka akan menggunakan Input + label --}}
 <div class="{{ $className }} mb-3" id="group_{{ $name }}">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
-    
-    <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ isset($value) ? $value : old($name) }}" {{ $disabled ? 'disabled' : '' }} {{ $required ? 'required' : '' }}>
 
-    @error($name)  
+    <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ isset($value) ? old($name, $value) : old($name) }}" {{ $disabled ? 'disabled' : '' }} {{ $required ? 'required' : '' }}>
+
+    @error($name)
         <div class="alert alert-danger mt-1 p-1" role="alert">
             {{ $message }}
         </div>
@@ -39,7 +39,7 @@
 
 
 
-    
+
 {{-- Pake Component --}}
 {{-- <x-form-input type="text" name="owner_name" label="Masukkan Nama Owner" placeholder="Input Owner Name" /> --}}
 {{-- <x-form-input type="text" name="owner_contact" label="Masukkan Kontak Owner" placeholder="Input Owner Contact" /> --}}

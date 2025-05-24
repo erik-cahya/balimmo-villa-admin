@@ -17,6 +17,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -68,7 +69,7 @@ class PropertiesController extends Controller
     }
 
     public function create()
-    {   
+    {
         $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
         $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
 
@@ -79,6 +80,9 @@ class PropertiesController extends Controller
     {
 
         $slug = $this->generatePropertiesSlug($request->property_name);
+
+        // dd($slug);
+
         $request->validate([
             'property_name' => 'required',
             'description' => 'required',
@@ -92,7 +96,15 @@ class PropertiesController extends Controller
             'bathroom' => 'required',
             'year_construction' => 'required',
             'year_renovated' => 'required',
+            'feature' => 'required|array|min:1',
 
+            'images' => 'required',
+            'url_virtual_tour' => 'required',
+            'url_lifestyle' => 'required',
+            'url_experience' => 'required',
+
+
+            // Property Owners
             // 'owners[0][first_name]' => 'required',
             // 'owners[0][last_name]' => 'required',
             // 'owners[0][email]' => 'required',
@@ -106,9 +118,17 @@ class PropertiesController extends Controller
 
             // ##### Gallery
             // 'images.*' => 'required|image|max:2048',
+        ], [
+            'feature' => 'Please Choose features & Amenities',
+            'images' => 'Please Upload your Property Images',
+
+            // 'owners[0][first_name]' => 'Please input your first name',
+            // 'owners[0][last_name]' => 'Please input your last name',
+            // 'owners[0][email]' => 'Please input your email',
+            // 'owners[0][phone_number]' => 'Please input your phone number',
         ]);
 
-         // Freehold
+         // Freehold Validation
         if($request->legal_category === 'Freehold'){
             $request->validate([
                 'freehold_purchase_date' => 'required',
@@ -118,10 +138,6 @@ class PropertiesController extends Controller
 
             $holder_name = $request->freehold_certificate_holder_name;
             $holder_number = $request->freehold_certificate_number;
-
-            $green_zone = $request->freehold_green_zone == 'on' ? 1 : 0;
-            $yellow_zone = $request->freehold_yellow_zone == 'on' ? 1 : 0;
-            $pink_zone = $request->freehold_pink_zone == 'on' ? 1 : 0;
             $zoning = $request->freehold_zoning;
 
 
@@ -148,16 +164,10 @@ class PropertiesController extends Controller
                 'leasehold_negotiation_ext_cost' => 'required',
                 'leasehold_purchase_cost' => 'required',
                 'leasehold_deadline_payment' => 'required',
-                // 'leasehold_green_zone' => 'required',
-                // 'leasehold_yellow_zone' => 'required',
-                // 'leasehold_pink_zone' => 'required',
             ]);
 
             $holder_name = $request->leasehold_contract_holder_name;
             $holder_number = $request->leasehold_contract_number;
-            $green_zone = $request->leasehold_green_zone == 'on' ? 1 : 0;
-            $yellow_zone = $request->leasehold_yellow_zone == 'on' ? 1 : 0;
-            $pink_zone = $request->leasehold_pink_zone == 'on' ? 1 : 0;
             $zoning = $request->leasehold_zoning;
 
 
@@ -171,12 +181,6 @@ class PropertiesController extends Controller
             ]);
         };
 
-
-
-
-
-
-        
         // ==========================================================================================================================================
         // ########### Create Properties Data ##############
         // ==========================================================================================================================================
@@ -304,7 +308,7 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ########### Create Property URL & Attachment ##############
         // ==========================================================================================================================================
-        
+
         if($request->file_rental_support !== null){
             $fileRentalSupport = $request->file_rental_support->getClientOriginalName();
             $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileRentalSupport);
@@ -375,7 +379,7 @@ class PropertiesController extends Controller
     {
 
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
-        
+
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
@@ -394,12 +398,12 @@ class PropertiesController extends Controller
 
         // dd($data['data_properties']);
         $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
-        
+
         $data['agent_data'] = User::where('reference_code', $property->internal_reference)->first();
-        
+
         $data['property_owner'] = PropertyOwnerModel::where('properties_id', $data['data_properties']->id)->get();
 
-        $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['data_properties']->id)->get(); 
+        $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['data_properties']->id)->get();
 
         foreach($url_attachment as $url){
             if($url->name === 'url_virtual_tour'){
@@ -453,8 +457,60 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd($id);
+        // dd($id);
+        // dd($request->all());
 
+         // Freehold
+        if($request->legal_category === 'Freehold'){
+            $request->validate([
+                'freehold_purchase_date' => 'required',
+                'freehold_certificate_number' => 'required',
+                'freehold_certificate_holder_name' => 'required',
+            ]);
+
+            $holder_name = $request->freehold_certificate_holder_name;
+            $holder_number = $request->freehold_certificate_number;
+            $zoning = $request->freehold_zoning;
+
+
+            $request->merge([
+            'leasehold_start_date' => null,
+            'leasehold_end_date' => null,
+            'leasehold_contract_number' => null,
+            'leasehold_contract_holder_name' => null,
+            'leasehold_negotiation_ext_cost' => null,
+            'leasehold_purchase_cost' => null,
+            'leasehold_deadline_payment' => null,
+            'leasehold_zoning' => null,
+            ]);
+        }
+        // Leasehold
+        else
+        {
+            $request->validate([
+                'leasehold_start_date' => 'required',
+                'leasehold_end_date' => 'required',
+                'leasehold_contract_number' => 'required',
+                'leasehold_contract_holder_name' => 'required',
+                'leasehold_negotiation_ext_cost' => 'required',
+                'leasehold_purchase_cost' => 'required',
+                'leasehold_deadline_payment' => 'required',
+            ]);
+
+            $holder_name = $request->leasehold_contract_holder_name;
+            $holder_number = $request->leasehold_contract_number;
+            $zoning = $request->leasehold_zoning;
+
+
+            $request->merge([
+                'freehold_purchase_date' => null,
+                'freehold_certificate_number' => null,
+                'freehold_certificate_holder_name' => null,
+                'freehold_zoning' => null,
+            ]);
+        }
+
+        dd($request->all());
         // ==========================================================================================================================================
         // ############## Property Feature ##############
         // ==========================================================================================================================================
@@ -466,7 +522,13 @@ class PropertiesController extends Controller
             ]);
         }
 
-        return back();
+         $flashData = [
+            'judul' => 'Edit Property Success',
+            'pesan' => 'Property edited successfully',
+            'swalFlashIcon' => 'success',
+        ];
+        return back()->with('flashData', $flashData);
+
 
     }
 
@@ -478,7 +540,7 @@ class PropertiesController extends Controller
         if (file_exists(public_path('admin/gallery/' . $slug->property_slug))) {
             File::deleteDirectory(public_path('admin/gallery/' . $slug->property_slug));
         };
-        
+
         // Delete File Attachment
         if (file_exists(public_path('admin/attachment/' . $slug->property_slug))) {
             File::deleteDirectory(public_path('admin/attachment/' . $slug->property_slug));
@@ -497,14 +559,26 @@ class PropertiesController extends Controller
 
 
 
+    // private function getUSDtoIDRRate()
+    // {
+    //     try {
+    //         $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
+    //         return $response['rates']['IDR'] ?? 15000; // fallback
+    //     } catch (\Exception $e) {
+    //         return 15000; // fallback jika API gagal
+    //     }
+    // }
+
     private function getUSDtoIDRRate()
     {
-        try {
-            $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
-            return $response['rates']['IDR'] ?? 15000; // fallback
-        } catch (\Exception $e) {
-            return 15000; // fallback jika API gagal
-        }
+        return Cache::remember('usd_to_idr_rate', now()->addHours(1), function () {
+            try {
+                $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
+                return $response['rates']['IDR'] ?? 15000;
+            } catch (\Exception $e) {
+                return 15000;
+            }
+        });
     }
 
     private function dateConversion($date){
@@ -559,7 +633,7 @@ class PropertiesController extends Controller
             'pesan' => 'Property Status Changed Successfully',
             'swalFlashIcon' => 'success',
         ];
-        
+
         return redirect()->route('properties.index')->with('flashData', $flashData);
     }
 }

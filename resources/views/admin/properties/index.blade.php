@@ -146,9 +146,9 @@
                                        </td>
                                        <td class="text-capitalize">{{ $property->property_address }}</td>
 
-                                       <td><span class="badge 
+                                       <td><span class="badge
                                              {{ $property->type_acceptance == 'pending' ? 'bg-warning' :
-                                             ($property->type_acceptance == 'accept' ? 'bg-success' : 'bg-danger')  }} 
+                                             ($property->type_acceptance == 'accept' ? 'bg-success' : 'bg-danger')  }}
                                         text-light py-1 px-2 fs-12 text-capitalize">{{ $property->type_acceptance }}</span></td>
 
                                        <td>
@@ -189,7 +189,7 @@
 
     </div>
 
-    
+
 
 
 </div>

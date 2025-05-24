@@ -11,4 +11,6 @@
 </div>
 
 
+
+
 {{-- Equipped Kitchen (Fridge, Oven, Stove, Extractor Hood) --}}

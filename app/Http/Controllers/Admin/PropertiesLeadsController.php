@@ -63,7 +63,7 @@ class PropertiesLeadsController extends Controller
             // Kosongkan jika tidak ada leads
             $data['matchProperties'] = [];
         }
-        
+
         return view('admin.leads.index', $data);
     }
 
@@ -120,7 +120,7 @@ class PropertiesLeadsController extends Controller
         // dd($slug);
         // dd($request->all());
 
-        
+
 
         if ($slug !== null) {
             $request->validate([
@@ -146,9 +146,8 @@ class PropertiesLeadsController extends Controller
 
         // dd($request->all());
 
-
         $property = PropertiesModel::where('property_slug', $slug)->first();
-        
+
         $booking = PropertyLeadsModel::create([
             'properties_id' => $slug == null ? null : $property->id,
             'agent_code' => $slug == null ? null : $property->internal_reference,
@@ -164,13 +163,12 @@ class PropertiesLeadsController extends Controller
 
         event(new BookingCreated($booking));
 
-
         $flashData = [
             'judul' => 'Form Submit Success',
             'pesan' => 'Thank you, we have received your data.',
             'swalFlashIcon' => 'success',
         ];
-        
+
         return back()->with('flashData', $flashData);
     }
 
@@ -179,7 +177,7 @@ class PropertiesLeadsController extends Controller
 
         $propertyNames = $data['property_name'];
         $sellingPrices = $data['selling_price'];
-        
+
         $combined = [];
 
         foreach ($propertyNames as $index => $name) {
