@@ -458,7 +458,7 @@ class PropertiesController extends Controller
     public function update(Request $request, string $id)
     {
         // dd($id);
-        // dd($request->all());
+        dd($request->all());
 
          // Freehold
         if($request->legal_category === 'Freehold'){

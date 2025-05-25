@@ -157,19 +157,19 @@
 
                               <x-form-input className="col-lg-12" type="text" name="property_name" label="Property Name" value="{{ $data_properties->property_name }}" />
 
-                              <div class="col-lg-6 mb-3" id="group_region">
-                                   <label for="region" class="form-label">Region</label>
-                                   <select id="region" class="form-select" name="region">
-                                        <option value="" selected disabled>Select Region</option>
-                                   </select>
-                              </div>
+                                <div class="col-lg-6 mb-3" id="group_region">
+                                    <label for="region" class="form-label">Region</label>
+                                    <select id="region" class="form-select" name="region">
+                                        <option value="" disabled>Select Region</option>
+                                    </select>
+                                </div>
 
-                              <div class="col-lg-6 mb-3" id="group_region">
-                                   <label for="region" class="form-label">Sub Region</label>
-                                   <select id="subregion" class="form-select" name="subregion">
-                                        <option value="" selected disabled>Select Region First </option>
-                                   </select>
-                              </div>
+                                <div class="col-lg-6 mb-3" id="group_subregion">
+                                    <label for="subregion" class="form-label">Sub Region</label>
+                                    <select id="subregion" class="form-select" name="subregion">
+                                        <option value="" disabled>Select Region First</option>
+                                    </select>
+                                </div>
 
                               <div class="col-lg-12 mb-3" id="group_property_address">
                                    <label for="property_address" class="form-label">Property Address</label>
@@ -503,8 +503,6 @@
         //   const oldLegalCategory = "{{ old('legal_category') }}";
           const oldLegalCategory = "{{ $data_properties->legal_status }}";
 
-          console.log(oldLegalCategory);
-
           if (oldLegalCategory === 'Leasehold') {
                $('#leasehold_group').attr('style', 'display: block !important');
                $('#freehold_group').attr('style', 'display: none !important');
@@ -642,47 +640,75 @@
           $("#leasehold_deadline_payment").flatpickr({dateFormat: "d-m-Y"});
     </script>
 
-     <script>
-          document.addEventListener('DOMContentLoaded', function () {
-              const regionSelect = document.getElementById('region');
-              const subregionSelect = document.getElementById('subregion');
 
-              const regionChoices = new Choices(regionSelect, { searchEnabled: false });
-              const subregionChoices = new Choices(subregionSelect, { searchEnabled: false });
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const regionSelect = document.getElementById('region');
+        const subregionSelect = document.getElementById('subregion');
 
-              const url = "{{ asset('/admin/data/regions.json') }}";
+        const regionChoices = new Choices(regionSelect, { searchEnabled: false, shouldSort: false });
+        const subregionChoices = new Choices(subregionSelect, { searchEnabled: false, shouldSort: false });
 
-              console.log(url);
-              fetch(url)
-                  .then(response => response.json())
-                  .then(data => {
-                      const regions = Object.keys(data);
-                      regionChoices.setChoices(
-                          regions.map(region => ({ value: region, label: region.charAt(0).toUpperCase() + region.slice(1) })),
-                          'value',
-                          'label',
-                          true
-                      );
+        const selectedRegion = "{{ old('region', $data_properties->region ?? '') }}".toLowerCase();
+        const selectedSubregion = "{{ old('subregion', $data_properties->sub_region ?? '') }}";
 
-                      regionSelect.addEventListener('change', function () {
-                          const selectedRegion = this.value;
-                          const subregions = data[selectedRegion] || [];
+        const url = "{{ asset('/admin/data/regions.json') }}";
 
-                          // Reset subregion choices
-                          subregionChoices.clearChoices();
-                          subregionChoices.setChoices(
-                              subregions.map(sub => ({ value: sub, label: sub })),
-                              'value',
-                              'label',
-                              true
-                          );
-                      });
-                  })
-                  .catch(error => {
-                      console.error("Failed to load JSON:", error);
-                  });
-          });
-          </script>
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const regions = Object.keys(data);
+
+                // Populate region dropdown
+                regionChoices.setChoices(
+                    regions.map(region => ({
+                        value: region,
+                        label: region.charAt(0).toUpperCase() + region.slice(1)
+                    })),
+                    'value',
+                    'label',
+                    true
+                );
+
+                // Set selected region
+                if (selectedRegion && regions.includes(selectedRegion)) {
+                    regionChoices.setChoiceByValue(selectedRegion);
+
+                    const subregions = data[selectedRegion];
+                    subregionChoices.setChoices(
+                        subregions.map(sub => ({ value: sub, label: sub })),
+                        'value',
+                        'label',
+                        true
+                    );
+
+                    if (selectedSubregion) {
+                        subregionChoices.setChoiceByValue(selectedSubregion);
+                    }
+                }
+
+                // On region change
+                regionSelect.addEventListener('change', function () {
+                    const selected = this.value;
+                    const subregions = data[selected] || [];
+
+                    subregionChoices.clearChoices();
+                    subregionChoices.setChoices(
+                        subregions.map(sub => ({ value: sub, label: sub })),
+                        'value',
+                        'label',
+                        true
+                    );
+                });
+            })
+            .catch(error => {
+                console.error("Failed to load JSON:", error);
+            });
+        });
+
+    </script>
+
+    </script>
 
           {{-- ######################### Gallery Upload ######################### --}}
           <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
