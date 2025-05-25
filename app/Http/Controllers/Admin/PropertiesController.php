@@ -27,26 +27,24 @@ class PropertiesController extends Controller
 {
     public function index()
     {
-        if(Auth::user()->role == 'Master')
-        {
-            $data['data_property'] = PropertiesModel::
-                select(
-                    'properties.id',
-                    'property_name',
-                    'property_slug',
-                    'internal_reference',
-                    'bedroom',
-                    'property_code',
-                    'property_address',
-                    'type_mandate',
-                    'type_acceptance',
-                    'bathroom')
+        if (Auth::user()->role == 'Master') {
+            $data['data_property'] = PropertiesModel::select(
+                'properties.id',
+                'property_name',
+                'property_slug',
+                'internal_reference',
+                'bedroom',
+                'property_code',
+                'property_address',
+                'type_mandate',
+                'type_acceptance',
+                'bathroom'
+            )
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
                     $query->where('is_featured', 1);
                 }])->get();
-        }
-        else{
+        } else {
             $data['data_property'] = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
                 ->select(
                     'properties.id',
@@ -58,7 +56,8 @@ class PropertiesController extends Controller
                     'property_address',
                     'type_mandate',
                     'type_acceptance',
-                    'bathroom')
+                    'bathroom'
+                )
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
                     $query->where('is_featured', 1);
@@ -128,8 +127,8 @@ class PropertiesController extends Controller
             // 'owners[0][phone_number]' => 'Please input your phone number',
         ]);
 
-         // Freehold Validation
-        if($request->legal_category === 'Freehold'){
+        // Freehold Validation
+        if ($request->legal_category === 'Freehold') {
             $request->validate([
                 'freehold_purchase_date' => 'required',
                 'freehold_certificate_number' => 'required',
@@ -142,20 +141,20 @@ class PropertiesController extends Controller
 
 
             $request->merge([
-            'leasehold_start_date' => null,
-            'leasehold_end_date' => null,
-            'leasehold_contract_number' => null,
-            'leasehold_contract_holder_name' => null,
-            'leasehold_negotiation_ext_cost' => null,
-            'leasehold_purchase_cost' => null,
-            'leasehold_deadline_payment' => null,
-            'leasehold_green_zone' => 0,
-            'leasehold_yellow_zone' => 0,
-            'leasehold_pink_zone' => 0,
+                'leasehold_start_date' => null,
+                'leasehold_end_date' => null,
+                'leasehold_contract_number' => null,
+                'leasehold_contract_holder_name' => null,
+                'leasehold_negotiation_ext_cost' => null,
+                'leasehold_purchase_cost' => null,
+                'leasehold_deadline_payment' => null,
+                'leasehold_green_zone' => 0,
+                'leasehold_yellow_zone' => 0,
+                'leasehold_pink_zone' => 0,
             ]);
         }
         // Leasehold
-        elseif($request->legal_category === 'Leasehold'){
+        elseif ($request->legal_category === 'Leasehold') {
             $request->validate([
                 'leasehold_start_date' => 'required',
                 'leasehold_end_date' => 'required',
@@ -211,7 +210,7 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ########### Create Property Owner Data ##############
         // ==========================================================================================================================================
-        foreach($request->owners as $index => $owner) {
+        foreach ($request->owners as $index => $owner) {
             // Cek apakah semua field bernilai null atau kosong
             if (
                 empty($owner['first_name']) &&
@@ -259,16 +258,16 @@ class PropertiesController extends Controller
         // ############## Create Properties Financial ##############
         // ==========================================================================================================================================
         $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
-        $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(),2);
+        $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
 
         // Presentase
-        if($idrPrice < 15000000000 ){
+        if ($idrPrice < 15000000000) {
             $commision = 5;
-        }else if($idrPrice >= 15000000000  && $idrPrice <= 34000000000 ){
+        } else if ($idrPrice >= 15000000000  && $idrPrice <= 34000000000) {
             $commision = 4;
-        }else if($idrPrice > 34000000000  && $idrPrice <= 70000000000 ){
+        } else if ($idrPrice > 34000000000  && $idrPrice <= 70000000000) {
             $commision = 3;
-        }else{
+        } else {
             $commision = 2.5;
         }
 
@@ -297,7 +296,7 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ########### Create Property Feature Data
         // ==========================================================================================================================================
-        foreach($request->feature as $index => $feature){
+        foreach ($request->feature as $index => $feature) {
             $idFeature = FeatureListModel::select('id')->where('slug', $index)->first();
             PropertyFeatureModel::create([
                 'properties_id' => $propertyCreate->id,
@@ -309,18 +308,18 @@ class PropertiesController extends Controller
         // ########### Create Property URL & Attachment ##############
         // ==========================================================================================================================================
 
-        if($request->file_rental_support !== null){
+        if ($request->file_rental_support !== null) {
             $fileRentalSupport = $request->file_rental_support->getClientOriginalName();
             $request->file_rental_support->move(public_path('admin/attachment/' . $slug), $fileRentalSupport);
-        }else{
+        } else {
             $fileRentalSupport = null;
         }
 
-        if($request->file_type_of_mandate !== null){
+        if ($request->file_type_of_mandate !== null) {
 
             $fileTypeMandate = $request->file_type_of_mandate->getClientOriginalName();
             $request->file_type_of_mandate->move(public_path('admin/attachment/' . $slug), $fileTypeMandate);
-        }else{
+        } else {
             $fileTypeMandate = null;
         }
 
@@ -329,7 +328,7 @@ class PropertiesController extends Controller
         $dataURL['file_rental_support'] = $fileRentalSupport;
         $dataURL['file_type_of_mandate'] = $fileTypeMandate;
 
-        foreach($dataURL as $key => $value){
+        foreach ($dataURL as $key => $value) {
             PropertyUrlAttachmentModel::create([
                 'properties_id' => $propertyCreate->id,
                 'name' => $key,
@@ -384,9 +383,9 @@ class PropertiesController extends Controller
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
             ->with(['featuredImage' => function ($query) {
-                        $query->select('image_path', 'property_gallery.id');
-                        $query->where('is_featured', 1);
-                    }])
+                $query->select('image_path', 'property_gallery.id');
+                $query->where('is_featured', 1);
+            }])
             ->first();
 
         // dd($data['data_properties']);
@@ -405,17 +404,15 @@ class PropertiesController extends Controller
 
         $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['data_properties']->id)->get();
 
-        foreach($url_attachment as $url){
-            if($url->name === 'url_virtual_tour'){
+        foreach ($url_attachment as $url) {
+            if ($url->name === 'url_virtual_tour') {
                 preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
 
                 $url->path_attachment = $match[1];
-            }
-            elseif($url->name === 'url_lifestyle'){
+            } elseif ($url->name === 'url_lifestyle') {
                 preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
                 $url->path_attachment = $match[1];
-            }
-            elseif($url->name === 'url_experience'){
+            } elseif ($url->name === 'url_experience') {
                 preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
                 $url->path_attachment = $match[1];
             }
@@ -447,7 +444,16 @@ class PropertiesController extends Controller
         // Ambil ID fitur yang sudah dipilih
         $data['selected_feature_ids'] = $data['properties_feature']->pluck('feature_id')->toArray();
 
-        // dd($data['property_owner']);
+        // URL Attachment
+        $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['data_properties']->id)->select('name', 'path_attachment')->get();
+        $attachment = [];
+        foreach ($url_attachment as $key) {
+            $attachment[$key->name] = $key->path_attachment;
+        };
+
+
+        $data['attachment'] = $attachment;
+        // dd($data['url_attachment']);
 
         return view('admin.properties.edit', $data);
     }
@@ -460,8 +466,8 @@ class PropertiesController extends Controller
         // dd($id);
         dd($request->all());
 
-         // Freehold
-        if($request->legal_category === 'Freehold'){
+        // Freehold
+        if ($request->legal_category === 'Freehold') {
             $request->validate([
                 'freehold_purchase_date' => 'required',
                 'freehold_certificate_number' => 'required',
@@ -474,19 +480,18 @@ class PropertiesController extends Controller
 
 
             $request->merge([
-            'leasehold_start_date' => null,
-            'leasehold_end_date' => null,
-            'leasehold_contract_number' => null,
-            'leasehold_contract_holder_name' => null,
-            'leasehold_negotiation_ext_cost' => null,
-            'leasehold_purchase_cost' => null,
-            'leasehold_deadline_payment' => null,
-            'leasehold_zoning' => null,
+                'leasehold_start_date' => null,
+                'leasehold_end_date' => null,
+                'leasehold_contract_number' => null,
+                'leasehold_contract_holder_name' => null,
+                'leasehold_negotiation_ext_cost' => null,
+                'leasehold_purchase_cost' => null,
+                'leasehold_deadline_payment' => null,
+                'leasehold_zoning' => null,
             ]);
         }
         // Leasehold
-        else
-        {
+        else {
             $request->validate([
                 'leasehold_start_date' => 'required',
                 'leasehold_end_date' => 'required',
@@ -515,21 +520,19 @@ class PropertiesController extends Controller
         // ############## Property Feature ##############
         // ==========================================================================================================================================
         PropertyFeatureModel::where('properties_id', $id)->delete();
-        foreach($request->feature as $key => $value){
+        foreach ($request->feature as $key => $value) {
             PropertyFeatureModel::create([
                 'properties_id' => $id,
                 'feature_id' => $value
             ]);
         }
 
-         $flashData = [
+        $flashData = [
             'judul' => 'Edit Property Success',
             'pesan' => 'Property edited successfully',
             'swalFlashIcon' => 'success',
         ];
         return back()->with('flashData', $flashData);
-
-
     }
 
     public function destroy(string $id)
@@ -581,11 +584,13 @@ class PropertiesController extends Controller
         });
     }
 
-    private function dateConversion($date){
+    private function dateConversion($date)
+    {
         return Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
     }
 
-    private function generatePropertiesSlug($name){
+    private function generatePropertiesSlug($name)
+    {
         $baseSlug = Str::slug($name);
         $slug = $baseSlug;
         $counter = 2;
@@ -599,7 +604,8 @@ class PropertiesController extends Controller
         return $slug;
     }
 
-    private function floatNumbering($number) {
+    private function floatNumbering($number)
+    {
         $number = trim($number);
 
         // Hapus semua spasi
@@ -621,7 +627,8 @@ class PropertiesController extends Controller
         return floatval($number);
     }
 
-    public function changeAcceptance(Request $request, $slug){
+    public function changeAcceptance(Request $request, $slug)
+    {
 
         PropertiesModel::where('property_slug', $slug)->update(
             [
@@ -633,6 +640,9 @@ class PropertiesController extends Controller
             'pesan' => 'Property Status Changed Successfully',
             'swalFlashIcon' => 'success',
         ];
+
+        // Hapus cache lama agar nanti di-refresh otomatis saat index() dipanggil lagi
+        Cache::forget('properties_list');
 
         return redirect()->route('properties.index')->with('flashData', $flashData);
     }

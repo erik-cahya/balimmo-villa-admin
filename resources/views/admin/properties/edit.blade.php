@@ -393,11 +393,11 @@
                                    <div class="row">
                                         <div class="col-12">
                                              <div class="form-check form-check-inline">
-                                                  <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate">
+                                                  <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ $data_properties->type_mandate == 'Essentials Mandate' ? 'checked' : '' }} >
                                                   <label class="form-check-label" for="esstentials_mandate">Essentials Mandate</label>
                                              </div>
                                              <div class="form-check form-check-inline">
-                                                  <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate">
+                                                  <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ $data_properties->type_mandate == 'Booster Mandate' ? 'checked' : '' }}>
                                                   <label class="form-check-label" for="booster_mandate">Booster Mandate</label>
                                              </div>
                                         </div>
@@ -428,18 +428,16 @@
 
                               <div class="col-lg-12 mb-3">
                                    <label for="gallery" class="form-label">Property Gallery (min 4)</label>
-                                   {{-- <input type="file" id="gallery" name="gallery" class="form-control" placeholder=""> --}}
 
                                    <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-3">
                                    <div id="previewContainer" class="d-flex flex-wrap gap-3"></div>
-
                                    <input type="hidden" name="order" id="imageOrder">
 
                               </div>
 
-                              <x-form-input className="col-lg-12" type="text" name="url_virtual_tour" label="Virtual Tour Link" placeholder="Input Youtube URL" />
-                              <x-form-input className="col-lg-12" type="text" name="url_lifestyle" label="Lifestyle" placeholder="Input Youtube URL"/>
-                              <x-form-input className="col-lg-12" type="text" name="url_experience" label="Experience" placeholder="Input Youtube URL"/>
+                              <x-form-input className="col-lg-12" type="text" name="url_virtual_tour" label="Virtual Tour Link" placeholder="Input Youtube URL" value="{{ $attachment['url_virtual_tour'] }}" />
+                              <x-form-input className="col-lg-12" type="text" name="url_lifestyle" label="Lifestyle" placeholder="Input Youtube URL" value="{{ $attachment['url_lifestyle'] }}" />
+                              <x-form-input className="col-lg-12" type="text" name="url_experience" label="Experience" placeholder="Input Youtube URL" value="{{ $attachment['url_experience'] }}" />
 
                          </div>
                     </div>
