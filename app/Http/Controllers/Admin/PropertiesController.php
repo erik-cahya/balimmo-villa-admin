@@ -77,7 +77,6 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
-
         $slug = $this->generatePropertiesSlug($request->property_name);
 
         // dd($slug);
@@ -104,10 +103,10 @@ class PropertiesController extends Controller
 
 
             // Property Owners
-            // 'owners[0][first_name]' => 'required',
-            // 'owners[0][last_name]' => 'required',
-            // 'owners[0][email]' => 'required',
-            // 'owners[0][phone_number]' => 'required',
+            'owners[0][first_name]' => 'required',
+            'owners[0][last_name]' => 'required',
+            'owners[0][email]' => 'required',
+            'owners[0][phone_number]' => 'required',
 
             // ##### Rental Yield
             'average_nightly_rate' => 'required',
@@ -121,11 +120,13 @@ class PropertiesController extends Controller
             'feature' => 'Please Choose features & Amenities',
             'images' => 'Please Upload your Property Images',
 
-            // 'owners[0][first_name]' => 'Please input your first name',
-            // 'owners[0][last_name]' => 'Please input your last name',
-            // 'owners[0][email]' => 'Please input your email',
-            // 'owners[0][phone_number]' => 'Please input your phone number',
+            'owners[0][first_name]' => 'Please input your first name',
+            'owners[0][last_name]' => 'Please input your last name',
+            'owners[0][email]' => 'Please input your email',
+            'owners[0][phone_number]' => 'Please input your phone number',
         ]);
+
+       
 
         // Freehold Validation
         if ($request->legal_category === 'Freehold') {

@@ -137,7 +137,7 @@
                                             </td>
                                             <td>{{ $agent->email }}</td>
                                             <td>{{ $agent->phone_number }}</td>
-                                            <td>{{ $agent->properties_count }} Property</td>
+                                            <td><a href="{{ route('agent.properties', strtolower($agent->reference_code)) }}">{{ $agent->properties_count }} Property</a></td>
                                             {{-- <td ><span class="badge badge-soft-secondary me-1">{{ $agent->reference_code }}</span></td> --}}
                                             <td class="text-capitalize"><span class="badge {{ ($agent->role === "master") ? "bg-danger" : "bg-primary" }} text-white fs-11">{{ $agent->role }}</span></td>
                                             <td>{{ \Carbon\Carbon::parse($agent->created_at)->format('d F, Y') }}</td>

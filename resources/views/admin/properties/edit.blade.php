@@ -247,7 +247,19 @@
                               <x-form-input className="col-lg-6" type="text" name="estimated_annual_turnover" label="Estimated Annual Turnover (IDR) *" value="{{ $data_properties->annual_turnover }}" />
                               <div class="col-lg-12 mb-3">
                                    <label for="file_rental_support" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
-                                   <input type="file" id="file_rental_support" name="file_rental_support" class="form-control" placeholder="">
+                                   <input type="file" id="file_rental_support" name="file_rental_support" class="form-control mb-2" placeholder="">
+
+                                   
+
+                                   @if (isset($attachment['file_rental_support']))     
+                                        <a href="{{ asset('admin/attachment/' . $data_properties->property_slug . '/' . $attachment['file_rental_support'] ) }}">
+                                             <span class="badge bg-light-subtle text-muted border fw-medium fs-13 px-2 py-1 d-flex align-items-center">
+                                                  <iconify-icon icon="material-symbols-light:download-rounded" class="fs-18 text-primary"></iconify-icon>
+                                                  {{ $attachment['file_rental_support'] }} 
+                                             </span>
+                                        </a>
+                                   @endif
+
                               </div>
 
                          </div>
@@ -406,9 +418,16 @@
 
                               <div class="col-lg-12 mb-3">
                                    <label for="file_type_of_mandate" class="form-label">Supporting Document</label>
-                                   <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
+                                   <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control mb-2" placeholder="">
 
-                                   <a href="">BERITA ACARA VERIFIKASI-update.pdf</a>
+                                   @if (isset($attachment['file_type_of_mandate']))     
+                                        <a href="{{ asset('admin/attachment/' . $data_properties->property_slug . '/'.$attachment['file_type_of_mandate'] ) }}">
+                                             <span class="badge bg-light-subtle text-muted border fw-medium fs-13 px-2 py-1 d-flex flex-nowrap align-items-center">
+                                                  <iconify-icon icon="material-symbols-light:download-rounded" class="fs-18 text-primary"></iconify-icon>
+                                                  {{ $attachment['file_type_of_mandate'] }} 
+                                             </span>
+                                        </a>
+                                   @endif
 
                               </div>
 

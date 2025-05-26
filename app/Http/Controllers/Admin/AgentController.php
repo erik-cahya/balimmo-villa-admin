@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PropertiesModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,9 +33,7 @@ class AgentController extends Controller
         $loggedInUser = User::withCount('properties')->find(Auth::id());
         $otherUsers = User::where('id', '!=', Auth::id())->withCount('properties')->get();     
         $data['data_agent'] = collect([$loggedInUser])->merge($otherUsers);
-        // $data['data_agent'] = collect([$loggedInUser]);
 
-        // dd($data['data_agent']);
         return view('admin.agent.index', $data);
     }
 
@@ -47,12 +46,9 @@ class AgentController extends Controller
             'phone_number' => 'required',
             'role' => 'required',
             'initial_name' => 'required',
-        ], [
-            // 'property_name.required' => 'custom message',
         ]); 
         
         do {
-            // $reference_code = 'BPM-' . Str::upper($request->initial_name) . '-' . random_int(1000, 9999);
             $reference_code = $request->role == 'Master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
 
         } while (User::where('reference_code', $reference_code)->exists());
@@ -76,12 +72,6 @@ class AgentController extends Controller
 
     public function destroy(string $id)
     {
-
-        // // Delete Image Handler
-        // if ($this->getFeaturedImage($id) != null) {
-        //     File::delete(public_path('admin/uploads/images/' . $this->getFeaturedImage($id)));
-        // }
-
         // PropertiesFeatureModel::where('properties_id', $id)->delete();
         User::destroy($id);
 
@@ -92,6 +82,37 @@ class AgentController extends Controller
         ];
 
         return response()->json($flashData);
+    }
+
+    public function agentProperty($refcode){
+
+        $data['agent_properties'] = PropertiesModel::where('internal_reference', $refcode)
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->with(['featuredImage' => function ($query) {
+                        $query->select('image_path', 'property_gallery.id');
+                        $query->where('is_featured', 1);
+                    }])
+            ->get();
+
+        foreach ($data['agent_properties'] as $item) {
+            $item->formatted_price = $this->shortPriceIDR($item->selling_price_idr);
+        }
+
+        // dd($data['agent_properties']);
+        return view('admin.agent.detail-properties', $data);
+    }
+
+    private function shortPriceIDR($priceIDR)
+    {
+        if ($priceIDR >= 1000000000) {
+            return 'IDR ' . number_format($priceIDR / 1000000000, 1) . 'B';
+        } elseif ($priceIDR >= 1000000) {
+            return 'IDR ' . number_format($priceIDR / 1000000, 1) . 'M';
+        } elseif ($priceIDR >= 1000) {
+            return 'IDR ' . number_format($priceIDR / 1000, 0) . 'K';
+        } else {
+            return 'IDR ' . number_format($priceIDR, 0, ',', '.');
+        }
     }
 }
 

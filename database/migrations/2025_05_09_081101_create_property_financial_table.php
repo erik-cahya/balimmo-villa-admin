@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('properties_id')->comment('fk to properties table');
             
-            $table->integer('avg_nightly_rate')->nullable();
+            $table->bigInteger('avg_nightly_rate')->nullable();
             $table->decimal('avg_occupancy_rate', 18, 2)->nullable();
             $table->integer('months_rented')->nullable();
             $table->integer('annual_turnover')->nullable();

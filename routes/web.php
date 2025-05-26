@@ -57,6 +57,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details');
 
+    Route::get('/agent/{refcode}/properties', [AgentController::class, 'agentProperty'])->name('agent.properties');
     Route::resource('/agent', AgentController::class);
 
     Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');
