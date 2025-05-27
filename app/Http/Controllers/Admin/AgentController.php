@@ -12,8 +12,9 @@ use Illuminate\Support\Str;
 
 class AgentController extends Controller
 {
-    private function checkMasterRole(){
-        if(Auth::check() && Auth::user()->role == 'Agent'){
+    private function checkMasterRole()
+    {
+        if (Auth::check() && Auth::user()->role == 'Agent') {
             return redirect()->route('dashboard.index');
         }
     }
@@ -21,23 +22,24 @@ class AgentController extends Controller
     public function __construct()
     {
         $this->middleware('role:Master');
-
     }
 
-    public function index(){
+    public function index()
+    {
 
         // if ($redirect = $this->checkMasterRole()) {
         //     return $redirect;
         // }
 
         $loggedInUser = User::withCount('properties')->find(Auth::id());
-        $otherUsers = User::where('id', '!=', Auth::id())->withCount('properties')->get();     
+        $otherUsers = User::where('id', '!=', Auth::id())->withCount('properties')->get();
         $data['data_agent'] = collect([$loggedInUser])->merge($otherUsers);
 
         return view('admin.agent.index', $data);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         // dd($request->role);
         $request->validate([
@@ -46,11 +48,10 @@ class AgentController extends Controller
             'phone_number' => 'required',
             'role' => 'required',
             'initial_name' => 'required',
-        ]); 
-        
-        do {
-            $reference_code = $request->role == 'Master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
+        ]);
 
+        do {
+            $reference_code = $request->role == 'Master' ? 'BPM-' .  Str::upper($request->initial_name) . '-' . random_int(1000, 9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000, 9999);
         } while (User::where('reference_code', $reference_code)->exists());
 
         User::create([
@@ -82,14 +83,15 @@ class AgentController extends Controller
         return response()->json($flashData);
     }
 
-    public function agentProperty($refcode){
+    public function agentProperty($refcode)
+    {
 
         $data['agent_properties'] = PropertiesModel::where('internal_reference', $refcode)
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->with(['featuredImage' => function ($query) {
-                        $query->select('image_path', 'property_gallery.id');
-                        $query->where('is_featured', 1);
-                    }])
+                $query->select('image_path', 'property_gallery.id');
+                $query->where('is_featured', 1);
+            }])
             ->get();
 
         foreach ($data['agent_properties'] as $item) {
@@ -113,4 +115,3 @@ class AgentController extends Controller
         }
     }
 }
-

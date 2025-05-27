@@ -79,9 +79,6 @@ class PropertiesController extends Controller
     {
         $slug = $this->generatePropertiesSlug($request->property_name);
 
-
-
-
         $rules = [];
         foreach ($request->owners as $index => $owner) {
             $prefix = "owners.$index.";
@@ -92,7 +89,7 @@ class PropertiesController extends Controller
             $rules["{$prefix}last_name"] = $isFirst ? 'required|string' : 'nullable|string';
             $rules["{$prefix}email"] = $isFirst ? 'required|email' : 'nullable|email';
             $rules["{$prefix}phone_number"] = $isFirst ? 'required' : 'nullable';
-            
+
 
             if ($isFirst) {
                 $messages["{$prefix}first_name.required"] = 'First name of Owner 1 is required.';
@@ -106,7 +103,7 @@ class PropertiesController extends Controller
         $request->validate($rules, $messages);
 
         $request->validate([
-        
+
             'property_name' => 'required',
             'description' => 'required',
             'region' => 'required',
@@ -477,7 +474,7 @@ class PropertiesController extends Controller
     public function update(Request $request, string $id)
     {
         // dd($id);
-        dd($request->all());
+        // dd($request->all());
 
         // Freehold
         if ($request->legal_category === 'Freehold') {
@@ -528,9 +525,147 @@ class PropertiesController extends Controller
             ]);
         }
 
-        dd($request->all());
+        // dd($request->all());
+
         // ==========================================================================================================================================
-        // ############## Property Feature ##############
+        // ########### Edit Properties Data ##############
+        // ==========================================================================================================================================
+        $baseSlug = Str::slug($request->property_name);
+        $slug = $baseSlug;
+        $counter = 2;
+        while (
+            PropertiesModel::where('property_slug', $slug)
+            ->where('id', '!=', $id)->exists()
+        ) {
+            $slug = $baseSlug . '-' . $counter;
+            $counter++;
+        }
+
+        PropertiesModel::where('id', $id)->update([
+            'property_name' => $request->property_name,
+            'property_slug' => $slug,
+            'property_description' => $request->description,
+            'region' => Str::title($request->region),
+            'sub_region' => Str::title($request->subregion),
+            'property_address' => $request->property_address,
+            'total_land_area' => $this->floatNumbering($request->land_size),
+            'villa_area' => $this->floatNumbering($request->built_area),
+            'pool_area' => $this->floatNumbering($request->pool_area),
+            'bedroom' => $request->bedroom,
+            'bathroom' => $request->bathroom,
+            'year_construction' => $request->year_construction,
+            'year_renovated' => $request->year_renovated,
+            'type_mandate' => $request->type_mandate,
+            // 'type_acceptance' => 'pending',
+        ]);
+
+        // ==========================================================================================================================================
+        // ########### Edit Properties Legal ##############
+        // ==========================================================================================================================================
+        PropertyLegalModel::where('properties_id', $id)->update([
+            'company_name' => $request->company_name,
+            'rep_first_name' => $request->legal_rep_last_name,
+            'rep_last_name' => $request->legal_rep_first_name,
+            'phone' => $request->legal_rep_phone_number,
+            'email' => $request->legal_rep_email,
+
+            'legal_status' => $request->legal_category,
+            'holder_name' => $holder_name,
+            'holder_number' => $holder_number,
+            'start_date' => $request->leasehold_start_date == null ? null : $this->dateConversion($request->leasehold_start_date),
+            'end_date' =>  $request->leasehold_end_date == null ? null : $this->dateConversion($request->leasehold_end_date),
+            'purchase_date' => $request->freehold_purchase_date == null ? null : $this->dateConversion($request->freehold_purchase_date),
+            'extension_cost' => $request->leasehold_negotiation_ext_cost,
+            'purchase_cost' => $request->leasehold_purchase_cost,
+            'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
+            'zoning' => $zoning,
+        ]);
+
+        // ==========================================================================================================================================
+        // ########### Create Property Owner Data ##############
+        // ==========================================================================================================================================
+        // Simpan atau update data owner
+        if ($request->has('owners')) {
+            foreach ($request->owners as $index => $owner) {
+                // Lewati jika semua field kosong
+                if (
+                    empty($owner['first_name']) &&
+                    empty($owner['last_name']) &&
+                    empty($owner['phone_number']) &&
+                    empty($owner['email'])
+                ) {
+                    continue;
+                }
+
+                // Jika ada ID berarti update, jika tidak, create baru
+                if (!empty($owner['id'])) {
+                    PropertyOwnerModel::where('id', $owner['id'])->update([
+                        'first_name'   => $owner['first_name'],
+                        'last_name'    => $owner['last_name'],
+                        'phone'        => $owner['phone_number'],
+                        'email'        => $owner['email'],
+                        'owner_order'  => $index + 1,
+                    ]);
+                } else {
+                    PropertyOwnerModel::create([
+                        'properties_id' => $id,
+                        'first_name'   => $owner['first_name'],
+                        'last_name'    => $owner['last_name'],
+                        'phone'        => $owner['phone_number'],
+                        'email'        => $owner['email'],
+                        'owner_order'  => $index + 1,
+                    ]);
+                }
+            }
+        }
+
+        // Hapus data owner yang ditandai untuk dihapus
+        if ($request->filled('owners_deleted')) {
+            PropertyOwnerModel::where('properties_id', $id)
+                ->whereIn('id', $request->owners_deleted)
+                ->delete();
+        }
+
+        // ==========================================================================================================================================
+        // ############## Edit Properties Financial ##############
+        // ==========================================================================================================================================
+        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
+        $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
+
+        // Presentase
+        if ($idrPrice < 15000000000) {
+            $commision = 5;
+        } else if ($idrPrice >= 15000000000  && $idrPrice <= 34000000000) {
+            $commision = 4;
+        } else if ($idrPrice > 34000000000  && $idrPrice <= 70000000000) {
+            $commision = 3;
+        } else {
+            $commision = 2.5;
+        }
+
+        $commisionAmmountIDR = $idrPrice * $commision / 100;
+        $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
+        $netSellerIDR = $idrPrice - $commisionAmmountIDR;
+        $netSellerUSD = round($usdPrice - $commisionAmmountUSD, 2);
+
+
+        PropertyFinancialModel::where('properties_id', $id)->update([
+            'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
+            'avg_occupancy_rate' => $request->average_occupancy_rate,
+            'months_rented' => $request->month_rented_per_year,
+            'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
+
+            // Sale Price & Conditions
+            'selling_price_idr' => $idrPrice,
+            'selling_price_usd' => $usdPrice,
+            'commision_ammount_idr' => $commisionAmmountIDR,
+            'commision_ammount_usd' => $commisionAmmountUSD,
+            'net_seller_idr' => $netSellerIDR,
+            'net_seller_usd' => $netSellerUSD,
+        ]);
+
+        // ==========================================================================================================================================
+        // ############## Edit Property Feature ##############
         // ==========================================================================================================================================
         PropertyFeatureModel::where('properties_id', $id)->delete();
         foreach ($request->feature as $key => $value) {
@@ -540,6 +675,48 @@ class PropertiesController extends Controller
             ]);
         }
 
+
+        // ==========================================================================================================================================
+        // ############## Edit Property URL & Attachment ##############
+        // ==========================================================================================================================================
+        $folderPath = public_path('admin/attachment/' . $slug);
+
+        if (!File::exists($folderPath)) {
+            File::makeDirectory($folderPath, 0755, true);
+        }
+
+        $fileRentalSupport = $this->handleFileUpdate(
+            $request,
+            'file_rental_support',
+            $folderPath,
+            $id
+        );
+
+        $fileTypeMandate = $this->handleFileUpdate(
+            $request,
+            'file_type_of_mandate',
+            $folderPath,
+            $id
+        );
+
+        // Update atau buat ulang URL dan attachment
+        $dataURL = $request->only(['url_virtual_tour', 'url_lifestyle', 'url_experience']);
+
+        // Masukkan file juga
+        $dataURL['file_rental_support'] = $fileRentalSupport;
+        $dataURL['file_type_of_mandate'] = $fileTypeMandate;
+
+        foreach ($dataURL as $key => $value) {
+            if ($value !== null && $value !== '') {
+                PropertyUrlAttachmentModel::updateOrCreate(
+                    ['properties_id' => $id, 'name' => $key],
+                    ['path_attachment' => $value]
+                );
+            }
+        }
+
+        Cache::forget('properties_list_cache');
+
         $flashData = [
             'judul' => 'Edit Property Success',
             'pesan' => 'Property edited successfully',
@@ -547,6 +724,40 @@ class PropertiesController extends Controller
         ];
         return back()->with('flashData', $flashData);
     }
+
+    private function handleFileUpdate($request, $inputName, $folderPath, $propertyId)
+    {
+        if ($request->hasFile($inputName)) {
+            // Cek jika sudah ada file lama
+            $existing = PropertyUrlAttachmentModel::where('properties_id', $propertyId)
+                ->where('name', $inputName)
+                ->first();
+
+            if ($existing && $existing->path_attachment) {
+                $oldPath = $folderPath . '/' . $existing->path_attachment;
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
+            }
+
+            $newFile = $request->file($inputName);
+            $filename = $newFile->getClientOriginalName();
+            $newFile->move($folderPath, $filename);
+            return $filename;
+        }
+
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+
 
     public function destroy(string $id)
     {
@@ -572,18 +783,6 @@ class PropertiesController extends Controller
 
         return response()->json($flashData);
     }
-
-
-
-    // private function getUSDtoIDRRate()
-    // {
-    //     try {
-    //         $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
-    //         return $response['rates']['IDR'] ?? 15000; // fallback
-    //     } catch (\Exception $e) {
-    //         return 15000; // fallback jika API gagal
-    //     }
-    // }
 
     private function getUSDtoIDRRate()
     {

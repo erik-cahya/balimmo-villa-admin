@@ -34,6 +34,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
+
         // Buat folder jika belum ada
         $userFolder = public_path('admin/profile-image/' . $request->reference_code);
         if (!file_exists($userFolder)) {

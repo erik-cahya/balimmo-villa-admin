@@ -60,7 +60,7 @@
                                    <x-form-input className="col-lg-4" type="email" name="email" label="Email Agent"/>
 
                                    <x-form-input className="col-lg-4" type="number" name="phone_number" label="Phone Number"/>
-                                   <x-form-select className="col-lg-4" name="role" label="User Role" 
+                                   <x-form-select className="col-lg-4" name="role" label="User Role"
                                         :options="['Agent', 'Master']"
                                    />
                                    <x-form-input className="col-lg-4" type="password" name="password" label="Password Login"/>
@@ -78,7 +78,7 @@
                </div>
           </form>
 
-          
+
      </div>
 
     <div class="row">
@@ -127,7 +127,7 @@
                                             <td>
                                                  <div class="d-flex align-items-center gap-2">
                                                       <div>
-                                                           <img src="{{ asset('admin') }}/assets/images/no-pic.png" alt="" class="avatar-sm rounded-circle">
+                                                           <img src="{{ asset('admin') }}{{ $agent->profile == null ? '/assets/images/users/avatar-1.jpg' : '/profile-image/' . $agent->reference_code . '/'.$agent->profile }}" alt="" class="avatar-sm rounded-circle">
                                                       </div>
                                                       <div>
                                                            <a href="#!" class="text-dark fw-medium fs-15">{{ $agent->name }}</a>
@@ -155,7 +155,7 @@
                                                        {{-- /. Delete Button --}}
                                                       @endif
 
-                                                      
+
                                                  </div>
                                             </td>
                                        </tr>
@@ -191,14 +191,14 @@
           document.addEventListener('DOMContentLoaded', function() {
               // Saat halaman sudah ready
               const deleteButtons = document.querySelectorAll('.deleteButton');
-      
+
               deleteButtons.forEach(button => {
                   button.addEventListener('click', function(e) {
                       e.preventDefault();
-      
+
                       let propertyName = this.getAttribute('data-nama');
                       let propertyId = this.parentElement.querySelector('.propertyId').value;
-      
+
                       Swal.fire({
                           title: 'Are you sure?',
                           text: "Delete agent " + propertyName + "?",
@@ -240,7 +240,7 @@
               });
           });
       </script>
-      
+
  {{-- /* End Sweet Alert --}}
-     
+
 @endpush

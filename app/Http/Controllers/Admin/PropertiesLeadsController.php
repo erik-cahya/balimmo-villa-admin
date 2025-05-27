@@ -17,7 +17,7 @@ class PropertiesLeadsController extends Controller
     /**
      * Display a listing of the resource.
      */
-   public function index()
+    public function index()
     {
         if (!Auth::check()) {
             return redirect()->route('login');
@@ -78,10 +78,7 @@ class PropertiesLeadsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.
@@ -132,7 +129,7 @@ class PropertiesLeadsController extends Controller
                 'timing' => 'required',
                 'bedroom' => 'required',
             ]);
-        }else{
+        } else {
             // Form di landing page
             $request->validate([
                 'name' => 'required',
@@ -172,7 +169,8 @@ class PropertiesLeadsController extends Controller
         return back()->with('flashData', $flashData);
     }
 
-    public function sendMail(Request $request){
+    public function sendMail(Request $request)
+    {
         $data = $request->all();
 
         $propertyNames = $data['property_name'];

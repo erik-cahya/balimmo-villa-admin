@@ -48,28 +48,14 @@
                      <div class="card-body">
                          <div class="row">
 
+                                <div id="owners-container">
+                                    @foreach ($property_owner as $index => $owner)
+                                        @include('components.owner-input', ['owner' => $owner, 'index' => $index])
+                                    @endforeach
+                                </div>
 
-                              <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                   <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner {{ $property_owner[0]->owner_order }}</h5>
-                                   <hr>
-                                   <div class="my-3 row">
-                                        <x-form-input className="col-lg-6" type="text" name="owners[0][first_name]" label="First Name" value="{{ $property_owner[0]->first_name }}" />
-                                        <x-form-input className="col-lg-6" type="text" name="owners[0][last_name]" label="Last Name" value="{{ $property_owner[0]->last_name }}" />
-                                        <x-form-input className="col-lg-6" type="number" name="owners[0][phone_number]" label="Phone Number" value="{{ $property_owner[0]->phone }}" />
-                                        <x-form-input className="col-lg-6" type="text" name="owners[0][email]" label="Email" value="{{ $property_owner[0]->email }}"/>
-                                   </div>
-                              </div>
+                                <button type="button" class="btn btn-sm btn-secondary mb-2" onclick="addOwner()">+ Add Owner</button>
 
-                                    <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
-                                        <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
-                                        <hr>
-                                        <div class="my-3 row">
-                                             <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" value="{{ isset($property_owner[1]) ? $property_owner[1]->first_name : '-' }}" />
-                                             <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" value="{{ isset($property_owner[1]) ? $property_owner[1]->last_name : '-' }}" />
-                                             <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" value="{{ isset($property_owner[1]) ? $property_owner[1]->phone : 0 }}" />
-                                             <x-form-input className="col-lg-6" type="text" name="owners[1][email]" label="Email" value="{{ isset($property_owner[1]) ? $property_owner[1]->email : '-' }}"/>
-                                        </div>
-                                   </div>
 
                               <div class="pt-4 px-3 rounded bg-light-subtle border border-dark mb-4">
                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
@@ -249,13 +235,13 @@
                                    <label for="file_rental_support" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
                                    <input type="file" id="file_rental_support" name="file_rental_support" class="form-control mb-2" placeholder="">
 
-                                   
 
-                                   @if (isset($attachment['file_rental_support']))     
+
+                                   @if (isset($attachment['file_rental_support']))
                                         <a href="{{ asset('admin/attachment/' . $data_properties->property_slug . '/' . $attachment['file_rental_support'] ) }}">
                                              <span class="badge bg-light-subtle text-muted border fw-medium fs-13 px-2 py-1 d-flex align-items-center">
                                                   <iconify-icon icon="material-symbols-light:download-rounded" class="fs-18 text-primary"></iconify-icon>
-                                                  {{ $attachment['file_rental_support'] }} 
+                                                  {{ $attachment['file_rental_support'] }}
                                              </span>
                                         </a>
                                    @endif
@@ -420,11 +406,11 @@
                                    <label for="file_type_of_mandate" class="form-label">Supporting Document</label>
                                    <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control mb-2" placeholder="">
 
-                                   @if (isset($attachment['file_type_of_mandate']))     
+                                   @if (isset($attachment['file_type_of_mandate']))
                                         <a href="{{ asset('admin/attachment/' . $data_properties->property_slug . '/'.$attachment['file_type_of_mandate'] ) }}">
                                              <span class="badge bg-light-subtle text-muted border fw-medium fs-13 px-2 py-1 d-flex flex-nowrap align-items-center">
                                                   <iconify-icon icon="material-symbols-light:download-rounded" class="fs-18 text-primary"></iconify-icon>
-                                                  {{ $attachment['file_type_of_mandate'] }} 
+                                                  {{ $attachment['file_type_of_mandate'] }}
                                              </span>
                                         </a>
                                    @endif
@@ -493,6 +479,65 @@
      <script src="{{ asset('admin/assets/js/custom/currency-format.js') }}"></script>
 
      <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
+
+     <script>
+    let ownerIndex = {{ count($property_owner) }};
+
+    function addOwner() {
+        const container = document.getElementById('owners-container');
+
+        const newBlock = document.createElement('div');
+        newBlock.className = 'owner-block border rounded p-3 mb-3 position-relative';
+        newBlock.dataset.index = ownerIndex;
+
+        newBlock.innerHTML = `
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-2" onclick="removeOwner(this)" aria-label="Close"></button>
+
+            <h5 class="text-dark fw-semibold"><i class="ri-user-line"></i> Owner ${ownerIndex + 1}</h5>
+            <hr>
+            <div class="row">
+                <input type="hidden" name="owners[${ownerIndex}][id]" value="">
+                <div class="col-lg-6 mb-2">
+                    <label class="form-label">First Name</label>
+                    <input class="form-control" type="text" name="owners[${ownerIndex}][first_name]">
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <label class="form-label">Last Name</label>
+                    <input class="form-control" type="text" name="owners[${ownerIndex}][last_name]">
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <label class="form-label">Phone Number</label>
+                    <input class="form-control" type="number" name="owners[${ownerIndex}][phone_number]">
+                </div>
+                <div class="col-lg-6 mb-2">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="text" name="owners[${ownerIndex}][email]">
+                </div>
+            </div>
+        `;
+
+        container.appendChild(newBlock);
+        ownerIndex++;
+    }
+
+    function removeOwner(button) {
+    const ownerBlock = button.closest('.owner-block');
+
+    const hiddenIdInput = ownerBlock.querySelector('input[name^="owners"][name$="[id]"]');
+    if (hiddenIdInput && hiddenIdInput.value) {
+        // Jika owner memiliki ID (artinya sudah tersimpan di database), tandai untuk dihapus
+        const deletedInput = document.createElement('input');
+        deletedInput.type = 'hidden';
+        deletedInput.name = 'owners_deleted[]';
+        deletedInput.value = hiddenIdInput.value;
+        document.getElementById('owners-container').appendChild(deletedInput);
+    }
+
+    // Hapus elemen blok owner
+    ownerBlock.remove();
+}
+</script>
+
 
      {{-- Custom Toggle --}}
      <script>

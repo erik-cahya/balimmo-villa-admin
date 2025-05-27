@@ -20,7 +20,7 @@
                          <div class="col-xl-8 col-lg-12">
                               <div class="card">
                                    <div class="card-body">
-                                        
+
                                         <div class="d-flex align-items-center my-3 gap-3">
                                              <img src="{{ asset('admin') }}{{ Auth::user()->profile == null ? '/assets/images/users/avatar-2.jpg' : '/profile-image/' . Auth::user()->reference_code . '/'.Auth::user()->profile }}" alt="" class="rounded-circle avatar-xl img-thumbnail" style="object-fit: cover">
                                              <div>
@@ -30,18 +30,9 @@
 
                                         </div>
                                         <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mt-3">
-
                                              <div>
                                                   <a href="mailto:{{ $profile->email }}" class="btn btn-primary"><i class="ri-mail-fill"></i> Email Us</a>
                                                   <a href="#!" class="btn btn-outline-primary"><i class="ri-phone-fill"></i> Phone</a>
-                                             </div>
-                                             <div class="d-flex gap-1">
-                                                  <a href="javascript: void(0);" class="btn btn-dark avatar-sm d-flex align-items-center justify-content-center fs-20">
-                                                       <i class="ri-edit-fill"></i>
-                                                  </a>
-                                                  <a href="javascript: void(0);" class="btn btn-primary avatar-sm d-flex align-items-center justify-content-center fs-20">
-                                                       <i class="ri-share-fill"></i>
-                                                  </a>
                                              </div>
                                         </div>
 
@@ -61,7 +52,7 @@
                                         </div>
 
                                         <div class="row">
-                                             <div class="col-lg-4">                                                  
+                                             <div class="col-lg-4">
                                                   <h4 class="card-title mb-2">Social Media :</h4>
                                                   <ul class="list-inline d-flex gap-1 mb-0 align-items-center mt-3">
                                                        <li class="list-inline-item">
@@ -69,13 +60,13 @@
                                                                  <i class="ri-facebook-fill"></i>
                                                             </a>
                                                        </li>
-          
+
                                                        <li class="list-inline-item">
                                                             <a href="javascript: void(0);" class="btn btn-soft-danger avatar-sm d-flex align-items-center justify-content-center fs-20">
                                                                  <i class="ri-instagram-fill"></i>
                                                             </a>
                                                        </li>
-          
+
                                                        <li class="list-inline-item">
                                                             <a href="javascript: void(0);" class="btn btn-soft-info avatar-sm d-flex align-items-center justify-content-center  fs-20">
                                                                  <i class="ri-twitter-fill"></i>
@@ -184,7 +175,7 @@
                                           <h4 class="card-title">Edit Data</h4>
                                     </div>
                                     <div class="card-body">
-                                          
+
                                       <input type="hidden" name="reference_code" value="{{ $profile->reference_code }}">
                                         <x-form-input className="" type="text" name="name" label="Name" value="{{ $profile->name }}" />
                                         <x-form-input className="" type="text" name="tagline" label="Tagline" value="{{ $profile->tagline }}" />

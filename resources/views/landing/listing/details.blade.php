@@ -55,13 +55,13 @@
                             </div>
                         </div>
                         </div>
-                    </div>                                                                                   
+                    </div>
                 </div>
             </div>
         </div>
 
-        
-        
+
+
     </div>
 </section>
 <!-- Hero section .\ -->
@@ -129,7 +129,7 @@
                                             <span class="apartment__info--title">Land</span>
                                         </p>
 
-                                        
+
 
                                     </div>
                                 </div>
@@ -181,8 +181,8 @@
                                     @if ($feature_list->count() == 0)
                                         <p>No Data</p>
                                     @else
-                                        @foreach ($feature_list as $feature)    
-                                            <div class="col-md-4">
+                                        @foreach ($feature_list as $feature)
+                                            <div class="col-md-6">
                                                 <div class="row">
                                                     <div class="col-2">
                                                         <span class="properties__amenities--mark__icon"><svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -202,20 +202,20 @@
                         </div>
                         <div class="listing__details--content__step mb-80">
                             <h3 class="listing__details--content__title mb-40">Gallery</h3>
-                        
+
                             <div class="container">
                                 <div class="row g-3">
-                                    @foreach ($image_gallery as $gallery)     
+                                    @foreach ($image_gallery as $gallery)
                                         <div class="col-6 col-md-4 col-lg-3">
                                             <a class="chat__profile--photos__link glightbox" href="{{ asset($gallery->image_path) }}" data-gallery="gallery"><img class="chat__profile--photos__media" src="{{ asset($gallery->image_path) }}" alt="img"></a>
                                         </div>
                                     @endforeach
 
-                                    
+
                                 </div>
                             </div>
                         </div>
-                    
+
                         <div class="listing__details--content__step mb-80">
                             <div class="listing__details--location__header d-flex justify-content-between mb-40">
                                 <div class="listing__details--location__header--left">
@@ -231,17 +231,17 @@
                                     <li class="location__google--maps__info--list d-flex">
                                         <span class="location__google--maps__info--title">Subregion: </span>
                                         <span class="location__google--maps__info--subtitle">{{ $property->sub_region }}</span>
-                                    </li>             
+                                    </li>
                                 </ul>
-                                <ul class="location__google--maps__info--step">                                            
+                                <ul class="location__google--maps__info--step">
                                     <li class="location__google--maps__info--list d-flex">
                                         <span class="location__google--maps__info--title">Address:</span>
                                         <span class="location__google--maps__info--subtitle">{{ $property->property_address }}</span>
-                                    </li>                                         
+                                    </li>
                                     <li class="location__google--maps__info--list d-flex">
                                         <span class="location__google--maps__info--title">View:  </span>
                                         <span class="location__google--maps__info--subtitle">Beach</span>
-                                    </li>  
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -250,13 +250,13 @@
                             <div class="listing__details--video__thumbnail position-relative">
                                 @if ($lifestyle === null)
                                     <p class="admin__profile--desc">No Data</p>
-                                @else 
+                                @else
                                     <img src="https://img.youtube.com/vi/{{ $lifestyle }}/maxresdefault.jpg" alt="img">
                                     <div class="bideo__play">
                                         <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $lifestyle }}" data-gallery="video">
                                             <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor"/>
-                                            </svg>                                        
+                                            </svg>
                                             <span class="visually-hidden">Video Play</span>
                                         </a>
                                     </div>
@@ -268,31 +268,31 @@
                             <div class="listing__details--video__thumbnail position-relative">
                                 @if ($virtualTour === null)
                                     <p class="admin__profile--desc">No Data</p>
-                                @else 
+                                @else
                                     <img src="https://img.youtube.com/vi/{{ $virtualTour }}/maxresdefault.jpg" alt="img">
                                     <div class="bideo__play">
                                         <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $virtualTour }}" data-gallery="video">
                                             <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor"/>
-                                            </svg>                                        
+                                            </svg>
                                             <span class="visually-hidden">Video Play</span>
                                         </a>
                                     </div>
                                 @endif
                             </div>
-                        </div>                        
+                        </div>
                         <div class="listing__details--content__step mb-80">
                             <h3 class="listing__details--content__title mb-40">Experience</h3>
                             <div class="listing__details--video__thumbnail position-relative">
                                 @if ($experience === null)
                                     <p class="admin__profile--desc">No Data</p>
-                                @else     
+                                @else
                                 <img src="https://img.youtube.com/vi/{{ $experience }}/maxresdefault.jpg" alt="img">
                                 <div class="bideo__play">
                                     <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $experience }}" data-gallery="video">
                                         <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor"/>
-                                        </svg>                                        
+                                        </svg>
                                         <span class="visually-hidden">Video Play</span>
                                     </a>
                                 </div>
@@ -342,7 +342,7 @@
                                                 <li>
                                                     <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                    </svg>                                                
+                                                    </svg>
                                                     </span>
                                                 </li>
                                                 </ul>
@@ -377,7 +377,7 @@
                                                 <li>
                                                     <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                    </svg>                                                
+                                                    </svg>
                                                     </span>
                                                 </li>
                                                 </ul>
@@ -414,7 +414,7 @@
                                                 <li>
                                                     <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                    </svg>                                                
+                                                    </svg>
                                                     </span>
                                                 </li>
                                                 </ul>
@@ -449,7 +449,7 @@
                                                 <li>
                                                     <span><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M7.71289 1.40234L5.80859 5.29883L1.50195 5.91406C0.740234 6.03125 0.447266 6.96875 1.00391 7.52539L4.08008 10.543L3.34766 14.791C3.23047 15.5527 4.05078 16.1387 4.72461 15.7871L8.5625 13.7656L12.3711 15.7871C13.0449 16.1387 13.8652 15.5527 13.748 14.791L13.0156 10.543L16.0918 7.52539C16.6484 6.96875 16.3555 6.03125 15.5938 5.91406L11.3164 5.29883L9.38281 1.40234C9.06055 0.728516 8.06445 0.699219 7.71289 1.40234Z" fill="#D8D4CB"></path>
-                                                    </svg>                                                
+                                                    </svg>
                                                     </span>
                                                 </li>
                                                 </ul>
@@ -458,7 +458,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -466,17 +466,17 @@
                 <div class="listing__widget">
                     <div class="widget__admin--profile text-center mb-30">
                         <div class="admin__profile--thumbnail">
-                            <img src="{{ asset('landing') }}/assets/img/other/admin-profile.png" alt="img">
+                            <img src="{{ asset('admin') }}{{ $property->profilePicture == null ? '/assets/images/users/avatar-1.jpg' : '/profile-image/' . $property->agent_code . '/' . $property->profilePicture }}" width="150" alt="img">
                         </div>
                         <div class="admin__profile--content">
                             <h3 class="admin__profile--name">{{ $property->agent_name }}</h3>
-                            <h5 class="admin__profile--subtitle">Real estate broker</h5>
-                            <p class="admin__profile--desc">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit.Veritatis distinctio</p>
-                            <a class="admin__profile--email" href="mailto:b.gordon@homeid.com">{{ $property->agent_email }}</a>
+                            <h5 class="admin__profile--subtitle">{{ $property->agent_tagline }}</h5>
+                            <hr>
+                            <p class="admin__profile--desc">{{ Str::limit($property->agent_description, 160) }}</p>
+                            <a class="admin__profile--email" href="mailto:{{ $property->agent_email }}">{{ $property->agent_email }}</a>
                         </div>
                     </div>
-                    
+
                     <div class="widget__step mb-30">
                         <h2 class="widget__step--title">Booking Properties</h2>
                         <div class="widget__form">
@@ -485,28 +485,28 @@
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Name" name="name" type="text">
 
-                                    @error('name')  
+                                    @error('name')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Phone Number" name="phone_number" type="tel">
 
-                                    @error('phone_number')  
+                                    @error('phone_number')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Email Address" name="email" type="email">
 
-                                    @error('email')  
+                                    @error('email')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" id="budget" placeholder="(IDR) Budget" name="budget" type="text">
 
-                                    @error('budget')  
+                                    @error('budget')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
 
@@ -514,28 +514,28 @@
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Require Bedroom" name="bedroom" type="number">
 
-                                    @error('bedroom')  
+                                    @error('bedroom')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" placeholder="Location" name="location" type="text">
 
-                                    @error('location')  
+                                    @error('location')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="widget__form--input mb-20">
                                     <input class="widget__form--input__field" id="timing"  placeholder="Timing" name="timing" type="text">
 
-                                    @error('timing')  
+                                    @error('timing')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div class="widget__form--input">
                                     <textarea class="widget__form--textarea__field" name="message" placeholder="Write You Messege"></textarea>
 
-                                    @error('message')  
+                                    @error('message')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
@@ -544,7 +544,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="widget__step mb-30">
                         <h2 class="widget__step--title">Featured Properties</h2>
                         <div class="widget__featured--properties">
@@ -568,12 +568,12 @@
                                 <div class="widget__featured--propertie__price d-flex">
                                     <span class="new__price">$13000</span>
                                     <span class="old__price">$16000</span>
-                                </div>    
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
         </div>
