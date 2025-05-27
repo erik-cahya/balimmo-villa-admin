@@ -176,33 +176,26 @@ class LandingPageController extends Controller
     }
 
    public function search(Request $request)
-{
-    $query = $request->get('query');
-    // $priceMin = $request->get('price_min');
-    // $priceMax = $request->get('price_max');
-    $bedroom = $request->get('bedroom');
-    $propertyTypes = $request->get('property_type', []);
-    $locations = $request->get('location', []);
+    {
+        $query = $request->get('query');
 
-    $data_property = PropertiesModel::with('featuredImage')
-        ->where('type_acceptance', 'Accept')
-        ->when($query, function ($q) use ($query) {
-            $q->where(function($q2) use ($query) {
-                $q2->where('property_name', 'like', "%{$query}%")
-                   ->orWhere('property_address', 'like', "%{$query}%");
+        if (empty($query)) {
+            // Ambil dari cache saat tidak ada pencarian
+            $data_property = Cache::rememberForever('properties_list_cache', function () {
+                return []; // fallback
             });
-        })
-        // ->when($priceMin, fn($q) => $q->where('property_financial.selling_price_idr', '>', (int)$priceMin))
-        // ->when($priceMax, fn($q) => $q->where('property_financial.selling_price_idr', '<', (int)$priceMax))
-        ->when($bedroom, fn($q) => $q->where('bedroom', '=', $bedroom))
-        ->when($propertyTypes, fn($q) => $q->whereIn('legal_status', $propertyTypes))
-        ->when($locations, fn($q) => $q->whereIn('region', $locations))
-        ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
-        // ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-        ->get();
+        } else {
+            $data_property = PropertiesModel::with('featuredImage')
+                ->where('type_acceptance', 'Accept')
+                ->where(function ($q) use ($query) {
+                    $q->where('property_name', 'like', "%{$query}%")
+                    ->orWhere('property_address', 'like', "%{$query}%");
+                })
+                ->get();
+        }
 
-    return view('landing.listing.partials.property_list', compact('data_property'))->render(); 
-}
+        return view('landing.listing.partials.property_list', compact('data_property'))->render(); 
+    }
 
 
 }

@@ -72,9 +72,7 @@ class AgentController extends Controller
 
     public function destroy(string $id)
     {
-        // PropertiesFeatureModel::where('properties_id', $id)->delete();
         User::destroy($id);
-
         $flashData = [
             'judul' => 'Delete Success',
             'pesan' => 'Delete Agent Successfully',

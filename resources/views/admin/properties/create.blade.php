@@ -47,10 +47,53 @@
                                    <hr>
                                    <div class="my-3 row">
 
-                                        <x-form-input className="col-lg-6" type="text" name="owners[0][first_name]" label="First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="owners[0][last_name]" label="Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="owners[0][phone_number]" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="owners[0][email]" label="Email" />
+                                        <div class="col-lg-6 mb-3" id="group_owners[0][first_name]">
+                                             <label for="owners[0][first_name]" class="form-label">First Name</label>
+
+                                             <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control  @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
+
+                                             @error('owners.0.first_name')
+                                                  <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                       {{ $message }}
+                                                  </div>
+                                             @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[0][last_name]">
+                                             <label for="owners[0][last_name]" class="form-label">Last Name</label>
+
+                                             <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
+
+                                             @error('owners.0.last_name')
+                                                  <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                       {{ $message }}
+                                                  </div>
+                                             @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[0][email]">
+                                             <label for="owners[0][email]" class="form-label">Emails</label>
+
+                                             <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
+
+                                             @error('owners.0.email')
+                                                  <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                       {{ $message }}
+                                                  </div>
+                                             @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[0][phone_number]">
+                                             <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
+
+                                             <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.phone_number') }}">
+
+                                             @error('owners.0.phone_number')
+                                                  <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                       {{ $message }}
+                                                  </div>
+                                             @enderror
+                                        </div>
 
                                    </div>
                               </div>

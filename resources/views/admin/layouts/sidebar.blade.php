@@ -81,6 +81,15 @@
                     </a>
                </li>
 
+               <li class="nav-item">
+                         <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
+                              <span class="nav-icon">
+                                   <i class="ri-group-line"></i>
+                              </span>
+                              <span class="nav-text">My Profile</span>
+                         </a>
+                    </li>
+
          </ul>
     </div>
 </div>

@@ -79,9 +79,34 @@ class PropertiesController extends Controller
     {
         $slug = $this->generatePropertiesSlug($request->property_name);
 
-        // dd($slug);
+
+
+
+        $rules = [];
+        foreach ($request->owners as $index => $owner) {
+            $prefix = "owners.$index.";
+
+            $isFirst = $index == 0;
+
+            $rules["{$prefix}first_name"] = $isFirst ? 'required|string' : 'nullable|string';
+            $rules["{$prefix}last_name"] = $isFirst ? 'required|string' : 'nullable|string';
+            $rules["{$prefix}email"] = $isFirst ? 'required|email' : 'nullable|email';
+            $rules["{$prefix}phone_number"] = $isFirst ? 'required' : 'nullable';
+            
+
+            if ($isFirst) {
+                $messages["{$prefix}first_name.required"] = 'First name of Owner 1 is required.';
+                $messages["{$prefix}last_name.required"] = 'Last name of Owner 1 is required.';
+                $messages["{$prefix}email.required"] = 'Email of Owner 1 is required.';
+                $messages["{$prefix}email.email"] = 'Email of Owner 1 must be a valid email address.';
+                $messages["{$prefix}phone_number.required"] = 'Phone number of Owner 1 is required.';
+            }
+        }
+
+        $request->validate($rules, $messages);
 
         $request->validate([
+        
             'property_name' => 'required',
             'description' => 'required',
             'region' => 'required',
@@ -101,13 +126,6 @@ class PropertiesController extends Controller
             'url_lifestyle' => 'required',
             'url_experience' => 'required',
 
-
-            // Property Owners
-            'owners[0][first_name]' => 'required',
-            'owners[0][last_name]' => 'required',
-            'owners[0][email]' => 'required',
-            'owners[0][phone_number]' => 'required',
-
             // ##### Rental Yield
             'average_nightly_rate' => 'required',
             'average_occupancy_rate' => 'required',
@@ -119,14 +137,8 @@ class PropertiesController extends Controller
         ], [
             'feature' => 'Please Choose features & Amenities',
             'images' => 'Please Upload your Property Images',
-
-            'owners[0][first_name]' => 'Please input your first name',
-            'owners[0][last_name]' => 'Please input your last name',
-            'owners[0][email]' => 'Please input your email',
-            'owners[0][phone_number]' => 'Please input your phone number',
         ]);
 
-       
 
         // Freehold Validation
         if ($request->legal_category === 'Freehold') {
@@ -643,7 +655,7 @@ class PropertiesController extends Controller
         ];
 
         // Hapus cache lama agar nanti di-refresh otomatis saat index() dipanggil lagi
-        Cache::forget('properties_list');
+        Cache::forget('properties_list_cache');
 
         return redirect()->route('properties.index')->with('flashData', $flashData);
     }

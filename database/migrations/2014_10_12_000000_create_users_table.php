@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('password');
             $table->string('reference_code')->nullable()->unique();
             $table->string('role')->nullable();
+            $table->string('description')->nullable();
+            $table->string('tagline')->nullable();
+            $table->string('address')->nullable();
+            $table->text('profile')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
