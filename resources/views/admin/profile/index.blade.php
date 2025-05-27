@@ -22,10 +22,10 @@
                                    <div class="card-body">
                                         
                                         <div class="d-flex align-items-center my-3 gap-3">
-                                             <img src="{{ asset('admin') }}/assets/images/users/avatar-2.jpg" alt="" class="rounded-circle avatar-xl img-thumbnail">
+                                             <img src="{{ asset('admin') }}{{ Auth::user()->profile == null ? '/assets/images/users/avatar-2.jpg' : '/profile-image/' . Auth::user()->reference_code . '/'.Auth::user()->profile }}" alt="" class="rounded-circle avatar-xl img-thumbnail" style="object-fit: cover">
                                              <div>
                                                   <h3 class="fw-semibold mb-1">{{ $profile->name }}</h3>
-                                                  <a href="#!" class="link-primary fw-medium fs-14">EastTribune.nl</a>
+                                                  <a href="#!" class="link-primary fw-medium fs-14">{{ $profile->tagline }}</a>
                                              </div>
 
                                         </div>
@@ -57,10 +57,6 @@
                                              <div class="col-lg-4">
                                                   <p class="text-dark fw-semibold fs-16 mb-1">Address :</p>
                                                   <p class="mb-0">{{ $profile->address == null ? '-' : $profile->address }}</p>
-                                             </div>
-                                             <div class="col-lg-2">
-                                                  <p class="text-dark fw-semibold fs-16 mb-1">Status :</p>
-                                                  <p class="mb-0"><span class="badge bg-success text-white fs-12 px-2 py-1">Available</span> </p>
                                              </div>
                                         </div>
 
@@ -181,68 +177,40 @@
                               </div>
                          </div>
                          <div class="col-xl-4 col-lg-12">
-                              <div class="card">
-                                   <div class="card-header">
-                                        <h4 class="card-title">Transactions </h4>
-                                   </div>
-                                   <div class="card-body">
-                                        <div class="p-3 bg-primary bg-gradient rounded-4 border border-light border-2 shadow-sm">
-                                             <div class="d-flex align-items-center">
-                                                  <img src="{{ asset('admin') }}/assets/images/chip.png" alt="" class="avatar">
-                                                  <div class="ms-auto">
-                                                       <img src="{{ asset('admin') }}/assets/images/card/mastercard.svg" alt="" class="avatar">
-                                                  </div>
-                                             </div>
-                                             <div class="mt-5">
+                          <form action="{{ route('profile.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                                <div class="card">
+                                    <div class="card-header">
+                                          <h4 class="card-title">Edit Data</h4>
+                                    </div>
+                                    <div class="card-body">
+                                          
+                                      <input type="hidden" name="reference_code" value="{{ $profile->reference_code }}">
+                                        <x-form-input className="" type="text" name="name" label="Name" value="{{ $profile->name }}" />
+                                        <x-form-input className="" type="text" name="tagline" label="Tagline" value="{{ $profile->tagline }}" />
+                                        <div class="col-lg-12 mb-3" id="group_description">
+                                          <label for="description" class="form-label">Description</label>
+                                          <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter address">{{ old('description', $profile->description) }}</textarea>
+                                      </div>
 
-                                                  <h4 class="text-white d-flex gap-2"><span class="text-white-50">XXXX</span> <span class="text-white-50">XXXX</span> <span class="text-white-50">XXXX</span> 3467</h4>
-                                             </div>
-                                             <div class="d-flex align-items-center justify-content-between mt-4">
-                                                  <div>
-                                                       <p class="text-white-50 mb-2">Holder Name</p>
-                                                       <h4 class="mb-0 text-white">Ray C. Nichols</h4>
-                                                  </div>
-                                                  <div>
-                                                       <p class="text-white-50 mb-2">Valid</p>
-                                                       <h4 class="mb-0 text-white">05/26</h4>
-                                                  </div>
-                                                  <img src="{{ asset('admin') }}/assets/images/contactless-payment.png" alt="" class="img-fluid">
-                                             </div>
+                                        <x-form-input className="" type="text" name="email" label="Email" value="{{ $profile->email }}" />
+                                        <x-form-input className="" type="text" name="phone" label="Phone" value="{{ $profile->phone_number }}" />
+
+                                        <div class="col-lg-12 mb-3" id="group_address">
+                                          <label for="address" class="form-label">Address</label>
+                                          <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter address">{{ old('address', $profile->address) }}</textarea>
                                         </div>
-                                        <div class="mt-4">
-                                             <div class="d-flex align-items-center gap-3 border-bottom pb-3">
-                                                  <div class="avatar bg-primary bg-opacity-10 rounded">
-                                                       <iconify-icon icon="solar:square-transfer-horizontal-bold" class="fs-28 text-primary avatar-title"></iconify-icon>
-                                                  </div>
-                                                  <div>
-                                                       <p class="mb-1 text-dark fw-medium fs-15">Michael A. Miner</p>
-                                                       <p class="text-muted mb-0">michaelminer@dayrep.com</p>
-                                                  </div>
-                                                  <div class="ms-auto">
-                                                       <p class="mb-1 fs-16 text-dark fw-medium">$13,987 <span><i class="ri-checkbox-circle-line text-success ms-1"></i></span></p>
-                                                       <p class="mb-0 fs-13">TXN-341220</p>
-                                                  </div>
-                                             </div>
-                                             <div class="d-flex align-items-center gap-3 pt-3 rounded">
-                                                  <div class="avatar bg-primary bg-opacity-10 rounded">
-                                                       <iconify-icon icon="solar:square-transfer-horizontal-bold" class="fs-28 text-primary avatar-title"></iconify-icon>
-                                                  </div>
-                                                  <div>
-                                                       <p class="mb-1 text-dark fw-medium fs-15">Theresa T. Brose</p>
-                                                       <p class="text-muted mb-0">theresbrosea@dayrep.com</p>
-                                                  </div>
-                                                  <div class="ms-auto">
-                                                       <p class="mb-1 fs-16 text-dark fw-medium">$2,710 <span><i class="ri-checkbox-circle-line text-success ms-1"></i></span></p>
-                                                       <p class="mb-0 fs-13">TXN-836451</p>
-                                                  </div>
-                                             </div>
-                                             <div class="mt-4">
-                                                  <a href="#!" class="link-primary fw-medium">View More</a>
-                                             </div>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
+
+                                    <div class="col-lg-12 mb-3">
+                                    <label for="photo_profile" class="form-label">Upload Photo Profile</label>
+                                    <input type="file" id="photo_profile" name="photo_profile" class="form-control" placeholder="">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
                </div>
 
