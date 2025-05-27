@@ -186,7 +186,7 @@ class PropertiesLeadsController extends Controller
                 'selling_price' => $sellingPrices[$index],
             ];
         }
-        Mail::to('erikcp38@gmail.com')->send(new NotifikasiEmail([
+        Mail::to($request->cust_email)->send(new NotifikasiEmail([
             'properties' => $combined,
         ]));
 
