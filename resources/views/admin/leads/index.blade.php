@@ -42,7 +42,7 @@
                          </div>
                     </div>
                </div>
-          </div> 
+          </div>
      </div>
      <div class="row">
          <div class="col-xl-12">
@@ -69,7 +69,7 @@
                                     </tr>
                               </thead>
                               <tbody>
-                                   @foreach ($data_customers as $customer)     
+                                   @foreach ($data_customers as $customer)
                                         <tr>
                                              <td>{{ $loop->iteration }}</td>
                                              <td>
@@ -97,7 +97,7 @@
 
                                                        </div>
                                                   @else
-                                                       
+
                                                        <span class="badge bg-danger text-light py-1 px-2 fs-12">Property Not Specified</span>
                                                   @endif
                                              </td>
@@ -106,7 +106,7 @@
                                              <td>
                                                   {{-- <a href="#!" class="btn btn-primary btn-sm w-100">Edit</a> --}}
 
-                                                  
+
 
                                                   <div class="d-flex">
                                                   @if ($matchProperties[$customer->id]->count() == 0)
@@ -121,7 +121,7 @@
                                                             More
                                                        </a>
                                                        <div class="dropdown-menu dropdown-menu-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 33.3333px, 0px);" data-popper-placement="bottom-end">
-                                                       
+
                                                             @if ($matchProperties[$customer->id]->count() >= 1)
                                                                  <form action="{{ route('leads.sendmail') }}" method="POST">
                                                                       @csrf
@@ -138,11 +138,11 @@
                                                        </div>
                                                   </div>
                                                   </div>
-                         
-               
+
+
                                              </td>
                                         </tr>
-                                        
+
                                         <tr id="villasForCustomer{{ $customer->id }}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                              <td colspan="8" class="accordion-body">
                                                   <div class="row">
@@ -166,7 +166,7 @@
                                                                                                     <div class="d-flex gap-2">
                                                                                                          <div class="avatar-sm flex-shrink-0">
                                                                                                               <span class="avatar-title bg-success bg-opacity-50 text-white rounded">
-                                                                                                                   <iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon> 
+                                                                                                                   <iconify-icon icon="solar:bed-broken" class="align-middle fs-16"></iconify-icon>
                                                                                                               </span>
                                                                                                          </div>
                                                                                                          <div class="d-block">
@@ -191,9 +191,9 @@
                                                                                           </div>
                                                                                           <hr>
                                                                                           <h3 class="text-white fw-normal fs-16 fst-italic">IDR {{ number_format($properties->selling_price_idr, 2, ',', '.') }}</h3>
-                                                                                          <h3 class="text-white fw-normal fs-16 fst-italic">Gianyar</h3>
+                                                                                          <h3 class="text-white fw-normal fs-16 fst-italic">{{ $properties->region }}</h3>
 
-                                                                                          
+
                                                                                      </div>
                                                                                      <div class="col-xl-5 col-lg-4 col-md-4">
                                                                                           <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
@@ -209,7 +209,7 @@
                                    @endforeach
 
                               </tbody>
-                          </table>  
+                          </table>
                         </div>
                    </div>
                    <div class="card-footer">
@@ -229,12 +229,12 @@
     </div>
     <div class="row">
 
-   
+
           <div class="accordion-item">
 
-                    
 
-               
+
+
           </div>
 
     </div>
@@ -268,14 +268,14 @@
           document.addEventListener('DOMContentLoaded', function() {
               // Saat halaman sudah ready
               const deleteButtons = document.querySelectorAll('.deleteButton');
-      
+
               deleteButtons.forEach(button => {
                   button.addEventListener('click', function(e) {
                       e.preventDefault();
-      
+
                       let propertyName = this.getAttribute('data-nama');
                       let propertyId = this.parentElement.querySelector('.propertyId').value;
-      
+
                       Swal.fire({
                           title: 'Are you sure?',
                           text: "Delete agent " + propertyName + "?",
@@ -317,7 +317,7 @@
               });
           });
       </script>
-      
+
  {{-- /* End Sweet Alert --}}
-     
+
 @endpush

@@ -19,7 +19,7 @@ class BookingCreated
     /**
      * Create a new event instance.
      */
-    public function __construct(PropertyLeadsModel $booking)
+    public function __construct($booking)
     {
         $this->booking = $booking;
     }

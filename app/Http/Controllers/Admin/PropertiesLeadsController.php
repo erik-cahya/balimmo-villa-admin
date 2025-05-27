@@ -19,6 +19,7 @@ class PropertiesLeadsController extends Controller
      */
     public function index()
     {
+
         if (!Auth::check()) {
             return redirect()->route('login');
         }
@@ -171,6 +172,7 @@ class PropertiesLeadsController extends Controller
 
     public function sendMail(Request $request)
     {
+        // dd($request->cust_email);
         $data = $request->all();
 
         $propertyNames = $data['property_name'];
@@ -184,7 +186,7 @@ class PropertiesLeadsController extends Controller
                 'selling_price' => $sellingPrices[$index],
             ];
         }
-        Mail::to($request->cust_email)->send(new NotifikasiEmail([
+        Mail::to('erikcp38@gmail.com')->send(new NotifikasiEmail([
             'properties' => $combined,
         ]));
 

@@ -749,16 +749,6 @@ class PropertiesController extends Controller
         return null;
     }
 
-
-
-
-
-
-
-
-
-
-
     public function destroy(string $id)
     {
         $slug = PropertiesModel::where('id', $id)->first();

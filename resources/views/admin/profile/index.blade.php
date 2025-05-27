@@ -101,19 +101,9 @@
                                                                  <iconify-icon icon="solar:home-2-bold" class="fs-28 text-success avatar-title"></iconify-icon>
                                                             </div>
                                                             <div>
-                                                                 <p class="text-dark fw-semibold fs-16 mb-0">Active Property</p>
-                                                                 <p class="mb-0">350 Property Active</p>
+                                                                 <p class="text-dark fw-semibold fs-16 mb-0">Total Property</p>
+                                                                 <p class="mb-0">{{ $propertiesCount }} Property</p>
                                                             </div>
-                                                       </div>
-                                                       <div class="d-flex justify-content-between mt-4">
-                                                            <p class="mb-1 text-dark  fw-medium fa-15">View Property</p>
-                                                            <div>
-                                                                 <p class="mb-0 text-dark fw-semibold fs-15">231</p>
-                                                            </div>
-
-                                                       </div>
-                                                       <div class="progress mt-2" style="height: 10px;">
-                                                            <div class="progress-bar progress-bar  progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 60%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70"></div>
                                                        </div>
                                                   </div>
                                              </div>
@@ -124,19 +114,9 @@
                                                                  <iconify-icon icon="solar:home-bold" class="fs-28 text-warning avatar-title"></iconify-icon>
                                                             </div>
                                                             <div>
-                                                                 <p class="text-dark fw-semibold fs-16 mb-0">View Property</p>
-                                                                 <p class="mb-0">231 Property View</p>
+                                                                 <p class="text-dark fw-semibold fs-16 mb-0">Freehold Property</p>
+                                                                 <p class="mb-0">{{ $freeholdCount }} Property</p>
                                                             </div>
-                                                       </div>
-                                                       <div class="d-flex justify-content-between mt-4">
-                                                            <p class="mb-1 text-dark  fw-medium fa-15">Own Property</p>
-                                                            <div>
-                                                                 <p class="mb-0 text-dark fw-semibold fs-15">27</p>
-                                                            </div>
-
-                                                       </div>
-                                                       <div class="progress mt-2" style="height: 10px;">
-                                                            <div class="progress-bar progress-bar  progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 20%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70"></div>
                                                        </div>
                                                   </div>
                                              </div>
@@ -147,19 +127,9 @@
                                                                  <iconify-icon icon="solar:money-bag-bold" class="fs-28 text-primary avatar-title"></iconify-icon>
                                                             </div>
                                                             <div>
-                                                                 <p class="text-dark fw-semibold fs-16 mb-0">Own Property</p>
-                                                                 <p class="mb-0">27 Property Own</p>
+                                                                 <p class="text-dark fw-semibold fs-16 mb-0">Leasehold Property</p>
+                                                                 <p class="mb-0">{{ $leaseholdCount }} Property</p>
                                                             </div>
-                                                       </div>
-                                                       <div class="d-flex justify-content-between mt-4">
-                                                            <p class="mb-1 text-dark  fw-medium fa-15">Invest On Property</p>
-                                                            <div>
-                                                                 <p class="mb-0 text-dark fw-semibold fs-15">$928,128</p>
-                                                            </div>
-
-                                                       </div>
-                                                       <div class="progress mt-2" style="height: 10px;">
-                                                            <div class="progress-bar progress-bar  progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 80%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70"></div>
                                                        </div>
                                                   </div>
                                              </div>

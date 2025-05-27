@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PropertiesModel;
+use App\Models\PropertyLegalModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +19,32 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $data['profile'] = User::where('id', Auth::user()->id)->first();
+        $user = Auth::user();
+
+        $data['profile'] = $user;
+
+        $property = PropertiesModel::where('internal_reference', $user->reference_code)->first();
+
+        $data['propertiesCount'] = PropertiesModel::where('internal_reference', $user->reference_code)->count();
+
+        $data['leaseholdCount'] = 0;
+        $data['freeholdCount'] = 0;
+
+        if ($property) {
+            $propertyId = $property->id;
+
+            $data['leaseholdCount'] = PropertyLegalModel::where('properties_id', $propertyId)
+                ->where('legal_status', 'Leasehold')
+                ->count();
+
+            $data['freeholdCount'] = PropertyLegalModel::where('properties_id', $propertyId)
+                ->where('legal_status', 'Freehold')
+                ->count();
+        }
+
         return view('admin.profile.index', $data);
     }
+
 
     /**
      * Show the form for creating a new resource.
