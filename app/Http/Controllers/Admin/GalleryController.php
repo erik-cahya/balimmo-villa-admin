@@ -58,6 +58,26 @@ class GalleryController extends Controller
 
         Cache::forget('properties_list_cache');
 
-        return redirect()->route('properties.index')->with('success', 'Gallery updated');
+        $flashData = [
+            'judul' => 'Edit Gallery Success',
+            'pesan' => 'Gallery edited successfully',
+            'swalFlashIcon' => 'success',
+        ];
+        return back()->with('flashData', $flashData);
+        // return redirect()->route('properties.index')->with('success', 'Gallery updated');
+    }
+
+    public function destroy($id)
+    {
+        $image = PropertyGalleryModel::findOrFail($id);
+
+        // Hapus file fisik
+        if (file_exists(public_path($image->image_path))) {
+            unlink(public_path($image->image_path));
+        }
+
+        $image->delete();
+
+        return response()->json(['success' => true]);
     }
 }

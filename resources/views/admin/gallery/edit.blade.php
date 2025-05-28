@@ -35,9 +35,9 @@
             <div id="existingImages" class="d-flex mb-3 flex-wrap gap-3">
 
                 @foreach ($gallery->images->sortBy('order') as $img)
-                    <div class="img-preview" data-id="{{ $img->id }}" class="d-flex">
+                    <div class="img-preview" data-id="{{ $img->id }}">
                         <img src="{{ asset($img->image_path) }}" style="width:150px; height:150px; object-fit:cover; border:1px solid #ccc; padding:4px;">
-                        <p class="mt-1 text-center"></p>
+                        <p class="mt-1 text-center">{{ $img->caption ?? 'No Caption' }}</p>
                         <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $img->id }}">Delete</button>
                     </div>
                 @endforeach
@@ -68,7 +68,7 @@
                     const imageId = this.getAttribute('data-id');
                     if (confirm('Are you sure you want to delete this image?')) {
                         fetch(`/gallery-images/${imageId}`, {
-                                method: 'DELETE',
+                                method: 'GET',
                                 headers: {
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                                     'Accept': 'application/json',
