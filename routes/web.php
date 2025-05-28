@@ -53,10 +53,6 @@ Route::post('/booking/{slug}', [PropertiesLeadsController::class, 'booking'])->n
 Route::post('listing/booking/{slug}', [CustomerController::class, 'booking'])->name('customer.booking');
 
 
-Route::get('/gallery-images/{id}', [GalleryImageController::class, 'destroy'])->name('gallery-images.destroy');
-Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
-Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
-
 Route::middleware('auth')->group(function () {
 
     // ############################################################### Admin Panel Controller
@@ -81,7 +77,9 @@ Route::middleware('auth')->group(function () {
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
+    Route::get('/gallery-images/{id}', [GalleryImageController::class, 'destroy'])->name('gallery-images.destroy');
+    Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
+    Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
 });
 
 Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
