@@ -17,15 +17,15 @@ class PropertiesModel extends Model
     // ];
 
     // PropertiesModel.php
-        public function featuredImage()
-        {
-            return $this->hasOneThrough(
-                PropertyGalleryImageModel::class,
-                PropertyGalleryModel::class,
-                'properties_id', // Foreign key on PropertyGallery table
-                'gallery_id',    // Foreign key on PropertyGalleryImage table
-                'id',            // Local key on Properties table
-                'id'             // Local key on PropertyGallery table
-            );
-        }
+    public function featuredImage()
+    {
+        return $this->hasOneThrough(
+            PropertyGalleryImageModel::class,
+            PropertyGalleryModel::class,
+            'properties_id', // Foreign key on PropertyGallery table
+            'gallery_id',    // Foreign key on PropertyGalleryImage table
+            'id',            // Local key on Properties table
+            'id'             // Local key on PropertyGallery table
+        );
+    }
 }

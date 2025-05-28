@@ -15,6 +15,6 @@ class PropertyGalleryModel extends Model
 
     public function images()
     {
-        return $this->hasMany(PropertyGalleryImageModel::class);
+        return $this->hasMany(PropertyGalleryImageModel::class, 'gallery_id');
     }
 }

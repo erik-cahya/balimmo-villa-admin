@@ -240,7 +240,6 @@ class PropertiesController extends Controller
             ]);
         }
 
-
         // ==========================================================================================================================================
         // ########### Create Properties Legal ##############
         // ==========================================================================================================================================
@@ -258,8 +257,8 @@ class PropertiesController extends Controller
             'start_date' => $request->leasehold_start_date == null ? null : $this->dateConversion($request->leasehold_start_date),
             'end_date' =>  $request->leasehold_end_date == null ? null : $this->dateConversion($request->leasehold_end_date),
             'purchase_date' => $request->freehold_purchase_date == null ? null : $this->dateConversion($request->freehold_purchase_date),
-            'extension_cost' => $request->leasehold_negotiation_ext_cost,
-            'purchase_cost' => $request->leasehold_purchase_cost,
+            'extension_cost' => (int)preg_replace('/[^0-9]/', '', $request->leasehold_negotiation_ext_cost),
+            'purchase_cost' =>  (int)preg_replace('/[^0-9]/', '', $request->leasehold_purchase_cost),
             'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
             'zoning' => $zoning,
         ]);
@@ -386,7 +385,6 @@ class PropertiesController extends Controller
 
     public function detail(string $slug)
     {
-
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
 
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
@@ -440,6 +438,10 @@ class PropertiesController extends Controller
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+            ->with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'property_gallery.id');
+                $query->where('is_featured', 1);
+            }])
             ->first();
 
 
@@ -463,7 +465,8 @@ class PropertiesController extends Controller
 
 
         $data['attachment'] = $attachment;
-        // dd($data['url_attachment']);
+
+        $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
 
         return view('admin.properties.edit', $data);
     }
@@ -524,8 +527,6 @@ class PropertiesController extends Controller
                 'freehold_zoning' => null,
             ]);
         }
-
-        // dd($request->all());
 
         // ==========================================================================================================================================
         // ########### Edit Properties Data ##############
@@ -629,7 +630,7 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ############## Edit Properties Financial ##############
         // ==========================================================================================================================================
-        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
+        $idrPrice = $this->convertToInteger($request->idr_price);
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
 
         // Presentase
@@ -650,10 +651,10 @@ class PropertiesController extends Controller
 
 
         PropertyFinancialModel::where('properties_id', $id)->update([
-            'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
+            'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
             'avg_occupancy_rate' => $request->average_occupancy_rate,
             'months_rented' => $request->month_rented_per_year,
-            'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
+            'annual_turnover' => $this->convertToInteger($request->estimated_annual_turnover),
 
             // Sale Price & Conditions
             'selling_price_idr' => $idrPrice,
@@ -771,6 +772,8 @@ class PropertiesController extends Controller
             'swalFlashIcon' => 'success',
         ];
 
+        Cache::forget('properties_list_cache');
+
         return response()->json($flashData);
     }
 
@@ -784,6 +787,11 @@ class PropertiesController extends Controller
                 return 15000;
             }
         });
+    }
+
+    private function convertToInteger($value)
+    {
+        return (int)preg_replace('/[^0-9]/', '', $value);
     }
 
     private function dateConversion($date)
@@ -822,7 +830,6 @@ class PropertiesController extends Controller
 
         // US format: koma sebagai ribuan, titik sebagai desimal
         elseif (preg_match('/\d+,\d+\.\d+/', $number) || preg_match('/\d+,\d{3}/', $number)) {
-            // Hapus koma sebagai ribuan
             $number = str_replace(',', '', $number);
         }
 

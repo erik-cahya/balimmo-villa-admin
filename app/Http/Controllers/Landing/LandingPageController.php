@@ -45,14 +45,13 @@ class LandingPageController extends Controller
                 $item->formatted_price = $this->shortPriceIDR($item->sellingPriceIDR);
             }
 
-            return $data_property; // ← PENTING: pastikan return!
+            return $data_property;
         });
 
         // Simpan ke variabel untuk view
         $data['data_property'] = $properties;
 
         // Cache::forget('properties_list_cache');
-
         return view('landing.index', $data);
     }
 
@@ -74,19 +73,18 @@ class LandingPageController extends Controller
     {
         $properties = Cache::rememberForever('properties_list_cache', function () {
 
-            $data_property =
-                PropertiesModel::select(
-                    'properties.id',
-                    'total_land_area',
-                    'property_name',
-                    'property_slug',
-                    'internal_reference',
-                    'region',
-                    'bedroom',
-                    'bathroom',
-                    'property_address',
-                    'property_financial.selling_price_idr as sellingPriceIDR'
-                )->where('properties.type_acceptance', 'accept')
+            $data_property = PropertiesModel::select(
+                'properties.id',
+                'total_land_area',
+                'property_name',
+                'property_slug',
+                'internal_reference',
+                'region',
+                'bedroom',
+                'bathroom',
+                'property_address',
+                'property_financial.selling_price_idr as sellingPriceIDR'
+            )->where('properties.type_acceptance', 'accept')
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
@@ -180,31 +178,42 @@ class LandingPageController extends Controller
         return view('landing.sign-up.index');
     }
 
+
     public function search(Request $request)
     {
         $query = $request->get('query');
-        // $priceMin = $request->get('price_min');
-        // $priceMax = $request->get('price_max');
         $bedroom = $request->get('bedroom');
         $propertyTypes = $request->get('property_type', []);
         $locations = $request->get('location', []);
 
-        $data_property = PropertiesModel::with('featuredImage')
-            ->where('type_acceptance', 'Accept')
-            ->when($query, function ($q) use ($query) {
-                $q->where(function ($q2) use ($query) {
-                    $q2->where('property_name', 'like', "%{$query}%")
-                        ->orWhere('property_address', 'like', "%{$query}%");
-                });
-            })
-            // ->when($priceMin, fn($q) => $q->where('property_financial.selling_price_idr', '>', (int)$priceMin))
-            // ->when($priceMax, fn($q) => $q->where('property_financial.selling_price_idr', '<', (int)$priceMax))
-            ->when($bedroom, fn($q) => $q->where('bedroom', '=', $bedroom))
-            ->when($propertyTypes, fn($q) => $q->whereIn('legal_status', $propertyTypes))
-            ->when($locations, fn($q) => $q->whereIn('region', $locations))
-            ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
-            // ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-            ->get();
+        // Jika semua filter kosong gunakan query from cache
+        if (empty($query) && empty($bedroom) && empty($propertyTypes) && empty($locations)) {
+            $data_property = Cache::rememberForever('properties_list_cache', function () {
+                return PropertiesModel::with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'property_gallery.id');
+                    $query->where('is_featured', 1);
+                }])->where('type_acceptance', 'Accept')
+                    ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+                    ->get();
+            });
+        } else {
+            $data_property = PropertiesModel::with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'property_gallery.id');
+                $query->where('is_featured', 1);
+            }])
+                ->where('type_acceptance', 'Accept')
+                ->when($query, function ($q) use ($query) {
+                    $q->where(function ($q2) use ($query) {
+                        $q2->where('property_name', 'like', "%{$query}%")
+                            ->orWhere('property_address', 'like', "%{$query}%");
+                    });
+                })
+                ->when($bedroom, fn($q) => $q->where('bedroom', '=', $bedroom))
+                ->when($propertyTypes, fn($q) => $q->whereIn('legal_status', $propertyTypes))
+                ->when($locations, fn($q) => $q->whereIn('region', $locations))
+                ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+                ->get();
+        }
 
         return view('landing.listing.partials.property_list', compact('data_property'))->render();
     }

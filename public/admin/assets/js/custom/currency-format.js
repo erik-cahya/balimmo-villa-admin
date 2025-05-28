@@ -3,6 +3,8 @@ const cleaveFields = [
     { id: '#average_nightly_rate', options: { prefix: 'IDR ' } },
     { id: '#estimated_annual_turnover', options: { prefix: 'IDR ' } },
     { id: '#estimated_commision_idr', options: { prefix: 'IDR ' } },
+    { id: '#leasehold_negotiation_ext_cost', options: { prefix: 'IDR ' } },
+    { id: '#leasehold_purchase_cost', options: { prefix: 'IDR ' } },
     { id: '#usd_price', options: {} },
     { id: '#cost_meter', options: { prefix: '$ ' } }, // contoh custom config
     { id: '#annual_fees', options: {} },

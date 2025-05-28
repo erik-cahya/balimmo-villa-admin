@@ -4,7 +4,7 @@
         <article class="featured__card">
             <div class="featured__thumbnail position-relative">
                 <div class="media">
-                    <a class="featured__thumbnail--link" href="{{ route('landing-page.listing.detail', $property->property_slug) }}">
+                    <a class="featured__thumbnail--link" href="{{ route('landing-page.listing.detail', $property->property_slug) }}" style="background-color: red; max-height: 26rem; object-fit: fill">
                         <img class="featured__thumbnail--img" src="{{ asset($property->featuredImage->image_path) }}" alt="featured-img">
                     </a>
                 </div>
