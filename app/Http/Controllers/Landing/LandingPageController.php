@@ -7,6 +7,7 @@ use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyGalleryImageModel;
 use App\Models\PropertyUrlAttachmentModel;
+use App\Models\RegionModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -50,6 +51,8 @@ class LandingPageController extends Controller
 
         // Simpan ke variabel untuk view
         $data['data_property'] = $properties;
+        $data['regions'] = RegionModel::select('name')->get();
+
 
         // Cache::forget('properties_list_cache');
         return view('landing.index', $data);
@@ -99,6 +102,7 @@ class LandingPageController extends Controller
         });
 
         $data['data_property'] = $properties;
+        $data['regions'] = RegionModel::select('name')->get();
 
         return view('landing.listing.index', $data);
     }

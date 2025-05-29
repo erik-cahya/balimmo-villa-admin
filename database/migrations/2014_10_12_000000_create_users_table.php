@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('tagline')->nullable();
             $table->string('address')->nullable();
             $table->text('profile')->nullable();
+            $table->boolean('status')->nullable()->comment('1:active | 0:disabled');
             $table->rememberToken();
             $table->timestamps();
         });

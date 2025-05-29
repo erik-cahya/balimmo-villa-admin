@@ -701,6 +701,7 @@
         });
     </script>
 
+    {{-- Region & Sub Region --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const regionSelect = document.getElementById('region');
@@ -718,7 +719,7 @@
             const selectedRegion = "{{ old('region', $data_properties->region ?? '') }}".toLowerCase();
             const selectedSubregion = "{{ old('subregion', $data_properties->sub_region ?? '') }}";
 
-            const url = "{{ asset('/admin/data/regions.json') }}";
+            const url = "{{ route('api.regions') }}"; // Ganti dari asset() ke route()
 
             fetch(url)
                 .then(response => response.json())
@@ -736,7 +737,7 @@
                         true
                     );
 
-                    // Set selected region
+                    // Set selected region dan subregion (jika ada)
                     if (selectedRegion && regions.includes(selectedRegion)) {
                         regionChoices.setChoiceByValue(selectedRegion);
 
@@ -774,10 +775,12 @@
                     });
                 })
                 .catch(error => {
-                    console.error("Failed to load JSON:", error);
+                    console.error("Failed to load region data:", error);
                 });
         });
     </script>
+
+    {{-- Region & Sub Region --}}
 
     </script>
 

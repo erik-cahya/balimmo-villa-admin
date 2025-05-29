@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -42,8 +42,7 @@ class RegisteredUserController extends Controller
 
         do {
             // $reference_code = 'BPM-' . Str::upper($request->initial_name) . '-' . random_int(1000, 9999);
-            $reference_code = $request->role == 'Master' ? 'BPM-'.  Str::upper($request->initial_name) . '-' . random_int(1000,9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000,9999);
-
+            $reference_code = $request->role == 'Master' ? 'BPM-' .  Str::upper($request->initial_name) . '-' . random_int(1000, 9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000, 9999);
         } while (User::where('reference_code', $reference_code)->exists());
 
         $user = User::create([
@@ -51,7 +50,8 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'reference_code' => $reference_code,
-            'role' => $request->role
+            'role' => $request->role,
+            'status' => 1
         ]);
 
         event(new Registered($user));

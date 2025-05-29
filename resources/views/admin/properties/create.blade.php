@@ -682,9 +682,8 @@
                 searchEnabled: false
             });
 
-            const url = "{{ asset('/admin/data/regions.json') }}";
+            const url = "{{ route('api.regions') }}";
 
-            console.log(url);
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -703,7 +702,6 @@
                         const selectedRegion = this.value;
                         const subregions = data[selectedRegion] || [];
 
-                        // Reset subregion choices
                         subregionChoices.clearChoices();
                         subregionChoices.setChoices(
                             subregions.map(sub => ({
@@ -717,7 +715,7 @@
                     });
                 })
                 .catch(error => {
-                    console.error("Failed to load JSON:", error);
+                    console.error("Failed to load region data:", error);
                 });
         });
     </script>

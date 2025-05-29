@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PropertiesLeadsController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/search-property', [LandingPageController::class, 'search'])->name('property.search');
+Route::get('/search-agent', [AgentController::class, 'search'])->name('agent.search');
 
 
 
@@ -78,6 +80,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImage'])->name('gallery-images.destroy');
     Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
     Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
+
+    Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
 });
 
 Route::get('/mail', [MailController::class, 'send'])->name('sendmail');

@@ -13,6 +13,7 @@ use App\Models\PropertyGalleryModel;
 use App\Models\PropertyLegalModel;
 use App\Models\PropertyOwnerModel;
 use App\Models\PropertyUrlAttachmentModel;
+use App\Models\RegionModel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -69,6 +70,10 @@ class PropertiesController extends Controller
 
     public function create()
     {
+        // $regions = RegionModel::with('subRegions')->get();
+
+        // dd($regions);
+
         $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
         $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
 

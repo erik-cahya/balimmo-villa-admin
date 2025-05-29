@@ -649,7 +649,16 @@
                             </div>
                             <div class="contact__property--form__input">
                                 <label for="location">Location*</label>
-                                <input id="location" name="location" placeholder="Location" type="text">
+
+                                <div class="advance__search--items">
+                                    <select class="advance__search--select" name="location" style="background-color: #fff">
+                                        <option selected disabled>Property Location</option>
+                                        @foreach ($regions as $rgn)
+                                            <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                {{-- <input id="location" name="location" placeholder="Location" type="text"> --}}
 
                                 @error('location')
                                     <p class="text-danger my-2">{{ $message }}</p>

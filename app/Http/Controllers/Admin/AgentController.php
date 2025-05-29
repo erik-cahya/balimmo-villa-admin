@@ -7,6 +7,7 @@ use App\Models\PropertiesModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 
@@ -38,6 +39,12 @@ class AgentController extends Controller
         return view('admin.agent.index', $data);
     }
 
+    // public function index()
+    // {
+    //     $data_agent = User::withCount('properties')->paginate(2);
+    //     return view('admin.agent.index', compact('data_agent'));
+    // }
+
     public function store(Request $request)
     {
 
@@ -61,6 +68,7 @@ class AgentController extends Controller
             'password' => bcrypt($request->password),
             'reference_code' => $reference_code,
             'role' => strtolower($request->role),
+            'status' => 1
         ]);
 
         $flashData = [
@@ -114,4 +122,36 @@ class AgentController extends Controller
             return 'IDR ' . number_format($priceIDR, 0, ',', '.');
         }
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        $data_agent = User::when($query, function ($q) use ($query) {
+            $q->where(function ($q2) use ($query) {
+                $q2->where('name', 'like', "%{$query}%")
+                    ->orWhere('email', 'like', "%{$query}%");
+            });
+        })
+            ->get();
+
+        return view('admin.agent.partials.data-agent', compact('data_agent'))->render();
+    }
+
+    // public function search(Request $request)
+    // {
+    //     $query = $request->get('query');
+    //     $page = $request->get('page', 1);
+    //     $perPage = 10;
+
+    //     $data_agent = User::when($query, function ($q) use ($query) {
+    //         $q->where(function ($q2) use ($query) {
+    //             $q2->where('name', 'like', "%{$query}%")
+    //                 ->orWhere('email', 'like', "%{$query}%");
+    //         });
+    //     })
+    //         ->paginate($perPage, ['*'], 'page', $page);
+
+    //     return view('admin.agent.partials.data-agent', compact('data_agent'))->render();
+    // }
 }
