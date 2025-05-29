@@ -3,9 +3,7 @@
 use App\Http\Controllers\Admin\AgentController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\GalleryImageController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
@@ -77,7 +75,7 @@ Route::middleware('auth')->group(function () {
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/gallery-images/{id}', [GalleryImageController::class, 'destroy'])->name('gallery-images.destroy');
+    Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImage'])->name('gallery-images.destroy');
     Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
     Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
 });

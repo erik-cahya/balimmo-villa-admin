@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PropertiesModel;
+use App\Models\PropertyGalleryImageModel;
 use App\Models\PropertyGalleryModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -14,10 +15,10 @@ class GalleryController extends Controller
 {
     public function edit(PropertyGalleryModel $gallery)
     {
+        $propertyName = PropertiesModel::where('id', $gallery->properties_id)->value('property_name');
         $gallery->load(['images' => fn($q) => $q->orderBy('order')]);
-        // dd($gallery);
 
-        return view('admin.gallery.edit', compact('gallery'));
+        return view('admin.properties.gallery.edit', compact(['gallery', 'propertyName']));
     }
 
     public function update(Request $request, PropertyGalleryModel $gallery)
@@ -79,5 +80,20 @@ class GalleryController extends Controller
         $image->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    public function deleteImage($id)
+    {
+
+        $image = PropertyGalleryImageModel::findOrFail($id);
+
+        // // Hapus file fisik
+        if (file_exists(public_path($image->image_path))) {
+            unlink(public_path($image->image_path));
+        }
+        $image->delete();
+        return response()->json(['success' => true]);
+
+        // Cache::forget('properties_list_cache');
     }
 }

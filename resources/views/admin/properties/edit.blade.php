@@ -415,17 +415,20 @@
                             <div class="row">
 
                                 <div class="col-lg-12 d-block mb-3">
-                                    <label for="gallery" class="form-label d-block">Property Gallery | <a href="{{ route('gallery.edit', $image_gallery[0]->id) }}">Edit Gallery</a></label>
+                                    <label for="gallery" class="form-label d-block">Property Gallery </label>
 
                                     @foreach ($image_gallery as $gallery)
                                         <a href="{{ asset($gallery->image_path) }}" class="glightbox" data-gallery="property-gallery">
-                                            <img src="{{ asset($gallery->image_path) }}" width="130" style="margin:10px; border-radius:8px;">
+                                            <img src="{{ asset($gallery->image_path) }}" width="130" style="margin: 6px; width: 5rem; max-height: 5rem; object-fit:cover; border-radius: 10px">
                                         </a>
                                     @endforeach
 
-                                    {{-- <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-3">
-                                    <div id="previewContainer" class="d-flex flex-wrap gap-3"></div>
-                                    <input type="hidden" name="order" id="imageOrder"> --}}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <a href="{{ route('gallery.edit', $image_gallery[0]->gallery_id) }}" class="btn btn-sm btn-primary">Edit Gallery</a>
+
+                                        </div>
+                                    </div>
 
                                 </div>
 

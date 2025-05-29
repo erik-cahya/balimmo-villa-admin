@@ -23,38 +23,63 @@
     </style>
 @endpush
 @section('content')
-    <div class="container">
-        <h2>Edit Gallery</h2>
+    <div class="container-fluid">
+        {{-- <h2>Edit Properties Gallery</h2> --}}
 
-        <form action="{{ route('gallery.update', $gallery->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
-            @csrf
-            <input type="text" name="title" value="{{ $gallery->title }}" class="form-control mb-3">
-            <textarea name="description" class="form-control mb-3">{{ $gallery->description }}</textarea>
-
-            <h5>Existing Images</h5>
-            <div id="existingImages" class="d-flex mb-3 flex-wrap gap-3">
-
-                @foreach ($gallery->images->sortBy('order') as $img)
-                    <div class="img-preview" data-id="{{ $img->id }}">
-                        <img src="{{ asset($img->image_path) }}" style="width:150px; height:150px; object-fit:cover; border:1px solid #ccc; padding:4px;">
-                        <p class="mt-1 text-center">{{ $img->caption ?? 'No Caption' }}</p>
-                        <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $img->id }}">Delete</button>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
+                        <h4 class="card-title text-uppercase">Property Galleries</h4>
                     </div>
-                @endforeach
+                    <div class="card-body">
+                        <div class="row">
 
+                            <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
+                                <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> {{ $propertyName }}</h5>
+                                <hr>
+                                <div class="row my-3">
+
+                                    <form action="{{ route('gallery.update', $gallery->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
+                                        @csrf
+                                        <h5 class="text-dark fw-semibold">Existing Images</h5>
+                                        <div id="existingImages" class="d-flex mb-3 flex-wrap gap-3">
+
+                                            @foreach ($gallery->images->sortBy('order') as $img)
+                                                <div class="img-preview" data-id="{{ $img->id }}">
+                                                    <img src="{{ asset($img->image_path) }}" style="width:150px; height:150px; object-fit:cover; border:1px solid #ccc; border-radius: 10px; padding:4px;">
+                                                    <p class="mt-1 text-center"></p>
+                                                    <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $img->id }}">Delete</button>
+                                                </div>
+
+                                                @if ($img->is_featured)
+                                                    <span style="position: absolute; top: 35px; left: 25px; background-color: gold; color: black; padding: 2px 6px; font-size: 12px; border-radius: 3px;">
+                                                        Featured
+                                                    </span>
+                                                @endif
+                                            @endforeach
+
+                                        </div>
+
+                                        <input type="hidden" name="order" id="imageOrder">
+
+                                        <hr>
+                                        <h5 class="text-dark fw-semibold">Upload New Images</h5>
+                                        <div id="newImagesPreview" class="d-flex mb-3 flex-wrap gap-3"></div>
+                                        <input type="file" name="images[]" id="newImageInput" multiple class="form-control mb-3">
+
+                                        <button type="submit" class="btn btn-success">Update Gallery</button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
-
-            <input type="hidden" name="order" id="imageOrder">
-
-            {{-- <h5>Add New Images</h5>
-        <input type="file" name="images[]" multiple class="form-control mb-3"> --}}
-
-            <h5>New Images Preview</h5>
-            <div id="newImagesPreview" class="d-flex mb-3 flex-wrap gap-3"></div>
-            <input type="file" name="images[]" id="newImageInput" multiple class="form-control mb-3">
-
-            <button type="submit" class="btn btn-success">Update Gallery</button>
-        </form>
+        </div>
     </div>
 @endsection
 
@@ -68,7 +93,7 @@
                     const imageId = this.getAttribute('data-id');
                     if (confirm('Are you sure you want to delete this image?')) {
                         fetch(`/gallery-images/${imageId}`, {
-                                method: 'GET',
+                                method: 'DELETE',
                                 headers: {
                                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                                     'Accept': 'application/json',
@@ -76,9 +101,19 @@
                             })
                             .then(res => res.json())
                             .then(data => {
+                                console.log(data);
+
                                 if (data.success) {
+
                                     // remove image from DOM
                                     this.closest('.img-preview').remove();
+
+                                    Swal.fire({
+                                        title: 'Edit Gallery Success',
+                                        text: 'Gallery edited successfully',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    });
                                 }
                             });
                     }
@@ -86,7 +121,6 @@
             });
         });
     </script>
-
     {{-- /*  Delete Per Image */ --}}
 
     <script>
