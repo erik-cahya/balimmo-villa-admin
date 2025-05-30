@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/search-property', [LandingPageController::class, 'search'])->name('property.search');
+Route::post('/search', [LandingPageController::class, 'filter'])->name('filter.properties');
 Route::get('/search-agent', [AgentController::class, 'search'])->name('agent.search');
 
 

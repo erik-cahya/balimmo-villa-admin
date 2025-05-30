@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
+use App\Models\FeatureListModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyGalleryImageModel;
@@ -11,6 +12,7 @@ use App\Models\RegionModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class LandingPageController extends Controller
 {
@@ -52,6 +54,7 @@ class LandingPageController extends Controller
         // Simpan ke variabel untuk view
         $data['data_property'] = $properties;
         $data['regions'] = RegionModel::select('name')->get();
+        $data['feature_list'] = FeatureListModel::get();
 
 
         // Cache::forget('properties_list_cache');
@@ -182,7 +185,9 @@ class LandingPageController extends Controller
         return view('landing.sign-up.index');
     }
 
-
+    // ======================================================
+    // Search / Filter in listing page
+    // ======================================================
     public function search(Request $request)
     {
         $query = $request->get('query');
@@ -220,5 +225,76 @@ class LandingPageController extends Controller
         }
 
         return view('landing.listing.partials.property_list', compact('data_property'))->render();
+    }
+
+
+    // ======================================================
+    // Search / Filter in landing page
+    // ======================================================
+    public function filter(Request $request)
+    {
+        $name = $request->name;
+        $propertyType = $request->property_type;
+        $location = $request->location;
+
+        $priceMin = $request->priceMin;
+        $priceMax = $request->priceMax;
+        $yearBuild = $request->year_build;
+        $bathroom = $request->bathroom;
+        $bedroom = $request->bedroom;
+        $propertyCode = $request->property_code;
+
+
+        $featureIds = $request->input('features');
+
+        $propertyIds = []; // Default kosong
+        if ($featureIds && count($featureIds) > 0) {
+            $propertyIds = DB::table('property_feature')
+                ->select('properties_id')
+                ->whereIn('feature_id', $featureIds)
+                ->groupBy('properties_id')
+                ->havingRaw('COUNT(DISTINCT feature_id) = ?', [count($featureIds)])
+                ->pluck('properties_id')
+                ->toArray();
+
+            // Jika ada fitur dipilih, tapi hasilnya kosong, maka langsung return kosong
+            if (empty($propertyIds)) {
+                $data['data_property'] = collect(); // kosongkan collection
+                return view('landing.search.index', $data);
+            }
+        }
+
+        // dd($propertyIds);
+
+        $data['data_property'] = PropertiesModel::with(['featuredImage' => function ($query) {
+            $query->select('image_path', 'property_gallery.id');
+            $query->where('is_featured', 1);
+        }])
+            ->select(
+                'properties.*',
+                'property_financial.selling_price_idr',
+                'property_legal.legal_status'
+            )
+            ->when(
+                $name,
+                fn($query, $name) => $query->where('property_name', 'like', "%{$name}%")
+            )
+            ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            // ->rightJoin('property_feature', 'property_feature.properties_id', '=', 'properties.id')
+            // ->when($name, fn($query, $name) => $query->where('property_name', 'like', "%{$name}%"))
+            ->when($location, fn($q, $location) => $q->where('region', $location))
+            ->when($propertyType, fn($q, $propertyType) => $q->where('legal_status', 'like', "%{$propertyType}%"))
+            ->when($yearBuild, fn($q, $yearBuild) => $q->where('year_construction', 'like', "%{$yearBuild}%"))
+            ->when($bathroom, fn($q, $bathroom) => $q->where('bathroom', 'like', "%{$bathroom}%"))
+            ->when($bedroom, fn($q, $bedroom) => $q->where('bedroom', 'like', "%{$bedroom}%"))
+            ->when($propertyCode, fn($q, $propertyCode) => $q->where('property_code', 'like', "%{$propertyCode}%"))
+            ->when(count($propertyIds) > 0, fn($q) => $q->whereIn('properties.id', $propertyIds)) // 💡 Gabung ke filter berdasarkan fitur
+            ->get();
+
+        // dd($location);
+        // dd($data['data_property']);
+
+        return view('landing.search.index', $data);
     }
 }

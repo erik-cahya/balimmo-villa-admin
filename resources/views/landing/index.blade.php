@@ -12,6 +12,7 @@
                         <p class="hero__content--desc" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="50">More than <span class="color-hover">1000+</span> house avaiable for sell & rent in country</p>
                         <h2 class="hero__content--title h1" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">Find Your <span class="color-hover">Dream</span> Home</h2>
                     </div>
+
                     <!-- Advance search filter -->
                     <div class="advance__search--filter">
                         <ul class="nav advance__tab--btn justify-content-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
@@ -19,95 +20,40 @@
                                 <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Buy
                                 </button>
                             </li>
-                            <li class="nav-item advance__tab--btn__list">
-                                <button class="advance__tab--btn__field" data-bs-toggle="tab" data-bs-target="#rent" type="button">
-                                    Rent</button>
-                            </li>
                         </ul>
-                        <div class="tab-content" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
-                            <div class="tab-pane fade show active" id="buy">
-                                <div class="advance__search--inner d-flex">
-                                    <div class="advance__search--items">
-                                        <input class="advance__search--input" placeholder="Enter Keyword..." type="text">
-                                    </div>
-                                    <div class="advance__search--items">
-                                        <select class="advance__search--select">
-                                            <option selected value="1">Property Type</option>
-                                            <option value="2">Bungalow</option>
-                                            <option value="3">Condo</option>
-                                            <option value="4">Apartment</option>
-                                            <option value="5">House</option>
-                                            <option value="6">Single Family</option>
-                                            <option value="7">Land</option>
-                                        </select>
-                                    </div>
-                                    <div class="advance__search--items position-relative">
-                                        <input class="advance__search--input location" placeholder="Which Place?" type="text">
-                                        <span class="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#8B8B8B" />
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="advance__search--items price">
-                                        <div class="advance__search--price d-flex align-items-center justify-content-between">
-                                            <span>Price</span>
-                                            <label><svg width="9" height="18" viewBox="0 0 9 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M5.34376 8.4373H5.06244V3.37489H8.43733C8.74808 3.37489 8.99977 3.1228 8.99977 2.81245C8.99977 2.50189 8.74807 2.25001 8.43733 2.25001H5.06244V0.56244C5.06244 0.251885 4.81074 0 4.5 0C4.18926 0 3.93756 0.252091 3.93756 0.56244V2.25001H3.65623C1.64026 2.25001 0 3.89027 0 5.90624C0 7.92222 1.64026 9.56248 3.65623 9.56248H3.93756V14.6249L0.562671 14.6247C0.251921 14.6247 0.000231432 14.8768 0.000231432 15.1871C0.000231432 15.4977 0.251931 15.7496 0.562671 15.7496H3.93756V17.4371C3.93756 17.7477 4.18926 17.9996 4.5 17.9996C4.81074 17.9996 5.06244 17.7475 5.06244 17.4371V15.7496H5.34376C7.35974 15.7496 9 14.1093 9 12.0933C9 10.0776 7.35974 8.4373 5.34376 8.4373V8.4373ZM3.93754 8.4373H3.65621C2.26039 8.4373 1.12511 7.30202 1.12511 5.90619C1.12511 4.51037 2.26039 3.37509 3.65621 3.37509H3.93754V8.4373ZM5.34376 14.6247H5.06244V9.56228H5.34376C6.73959 9.56228 7.87487 10.6976 7.87487 12.0934C7.87487 13.4894 6.73959 14.6247 5.34376 14.6247Z"
-                                                        fill="#8B8B8B" />
-                                                </svg>
-                                            </label>
+                        <form action="{{ route('filter.properties') }}" method="POST">
+                            @csrf
+                            <div class="tab-content" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                                <div class="tab-pane fade show active" id="buy">
+                                    <div class="advance__search--inner d-flex">
+                                        <div class="advance__search--items">
+                                            <input class="advance__search--input" name="name" placeholder="Enter Keyword..." type="text">
                                         </div>
+                                        <div class="advance__search--items">
+                                            <select class="advance__search--select" name="property_type">
+                                                <option selected disabled>Select Property Type</option>
+                                                <option value="Leasehold">Leasehold</option>
+                                                <option value="Freehold">Freehold</option>
+                                            </select>
+                                        </div>
+                                        <div class="advance__search--items position-relative">
+                                            <input class="advance__search--input location" name="location" placeholder="Which Place?" type="text">
+                                            <span class="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#8B8B8B" />
+                                                </svg>
+                                            </span>
+                                        </div>
+
+                                        <button type="submit" class="advance__search--btn solid__btn">Search Now <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
+                                                <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />
+                                            </svg>
+                                        </button>
                                     </div>
-                                    <button class="advance__search--btn solid__btn">Search Now <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
-                                            <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />
-                                        </svg>
-                                    </button>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="rent">
-                                <div class="advance__search--inner d-flex">
-                                    <div class="advance__search--items">
-                                        <input class="advance__search--input" placeholder="Enter Keyword..." type="text">
-                                    </div>
-                                    <div class="advance__search--items">
-                                        <select class="advance__search--select">
-                                            <option selected value="1">Property Type</option>
-                                            <option value="2">Bungalow</option>
-                                            <option value="3">Condo</option>
-                                            <option value="4">Apartment</option>
-                                            <option value="5">House</option>
-                                            <option value="6">Single Family</option>
-                                            <option value="7">Land</option>
-                                        </select>
-                                    </div>
-                                    <div class="advance__search--items position-relative">
-                                        <input class="advance__search--input" placeholder="Which Place?" type="text">
-                                        <span class="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#8B8B8B" />
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="advance__search--items price">
-                                        <div class="advance__search--price d-flex align-items-center justify-content-between">
-                                            <span>Price</span>
-                                            <label><svg width="9" height="18" viewBox="0 0 9 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M5.34376 8.4373H5.06244V3.37489H8.43733C8.74808 3.37489 8.99977 3.1228 8.99977 2.81245C8.99977 2.50189 8.74807 2.25001 8.43733 2.25001H5.06244V0.56244C5.06244 0.251885 4.81074 0 4.5 0C4.18926 0 3.93756 0.252091 3.93756 0.56244V2.25001H3.65623C1.64026 2.25001 0 3.89027 0 5.90624C0 7.92222 1.64026 9.56248 3.65623 9.56248H3.93756V14.6249L0.562671 14.6247C0.251921 14.6247 0.000231432 14.8768 0.000231432 15.1871C0.000231432 15.4977 0.251931 15.7496 0.562671 15.7496H3.93756V17.4371C3.93756 17.7477 4.18926 17.9996 4.5 17.9996C4.81074 17.9996 5.06244 17.7475 5.06244 17.4371V15.7496H5.34376C7.35974 15.7496 9 14.1093 9 12.0933C9 10.0776 7.35974 8.4373 5.34376 8.4373V8.4373ZM3.93754 8.4373H3.65621C2.26039 8.4373 1.12511 7.30202 1.12511 5.90619C1.12511 4.51037 2.26039 3.37509 3.65621 3.37509H3.93754V8.4373ZM5.34376 14.6247H5.06244V9.56228H5.34376C6.73959 9.56228 7.87487 10.6976 7.87487 12.0934C7.87487 13.4894 6.73959 14.6247 5.34376 14.6247Z"
-                                                        fill="#8B8B8B" />
-                                                </svg>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <button class="advance__search--btn solid__btn">Search Now <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
-                                            <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
+
                         <div class="advance__wrapper position-relative text-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="250">
                             <button class="advance__option--btn position-relative" data-bs-toggle="modal" data-bs-target="#advanceModal"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9 17.9991C13.9624 17.9991 18 13.9618 18 8.99957C18 4.03734 13.9624 0 9 0C4.03764 0 0 4.03734 0 8.99957C0 13.9618 4.03764 17.9991 9 17.9991ZM4.71946 8.51799H8.51846V4.71869C8.51846 4.45281 8.73429 4.23715 9 4.23715C9.26589 4.23715 9.48154 4.45298 9.48154 4.71869V8.51799H13.2805C13.5464 8.51799 13.7621 8.73382 13.7621 8.99953C13.7621 9.26541 13.5462 9.48107 13.2805 9.48107H9.48154V13.2802C9.48154 13.5461 9.26571 13.7617 9 13.7617C8.73412 13.7617 8.51846 13.5459 8.51846 13.2802V9.48107H4.71946C4.45358 9.48107 4.23792 9.26524 4.23792 8.99953C4.23792 8.73364 4.45342 8.51799 4.71946 8.51799Z" fill="#DDAB70" />
@@ -1151,215 +1097,126 @@
     <!-- Agents Consult section .\ -->
 
     <!-- Quickview Wrapper -->
-    <div class="modal fade" id="advanceModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog advance__filter--main--wrapper modal-dialog-centered">
-            <div class="modal-content advance__filter--main__content">
-                <div class="advance__filter--header d-flex justify-content-between align-items-center">
-                    <h2 class="advance__filter--header__title">More Filter</h2>
-                    <button type="button" class="btn-close quickview__close--btn" data-bs-dismiss="modal" aria-label="Close">✕</button>
-                </div>
-                <div class="modal-body advance__filter--details">
-                    <div class="advance__price--range modal__price--range">
-                        <h3 class="advance__price--range__title">Filter By Price</h3>
-                        <div class="advance__filter--price advance__price--filter">
-                            <div class="widget__price--filtering">
-                                <div class="price-input">
-                                    <input type="number" class="input-min" value="2500">
-                                    <div class="separator">-</div>
-                                    <input type="number" class="input-max" value="7500">
-                                </div>
-                                <div class="price-slider">
-                                    <div class="progress"></div>
-                                </div>
-                                <div class="range-input">
-                                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
-                                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
-                                </div>
-                                <button class="advance__filter--btn solid__btn">Filter</button>
-                            </div>
-                        </div>
+    <form action="{{ route('filter.properties') }}" method="POST">
+        @csrf
+        <div class="modal fade" id="advanceModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog advance__filter--main--wrapper modal-dialog-centered">
+                <div class="modal-content advance__filter--main__content">
+                    <div class="advance__filter--header d-flex justify-content-between align-items-center">
+                        <h2 class="advance__filter--header__title">More Filter</h2>
+                        <button type="button" class="btn-close quickview__close--btn" data-bs-dismiss="modal" aria-label="Close">✕</button>
                     </div>
-                    <div class="advance__apeartment--area">
-                        <div class="advance__apeartment--list">
-                            <label class="advance__apeartment--label">Type</label>
-                            <div class="select">
-                                <select class="advance__apeartment--select">
-                                    <option selected="" value="1">Apartments</option>
-                                    <option value="2">Office</option>
-                                    <option value="3">Condo</option>
-                                    <option value="4">Apartment</option>
-                                    <option value="5">House</option>
-                                    <option value="6">Single Family</option>
-                                    <option value="7">Land</option>
-                                </select>
+                    <div class="modal-body advance__filter--details">
+                        <div class="advance__price--range modal__price--range">
+                            <h3 class="advance__price--range__title">Filter By Price</h3>
+                            <div class="advance__filter--price advance__price--filter">
+                                <div class="widget__price--filtering">
+                                    <div class="price-input">
+                                        <input type="number" class="input-min" name="priceMin" value="1000000">
+                                        <div class="separator">-</div>
+                                        <input type="number" class="input-max" name="priceMax" value="100000000">
+                                    </div>
+                                    <div class="price-slider">
+                                        <div class="progress"></div>
+                                    </div>
+                                    <div class="range-input">
+                                        <input type="range" class="range-min" min="0" max="100000000000" value="1000000" step="1000">
+                                        <input type="range" class="range-max" min="0" max="100000000000" value="100000000" step="1000">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="advance__apeartment--list">
-                            <label class="advance__apeartment--label">Property ID</label>
-                            <input class="advance__apeartment--input__field" placeholder="Th26157096" type="text">
-                        </div>
-                        <div class="advance__apeartment--list">
-                            <label class="advance__apeartment--label">Bedrooms</label>
-                            <div class="select">
-                                <select class="advance__apeartment--select">
-                                    <option selected="" value="1">Bedrooms</option>
-                                    <option value="2">1+</option>
-                                    <option value="3">2+</option>
-                                    <option value="4">3+</option>
-                                    <option value="5">4+</option>
-                                    <option value="6">5+</option>
-                                    <option value="7">6+</option>
-                                </select>
+                        <div class="advance__apeartment--area">
+                            <div class="advance__apeartment--list">
+                                <label class="advance__apeartment--label">Type</label>
+                                <div class="select">
+                                    <select class="advance__apeartment--select" name="property_type">
+                                        <option selected disabled>Choose Property Type</option>
+                                        <option value="Leasehold">Leasehold</option>
+                                        <option value="Freehold">Freehold</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="advance__apeartment--list">
+                                <label class="advance__apeartment--label">Property ID</label>
+                                <input class="advance__apeartment--input__field" name="property_code" placeholder="Th26157096" type="text">
+                            </div>
+                            <div class="advance__apeartment--list">
+                                <label class="advance__apeartment--label">Bedrooms</label>
+                                <div class="select">
+                                    <select class="advance__apeartment--select" name="bedroom">
+                                        <option value="" selected>All Bedroom</option>
+                                        <option value="2">1+</option>
+                                        <option value="3">2+</option>
+                                        <option value="4">3+</option>
+                                        <option value="5">4+</option>
+                                        <option value="6">5+</option>
+                                        <option value="7">6+</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="advance__apeartment--list">
+                                <label class="advance__apeartment--label">Bathrooms</label>
+                                <div class="select">
+                                    <select class="advance__apeartment--select" name="bathroom">
+                                        <option value="" selected>All Bathrooms</option>
+                                        <option value="2">1+</option>
+                                        <option value="3">2+</option>
+                                        <option value="4">3+</option>
+                                        <option value="5">4+</option>
+                                        <option value="6">5+</option>
+                                        <option value="7">6+</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="advance__apeartment--list">
+                                <label class="advance__apeartment--label">Year built</label>
+                                <input class="advance__apeartment--input__field" name="year_build" placeholder="Input Year Build" type="text">
+                            </div>
+                            <div class="advance__apeartment--list">
+                                <label class="advance__apeartment--label">Location</label>
+                                <div class="select">
+                                    <select class="advance__apeartment--select" name="location">
+                                        <option selected disabled>Select location</option>
+                                        @foreach ($regions as $region)
+                                            <option value="{{ $region->name }}">{{ $region->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="advance__apeartment--list">
-                            <label class="advance__apeartment--label">Bathrooms</label>
-                            <div class="select">
-                                <select class="advance__apeartment--select">
-                                    <option selected="" value="1">Bathrooms</option>
-                                    <option value="2">1+</option>
-                                    <option value="3">2+</option>
-                                    <option value="4">3+</option>
-                                    <option value="5">4+</option>
-                                    <option value="6">5+</option>
-                                    <option value="7">6+</option>
-                                </select>
+                        <div class="interior__amenities--area">
+                            <h3 class="interior__amenitie--title">Interior Amenities</h3>
+                            <div class="advance__apeartment--iner d-flex">
+
+                                <ul class="interior__amenities--check d-flex flex-wrap list-unstyled">
+                                    @foreach ($feature_list as $feature)
+                                        
+                                    <li class="interior__amenities--check__list" style="width: 30rem">
+                                        <label class="interior__amenities--check__label" for="{{ $feature->slug }}">{{ $feature->name }}</label>
+                                        <input class="interior__amenities--check__input" id="{{ $feature->slug }}" type="checkbox" name="features[]" value="{{ $feature->id }}">
+                                        <span class="interior__amenities--checkmark"></span>
+                                    </li>
+                                    @endforeach
+
+                                </ul>
+                                
                             </div>
                         </div>
-                        <div class="advance__apeartment--list">
-                            <label class="advance__apeartment--label">Year built</label>
-                            <div class="select">
-                                <select class="advance__apeartment--select">
-                                    <option selected="" value="1">Year built</option>
-                                    <option value="2">2020</option>
-                                    <option value="3">2021</option>
-                                    <option value="4">2022</option>
-                                    <option value="5">2023</option>
-                                    <option value="6">2024</option>
-                                    <option value="7">2025</option>
-                                </select>
-                            </div>
+                        <div class="advance__filter--footer d-flex justify-content-between align-items-center">
+                            <button class="advance__filter--reset__btn">Reset all filters</button>
+                            <button class="advance__filter--search__btn solid__btn">Search <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
+                                    <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />
+                                </svg>
+                            </button>
                         </div>
-                        <div class="advance__apeartment--list">
-                            <label class="advance__apeartment--label">Location</label>
-                            <div class="select">
-                                <select class="advance__apeartment--select">
-                                    <option selected="" value="1">Canada</option>
-                                    <option value="2">United</option>
-                                    <option value="3">Adana</option>
-                                    <option value="4">Antalya</option>
-                                    <option value="5">Bursa</option>
-                                    <option value="6">Gaziantep</option>
-                                    <option value="7">New York</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="interior__amenities--area">
-                        <h3 class="interior__amenitie--title">Interior Amenities</h3>
-                        <div class="advance__apeartment--iner d-flex">
-                            <ul class="interior__amenities--check">
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check1">Air Conditioning</label>
-                                    <input class="interior__amenities--check__input" id="check1" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check2">Swimming Pool</label>
-                                    <input class="interior__amenities--check__input" id="check2" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check3">Outdoor Shower</label>
-                                    <input class="interior__amenities--check__input" id="check3" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check4">Lawn</label>
-                                    <input class="interior__amenities--check__input" id="check4" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                            </ul>
-                            <ul class="interior__amenities--check">
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check5">Barbeque</label>
-                                    <input class="interior__amenities--check__input" id="check5" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check6">Washer</label>
-                                    <input class="interior__amenities--check__input" id="check6" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check7">Microwave</label>
-                                    <input class="interior__amenities--check__input" id="check7" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check8">Dryer</label>
-                                    <input class="interior__amenities--check__input" id="check8" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                            </ul>
-                            <ul class="interior__amenities--check">
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check9">TV Cable</label>
-                                    <input class="interior__amenities--check__input" id="check9" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check10">Refrigerator</label>
-                                    <input class="interior__amenities--check__input" id="check10" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check11">Laundry</label>
-                                    <input class="interior__amenities--check__input" id="check11" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check12">Gym</label>
-                                    <input class="interior__amenities--check__input" id="check12" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                            </ul>
-                            <ul class="interior__amenities--check">
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check13">Front yard</label>
-                                    <input class="interior__amenities--check__input" id="check13" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check14">WiFi</label>
-                                    <input class="interior__amenities--check__input" id="check14" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check15">Sauna</label>
-                                    <input class="interior__amenities--check__input" id="check15" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                                <li class="interior__amenities--check__list">
-                                    <label class="interior__amenities--check__label" for="check16">Wine cellar</label>
-                                    <input class="interior__amenities--check__input" id="check16" type="checkbox">
-                                    <span class="interior__amenities--checkmark"></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="advance__filter--footer d-flex justify-content-between align-items-center">
-                        <button class="advance__filter--reset__btn">Reset all filters</button>
-                        <button class="advance__filter--search__btn solid__btn">Search <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
-                                <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />
-                            </svg>
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+
     <!-- Quickview Wrapper End -->
 @endsection
 @push('scripts')
