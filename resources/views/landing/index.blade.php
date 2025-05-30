@@ -206,7 +206,9 @@
                                 <article class="featured__card">
                                     <div class="featured__thumbnail position-relative">
                                         <div class="media">
-                                            <a class="featured__thumbnail--link" href="{{ route('landing-page.listing.detail', $property->property_slug) }}" style="background-color: red; max-height: 26rem"><img class="featured__thumbnail--img" src="{{ asset($property->featuredImage->image_path) }}" alt="featured-img"></a>
+                                            <a class="featured__thumbnail--link" href="{{ route('landing-page.listing.detail', $property->property_slug) }}" style="background-color: red; max-height: 26rem">
+                                                <img class="featured__thumbnail--img" src="{{ asset($property->featuredImage->image_path) }}" alt="featured-img"style="width: auto; height: 20rem; object-fit:cover; border-radius: 10px">
+                                            </a>
                                         </div>
                                         <div class="featured__badge">
                                             <span class="badge__field style2">{{ $property->region }}</span>
@@ -597,7 +599,7 @@
                                 <label for="location">Location*</label>
 
                                 <div class="advance__search--items">
-                                    <select class="advance__search--select" name="location" style="background-color: #fff">
+                                    <select class="advance__search--select" name="location" style="background-color: #fff; border: none!important;">
                                         <option selected disabled>Property Location</option>
                                         @foreach ($regions as $rgn)
                                             <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
@@ -1189,18 +1191,17 @@
                             <h3 class="interior__amenitie--title">Interior Amenities</h3>
                             <div class="advance__apeartment--iner d-flex">
 
-                                <ul class="interior__amenities--check d-flex flex-wrap list-unstyled">
+                                <ul class="interior__amenities--check d-flex list-unstyled flex-wrap">
                                     @foreach ($feature_list as $feature)
-                                        
-                                    <li class="interior__amenities--check__list" style="width: 30rem">
-                                        <label class="interior__amenities--check__label" for="{{ $feature->slug }}">{{ $feature->name }}</label>
-                                        <input class="interior__amenities--check__input" id="{{ $feature->slug }}" type="checkbox" name="features[]" value="{{ $feature->id }}">
-                                        <span class="interior__amenities--checkmark"></span>
-                                    </li>
+                                        <li class="interior__amenities--check__list" style="width: 30rem">
+                                            <label class="interior__amenities--check__label" for="{{ $feature->slug }}">{{ $feature->name }}</label>
+                                            <input class="interior__amenities--check__input" id="{{ $feature->slug }}" type="checkbox" name="features[]" value="{{ $feature->id }}">
+                                            <span class="interior__amenities--checkmark"></span>
+                                        </li>
                                     @endforeach
 
                                 </ul>
-                                
+
                             </div>
                         </div>
                         <div class="advance__filter--footer d-flex justify-content-between align-items-center">

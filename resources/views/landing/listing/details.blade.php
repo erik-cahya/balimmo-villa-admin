@@ -515,8 +515,14 @@
                                             <p class="text-danger my-2">{{ $message }}</p>
                                         @enderror
                                     </div>
+
                                     <div class="widget__form--input mb-20">
-                                        <input class="widget__form--input__field" placeholder="Location" name="location" type="text">
+                                        <select class="add__listing--form__select" name="location" style="background-color: #F6F8FB; border: none">
+                                            <option selected disabled>Choose Location</option>
+                                            @foreach ($regions as $rgn)
+                                                <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
+                                            @endforeach
+                                        </select>
 
                                         @error('location')
                                             <p class="text-danger my-2">{{ $message }}</p>
@@ -542,31 +548,34 @@
                         </div>
 
                         <div class="widget__step mb-30">
-                            <h2 class="widget__step--title">Featured Properties</h2>
-                            <div class="widget__featured--properties">
-                                <div class="widget__featured--properties__thumbnail position-relative">
-                                    <img src="{{ asset('landing') }}/assets/img/property/property-sidebar.png" alt="img">
-                                    <div class="featured__badge">
-                                        <span class="badge__field">Featured</span>
-                                    </div>
-                                </div>
-                                <div class="widget__featured--properties__content">
-                                    <div class="widget__featured--properties__content--top d-flex align-items-center justify-content-between">
-                                        <div class="widget__featured--properties__author">
-                                            <img src="{{ asset('landing') }}/assets/img/property/properties-author2.png" alt="img">
+                            <h2 class="widget__step--title">Other Properties</h2>
+
+                            @foreach ($other_properties as $oth_props)
+                                <div class="widget__featured--properties" style="margin-top: 20px; border: 1px solid #D9D9D9; padding-bottom: 20px">
+                                    <div class="widget__featured--properties__thumbnail position-relative">
+                                        <img src="{{ asset($oth_props->featuredImage->image_path) }}" alt="img">
+                                        <div class="featured__badge">
+                                            <span class="badge__field">{{ $oth_props->region }}</span>
                                         </div>
                                     </div>
-                                    <p class="widget__featured--properties__desc"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#063436"></path>
-                                        </svg>
-                                        Jl Raya Kerobokan No 87, Badung</p>
-                                    <h3 class="widget__featured--properties__title">Single Family Home</h3>
-                                    <div class="widget__featured--propertie__price d-flex">
-                                        <span class="new__price">$13000</span>
-                                        <span class="old__price">$16000</span>
+                                    <div class="widget__featured--properties__content">
+                                        <div class="widget__featured--properties__content--top d-flex align-items-center justify-content-between">
+                                            <div class="widget__featured--properties__author">
+                                                <img src="{{ asset('admin') }}{{ $property->profilePicture == null ? '/assets/images/users/avatar-1.jpg' : '/profile-image/' . $property->agent_code . '/' . $property->profilePicture }}" alt="img" style="width: 6rem; max-height: 6rem; object-fit:cover; ">
+                                            </div>
+                                        </div>
+                                        <p class="widget__featured--properties__desc"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#063436"></path>
+                                            </svg>
+                                            {{ $oth_props->property_address }}
+                                        </p>
+                                        <h3 class="widget__featured--properties__title">{{ $oth_props->property_name }}</h3>
+
+                                        <a href="{{ route('landing-page.listing.detail', $oth_props->property_slug) }}" class="solid__btn">View Properties</a>
+
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
 
                     </div>

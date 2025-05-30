@@ -153,8 +153,20 @@ class LandingPageController extends Controller
             }
         }
         $data['attachment'] = collect($url_attachment);
+        $data['regions'] = RegionModel::select('name')->get();
+
 
         if ($data['property']->type_acceptance == 'accept') {
+
+            $data['other_properties'] = PropertiesModel::where('internal_reference', $data['property']->internal_reference)->where('properties.id', '!=', $data['property']->id)->where('type_acceptance', 'accept')
+                ->with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'property_gallery.id');
+                    $query->where('is_featured', 1);
+                }])
+                ->inRandomOrder()
+                ->limit(2)
+                ->get();
+
             return view('landing.listing.details', $data);
         } else {
             return abort(404);

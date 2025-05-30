@@ -115,7 +115,6 @@ class PropertiesLeadsController extends Controller
 
     public function booking(Request $request, $slug = null)
     {
-        // dd($slug);
         if ($slug !== null) {
             $request->validate([
                 'name' => 'required',

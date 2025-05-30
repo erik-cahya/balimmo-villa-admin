@@ -4,8 +4,8 @@
         <article class="featured__card">
             <div class="featured__thumbnail position-relative">
                 <div class="media">
-                    <a class="featured__thumbnail--link" href="{{ route('landing-page.listing.detail', $property->property_slug) }}" style="max-height: 26rem; object-fit: fill">
-                        <img class="featured__thumbnail--img" src="{{ asset($property->featuredImage->image_path) }}" alt="featured-img">
+                    <a class="featured__thumbnail--link" href="{{ route('landing-page.listing.detail', $property->property_slug) }}">
+                        <img class="featured__thumbnail--img" src="{{ asset($property->featuredImage->image_path) }}" alt="featured-img" style="height: 26rem; object-fit: cover">
                     </a>
                 </div>
                 <div class="featured__badge">
