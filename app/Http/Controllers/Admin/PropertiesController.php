@@ -39,12 +39,14 @@ class PropertiesController extends Controller
                 'property_address',
                 'type_mandate',
                 'type_acceptance',
-                'bathroom'
+                'bathroom',
+                'users.name as agentName',
+                'users.status'
             )
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
                     $query->where('is_featured', 1);
-                }])->get();
+                }])->leftJoin('users', 'reference_code', '=', 'properties.internal_reference')->get();
         } else {
             $data['data_property'] = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
                 ->select(

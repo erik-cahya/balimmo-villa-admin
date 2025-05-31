@@ -83,10 +83,15 @@ class AgentController extends Controller
 
     public function destroy(string $id)
     {
-        User::destroy($id);
+
+        // User::destroy($id);
+        User::where('id', $id)->update([
+            'status' => 0
+        ]);
+
         $flashData = [
-            'judul' => 'Delete Success',
-            'pesan' => 'Delete Agent Successfully',
+            'judul' => 'Disabled Success',
+            'pesan' => 'Disabled Agent Successfully',
             'swalFlashIcon' => 'success',
         ];
 

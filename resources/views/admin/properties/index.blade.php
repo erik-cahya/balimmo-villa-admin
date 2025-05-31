@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                         <div>
-                            <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">10 </span></h4>
+                            <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">{{ $data_property->count() }} </span></h4>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -63,7 +63,13 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><span class="badge bg-dark text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span></td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+
+                                                <span class="fst-italic">{{ $property->agentName }}</span>
+                                                <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
+                                            </div>
+                                        </td>
                                         <td><span class="badge bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
                                         <td>
                                             <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="solar:bed-broken" class="fs-18 text-primary"></iconify-icon>{{ $property->bedroom }} Bedroom</p>

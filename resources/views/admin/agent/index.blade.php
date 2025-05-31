@@ -171,12 +171,12 @@
 
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Delete agent " + propertyName + "?",
+                        text: "Disabled agent " + propertyName + "?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
+                        confirmButtonText: 'Yes, disabled it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript

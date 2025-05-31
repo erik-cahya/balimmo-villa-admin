@@ -36,7 +36,7 @@
                     {{-- <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a> --}}
                     {{-- Delete Button --}}
                     <input type="hidden" class="propertyId" value="{{ $agent->id }}">
-                    <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $agent->name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="fs-18 align-middle"></iconify-icon></button>
+                    <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $agent->name }}"><iconify-icon icon="fe:disabled" class="fs-18 align-middle"></iconify-icon></button>
                     {{-- /. Delete Button --}}
                 @endif
 
