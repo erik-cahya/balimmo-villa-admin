@@ -22,7 +22,7 @@
                     <div class="card-body">
 
                         <div class="d-flex align-items-center my-3 gap-3">
-                            <img src="{{ asset('admin') }}{{ Auth::user()->profile == null ? '/assets/images/users/avatar-2.jpg' : '/profile-image/' . Auth::user()->reference_code . '/' . Auth::user()->profile }}" alt="" class="rounded-circle avatar-xl img-thumbnail" style="object-fit: cover">
+                            <img src="{{ asset('admin') }}{{ Auth::user()->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . Auth::user()->reference_code . '/' . Auth::user()->profile }}" alt="" class="rounded-circle avatar-xl img-thumbnail" style="object-fit: cover">
                             <div>
                                 <h3 class="fw-semibold mb-1">{{ $profile->name }}</h3>
                                 <a href="#!" class="link-primary fw-medium fs-14">{{ $profile->tagline }}</a>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AgentController;
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -29,7 +30,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/search-property', [LandingPageController::class, 'search'])->name('property.search');
 Route::post('/search', [LandingPageController::class, 'filter'])->name('filter.properties');
+
 Route::get('/search-agent', [AgentController::class, 'search'])->name('agent.search');
+Route::get('/client-agent', [ClientController::class, 'search'])->name('client.search');
 
 
 
@@ -87,6 +90,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
 
     Route::get('/visit', [VisitController::class, 'index'])->name('visit.index');
+
+    Route::get('clients', [ClientController::class, 'index'])->name('client.index');
+    Route::post('clients', [ClientController::class, 'store'])->name('client.store');
+    Route::post('clients/leads', [ClientController::class, 'dataFromLeads'])->name('client.fromLeads');
 
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
 });

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @push('style')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/dataTable.min.css') }}">
 
     <style>
         .dataTables_filter input {
@@ -140,7 +140,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div>
-                                                        <img src="{{ asset('admin') }}{{ $property->profile == null ? '/assets/images/users/avatar-2.jpg' : '/profile-image/' . $property->reference_code . '/' . $property->profile }}" class="avatar-sm rounded-circle me-2" alt="profile picture">
+                                                        <img src="{{ asset('admin') }}{{ $property->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . $property->reference_code . '/' . $property->profile }}" class="avatar-sm rounded-circle me-2" alt="profile picture" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
 
                                                     </div>
                                                     <div class="d-flex flex-column">
@@ -215,7 +215,7 @@
                                 <div class="d-flex align-items-center justify-content-between border-bottom mt-2 flex-wrap gap-2 pb-2">
                                     <div class="d-flex align-items-center gap-2">
                                         <div class="avatar">
-                                            <img src="{{ asset('admin') }}{{ $agent->profile == null ? '/assets/images/users/avatar-2.jpg' : '/profile-image/' . $agent->reference_code . '/' . $agent->profile }}" alt="avatar-3" class="img-fluid rounded-circle" style="width: 3rem; height: 3rem">
+                                            <img src="{{ asset('admin') }}{{ $agent->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . $agent->reference_code . '/' . $agent->profile }}" alt="avatar-3" class="img-fluid rounded-circle" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
                                         </div>
                                         <div class="d-block">
                                             <span class="text-dark">

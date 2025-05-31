@@ -80,11 +80,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
+                <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('client.index') }}">
                     <span class="nav-icon">
-                        <i class="ri-group-line"></i>
+                        <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
                     </span>
-                    <span class="nav-text">My Profile</span>
+                    <span class="nav-text">Clients</span>
                 </a>
             </li>
 
@@ -101,11 +101,22 @@
                             <a class="sub-nav-link" href="{{ route('visit.index') }}">Properties Visit</a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Visit </a>
+                            <a class="sub-nav-link" href="#">Create Visit </a>
                         </li>
 
                     </ul>
                 </div>
+            </li>
+
+            <li class="menu-title">Account Management</li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
+                    <span class="nav-icon">
+                        <i class="ri-group-line"></i>
+                    </span>
+                    <span class="nav-text">My Profile</span>
+                </a>
             </li>
 
         </ul>
