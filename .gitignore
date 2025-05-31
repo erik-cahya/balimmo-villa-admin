@@ -20,5 +20,6 @@ yarn-error.log
 
 /public/gallery
 /public/admin/gallery
-/public/admin/profile-image
+/public/admin/profile-image 
+
 /public/admin/attachment
