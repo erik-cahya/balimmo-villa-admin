@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
 use App\Http\Controllers\Admin\PropertiesLeadsController;
+use App\Http\Controllers\Admin\VisitController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Landing\LandingPageController;
@@ -84,6 +85,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImage'])->name('gallery-images.destroy');
     Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
     Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
+
+    Route::get('/visit', [VisitController::class, 'index'])->name('visit.index');
 
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
 });
