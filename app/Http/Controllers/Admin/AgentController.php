@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PropertiesModel;
+use App\Models\PropertyLegalModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 
@@ -91,6 +93,35 @@ class AgentController extends Controller
         return response()->json($flashData);
     }
 
+    public function detailAgent($refcode)
+    {
+        // dd($refcode);
+        // $user = Auth::user();
+
+        $data['profile'] = User::where('reference_code', $refcode)->first();
+
+        $property = PropertiesModel::where('internal_reference', $refcode)->first();
+
+        $data['propertiesCount'] = PropertiesModel::where('internal_reference', $refcode)->count();
+
+        $data['leaseholdCount'] = 0;
+        $data['freeholdCount'] = 0;
+
+        if ($property) {
+            $propertyId = $property->id;
+
+            $data['leaseholdCount'] = PropertyLegalModel::where('properties_id', $propertyId)
+                ->where('legal_status', 'Leasehold')
+                ->count();
+
+            $data['freeholdCount'] = PropertyLegalModel::where('properties_id', $propertyId)
+                ->where('legal_status', 'Freehold')
+                ->count();
+        }
+
+        return view('admin.agent.detail-agent', $data);
+    }
+
     public function agentProperty($refcode)
     {
 
@@ -154,4 +185,46 @@ class AgentController extends Controller
 
     //     return view('admin.agent.partials.data-agent', compact('data_agent'))->render();
     // }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'confirmed', 'min:8'],
+        ]);
+
+        // Temukan user berdasarkan reference_code
+        $user = User::where('reference_code', $request->reference_code)->first();
+
+        // dd($user->id);
+        if (!$user) {
+            return back()->withErrors(['user' => 'User not found']);
+        }
+
+        // Update password
+        $user->update([
+            'password' => Hash::make($request->password),
+            'remember_token' => Str::random(60),
+        ]);
+
+        // Jika user yang sedang login adalah user yang diubah
+        if (Auth::id() === $user->id) {
+            // Auth::logout(); // Logout user
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')->with('flashData', [
+                'judul' => 'Change Password Success',
+                'pesan' => 'Agent Password successfully changed',
+                'swalFlashIcon' => 'success',
+            ]);
+        }
+
+        // Jika bukan user yang sedang login
+        return redirect()->back()->with('flashData', [
+            'judul' => 'Change Password Success',
+            'pesan' => 'Agent Password successfully changed',
+            'swalFlashIcon' => 'success',
+        ]);
+    }
 }

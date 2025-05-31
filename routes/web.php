@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
 use App\Http\Controllers\Admin\PropertiesLeadsController;
+use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\MailController;
@@ -66,6 +67,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details');
 
     Route::get('/agent/{refcode}/properties', [AgentController::class, 'agentProperty'])->name('agent.properties');
+    Route::get('/agent/{refcode}', [AgentController::class, 'detailAgent'])->name('agent.detail');
+    Route::post('/agent/change-password', [AgentController::class, 'changePassword'])->name('agent.changePassword');
     Route::resource('/agent', AgentController::class);
 
     Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');

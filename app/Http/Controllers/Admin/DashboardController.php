@@ -15,6 +15,7 @@ class DashboardController extends Controller
     {
 
 
+
         $data['data_agent'] = User::where('role', 'agent',)->select('name', 'created_at', 'email', 'profile', 'reference_code')->orderBy('created_at', 'ASC')->get();
 
         if (Auth::user()->role == 'Master') {

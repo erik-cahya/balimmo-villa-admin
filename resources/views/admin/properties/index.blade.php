@@ -15,79 +15,6 @@
             </div>
         </div>
         <!-- ========== Page Title End ========== -->
-
-        <div class="row">
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="fs-15 fw-medium mb-2">Earn of the Month</p>
-                                <h3 class="text-dark fw-bold d-flex align-items-center mb-0 gap-2">$3548.09</h3>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-primary rounded bg-opacity-10">
-                                    <iconify-icon icon="solar:calendar-date-broken" class="fs-32 text-primary avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="fs-15 fw-medium d-flex align-items-center mb-2 gap-2">Earn Growth <span class="badge text-success bg-success-subtle fs-11"><i class="ri-arrow-up-line"></i>44%</span></p>
-                                <h3 class="text-dark fw-bold d-flex align-items-center mb-0 gap-2">$67435.00</h3>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-success rounded bg-opacity-10">
-                                    <iconify-icon icon="solar:graph-new-broken" class="fs-32 text-success avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="fs-15 fw-medium mb-2">Conversation Rate</p>
-                                <h3 class="text-dark fw-bold d-flex align-items-center mb-0 gap-2">78.8%</h3>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-warning rounded bg-opacity-10">
-                                    <iconify-icon icon="solar:user-plus-broken" class="fs-32 text-warning avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <p class="fs-15 fw-medium mb-2">Gross Profit Margin</p>
-                                <h3 class="text-dark fw-bold d-flex align-items-center mb-0 gap-2">34.00%</h3>
-                            </div>
-                            <div>
-                                <div class="avatar-md bg-info rounded bg-opacity-10">
-                                    <iconify-icon icon="solar:chart-2-broken" class="fs-32 text-info avatar-title"></iconify-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
@@ -144,7 +71,35 @@
                                         </td>
                                         <td class="text-capitalize">{{ $property->property_address }}</td>
 
-                                        <td><span class="badge {{ $property->type_acceptance == 'pending' ? 'bg-warning' : ($property->type_acceptance == 'accept' ? 'bg-success' : 'bg-danger') }} text-light fs-12 text-capitalize px-2 py-1">{{ $property->type_acceptance }}</span></td>
+                                        @php
+                                            switch ($property->type_acceptance) {
+                                                case 'accept':
+                                                    $badgeClass = 'bg-success';
+                                                    $popOverContent = 'Your property has been listed on the Balimmo Properties website.';
+                                                    $popOverTitle = '👍 Great, your property has been successfully listed!';
+                                                    break;
+                                                case 'pending':
+                                                    $badgeClass = 'bg-warning';
+                                                    $popOverContent = 'We are checking your data, please wait or contact the Balimmo Properties admin.';
+                                                    $popOverTitle = '👋 Hello, we are reviewing your property!';
+                                                    break;
+                                                case 'decline':
+                                                    $badgeClass = 'bg-danger';
+                                                    $popOverContent = 'Unfortunately, your property listing was declined. Please contact the Balimmo Properties admin for more details or to make corrections.';
+                                                    $popOverTitle = '❌ Listing Declined';
+                                                    break;
+                                                default:
+                                                    $badgeClass = 'bg-secondary';
+                                                    $popOverContent = 'Status unknown. Please contact Balimmo Properties admin for clarification.';
+                                                    $popOverTitle = 'ℹ️ Status Unknown';
+                                                    break;
+                                            }
+                                        @endphp
+                                        <td>
+                                            <span class="badge {{ $badgeClass }} text-light fs-12 text-capitalize px-2 py-1" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{ $popOverContent }}" title="{{ $popOverTitle }}">
+                                                {{ $property->type_acceptance }}
+                                            </span>
+                                        </td>
 
                                         <td>
                                             <div class="d-flex gap-2">
@@ -182,7 +137,6 @@
             </div>
 
         </div>
-
     </div>
 @endsection
 @push('scripts')

@@ -17,11 +17,6 @@
         .dataTable {
             margin-top: 3rem !important;
         }
-
-        .paging_simple_numbers {
-            /* background-color: red; */
-            /* #063436 */
-        }
     </style>
 @endpush
 
