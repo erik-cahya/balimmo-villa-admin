@@ -48,10 +48,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="listing__featured--content">
-                                                            <div class="featured__content--list__top d-flex justify-content-between">
+                                                            <div class="featured__content--list__top">
                                                                 <h3 class="featured__card--title"><a href="#">{{ $property->property_name }}</a></h3>
-                                                                <span class="featured__card--price fst-italic">IDR {{ $property->selling_price_idr }}</span>
-
+                                                                <span class="featured__card--price mt-3 fs-12 fst-italic">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
                                                             </div>
                                                             <ul class="listing__featured--info d-flex">
                                                                 <li class="listing__featured--info__items">

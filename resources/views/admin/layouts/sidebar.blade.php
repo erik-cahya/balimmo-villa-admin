@@ -80,6 +80,37 @@
             </li>
 
             <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('client.index') }}">
+                    <span class="nav-icon">
+                        <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
+                    </span>
+                    <span class="nav-text">Clients</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link menu-arrow {{ request()->routeIs('visit.*') ? 'active' : '' }}" href="#sidebarVisit" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarVisit">
+                    <span class="nav-icon">
+                        <iconify-icon icon="carbon:document" class="fs-18 align-middle"></iconify-icon>
+                    </span>
+                    <span class="nav-text"> Visit </span>
+                </a>
+                <div class="{{ request()->routeIs('visit.*') ? 'show' : '' }} collapse" id="sidebarVisit">
+                    <ul class="nav sub-navbar-nav">
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('visit.index') }}">Properties Visit</a>
+                        </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="#">Create Visit </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+
+            <li class="menu-title">Account Management</li>
+
+            <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
                     <span class="nav-icon">
                         <i class="ri-group-line"></i>

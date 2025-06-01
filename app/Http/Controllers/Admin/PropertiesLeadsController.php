@@ -154,7 +154,7 @@ class PropertiesLeadsController extends Controller
             'message' => $request->message,
         ]);
 
-        event(new BookingCreated($booking));
+        // event(new BookingCre ated($booking));
 
         $flashData = [
             'judul' => 'Form Submit Success',

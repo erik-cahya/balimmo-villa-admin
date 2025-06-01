@@ -59,8 +59,7 @@
                                 <x-form-input className="col-lg-4" type="email" name="email" label="Email Agent" />
 
                                 <x-form-input className="col-lg-4" type="number" name="phone_number" label="Phone Number" />
-                                <x-form-select className="col-lg-4" name="role" label="User Role"
-                                    :options="['Agent', 'Master']" />
+                                <x-form-select className="col-lg-4" name="role" label="User Role" :options="['Agent', 'Master']" />
                                 <x-form-input className="col-lg-4" type="password" name="password" label="Password Login" />
 
                             </div>
@@ -118,7 +117,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
     </div>

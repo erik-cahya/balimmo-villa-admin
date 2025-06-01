@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AgentController;
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
 use App\Http\Controllers\Admin\PropertiesLeadsController;
+use App\Http\Controllers\Admin\VisitController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Landing\LandingPageController;
@@ -28,7 +30,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/search-property', [LandingPageController::class, 'search'])->name('property.search');
 Route::post('/search', [LandingPageController::class, 'filter'])->name('filter.properties');
+
 Route::get('/search-agent', [AgentController::class, 'search'])->name('agent.search');
+Route::get('/client-agent', [ClientController::class, 'search'])->name('client.search');
 
 
 
@@ -84,6 +88,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImage'])->name('gallery-images.destroy');
     Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
     Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
+
+    Route::get('/visit', [VisitController::class, 'index'])->name('visit.index');
+
+    Route::get('clients', [ClientController::class, 'index'])->name('client.index');
+    Route::post('clients', [ClientController::class, 'store'])->name('client.store');
+    Route::post('clients/leads', [ClientController::class, 'dataFromLeads'])->name('client.fromLeads');
 
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
 });
