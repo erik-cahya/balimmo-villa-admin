@@ -43,11 +43,11 @@
         <!-- ========== Page Title End ========== -->
 
         <!-- Start here.... -->
-        <div class="row">
+        <div class="row d-flex align-items-center">
             <div class="{{ Auth::user()->role === 'Master' ? 'col-md-6 col-xl-4' : 'col-md-6 col-xl-6' }}">
                 <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
+                    <div class="card-body pb-0">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
                             <div>
                                 <p class="fs-15 fw-medium mb-2">Total Properties</p>
                                 <h3 class="text-dark fw-bold d-flex align-items-center mb-0 gap-2">{{ $data_properties->count() }} Property</h3>
@@ -57,6 +57,12 @@
                                     <iconify-icon icon="solar:calendar-date-broken" class="fs-32 text-success avatar-title"></iconify-icon>
                                 </div>
                             </div>
+
+                        </div>
+                        <div class="gap-3 d-flex">
+                            <p><i class="ri-circle-fill text-success"></i> {{ $data_properties->where('type_acceptance', 'accept')->count() }} Accept</p>
+                            <p><i class="ri-circle-fill text-warning"></i> {{ $data_properties->where('type_acceptance', 'pending')->count() }} Pending</p>
+                            <p><i class="ri-circle-fill text-danger"></i> {{ $data_properties->where('type_acceptance', 'decline')->count() }} Decline</p>
                         </div>
                     </div>
                 </div>

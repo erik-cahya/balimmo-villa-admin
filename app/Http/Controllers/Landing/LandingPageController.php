@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
+use function Laravel\Prompts\error;
+
 class LandingPageController extends Controller
 {
     public function index()
@@ -112,6 +114,8 @@ class LandingPageController extends Controller
 
     public function listingDetail($slug)
     {
+
+
         $data['property'] = PropertiesModel::where('property_slug', $slug)
             ->select(
                 'properties.*',
@@ -131,6 +135,11 @@ class LandingPageController extends Controller
                 $query->select('image_path', 'property_gallery.id');
                 $query->where('is_featured', 1);
             }])->first();
+
+        if ($data['property'] == null) {
+            return view('error.404');
+        };
+
 
         $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['property']['featuredImage']->id)->get();
 
