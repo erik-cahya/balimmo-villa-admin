@@ -43,14 +43,19 @@ class PropertiesLeadsController extends Controller
             $regions = $leads->pluck('localization')->unique()->toArray();
             $maxBudget = $leads->max('cust_budget');
 
+            // dd($maxBudget);
             // Ambil semua properti yang mungkin cocok sekaligus
-            $properties = PropertiesModel::whereIn('region', $regions)
+            $properties = PropertiesModel::whereIn('sub_region', $regions)
+                ->with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'property_gallery.id');
+                    $query->where('is_featured', 1);
+                }])
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
                 ->where('selling_price_idr', '<=', $maxBudget)
                 ->get();
 
             // Kelompokkan properti berdasarkan region
-            $groupedProperties = $properties->groupBy('region');
+            $groupedProperties = $properties->groupBy('sub_region');
 
             // Kelompokkan kembali sesuai budget masing-masing lead
             foreach ($leads as $lead) {
@@ -115,13 +120,14 @@ class PropertiesLeadsController extends Controller
 
     public function booking(Request $request, $slug = null)
     {
+
+
         if ($slug !== null) {
             $request->validate([
                 'name' => 'required',
                 'phone_number' => 'required',
                 'email' => 'required',
                 'budget' => 'required',
-                'location' => 'required',
                 'timing' => 'required',
                 'bedroom' => 'required',
             ]);
@@ -141,6 +147,8 @@ class PropertiesLeadsController extends Controller
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
 
+
+
         $booking = PropertyLeadsModel::create([
             'properties_id' => $slug == null ? null : $property->id,
             'agent_code' => $slug == null ? null : $property->internal_reference,
@@ -149,7 +157,7 @@ class PropertiesLeadsController extends Controller
             'cust_email' => $request->email,
             'cust_budget' => (int)preg_replace('/[^0-9]/', '', $request->budget),
             'require_bedroom' => $slug == null ? null : $request->bedroom,
-            'localization' => $request->location,
+            'localization' => $request->location == null ? $property->sub_region : $request->location,
             'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
             'message' => $request->message,
         ]);
@@ -171,24 +179,44 @@ class PropertiesLeadsController extends Controller
         $data = $request->all();
 
         $propertyNames = $data['property_name'];
-        $sellingPrices = $data['selling_price'];
+        $sellingPricesIDR = $data['selling_price_idr'];
+        $sellingPricesUSD = $data['selling_price_usd'];
+        $propertyAddress = $data['property_address'];
+        $bedroom = $data['bedroom'];
+        $bathroom = $data['bathroom'];
+        $subRegion = $data['sub_region'];
+        $propertySlug = $data['property_slug'];
+        $imagePath = $data['image_path'];
 
         $combined = [];
 
         foreach ($propertyNames as $index => $name) {
             $combined[] = [
                 'name' => $name,
-                'selling_price' => $sellingPrices[$index],
+                'sellingPriceIDR' => $sellingPricesIDR[$index],
+                'sellingPriceUSD' => $sellingPricesUSD[$index],
+                'propertyAddress' => $propertyAddress[$index],
+                'bedroom' => $bedroom[$index],
+                'bathroom' => $bathroom[$index],
+                'subRegion' => $subRegion[$index],
+                'propertySlug' => $propertySlug[$index],
+                'imagePath' => $imagePath[$index],
             ];
         }
-        Mail::to($request->cust_email)->send(new NotifikasiEmail([
+
+
+        // $data['properties'] = $combined;
+        // return view('emails.notifikasi', $data);
+
+
+        Mail::to('erikcp38@gmail.com')->send(new NotifikasiEmail([
+            // Mail::to($request->cust_email)->send(new NotifikasiEmail([
             'properties' => $combined,
         ]));
 
-
         $flashData = [
             'judul' => 'Success',
-            'pesan' => 'Recommendation email successfully sent to customer',
+            'pesan' => 'Recommendation email successfully sent to ' . $request->cust_email,
             'swalFlashIcon' => 'success',
         ];
         return redirect()->route('leads.index')->with('flashData', $flashData);

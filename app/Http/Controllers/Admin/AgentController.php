@@ -57,11 +57,26 @@ class AgentController extends Controller
             'phone_number' => 'required',
             'role' => 'required',
             'initial_name' => 'required',
+            'number_id' => 'required|numeric',
+            'password' => 'required|confirmed|min:8',
+
         ]);
 
-        do {
-            $reference_code = $request->role == 'Master' ? 'BPM-' .  Str::upper($request->initial_name) . '-' . random_int(1000, 9999) : 'BPA-' .  Str::upper($request->initial_name) . '-' . random_int(1000, 9999);
-        } while (User::where('reference_code', $reference_code)->exists());
+        // Generate number ID jika tidak diisi
+        $numberID = $request->number_id == null ? random_int(1000, 99999) : $request->number_id;
+
+        // Generate reference code
+        $reference_code = $request->role == 'Master'
+            ? 'BPM-' . Str::upper($request->initial_name) . '-' . $numberID
+            : 'BPA-' . Str::upper($request->initial_name) . '-' . $numberID;
+
+        // Cek apakah reference_code sudah digunakan
+        if (User::where('reference_code', $reference_code)->exists()) {
+            return back()
+                ->withErrors(['number_id' => 'Code number already exists. Please choose a different Number ID.'])
+                ->withInput();
+        }
+
 
         User::create([
             'name' => $request->name,
@@ -95,6 +110,20 @@ class AgentController extends Controller
             'swalFlashIcon' => 'success',
         ];
 
+        return response()->json($flashData);
+    }
+
+    public function reactivate($id)
+    {
+        User::where('id', $id)->update([
+            'status' => 1
+        ]);
+
+        $flashData = [
+            'judul' => 'Activation Account Success',
+            'pesan' => 'Account Agent Successfully Activate',
+            'swalFlashIcon' => 'success',
+        ];
         return response()->json($flashData);
     }
 

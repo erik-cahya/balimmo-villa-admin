@@ -9,6 +9,7 @@ use App\Models\PropertyFeatureModel;
 use App\Models\PropertyGalleryImageModel;
 use App\Models\PropertyUrlAttachmentModel;
 use App\Models\RegionModel;
+use App\Models\SubRegionModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -29,12 +30,13 @@ class LandingPageController extends Controller
                 'internal_reference',
                 'bedroom',
                 'bathroom',
-                'region',
+                'sub_region',
                 'property_address',
                 'users.name as agent_name',
                 'users.profile as profilePicture',
                 'users.reference_code as referenceCode',
-                'property_financial.selling_price_idr as sellingPriceIDR'
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
             )
                 ->where('type_acceptance', 'Accept')
                 ->join('users', 'reference_code', '=', 'properties.internal_reference')
@@ -47,7 +49,7 @@ class LandingPageController extends Controller
 
             // Format harga
             foreach ($data_property as $item) {
-                $item->formatted_price = $this->shortPriceIDR($item->sellingPriceIDR);
+                $item->formatted_price = $this->shortPriceIDR($item->selling_price_idr);
             }
 
             return $data_property;
@@ -55,11 +57,10 @@ class LandingPageController extends Controller
 
         // Simpan ke variabel untuk view
         $data['data_property'] = $properties;
-        $data['regions'] = RegionModel::select('name')->get();
+        $data['sub_regions'] = SubRegionModel::select('name')->get();
         $data['feature_list'] = FeatureListModel::get();
 
-
-        // Cache::forget('properties_list_cache');
+        Cache::forget('properties_list_cache');
         return view('landing.index', $data);
     }
 
@@ -87,11 +88,13 @@ class LandingPageController extends Controller
                 'property_name',
                 'property_slug',
                 'internal_reference',
-                'region',
+                'sub_region',
                 'bedroom',
                 'bathroom',
                 'property_address',
-                'property_financial.selling_price_idr as sellingPriceIDR'
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
+
             )->where('properties.type_acceptance', 'accept')
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
                 ->with(['featuredImage' => function ($query) {
@@ -101,7 +104,7 @@ class LandingPageController extends Controller
                 ->get();
 
             foreach ($data_property as $item) {
-                $item->formatted_price = $this->shortPriceIDR($item->sellingPriceIDR);
+                $item->formatted_price = $this->shortPriceIDR($item->selling_price_idr);
             }
             return $data_property;
         });
@@ -114,8 +117,6 @@ class LandingPageController extends Controller
 
     public function listingDetail($slug)
     {
-
-
         $data['property'] = PropertiesModel::where('property_slug', $slug)
             ->select(
                 'properties.*',
@@ -126,7 +127,8 @@ class LandingPageController extends Controller
                 'users.tagline as agent_tagline',
                 'users.profile as profilePicture',
                 'property_legal.legal_status as legalStatus',
-                'property_financial.selling_price_idr as sellingPriceIDR',
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
             )
             ->join('users', 'reference_code', '=', 'properties.internal_reference')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
@@ -231,6 +233,8 @@ class LandingPageController extends Controller
                 $query->select('image_path', 'property_gallery.id');
                 $query->where('is_featured', 1);
             }])
+                ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
                 ->where('type_acceptance', 'Accept')
                 ->when($query, function ($q) use ($query) {
                     $q->where(function ($q2) use ($query) {
@@ -241,7 +245,6 @@ class LandingPageController extends Controller
                 ->when($bedroom, fn($q) => $q->where('bedroom', '=', $bedroom))
                 ->when($propertyTypes, fn($q) => $q->whereIn('legal_status', $propertyTypes))
                 ->when($locations, fn($q) => $q->whereIn('region', $locations))
-                ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
                 ->get();
         }
 
@@ -254,12 +257,15 @@ class LandingPageController extends Controller
     // ======================================================
     public function filter(Request $request)
     {
+        // dd($request->all());
+
+
         $name = $request->name;
         $propertyType = $request->property_type;
         $location = $request->location;
 
-        $priceMin = $request->priceMin;
-        $priceMax = $request->priceMax;
+        $priceMin = (int)preg_replace('/[^0-9]/', '', $request->priceMin);
+        $priceMax = (int)preg_replace('/[^0-9]/', '', $request->priceMax);
         $yearBuild = $request->year_build;
         $bathroom = $request->bathroom;
         $bedroom = $request->bedroom;
@@ -302,13 +308,14 @@ class LandingPageController extends Controller
             )
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-            // ->rightJoin('property_feature', 'property_feature.properties_id', '=', 'properties.id')
-            // ->when($name, fn($query, $name) => $query->where('property_name', 'like', "%{$name}%"))
-            ->when($location, fn($q, $location) => $q->where('region', $location))
+
+            ->when($location, fn($q, $location) => $q->where('sub_region', $location))
             ->when($propertyType, fn($q, $propertyType) => $q->where('legal_status', 'like', "%{$propertyType}%"))
             ->when($yearBuild, fn($q, $yearBuild) => $q->where('year_construction', 'like', "%{$yearBuild}%"))
             ->when($bathroom, fn($q, $bathroom) => $q->where('bathroom', 'like', "%{$bathroom}%"))
             ->when($bedroom, fn($q, $bedroom) => $q->where('bedroom', 'like', "%{$bedroom}%"))
+            ->when($priceMin, fn($q) => $q->where('property_financial.selling_price_idr', '>=', $priceMin))
+            ->when($priceMax, fn($q) => $q->where('property_financial.selling_price_idr', '<=', $priceMax))
             ->when($propertyCode, fn($q, $propertyCode) => $q->where('property_code', 'like', "%{$propertyCode}%"))
             ->when(count($propertyIds) > 0, fn($q) => $q->whereIn('properties.id', $propertyIds)) // 💡 Gabung ke filter berdasarkan fitur
             ->get();

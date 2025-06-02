@@ -9,14 +9,20 @@
                     </a>
                 </div>
                 <div class="featured__badge">
-                    <span class="badge__field style2">{{ $property->region }}</span>
+                    <span class="badge__field style2">{{ $property->sub_region }}</span>
                 </div>
             </div>
             <div class="featured__content">
                 <div class="featured__content--top d-flex align-items-center justify-content-between">
                     <h3 class="featured__card--title"><a href="{{ route('landing-page.listing.detail', $property->property_slug) }}">{{ $property->property_name }}</a></h3>
-                    <span class="featured__card--price">{{ $property->formatted_price }}</span>
+                    {{-- <span class="featured__card--price">{{ $property->formatted_price }}</span> --}}
                 </div>
+
+                <div class="d-flex flex-column justify-content-between mt-4">
+                    <span class="fst-italic fw-bold" style="font-size: 14px">IDR {{ number_format($property->selling_price_idr) }}</span>
+                    <span class="fst-italic fw-bold" style="font-size: 14px">$ {{ number_format($property->selling_price_usd, 2) }}</span>
+                </div>
+                <hr>
                 <p class="featured__content--desc"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#063436" />
                     </svg>

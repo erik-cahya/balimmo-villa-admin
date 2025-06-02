@@ -1,48 +1,63 @@
-{{-- @php
-  dd($properties);
-@endphp --}}
+@php
+
+    // dd(asset($property['imagePath']));
+@endphp
 <!DOCTYPE html>
 <html>
-<body>
-  
-  <div style="display: flex; justify-content: center">
 
-    <img style="display: flex; justify-content: center" src="https://balimmo.properties/wp-content/uploads/2025/04/logo-balimmo-properties-green.png" alt="" width="500">
-  </div>
-    
-    <h2 style="font-weight: 700; text-align: center">Hi there 👋,</h2>
-    <p style="text-align: center">here for the recommendation villa and fit with your information</p>
-    
-    <div style="display: flex; flex-direction: row; justify-content: center">
-    @foreach ($properties as $property)
-    <div style="width: 300px; border-radius: 12px; overflow: hidden; margin:10px;box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: white;">
+<head>
+    <meta charset="UTF-8">
+    <title>Villa Recommendation</title>
+</head>
 
-        <div style="position: relative; height: 180px; overflow: hidden;">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Villa" style="width: 100%; height: 100%; object-fit: cover;">
-            <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 14px;">
-              IDR 200.000/malam
-            </div>
-        </div>
+<body style="font-family: Arial, sans-serif; background-color: #f6f6f6; margin: 0; padding: 20px;">
 
-        <!-- Info Villa -->
-        <div style="padding: 16px;">
-            <h3 style="font-size: 18px; font-weight: 700; color: #333; margin-bottom: 6px;">{{ $property['name'] }}</h3>
-            <div style="display: flex; align-items: center; font-size: 14px; color: #666; margin-bottom: 10px;">
-                <span style="margin-right: 5px;">📍</span>
-                <span>Sanur Denpasar, Bali</span>
-            </div>
-            <div style="display: flex; align-items: center; font-size: 14px; color: #555; margin-bottom: 15px;">
-                <span style="margin-right: 5px;">🛏️</span>
-                <span>40 Bedrooms</span>
-            </div>
-            <a href="#" style="display: inline-block; background: #4CAF50; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500;">Lihat Detail</a>
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 40px;">
+        <img src="{{ asset('admin') }}/assets/images/logo-dark.png" alt="Logo" width="200">
+        <h2 style="margin-top: 30px;">Hi there 👋,</h2>
+        <p style="color: #555;">Here are some villa recommendations that fit your needs.</p>
+    </div>
+
+    <!-- Wrapper -->
+    <div style="max-width: 640px; margin: 0 auto;">
+        <!-- Container for properties -->
+        <div style="font-size: 0;">
+            @foreach ($properties as $property)
+                {{-- ============================================== --}}
+                <div style="display: inline-block; vertical-align: top; width: 300px; margin: 10px; background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden;">
+                    <!-- Image -->
+                    <div style="position: relative;">
+                        <img src="{{ asset($property['imagePath']) }}" alt="Villa Image" style="width: 100%; height: 180px; object-fit: cover;">
+                        {{-- <img src="https://balimmo.lsp-eh.com/admin/gallery/villa-canggu-2/c485b92b-0bcc-4f36-859d-138882be0ab4.png" alt="Villa Image" style="width: 100%; height: 180px; object-fit: cover;"> --}}
+
+                        <div style="margin-top:6px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px; font-size: 14px;">
+                            IDR {{ $property['sellingPriceIDR'] }}
+                        </div>
+                        <div style="margin-top:6px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px; font-size: 14px;">
+                            USD {{ $property['sellingPriceUSD'] }}
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div style="padding: 15px;">
+                        <h3 style="font-size: 16px; color: #333; margin: 0 0 6px;">{{ $property['name'] }}</h3>
+                        <p style="font-size: 14px; color: #666; margin: 0 0 8px;">📍 {{ $property['propertyAddress'] }}</p>
+                        <p style="font-size: 13px; color: #555; margin: 0 0 12px;">
+                            🛏️ {{ $property['bedroom'] }} Bedroom &nbsp;&nbsp; 🚿 {{ $property['bathroom'] }} Bathroom
+                        </p>
+                        <a href="{{ route('landing-page.listing.detail', $property['propertySlug']) }}" style="display: inline-block; background-color: #4CAF50; color: white; padding: 8px 12px; text-decoration: none; border-radius: 6px; font-size: 13px;">See Detail</a>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
-    @endforeach
 
-  </div>
-    <p style="text-align: center">Our agent will contact you, if you have question please contact us on :</p>
-
+    <!-- Footer -->
+    <div style="text-align: center; font-size: 12px; color: #999; margin-top: 40px;">
+        &copy; {{ date('Y') }} Balimmo Properties. All rights reserved.
+    </div>
 
 </body>
+
 </html>

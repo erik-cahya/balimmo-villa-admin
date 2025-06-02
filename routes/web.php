@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/agent/{refcode}', [AgentController::class, 'detailAgent'])->name('agent.detail');
     Route::post('/agent/change-password', [AgentController::class, 'changePassword'])->name('agent.changePassword');
     Route::resource('/agent', AgentController::class);
+    Route::post('/agent/reactivate/{id}', [AgentController::class, 'reactivate']);
 
     Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');
     Route::resource('/leads', PropertiesLeadsController::class);

@@ -55,12 +55,31 @@
                             <div class="row">
 
                                 <x-form-input className="col-lg-4" type="text" name="name" label="Agent Name" />
-                                <x-form-input className="col-lg-4" type="text" name="initial_name" label="Intial Name" />
                                 <x-form-input className="col-lg-4" type="email" name="email" label="Email Agent" />
 
                                 <x-form-input className="col-lg-4" type="number" name="phone_number" label="Phone Number" />
-                                <x-form-select className="col-lg-4" name="role" label="User Role" :options="['Agent', 'Master']" />
-                                <x-form-input className="col-lg-4" type="password" name="password" label="Password Login" />
+                                <x-form-select className="col-lg-6" name="role" label="User Role" :options="['Agent', 'Master']" />
+
+                                <div class="col-md-6" id="group_month_rented_per_year">
+                                    <label for="month_rented_per_year" class="form-label">Reference ID</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="prefix-text">BPM</span>
+                                        <input type="text" name="initial_name" class="form-control @error('initial_name') validation-form @enderror" placeholder="Initial Name" value="{{ old('initial_name') }}">
+                                        <input type="text" name="number_id" maxlength="4" class="form-control @error('number_id') validation-form @enderror" min="1" max="9999" placeholder="Number ID" pattern="[0-9]{4}" value="{{ old('number_id') }}">
+                                    </div>
+                                    @error('initial_name')
+                                        <div class="alert alert-danger p-1" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    @error('number_id')
+                                        <div class="alert alert-danger p-1" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <x-form-input className="col-lg-6" type="password" name="password" label="Password Login" />
+                                <x-form-input className="col-lg-6" type="password" name="password_confirmation" label="Confirm Password" />
 
                             </div>
                             <div class="mb-3 rounded">
@@ -84,7 +103,6 @@
                         <div>
                             <h4 class="card-title">All Agent List</h4>
                         </div>
-
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -122,7 +140,22 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const roleSelect = document.getElementById('role');
+            const prefixText = document.getElementById('prefix-text');
+            roleSelect.addEventListener('change', function() {
+                if (roleSelect.value === 'Agent') {
+                    prefixText.textContent = 'BPA';
+                } else {
+                    prefixText.textContent = 'BPM';
+                }
+            });
+        });
+    </script>
 
     <script>
         function debounce(func, delay) {

@@ -27,7 +27,7 @@ class NotifikasiEmail extends Mailable
     {
         // dd($this->data['properties']);
 
-        return $this->subject('Contoh Notifikasi')
+        return $this->subject('Best Villa Recommendations for You')
             ->view('emails.notifikasi', $this->data);
         // ->with(['nama' => $this->data['name'], 'villaData' => $this->data['villaData']]);
     }

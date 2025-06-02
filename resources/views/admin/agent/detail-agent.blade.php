@@ -33,7 +33,13 @@
                             <div>
                                 <a href="mailto:{{ $profile->email }}" class="btn btn-primary"><i class="ri-mail-fill"></i> Email Us</a>
                                 <a href="#!" class="btn btn-outline-primary"><i class="ri-phone-fill"></i> Phone</a>
-                                <a href="#!" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><i class="ri-key-fill"></i> Reset Password</a>
+                                @if ($profile->status === 0)
+                                    <input type="hidden" class="propertyId" value="{{ $profile->id }}">
+                                    {{-- <a href="#!" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><iconify-icon icon="mdi:account-reactivate-outline" class="fs-18 align-middle"></iconify-icon> Reactivate Account</a> --}}
+                                    <button type="button" class="btn btn-outline-primary deleteButton" data-nama="{{ $profile->name }}"><iconify-icon icon="mdi:account-reactivate-outline" class="fs-18 align-middle"></iconify-icon> Reactivate Account</button>
+                                @else
+                                    <a href="#!" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><i class="ri-key-fill"></i> Reset Password</a>
+                                @endif
                             </div>
                         </div>
 
@@ -42,7 +48,6 @@
                             <div class="modal-dialog">
                                 <form action="{{ route('agent.changePassword') }}" method="POST">
                                     @csrf
-
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="staticBackdropLabel">Reset User Password</h5>
@@ -186,6 +191,9 @@
 @endsection
 
 @push('scripts')
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+
     @if ($errors->any())
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -194,5 +202,62 @@
             });
         </script>
     @endif
+
+    {{-- Sweet Alert --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Saat halaman sudah ready
+            const deleteButtons = document.querySelectorAll('.deleteButton');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let propertyName = this.getAttribute('data-nama');
+                    let propertyId = this.parentElement.querySelector('.propertyId').value;
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Reactivate agent " + propertyName + "?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, activate it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Kirim DELETE request manual lewat JavaScript
+                            fetch('/agent/reactivate/' + propertyId, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    Swal.fire({
+                                        title: data.judul,
+                                        text: data.pesan,
+                                        icon: data.swalFlashIcon,
+                                    });
+
+                                    // Optional: reload table / halaman
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1500);
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire('Error', 'Something went wrong!', 'error');
+                                });
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    {{-- /* End Sweet Alert --}}
 
 @endpush

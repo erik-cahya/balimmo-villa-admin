@@ -123,8 +123,16 @@
                                                                 <form action="{{ route('leads.sendmail') }}" method="POST">
                                                                     @csrf
                                                                     @foreach ($matchProperties[$customer->id] as $properties)
+                                                                        {{-- {{ dd($properties) }} --}}
+                                                                        <input type="hidden" name="image_path[]" value="{{ $properties->featuredImage->image_path }}">
                                                                         <input type="hidden" name="property_name[]" value="{{ $properties->property_name }}">
-                                                                        <input type="hidden" name="selling_price[]" value="{{ number_format($properties->selling_price_idr, 2, ',', '.') }}">
+                                                                        <input type="hidden" name="property_address[]" value="{{ $properties->property_address }}">
+                                                                        <input type="hidden" name="bedroom[]" value="{{ $properties->bedroom }}">
+                                                                        <input type="hidden" name="bathroom[]" value="{{ $properties->bathroom }}">
+                                                                        <input type="hidden" name="sub_region[]" value="{{ $properties->sub_region }}">
+                                                                        <input type="hidden" name="property_slug[]" value="{{ $properties->property_slug }}">
+                                                                        <input type="hidden" name="selling_price_idr[]" value="{{ number_format($properties->selling_price_idr, 2, ',', '.') }}">
+                                                                        <input type="hidden" name="selling_price_usd[]" value="{{ number_format($properties->selling_price_usd, 2, ',', '.') }}">
                                                                     @endforeach
                                                                     <input type="hidden" name="cust_email" value="{{ $customer->cust_email }}">
                                                                     <button type="submit" class="dropdown-item pb-2 pt-2">Send Email To Customer</button>

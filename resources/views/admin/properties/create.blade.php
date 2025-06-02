@@ -14,7 +14,6 @@
     <form action="{{ route('properties.store') }}" method="POST" enctype="multipart/form-data" id="galleryForm">
         @csrf
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
@@ -309,7 +308,6 @@
                                     <div class="row my-3">
 
                                         <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" />
-
                                         <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
                                         <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
 

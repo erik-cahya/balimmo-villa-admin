@@ -32,12 +32,11 @@
             <div class="d-flex gap-2">
                 <a href="{{ route('agent.detail', strtolower($agent->reference_code)) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="fs-18 align-middle"></iconify-icon></a>
 
-                @if (Auth::user()->id !== $agent->id)
-                    {{-- <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a> --}}
-                    {{-- Delete Button --}}
-                    <input type="hidden" class="propertyId" value="{{ $agent->id }}">
-                    <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $agent->name }}"><iconify-icon icon="fe:disabled" class="fs-18 align-middle"></iconify-icon></button>
-                    {{-- /. Delete Button --}}
+                @if ($agent->status === 1)
+                    @if (Auth::user()->id !== $agent->id)
+                        <input type="hidden" class="propertyId" value="{{ $agent->id }}">
+                        <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $agent->name }}"><iconify-icon icon="fe:disabled" class="fs-18 align-middle"></iconify-icon></button>
+                    @endif
                 @endif
 
             </div>
