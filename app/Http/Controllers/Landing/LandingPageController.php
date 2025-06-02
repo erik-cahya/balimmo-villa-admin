@@ -60,7 +60,7 @@ class LandingPageController extends Controller
         $data['sub_regions'] = SubRegionModel::select('name')->get();
         $data['feature_list'] = FeatureListModel::get();
 
-        Cache::forget('properties_list_cache');
+        // Cache::forget('properties_list_cache');
         return view('landing.index', $data);
     }
 

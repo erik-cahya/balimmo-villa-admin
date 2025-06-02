@@ -109,7 +109,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="table-responsive">
-                                <table class="table align-middle text-nowrap table-hover table-centered mb-0" id="myTable">
+                                <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="myTable">
                                     <thead class="bg-light-subtle">
                                         <tr>
                                             <th style="width: 20px;">
@@ -138,7 +138,7 @@
                                                             <img src="{{ asset('admin') }}/assets/images/users/default.jpg" alt="" class="avatar-sm rounded-circle">
                                                         </div>
                                                         <div>
-                                                            <a href="#!" class="text-dark fw-medium fs-15">{{ $leads->cust_name }}i</a>
+                                                            <a href="#!" class="text-dark fw-medium fs-15">{{ $leads->cust_name }}</a>
                                                         </div>
                                                     </div>
 
@@ -258,7 +258,6 @@
             $('#search_props').on('keyup', debounce(fetchFilteredProperties, 300));
         });
     </script>
-
 
     {{-- Sweet Alert --}}
     <script>
