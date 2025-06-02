@@ -209,8 +209,8 @@ class PropertiesLeadsController extends Controller
         // return view('emails.notifikasi', $data);
 
 
-        Mail::to('erikcp38@gmail.com')->send(new NotifikasiEmail([
-            // Mail::to($request->cust_email)->send(new NotifikasiEmail([
+        // Mail::to('erikcp38@gmail.com')->send(new NotifikasiEmail([
+        Mail::to($request->cust_email)->send(new NotifikasiEmail([
             'properties' => $combined,
         ]));
 
