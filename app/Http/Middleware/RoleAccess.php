@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RoleAccess
 {
@@ -14,16 +15,16 @@ class RoleAccess
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
 
         if (!Auth::check()) {
             return redirect()->route('login');
         }
 
-        if (!in_array(Auth::user()->role, $roles)) {
-            // Bisa redirect atau abort
-            return redirect('/dashboard'); // atau abort(403);
+        if (!$request->user() || $request->user()->role !== $role) {
+            // Jika bukan role yang diizinkan, lempar 404
+            throw new NotFoundHttpException();
         }
 
         return $next($request);

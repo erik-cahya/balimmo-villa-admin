@@ -25,6 +25,15 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         // dd(Auth::user()->reference_code);
+
+        $request->validate([
+            'client_first_name' => 'required',
+            'client_last_name' => 'required',
+            'client_email' => 'required|unique:client,email',
+            'client_phone' => 'required',
+
+        ]);
+
         ClientModel::create([
             'reference_code' => Auth::user()->reference_code,
             'first_name' => $request->client_first_name,
@@ -60,6 +69,9 @@ class ClientController extends Controller
 
     public function dataFromLeads(Request $request)
     {
+        if ($request->leadsData === null) {
+            return back()->withErrors(['dataLeads' => 'Data Leads Not Found']);
+        }
         foreach ($request->leadsData as $leads) {
             $dataLeads = PropertyLeadsModel::where('id', $leads)->first();
 

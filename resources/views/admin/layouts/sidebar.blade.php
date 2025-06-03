@@ -59,7 +59,7 @@
                 </div>
             </li>
 
-            @if (Auth::user()->role === 'Master')
+            @role('Master')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('agent.*') ? 'active' : '' }}" href="{{ route('agent.index') }}">
                         <span class="nav-icon">
@@ -68,7 +68,7 @@
                         <span class="nav-text">Agent</span>
                     </a>
                 </li>
-            @endif
+            @endrole
 
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
@@ -80,7 +80,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('client.index') }}">
+                <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('clients.index') }}">
                     <span class="nav-icon">
                         <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
                     </span>
@@ -101,7 +101,7 @@
                             <a class="sub-nav-link" href="{{ route('visit.index') }}">Properties Visit</a>
                         </li>
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="#">Create Visit </a>
+                            <a class="sub-nav-link" href="{{ route('visit.create') }}">Create Visit </a>
                         </li>
 
                     </ul>
@@ -118,6 +118,17 @@
                     <span class="nav-text">My Profile</span>
                 </a>
             </li>
+
+            @role('Master')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('localization.*') ? 'active' : '' }}" href="{{ route('localization.index') }}">
+                        <span class="nav-icon">
+                            <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
+                        </span>
+                        <span class="nav-text">Localization Management</span>
+                    </a>
+                </li>
+            @endrole
 
         </ul>
     </div>

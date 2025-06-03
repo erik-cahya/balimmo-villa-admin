@@ -47,19 +47,19 @@
                                     <div class="col-lg-6">
                                         <form class="app-search d-md-block me-auto">
                                             <div class="position-relative">
-                                                <input type="text" id="search_props" class="form-control" placeholder="Search Customer" autocomplete="off">
+                                                <input type="text" id="search_props" class="form-control" placeholder="Search Clients" autocomplete="off">
                                                 <iconify-icon icon="solar:magnifer-broken" class="search-widget-icon"></iconify-icon>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-lg-4">
-                                        <h5 class="text-dark fw-medium mb-0"> <span class="text-muted"> Customers</span></h5>
+                                        <h5 class="text-dark fw-medium mb-0"> <span class="text-muted">20 Client</span></h5>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="text-md-end mt-md-0 mt-3">
-                                    <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="ri-add-line me-1"></i> Add New Customer</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#addNewClientModal"><i class="ri-add-line me-1"></i> Add New Customer</button>
                                     <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#importLeads"><i class="ri-user-line me-1"></i> Import From Leads</button>
                                 </div>
                             </div>
@@ -70,10 +70,10 @@
         </div>
 
         <!-- Add New Customer Modal -->
-        <div class="modal modal-lg fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal modal-lg fade" id="addNewClientModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="{{ route('client.store') }}" method="POST">
+                    <form action="{{ route('clients.store') }}" method="POST">
                         @csrf
                         <div class="modal-header">
                             <h5 class="modal-title" id="staticBackdropLabel">Add New Client</h5>
@@ -204,12 +204,21 @@
             </div>
 
         </div>
-        <div class="row">
 
-            <div class="accordion-item">
-
+        <div class="toast-container position-fixed end-0 top-0 p-3">
+            <div id="liveToast2" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <div class="auth-logo me-auto">
+                        <img class="logo-dark" src="{{ asset('admin') }}/assets/images/logo-dark.png" alt="logo-dark" height="18" />
+                        <img class="logo-light" src="{{ asset('admin') }}/assets/images/logo-light.png" alt="logo-light" height="18" />
+                    </div>
+                    {{-- <small class="text-muted">2 seconds ago</small> --}}
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ $errors->first('dataLeads') }}
+                </div>
             </div>
-
         </div>
 
     </div>
@@ -218,6 +227,26 @@
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    @if ($errors->has('dataLeads'))
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const toastLiveExample2 = document.getElementById('liveToast2');
+                const toast = new bootstrap.Toast(toastLiveExample2);
+                toast.show();
+            });
+        </script>
+    @endif
+
+    @if ($errors->any() && !$errors->has('dataLeads'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var resetModal = new bootstrap.Modal(document.getElementById('addNewClientModal'));
+                resetModal.show();
+            });
+        </script>
+    @endif
+
     <script>
         $('#selectAll').on('change', function() {
             $('.form-check-input').prop('checked', this.checked);
@@ -315,4 +344,5 @@
     </script>
 
     {{-- /* End Sweet Alert --}}
+
 @endpush

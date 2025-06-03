@@ -1,4 +1,28 @@
 @extends('admin.layouts.master')
+@push('style')
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/dataTable.min.css') }}">
+    <style>
+        .dataTables_filter input {
+            border: 1px solid #eaedf1 !important;
+            /* border: 1px solid red; */
+            padding: 6px;
+            border-radius: 5px;
+        }
+
+        .dataTables_wrapper {
+            padding: 1rem;
+        }
+
+        .dataTable {
+            margin-top: 3rem !important;
+        }
+
+        .paging_simple_numbers {
+            /* background-color: red; */
+            /* #063436 */
+        }
+    </style>
+@endpush
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -37,7 +61,6 @@
                                     <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-search-line me-1"></i> Search</button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -54,43 +77,67 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table-hover table-centered table text-nowrap">
+                            <table class="table-hover table-centered table text-nowrap" id="propertiesTable">
                                 <thead class="table-light">
                                     <tr>
+                                        <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                                <label class="form-check-label" for="customCheck1"></label>
+                                            </div>
+                                        </th>
                                         <th scope="col">No</th>
                                         <th scope="col">Customer Name</th>
-                                        <th scope="col">Phone Number</th>
-                                        <th scope="col">Budget</th>
                                         <th scope="col">Property Name</th>
-                                        <th scope="col">Localization</th>
-                                        <th scope="col">Date</th>
+                                        <th scope="col">Created</th>
+                                        <th scope="col">Date Visit</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
                                         <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="qlementine-icons:user-16" class="fs-20 align-middle"></iconify-icon> Erik Cahya Pradana</a>
+                                                <span class="fst-italic fs-12">erik.cahya841@gmail.com</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> Grand Villa Ubud</span>
+                                                <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> The Heaven Seminyak</span>
+                                                <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> The Heaven Seminyak</span>
+                                                <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> The Heaven Seminyak</span>
+                                            </div>
+                                        </td>
+                                        <td><iconify-icon icon="eos-icons:modified-date-outlined" class="fs-20 align-middle"></iconify-icon> 04-June-2025</td>
+                                        <td><iconify-icon icon="fluent-mdl2:event-date" class="fs-20 align-middle"></iconify-icon> 04-June-2025</td>
+                                        <td>
+                                            <div class="btn-group mb-1 me-1">
+                                                <button type="button" class="btn btn-sm btn-warning"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
+                                                <button type="button" class="btn btn-sm btn-danger"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+                                                <button id="dropdown" type="button" class="btn btn-sm btn-primary text-light dropdown-toggle fw-medium" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Download
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown">
+                                                    <li><a class="dropdown-item" href="javascript:void(0);"><iconify-icon icon="openmoji:flag-indonesia" class="fs-12 align-middle"></iconify-icon> Indonesia Version</a></li>
+                                                    <li><a class="dropdown-item" href="{{ route('visit.pdf.english') }}"><iconify-icon icon="twemoji:flag-liberia" class="fs-12 align-middle"></iconify-icon> English Version</a></li>
+                                                    <li><a class="dropdown-item" href="javascript:void(0);"><iconify-icon icon="openmoji:flag-france" class="fs-12 align-middle"></iconify-icon> France Version</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
 
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -127,6 +174,16 @@
     </script>
 @endsection
 @push('scripts')
+    <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/dataTables.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#propertiesTable').DataTable({
+                ordering: false
+            });
+        });
+    </script>
     {{-- Sweet Alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {

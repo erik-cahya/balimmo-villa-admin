@@ -4,12 +4,13 @@ use App\Http\Controllers\Admin\AgentController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Docs\DocsVisitController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\LocalizationController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
 use App\Http\Controllers\Admin\PropertiesLeadsController;
-use App\Http\Controllers\Admin\VisitController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Landing\LandingPageController;
@@ -82,22 +83,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 
     Route::resource('/profile', ProfileController::class);
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImage'])->name('gallery-images.destroy');
     Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
     Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
 
-    Route::get('/visit', [VisitController::class, 'index'])->name('visit.index');
+    Route::get('/visit/generate/english', [DocsVisitController::class, 'generateEnglishPDF'])->name('visit.pdf.english');
+    Route::resource('/visit', DocsVisitController::class);
 
-    Route::get('clients', [ClientController::class, 'index'])->name('client.index');
-    Route::post('clients', [ClientController::class, 'store'])->name('client.store');
+    // Route::get('clients', [ClientController::class, 'index'])->name('client.index');
+    // Route::post('clients', [ClientController::class, 'store'])->name('client.store');
     Route::post('clients/leads', [ClientController::class, 'dataFromLeads'])->name('client.fromLeads');
+    Route::resource('/clients', ClientController::class);
 
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
+    Route::resource('localization', LocalizationController::class)->middleware('role:Master');
 });
+
+
 
 Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
 

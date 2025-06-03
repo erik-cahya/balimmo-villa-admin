@@ -10,13 +10,15 @@ use Illuminate\Support\Str;
 
 class PropertiesFeatureController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $data['feature_indoor'] = FeatureListModel::where('type', 'indoor')->get();
         $data['feature_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
         return view('admin.properties.feature-list.index', $data);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $baseSlug = Str::slug($request->name_category);
         $slug = $baseSlug;
@@ -42,7 +44,8 @@ class PropertiesFeatureController extends Controller
         return redirect()->route('features.index')->with('flashData', $flashData);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         // dd($request->all());
 
         $slug = Str::slug($request->name_category);
@@ -74,4 +77,3 @@ class PropertiesFeatureController extends Controller
         return response()->json($flashData);
     }
 }
-

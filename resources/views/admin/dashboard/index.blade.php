@@ -59,7 +59,7 @@
                             </div>
 
                         </div>
-                        <div class="gap-3 d-flex">
+                        <div class="d-flex gap-3">
                             <p><i class="ri-circle-fill text-success"></i> {{ $data_properties->where('type_acceptance', 'accept')->count() }} Accept</p>
                             <p><i class="ri-circle-fill text-warning"></i> {{ $data_properties->where('type_acceptance', 'pending')->count() }} Pending</p>
                             <p><i class="ri-circle-fill text-danger"></i> {{ $data_properties->where('type_acceptance', 'decline')->count() }} Decline</p>
@@ -261,7 +261,7 @@
     {{-- <script src="{{ asset('admin') }}/assets/js/pages/dashboard-analytics.js"></script> --}}
 
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('admin/assets/js/dataTables.min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
