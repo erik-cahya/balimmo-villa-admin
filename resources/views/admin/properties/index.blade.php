@@ -75,7 +75,13 @@
                                             <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="solar:bed-broken" class="fs-18 text-primary"></iconify-icon>{{ $property->bedroom }} Bedroom</p>
                                             <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="cil:bathroom" class="fs-18 text-primary"></iconify-icon>{{ $property->bathroom }} Bathroom</p>
                                         </td>
-                                        <td class="text-capitalize">{{ $property->property_address }}</td>
+                                        <td class="text-capitalize">
+                                            <div class="d-flex flex-column">
+                                                <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> {{ $property->region . ', ' . $property->sub_region }}</a>
+                                                <span class="fst-italic">{{ Str::limit($property->property_address, 50) }}</span>
+                                            </div>
+
+                                        </td>
 
                                         @php
                                             switch ($property->type_acceptance) {

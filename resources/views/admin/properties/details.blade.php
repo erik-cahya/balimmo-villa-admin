@@ -248,13 +248,13 @@
                                                 <p class="text-dark fw-semibold fs-16 mb-0"><iconify-icon icon="solar:bath-broken" class="fs-18 text-primary"></iconify-icon> Sale Price & Conditions</p>
                                                 <hr>
                                                 <div class="row">
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Desired Selling Price (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Desired Selling Price (USD)</span><span class="mx-2">:</span>$ {{ number_format($data_properties->selling_price_usd, 2, ',', '.') }}</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Desired Selling Price (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Desired Selling Price (USD)</span><span class="mx-2">:</span>$ {{ number_format($data_properties->selling_price_usd, 2, ',', '.') }}</p>
 
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Estimated Commision Ammount (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->commision_ammount_idr, 2, ',', '.') }}</p>
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Estimated Commision Ammount (USD)</span><span class="mx-2">:</span>USD {{ number_format($data_properties->commision_ammount_usd, 2, ',', '.') }}</p>
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Net Seller price (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->net_seller_idr, 2, ',', '.') }}</p>
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Net Seller price (USD)</span><span class="mx-2">:</span>USD {{ number_format($data_properties->net_seller_usd, 2, ',', '.') }}</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Commision Ammount (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->commision_ammount_idr, 2, ',', '.') }}</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Commision Ammount (USD)</span><span class="mx-2">:</span>USD {{ number_format($data_properties->commision_ammount_usd, 2, ',', '.') }}</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net Seller price (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->net_seller_idr, 2, ',', '.') }}</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net Seller price (USD)</span><span class="mx-2">:</span>USD {{ number_format($data_properties->net_seller_usd, 2, ',', '.') }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -267,11 +267,11 @@
                                                 <p class="text-dark fw-semibold fs-16 mb-0"><iconify-icon icon="solar:bath-broken" class="fs-18 text-primary"></iconify-icon> Rental Yield</p>
                                                 <hr>
                                                 <div class="row">
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Average Nightly Rate</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Average Occupancy Rate (%) </span><span class="mx-2">:</span>{{ $data_properties->avg_occupancy_rate }} %</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Average Nightly Rate</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Average Occupancy Rate (%) </span><span class="mx-2">:</span>{{ $data_properties->avg_occupancy_rate }} %</p>
 
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Months Rented per Year *</span><span class="mx-2">:</span>{{ $data_properties->months_rented }} Month</p>
-                                                    <p class="mb-2 col-lg-6"><span class="fw-medium text-dark">Estimated Annual Turnover</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->annual_turnover, 2, ',', '.') }}</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Months Rented per Year *</span><span class="mx-2">:</span>{{ $data_properties->months_rented }} Month</p>
+                                                    <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Annual Turnover</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->annual_turnover, 2, ',', '.') }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -304,7 +304,7 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="{{ asset('admin') }}{{ $agent_data->profile == null ? '/assets/images/users/avatar-2.jpg' : '/profile-image/' . $agent_data->reference_code . '/' . $agent_data->profile }}" alt="" class="avatar-xl rounded-circle border-light mx-auto border border-2">
+                            <img src="{{ asset('admin') }}{{ $agent_data->profile == null ? '/assets/images/users/avatar-2.jpg' : '/profile-image/' . $agent_data->reference_code . '/' . $agent_data->profile }}" alt="" class="avatar-xl rounded-circle border-light mx-auto border border-2" style="width: 8rem; height: 8rem; object-fit:cover; border-radius: 10px">
                             <div class="mt-2">
                                 <a href="#!" class="fw-medium text-dark fs-16 text-uppercase">{{ $agent_data->name }}</a>
                                 <p class="text-capitalize mb-0">({{ $agent_data->role }})</p>
