@@ -86,7 +86,7 @@
                             <div class="listing__details--content__step">
                                 <h2 class="listing__details--title mb-25">{{ $property->property_name }}</h2>
                                 <div class="listing__details--price__id d-flex align-items-center">
-                                    <div class="listing__details--price d-flex ">
+                                    <div class="listing__details--price d-flex">
                                         <span class="listing__details--price__new">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
                                         |
                                         <span class="listing__details--price__new">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
@@ -99,8 +99,6 @@
                                     </svg>
                                     {{ $property->property_address . ', ' . $property->sub_region }}
                                 </p>
-
-
 
                             </div>
                         </div>

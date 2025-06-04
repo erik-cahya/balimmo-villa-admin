@@ -37,36 +37,6 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <div class="row justify-content-between">
-                            <div class="col-lg-6">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-6">
-                                        <form class="app-search d-md-block me-auto">
-                                            <div class="position-relative">
-                                                <input type="search" class="form-control" placeholder="Search Customer" autocomplete="off" value="">
-                                                <iconify-icon icon="solar:magnifer-broken" class="search-widget-icon"></iconify-icon>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <h5 class="text-dark fw-medium mb-0"> <span class="text-muted"> Customers</span></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="text-md-end mt-md-0 mt-3">
-                                    <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-search-line me-1"></i> Search</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center border-bottom">
@@ -86,54 +56,83 @@
                                                 <label class="form-check-label" for="customCheck1"></label>
                                             </div>
                                         </th>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Customer Name</th>
-                                        <th scope="col">Property Name</th>
-                                        <th scope="col">Created</th>
-                                        <th scope="col">Date Visit</th>
-                                        <th scope="col">Action</th>
+                                        <th>No</th>
+                                        <th>Customer Name</th>
+                                        <th>Property Name</th>
+                                        <th>Created</th>
+                                        <th>Date Visit</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td>1</td>
-                                        <td>
-                                            <div class="d-flex flex-column">
-                                                <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="qlementine-icons:user-16" class="fs-20 align-middle"></iconify-icon> Erik Cahya Pradana</a>
-                                                <span class="fst-italic fs-12">erik.cahya841@gmail.com</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex flex-wrap gap-1">
-                                                <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> Grand Villa Ubud</span>
-                                                <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> The Heaven Seminyak</span>
-                                                <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> The Heaven Seminyak</span>
-                                                <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> The Heaven Seminyak</span>
-                                            </div>
-                                        </td>
-                                        <td><iconify-icon icon="eos-icons:modified-date-outlined" class="fs-20 align-middle"></iconify-icon> 04-June-2025</td>
-                                        <td><iconify-icon icon="fluent-mdl2:event-date" class="fs-20 align-middle"></iconify-icon> 04-June-2025</td>
-                                        <td>
-                                            <div class="btn-group mb-1 me-1">
-                                                <button type="button" class="btn btn-sm btn-warning"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
-                                                <button type="button" class="btn btn-sm btn-danger"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
-                                                <button id="dropdown" type="button" class="btn btn-sm btn-primary text-light dropdown-toggle fw-medium" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Download
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown">
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><iconify-icon icon="openmoji:flag-indonesia" class="fs-12 align-middle"></iconify-icon> Indonesia Version</a></li>
-                                                    <li><a class="dropdown-item" href="{{ route('visit.pdf.english') }}"><iconify-icon icon="twemoji:flag-liberia" class="fs-12 align-middle"></iconify-icon> English Version</a></li>
-                                                    <li><a class="dropdown-item" href="javascript:void(0);"><iconify-icon icon="openmoji:flag-france" class="fs-12 align-middle"></iconify-icon> France Version</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @foreach ($visit_docs as $visit)
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                    <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                                </div>
+                                            </td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                <div class="d-flex flex-column">
+                                                    <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="qlementine-icons:user-16" class="fs-16 align-middle"></iconify-icon> {{ $visit->first_name . ' ' . $visit->last_name }}</a>
+                                                    <div>
+
+                                                        <span class="fst-italic fs-12">{{ $visit->email }}</span>
+                                                        |
+                                                        <span class="fst-italic fs-12">{{ implode('-', str_split(preg_replace('/\D/', '', $visit->phone_number), 4)) }}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    @foreach ($property_list[$visit->id] ?? [] as $properties)
+                                                        <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> {{ $properties->property_name }}</span>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                            <td class="fs-12">
+                                                <iconify-icon icon="eos-icons:modified-date-outlined" class="fs-20 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($visit->created_at)->format('d F, Y') }}
+                                            </td>
+                                            <td class="fs-12">
+                                                <iconify-icon icon="fluent-mdl2:event-date" class="fs-20 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($visit->visit_date)->format('d F, Y') }}
+                                            </td>
+                                            <td>
+                                                <div class="btn-group mb-1 me-1">
+                                                    <button type="button" class="btn btn-sm btn-warning"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
+                                                    <button type="button" class="btn btn-sm btn-danger"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+                                                    <button id="dropdown" type="button" class="btn btn-sm btn-primary text-light dropdown-toggle fw-medium" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Download
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown">
+                                                        {{-- <li><a class="dropdown-item" href="{{ route('visit.pdf.english') }}" target="_blank"><iconify-icon icon="twemoji:flag-liberia" class="fs-12 align-middle"></iconify-icon> English Version</a></li> --}}
+                                                        <li>
+                                                            <form action="{{ route('visit.pdf.english.post') }}" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="email" value="{{ $visit->email }}">
+                                                                <input type="hidden" name="phone_number" value="{{ $visit->phone_number }}">
+                                                                <input type="hidden" name="first_name" value="{{ $visit->first_name }}">
+                                                                <input type="hidden" name="last_name" value="{{ $visit->last_name }}">
+                                                                <input type="hidden" name="visit_date" value="{{ $visit->visit_date }}">
+                                                                <input type="hidden" name="internal_reference" value="{{ $property_list[$visit->id][0]->internal_reference }}">
+                                                                @foreach ($property_list[$visit->id] ?? [] as $index => $properties)
+                                                                    {{-- {{ dd($properties) }} --}}
+                                                                    <input type="hidden" name="properties[{{ $index }}][name]" value="{{ $properties->property_name }}">
+                                                                    <input type="hidden" name="properties[{{ $index }}][address]" value="{{ $properties->property_address }}">
+                                                                    <input type="hidden" name="properties[{{ $index }}][selling_price_idr]" value="{{ $properties->selling_price_idr }}">
+                                                                    <input type="hidden" name="properties[{{ $index }}][selling_price_usd]" value="{{ $properties->selling_price_usd }}">
+                                                                @endforeach
+                                                                <button type="submit" class="dropdown-item" target="_blank"><iconify-icon icon="twemoji:flag-liberia" class="fs-12 align-middle"></iconify-icon> English Version</button>
+                                                            </form>
+                                                        </li>
+                                                        <li><a class="dropdown-item disabled" href="javascript:void(0);" target="_blank"><iconify-icon icon="openmoji:flag-indonesia" class="fs-12 align-middle"></iconify-icon> Indonesia Version</a></li>
+                                                        <li><a class="dropdown-item disabled" href="javascript:void(0);" target="_blank"><iconify-icon icon="openmoji:flag-france" class="fs-12 align-middle"></iconify-icon> France Version</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
                                 </tbody>
                             </table>

@@ -16,8 +16,8 @@
          <td>{{ implode('-', str_split(preg_replace('/\D/', '', $client->phone_number), 4)) }}</td>
          <td>
              <div class="d-flex gap-2">
-                 <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                 <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="align-middle fs-18"></iconify-icon></a>
+                 <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="fs-18 align-middle"></iconify-icon></a>
+                 <a href="#!" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="fs-18 align-middle"></iconify-icon></a>
              </div>
          </td>
      </tr>

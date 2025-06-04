@@ -18,7 +18,10 @@ class ClientController extends Controller
         $clientEmails = ClientModel::pluck('email')->toArray();
 
 
-        $data['data_leads'] = PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)->where('agent_code', Auth::user()->reference_code)->get();
+        $data['data_leads'] = PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)
+            ->where('agent_code', Auth::user()->reference_code)
+            ->get();
+
         return view('admin.clients.index', $data);
     }
 

@@ -71,6 +71,7 @@ class PropertiesController extends Controller
                 }])->get();
         }
 
+
         return view('admin.properties.index', $data);
     }
 

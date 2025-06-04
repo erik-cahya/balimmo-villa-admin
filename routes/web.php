@@ -38,9 +38,9 @@ Route::get('/client-agent', [ClientController::class, 'search'])->name('client.s
 
 
 // view our form page
-Route::get('/form', [FormController::class, 'index'])->name('form.index');
-Route::post('/form-submit', [FormController::class, 'submit'])->name('form.submit');
-Route::post('/form-upload', [FormController::class, 'upload'])->name('form.upload');
+// Route::get('/form', [FormController::class, 'index'])->name('form.index');
+// Route::post('/form-submit', [FormController::class, 'submit'])->name('form.submit');
+// Route::post('/form-upload', [FormController::class, 'upload'])->name('form.upload');
 
 // ############################################################### Landing Page Controller
 Route::get('/', [LandingPageController::class, 'index'])->name('landing-page.index');
@@ -89,6 +89,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
 
     Route::get('/visit/generate/english', [DocsVisitController::class, 'generateEnglishPDF'])->name('visit.pdf.english');
+    Route::post('/visit/generate/english', [DocsVisitController::class, 'generateEnglishPDF'])->name('visit.pdf.english.post');
     Route::resource('/visit', DocsVisitController::class);
 
     // Route::get('clients', [ClientController::class, 'index'])->name('client.index');
@@ -99,6 +100,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
     Route::resource('localization', LocalizationController::class)->middleware('role:Master');
 });
+
+// Route::get('signature', function () {
+//     return view('signature');
+// });
+
+// Route::post('/signature/save', [DocsVisitController::class, 'storeSignature'])->name('signature.save');
+
 
 
 

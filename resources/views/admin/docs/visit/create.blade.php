@@ -37,141 +37,127 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <div class="row justify-content-between">
-                            <div class="col-lg-6">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-6">
-                                        <form class="app-search d-md-block me-auto">
-                                            <div class="position-relative">
-                                                <input type="search" class="form-control" placeholder="Search Customer" autocomplete="off" value="">
-                                                <iconify-icon icon="solar:magnifer-broken" class="search-widget-icon"></iconify-icon>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <h5 class="text-dark fw-medium mb-0"> <span class="text-muted"> Customers</span></h5>
-                                    </div>
-                                </div>
+        <form action="{{ route('visit.store') }}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                            <div>
+                                <h4 class="card-title">Select Properties</h4>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="text-md-end mt-md-0 mt-3">
-                                    <button type="button" class="btn btn-sm btn-outline-primary me-1"><i class="ri-search-line me-1"></i> Search</button>
-                                </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                    <thead class="bg-light-subtle">
+                                        <tr>
+                                            <th style="width: 20px;">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="selectAll">
+                                                    <label class="form-check-label" fid="selectAll"></label>
+                                                </div>
+                                            </th>
+                                            <th>Properties Name</th>
+                                            <th>Properties Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($data_property as $property)
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="propertyId[]" class="form-check-input" id="{{ $property->propertyId }}" value="{{ $property->propertyId }}">
+                                                        <label class="form-check-label" for="{{ $property->propertyId }}">&nbsp;</label>
+                                                    </div>
+                                                </td>
+                                                <td class="fw-medium text-dark d-flex">
+                                                    <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" class="avatar-sm rounded-circle me-2" alt="...">
+
+                                                    <div class="d-flex flex-column">
+                                                        {{ $property->property_name }}
+                                                        <span class="fst-italic badge bg-dark text-light fs-11">{{ $property->property_code }}</span>
+                                                        <span class="fst-italic fs-12">{{ Str::limit($property->property_address, 100) }}</span>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex flex-column gap-1">
+                                                        <span class="fst-italic fs-12">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
+                                                        <span class="fst-italic fs-12">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- end table-responsive -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                            <div>
+                                <h4 class="card-title">Select Clients</h4>
                             </div>
 
                         </div>
+                        <div class="card-body">
+                            <div class="col-lg-12 text-capitalize mb-3" id="group_dataClients">
+                                <select class="form-control" id="dataClients" name="dataClients" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
+                                    <option value="" selected disabled>Choose Clients</option>
+                                    @foreach ($data_client as $client)
+                                        <option value="{{ $client->id }}">{{ $client->first_name . ' ' . $client->last_name }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('dataClient')
+                                    <style>
+                                        .choices__inner {
+                                            border-color: #e96767 !important;
+                                        }
+                                    </style>
+
+                                    <div class="alert alert-danger m-0">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                            <div>
+                                <h4 class="card-title">Date Visit</h4>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <x-form-input className="col-lg-12" type="text" name="date_visit" label="Date Visit" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">Create Document Visit</button>
                 </div>
+
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <h4 class="card-title">Properties Listing</h4>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
-                                <thead class="bg-light-subtle">
-                                    <tr>
-                                        <th style="width: 20px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1"></label>
-                                            </div>
-                                        </th>
-                                        <th>ID Properties</th>
-                                        <th>Properties Name</th>
-                                        <th>Address</th>
-                                        <th>Price IDR</th>
-                                        <th>Price USD</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                            </div>
-                                        </td>
-                                        <td><a href="javascript: void(0);" class="text-dark fw-medium">#TZ2540</a> </td>
-                                        <td class="fw-medium text-dark"><img src="{{ asset('admin') }}/assets/images/users/avatar-2.jpg" class="avatar-sm rounded-circle me-2" alt="..."> Michael A. Miner</td>
+        </form>
+    </div>
 
-                                        <td class="text-capitalize">
-                                            <div class="d-flex flex-column">
-                                                <a href="#!" class="text-dark fw-medium fs-14"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> Badung, Jimbaran</a>
-                                                <span class="fst-italic fs-12">Jl. Yoga Perkanthi, Jimbaran, Kec. Kuta Sel., Kabu...</span>
-                                            </div>
-
-                                        </td>
-                                        <td> Mastercard </td>
-                                        <td> <span class="badge bg-success-subtle text-success fs-12 px-2 py-1">Completed</span> </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- end table-responsive -->
-                    </div>
+    <div class="toast-container position-fixed end-0 top-0 p-3">
+        <div id="liveToast2" class="toast text-bg-primary" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div class="auth-logo me-auto">
+                    <img class="logo-dark" src="{{ asset('admin') }}/assets/images/logo-dark.png" alt="logo-dark" height="18" />
+                    <img class="logo-light" src="{{ asset('admin') }}/assets/images/logo-light.png" alt="logo-light" height="18" />
                 </div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
-
-            <div class="col-xl-6">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center border-bottom">
-                        <div>
-                            <h4 class="card-title">Clients</h4>
-                        </div>
-
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table-hover table-centered table text-nowrap">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Customer Name</th>
-                                        <th scope="col">Phone Number</th>
-                                        <th scope="col">Budget</th>
-                                        <th scope="col">Property Name</th>
-                                        <th scope="col">Localization</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
+            <div class="toast-body">
+                {{ $errors->first('propertiesNull') }}
             </div>
         </div>
     </div>
@@ -179,12 +165,43 @@
 @push('scripts')
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
 
+    @if ($errors->has('propertiesNull'))
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const toastLiveExample2 = document.getElementById('liveToast2');
+                const toast = new bootstrap.Toast(toastLiveExample2);
+                toast.show();
+            });
+        </script>
+    @endif
+
+    {{-- Flatpickr --}}
+    <script>
+        $("#date_visit").flatpickr({
+            dateFormat: "d-m-Y"
+        });
+    </script>
+    {{-- /* Flatpickr --}}
+
+    {{-- Data Table --}}
     <script>
         $(document).ready(function() {
             $('#propertiesTable').DataTable();
+            $('#clientTable').DataTable();
         });
     </script>
+    {{-- /* Data Table --}}
+
+    {{-- Checkbox check all --}}
+    <script>
+        $('#selectAll').on('change', function() {
+            $('.form-check-input').prop('checked', this.checked);
+        });
+    </script>
+    {{-- /* Checkbox check all --}}
+
     {{-- Sweet Alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
