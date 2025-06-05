@@ -28,10 +28,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="fw-semibold mb-0">Customers List</h4>
+                    <h4 class="fw-semibold mb-0">Visit List</h4>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Customers</a></li>
-                        <li class="breadcrumb-item active">Customers List</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Visit</a></li>
+                        <li class="breadcrumb-item active">Docs Visit List</li>
                     </ol>
                 </div>
             </div>
@@ -41,13 +41,13 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                         <div>
-                            <h4 class="card-title">All Customers List</h4>
+                            <h4 class="card-title">All Document Visit List</h4>
                         </div>
 
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table-hover table-centered table text-nowrap" id="propertiesTable">
+                            <table class="table-hover table-centered fs-14 table text-nowrap" id="propertiesTable">
                                 <thead class="table-light">
                                     <tr>
                                         <th style="width: 20px;">
@@ -61,6 +61,7 @@
                                         <th>Property Name</th>
                                         <th>Created</th>
                                         <th>Date Visit</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -88,7 +89,7 @@
                                             <td>
                                                 <div class="d-flex flex-wrap gap-1">
                                                     @foreach ($property_list[$visit->id] ?? [] as $properties)
-                                                        <span class="badge bg-dark text-light fs-10 px-2 py-1"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> {{ $properties->property_name }}</span>
+                                                        <span class="badge bg-dark text-light" style="font-size: 10px"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> {{ $properties->property_name }}</span>
                                                     @endforeach
                                                 </div>
                                             </td>
@@ -99,10 +100,13 @@
                                                 <iconify-icon icon="fluent-mdl2:event-date" class="fs-20 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($visit->visit_date)->format('d F, Y') }}
                                             </td>
                                             <td>
+                                                <span class="badge text-success bg-success-subtle fs-12 px-2 py-1">Done Visit</span>
+                                            </td>
+                                            <td>
                                                 <div class="btn-group mb-1 me-1">
-                                                    <button type="button" class="btn btn-sm btn-warning"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
-                                                    <button type="button" class="btn btn-sm btn-danger"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
-                                                    <button id="dropdown" type="button" class="btn btn-sm btn-primary text-light dropdown-toggle fw-medium" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <button type="button" class="btn btn-xs btn-warning"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
+                                                    <button type="button" class="btn btn-xs btn-danger"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+                                                    <button id="dropdown" type="button" class="btn btn-xs btn-primary text-light dropdown-toggle fw-medium" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Download
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown">

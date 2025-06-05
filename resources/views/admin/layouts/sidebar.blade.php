@@ -98,7 +98,7 @@
                 <div class="{{ request()->routeIs('visit.*') ? 'show' : '' }} collapse" id="sidebarVisit">
                     <ul class="nav sub-navbar-nav">
                         <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('visit.index') }}">Properties Visit</a>
+                            <a class="sub-nav-link" href="{{ route('visit.index') }}">List Document Visit</a>
                         </li>
                         <li class="sub-nav-item">
                             <a class="sub-nav-link" href="{{ route('visit.create') }}">Create Visit </a>
