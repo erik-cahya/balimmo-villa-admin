@@ -43,7 +43,7 @@ class PropertiesController extends Controller
                 'type_acceptance',
                 'bathroom',
                 'users.name as agentName',
-                'users.status'
+                'users.status',
             )
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
@@ -395,8 +395,22 @@ class PropertiesController extends Controller
         return redirect()->route('properties.index')->with('flashData', $flashData);
     }
 
-    public function detail(string $slug)
+    public function detail($slug)
     {
+        // $allProps = PropertiesModel::where('property_slug', $slug)
+        //     ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+        //     ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+        //     ->with(['featuredImage' => function ($query) {
+        //         $query->select('image_path', 'property_gallery.id');
+        //         $query->where('is_featured', 1);
+        //     }])
+        //     ->select(
+        //         'properties.*'
+        //     )
+        //     ->first();
+
+        // dd($allProps);
+
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
 
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
@@ -406,9 +420,25 @@ class PropertiesController extends Controller
                 $query->select('image_path', 'property_gallery.id');
                 $query->where('is_featured', 1);
             }])
+            ->select(
+                'properties.*',
+                'property_financial.*',
+                'property_legal.company_name',
+                'property_legal.rep_first_name',
+                'property_legal.rep_last_name',
+                'property_legal.phone',
+                'property_legal.email',
+                'property_legal.legal_status',
+                'property_legal.holder_name',
+                'property_legal.holder_number',
+                'property_legal.start_date',
+                'property_legal.end_date',
+                'property_legal.purchase_date',
+                'property_legal.deadline_payment',
+                'property_legal.zoning',
+            )
             ->first();
 
-        // dd($data['data_properties']);
 
         $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['data_properties']->id)
             ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
@@ -445,7 +475,7 @@ class PropertiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $slug)
+    public function edit($slug)
     {
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
@@ -454,10 +484,28 @@ class PropertiesController extends Controller
                 $query->select('image_path', 'property_gallery.id');
                 $query->where('is_featured', 1);
             }])
+            ->select(
+                'properties.*',
+                'property_financial.*',
+                'property_legal.company_name',
+                'property_legal.rep_first_name',
+                'property_legal.rep_last_name',
+                'property_legal.phone',
+                'property_legal.email',
+                'property_legal.legal_status',
+                'property_legal.holder_name',
+                'property_legal.holder_number',
+                'property_legal.start_date',
+                'property_legal.end_date',
+                'property_legal.purchase_date',
+                'property_legal.deadline_payment',
+                'property_legal.zoning',
+            )
             ->first();
 
 
         // Property Owner
+        // dd($data['data_properties']);
         $data['property_owner'] = PropertyOwnerModel::where('properties_id', $data['data_properties']->id)->get();
 
         // Properties Feature
@@ -730,12 +778,15 @@ class PropertiesController extends Controller
 
         Cache::forget('properties_list_cache');
 
+        // dd($slug->property_slug);
+
+        $slug = PropertiesModel::where('id', $id)->first();
         $flashData = [
             'judul' => 'Edit Property Success',
             'pesan' => 'Property edited successfully',
             'swalFlashIcon' => 'success',
         ];
-        return back()->with('flashData', $flashData);
+        return redirect()->route('properties.index')->with('flashData', $flashData);
     }
 
     private function handleFileUpdate($request, $inputName, $folderPath, $propertyId)

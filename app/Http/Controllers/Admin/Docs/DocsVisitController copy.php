@@ -108,34 +108,24 @@ class DocsVisitController extends Controller
     //     return $pdf->stream('docs.pdf');
     // }
 
-
     public function generateEnglishPDF(Request $request)
     {
-        // Data
-        $data = [
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'property' => $request->properties,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'visit_date' => Carbon::parse($request->visit_date)->format('d F, Y'),
-            'agentData' => User::where('reference_code', $request->internal_reference)
-                ->select('name', 'email')
-                ->first(),
-        ];
+        // dd($request->all());
+        $data['email'] = $request->email;
+        $data['phone_number'] = $request->phone_number;
+        $data['property'] = $request->properties;
+        $data['first_name'] = $request->first_name;
+        $data['last_name'] = $request->last_name;
+        $data['visit_date'] = Carbon::parse($request->visit_date)->format('d F, Y');
 
-        // SET OPTION lebih dulu
-        Pdf::setOption('isHtml5ParserEnabled', true);
-        Pdf::setOption('isPhpEnabled', true);
+        $data['agentData'] = User::where('reference_code', $request->internal_reference)->select('name', 'email')->first();
 
-        // Load view
-        $pdf = Pdf::loadView('admin.docs.visit.pdf.english.english-pdf', $data)
-            ->setPaper('A4', 'portrait');
+        // dd($data['agentData']);
+        $pdf = PDF::loadView('admin.docs.visit.pdf.english.english-pdf', $data)->setPaper('A4', 'portrait');
 
-
-        return $pdf->stream('test.pdf');
+        // dd($data['phone_number']);
+        return $pdf->stream('docs.pdf');
     }
-
 
 
     // public function storeSignature(Request $request)

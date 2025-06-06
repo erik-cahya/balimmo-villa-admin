@@ -2,130 +2,185 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document Properties Visit</title>
-    <style>
-        body {
-            /* font-family: sans-serif; */
-            font-size: 14px;
-        }
-
-        .row {
-            width: 100%;
-        }
-
-        .col {
-            width: 40%;
-            display: inline-block;
-            vertical-align: top;
-            /* background-color: red; */
-        }
-
-        .col.right {
-            float: right;
-        }
-
-        .label {
-            font-weight: bold;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+    <title>Dokumen SPK</title>
+    <link rel="stylesheet" type="text/css" href="{{ public_path('bootstrap/css/bootstrap/bootstrap.css') }}">
+    <script defer src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+    <style type="text/css">
+        html {
+            padding: 0 !important;
+            margin: 0 !important;
+            font-family: "Times New Roman";
         }
 
         table,
-        td,
-        th {
-            border: 1px solid black;
-            padding: 6px;
+        th,
+        td {
+            border-collapse: collapse;
+            vertical-align: top;
         }
 
-        th {
-            background-color: #eee;
+        .p1 {
+            font-size: 11px;
+        }
+
+        .p2 {
+            font-size: 11px;
+            text-align: justify;
+            line-height: 20px;
+        }
+
+        .p3 {
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .p4 {
+            font-size: 10px;
+        }
+
+        .inf {
+            font-weight: bold;
+        }
+
+        .warning {
+            font-style: italic;
+            color: red;
+        }
+
+        @page {
+            margin: 10mm;
+        }
+
+        body {
+            line-height: 1.3;
+            margin-top: 95px;
+            margin-bottom: 50px;
+        }
+
+        .page-number:before {
+            counter-reset: pages;
+            counter-increment: pages;
+            content: counter(page);
+        }
+
+        ul {
+            list-style: none;
+            /* Remove default list styling */
+            padding: 0;
+            margin-bottom: 10px;
+            font-size: 11px;
+            margin-left: 20px;
+            text-align: justify;
+        }
+
+        li {
+            margin-left: 20px;
+            /* Adjust margin as needed */
+            position: relative;
+            font-size: 11px;
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        .header {
+            position: fixed;
+            top: 10px;
+            width: 30%;
+            height: 65px;
+            margin-left: 50px;
+            border: 1px solid black;
+            padding-left: 5px;
+            padding-bottom: 10px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            font-size: 6pt;
+            color: #777;
+        }
+
+        .page {
+            margin-top: 10px;
+            margin-bottom: 50px;
+            padding: 0px 80px;
+        }
+
+        .page-number:before {
+            counter-reset: pages;
+            counter-increment: pages;
+            content: counter(page) " of " counters(pages);
+            /* content: counter(page); */
+        }
+
+        .page-number {
+            text-align: right;
+            color: black;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .details {
+            border: 0.5px solid black;
+            padding: 3px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .details-center {
+            border: 0.5px solid black;
+            padding: 3px;
+            border-collapse: collapse;
+            font-size: 11px;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .details-right {
+            border: 0.5px solid black;
+            padding: 3px;
+            border-collapse: collapse;
+            font-size: 11px;
+            text-align: right;
+            line-height: 20px;
+        }
+
+        .details-left {
+            border: 0.5px solid black;
+            padding: 3px;
+            border-collapse: collapse;
+            font-size: 11px;
+            text-align: left;
+            line-height: 20px;
         }
     </style>
 </head>
 
 <body>
-    <div style="text-align: center">
 
-        <img src="{{ public_path('/admin/assets/images/logo-dark.png') }}" alt="" style="width: 300px;">
-        <p>Jl. Pantai Batu Bolong No.15, Canggu, Kec. Kuta Utara,
-            <br>Kabupaten Badung, Bali 80351, Indonesia
-            <br>+62-85-333-777-500
-        </p>
-        <p><strong>Email : </strong>hello@balimmo.properties
-            <br><strong>Nomor : </strong>0055/SK-Keanggotaan/DDP-AREBI/2025
-        </p>
+    <div class="content">
+        <h1>Halaman 1</h1>
+        <p>Ini adalah konten halaman pertama. Tambahkan konten sebanyak mungkin agar terlihat efeknya.</p>
+
+        @for ($i = 1; $i <= 100; $i++)
+            <p>Baris konten {{ $i }}</p>
+        @endfor
     </div>
 
-    <div class="row">
-        <div class="col" style="margin-left: 50px">
-            <p><span class="label">Date de la visite:</span> [ {{ $visit_date }} ]</p>
-            <p><span class="label">Name:</span> [ {{ $first_name . ' ' . $last_name }} ]</p>
-            <p><span class="label">Surname:</span> [ {{ $first_name }} ]</p>
-            <p><span class="label">Phone:</span> [ {{ $phone_number }} ] </p>
-
-        </div>
-        <div class="col right">
-            <p><span class="label">Name of Agent:</span> [ {{ $agentData->name }} ]</p>
-            <p><span class="label">Email:</span> [ {{ $agentData->email }} ]</p>
-            <p><span class="label">N° Passport:</span> [............................]</p>
-            <p><span class="label">Nationality:</span> [............................]</p>
-        </div>
-    </div>
-
-    <h3 style="text-align: center; margin-top: 30px;">LIST VISIT OF THE DAY:</h3>
-
-    <table>
-        <thead>
-            <tr>
-                <th width="100">NAME VILLA</th>
-                <th width="100">ADDRESS</th>
-                <th width="20">PRICE IDR</th>
-                <th width="20">PRICE $</th>
+    <!-- Footer akan muncul di semua halaman -->
+    <footer class="footer">
+        <table style="width: 96%; ">
+            <tr class="">
+                <td width="20%">
+                    <p style="text-align: right;color: black;font-size: 10px;">
+                        Page <span class="page-number"></span>
+                    </p>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach ($property as $props)
-                <tr>
-                    <td><em>{{ $props['name'] }}</em></td>
-                    <td><em>{{ $props['address'] }}</em></td>
-                    <td><em>IDR {{ number_format($props['selling_price_idr'], 2, ',', '.') }}</em></td>
-                    <td><em>$ {{ number_format($props['selling_price_usd'], 2, ',', '.') }}</em></td>
-                </tr>
-            @endforeach
-
-        </tbody>
-    </table>
-
-    <div style="text-align: center">
-        <h2>Confidentiality Clause</h2>
-        <p>I, the undersigned, acknowledge having visited the above-mentioned property through BALIMMO PROPERTIES. I undertake not to contact the property owner directly, nor to negotiate or conclude any transaction concerning this property without going through the BALIMMO PROPERTIES agency. In the event of non-compliance with this commitment, I acknowledge that I will be liable for agency fees and may be prosecuted in the Denpasar (Bali) court.</p>
-
-        <h2>Inspection Certificate</h2>
-        <p>I certify that the property inspection was carried out through BALIMMO PROPERTIES.</p>
-
-        <h2 style="margin-top: 40px">Signatures</h2>
-    </div>
-
-    <div class="row">
-        <div class="col" style="margin-left: 50px">
-            <p><span class="label">Visiteur :</span></p>
-            <p><span class="label"></span> with mention "Accept this visit"</p>
-            <p>Signature : </p>
-
-        </div>
-        <div class="col right">
-            <p><span class="label">Agent Balimmo Properties : </span></p>
-            <p>Agent : {{ $agentData->name }}</p>
-            <p>Signature : </p>
-        </div>
-    </div>
+        </table>
+    </footer>
 
 </body>
 
