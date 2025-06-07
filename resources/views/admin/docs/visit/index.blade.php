@@ -114,11 +114,13 @@
                                                         <li>
                                                             <form action="{{ route('visit.pdf.english.post') }}" method="POST">
                                                                 @csrf
+                                                                {{-- {{ dd($visit->id) }} --}}
                                                                 <input type="hidden" name="email" value="{{ $visit->email }}">
                                                                 <input type="hidden" name="phone_number" value="{{ $visit->phone_number }}">
                                                                 <input type="hidden" name="first_name" value="{{ $visit->first_name }}">
                                                                 <input type="hidden" name="last_name" value="{{ $visit->last_name }}">
                                                                 <input type="hidden" name="visit_date" value="{{ $visit->visit_date }}">
+
                                                                 <input type="hidden" name="internal_reference" value="{{ $property_list[$visit->id][0]->internal_reference }}">
                                                                 @foreach ($property_list[$visit->id] ?? [] as $index => $properties)
                                                                     {{-- {{ dd($properties) }} --}}

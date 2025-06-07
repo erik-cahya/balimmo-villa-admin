@@ -12,7 +12,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $data['data_client'] = ClientModel::get();
+        $data['data_client'] = ClientModel::where('reference_code', Auth::user()->reference_code)->get();
 
 
         $clientEmails = ClientModel::pluck('email')->toArray();

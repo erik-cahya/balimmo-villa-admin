@@ -22,7 +22,10 @@
         </td>
         <td>{{ $agent->email }}</td>
         <td>{{ $agent->phone_number }}</td>
-        <td><a href="{{ route('agent.properties', strtolower($agent->reference_code)) }}">{{ $agent->properties_count }} Property</a></td>
+        <td>
+            <a href="{{ route('agent.properties', strtolower($agent->reference_code)) }}">{{ $agent->properties_count }} Property
+                <iconify-icon icon="majesticons:eye-line" class="fs-18 align-middle"></iconify-icon></a>
+        </td>
         {{-- <td ><span class="badge badge-soft-secondary me-1">{{ $agent->reference_code }}</span></td> --}}
         <td class="text-capitalize"><span class="badge {{ $agent->role === 'master' ? 'bg-danger' : 'bg-primary' }} fs-11 text-white">{{ $agent->role }}</span></td>
         <td class="text-capitalize"><span class="badge {{ $agent->status === 1 ? 'bg-success' : 'bg-danger' }} fs-11 text-white">{{ $agent->status === 1 ? 'Active' : 'Deactive' }}</span></td>

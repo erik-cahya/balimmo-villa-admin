@@ -304,7 +304,7 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="{{ asset('admin') }}{{ $agent_data->profile == null ? '/assets/images/users/avatar-2.jpg' : '/profile-image/' . $agent_data->reference_code . '/' . $agent_data->profile }}" alt="" class="avatar-xl rounded-circle border-light mx-auto border border-2" style="width: 8rem; height: 8rem; object-fit:cover; border-radius: 10px">
+                            <img src="{{ asset('admin') }}{{ $agent_data->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . $agent_data->reference_code . '/' . $agent_data->profile }}" alt="" class="avatar-xl rounded-circle border-light mx-auto border border-2" style="width: 8rem; height: 8rem; object-fit:cover; border-radius: 10px">
                             <div class="mt-2">
                                 <a href="#!" class="fw-medium text-dark fs-16 text-uppercase">{{ $agent_data->name }}</a>
                                 <p class="text-capitalize mb-0">({{ $agent_data->role }})</p>

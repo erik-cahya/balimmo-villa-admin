@@ -21,6 +21,12 @@ class DocsVisitController extends Controller
     {
         $data['visit_docs'] = VisitDocsModel::where('visit_docs.reference_code', Auth::user()->reference_code)
             ->join('client', 'client.id', '=', 'visit_docs.client_id')
+            ->select(
+                'visit_docs.id',
+                'client.first_name',
+                'client.last_name',
+                'client.email',
+            )
             ->get();
 
         $data['property_list'] = VisitPropertyDocsModel::join('properties', 'properties.id', '=', 'visit_property_docs.property_id')
@@ -35,6 +41,8 @@ class DocsVisitController extends Controller
             )
             ->get()
             ->groupBy('docs_visit_id');
+
+        // dd($data['visit_docs']);
 
         return view('admin.docs.visit.index', $data);
     }
