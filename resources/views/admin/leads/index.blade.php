@@ -65,6 +65,9 @@
                                         <th scope="col">Property Name</th>
                                         <th scope="col">Localization</th>
                                         <th scope="col">Date</th>
+                                        @role('Master')
+                                            <th scope="col">Leads From</th>
+                                        @endrole
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -93,8 +96,6 @@
                                                     <div class="d-block">
                                                         <p class="fs-13 text-dark fw-medium mb-0">{{ $customer->property_name }}</p>
                                                         <p class="d-inline mx-1 mb-0">Require : <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon> {{ $customer->require_bedroom }}</p>
-                                                        {{-- <p class="mb-0 mx-1 d-inline"><iconify-icon icon="cil:shower" class="align-middle fs-16"></iconify-icon> {{ $customer->require_bedroom }}</p> --}}
-
                                                     </div>
                                                 @else
                                                     <span class="badge bg-danger text-light fs-12 px-2 py-1">Property Not Specified</span>
@@ -102,9 +103,12 @@
                                             </td>
                                             <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $customer->localization }}</td>
                                             <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customer->date)->format('d F, Y') }}</td>
+                                            @role('Master')
+                                                <td>
+                                                    <span class="badge bg-primary text-capitalize me-1">{{ $customer->agent_code }}</span>
+                                                </td>
+                                            @endrole
                                             <td>
-                                                {{-- <a href="#!" class="btn btn-primary btn-sm w-100">Edit</a> --}}
-
                                                 <div class="d-flex">
                                                     @if ($matchProperties[$customer->id]->count() == 0)
                                                         <span class="btn btn-sm btn-primary">No Match Properties</span>
@@ -139,7 +143,8 @@
                                                                 </form>
                                                             @endif
 
-                                                            <a href="javascript:void(0);" class="dropdown-item pb-2 pt-2">Detail</a>
+                                                            <input type="hidden" class="propertyId" value="{{ $customer->id }}">
+                                                            <a href="javascript:void(0);" class="dropdown-item pb-2 pt-2 deleteButton" data-nama="{{ $customer->cust_name }}">Delete</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,9 +279,11 @@
                     let propertyName = this.getAttribute('data-nama');
                     let propertyId = this.parentElement.querySelector('.propertyId').value;
 
+                    const rowToDelete = this.closest('tr');
+
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Delete agent " + propertyName + "?",
+                        text: "Delete leads " + propertyName + "?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -285,7 +292,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/agent/' + propertyId, {
+                            fetch('/leads/' + propertyId, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -300,10 +307,13 @@
                                         icon: data.swalFlashIcon,
                                     });
 
-                                    // Optional: reload table / halaman
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 1500);
+                                    // Hapus baris dari DOM tanpa reload halaman
+                                    if (rowToDelete) {
+                                        rowToDelete.remove();
+                                    }
+
+                                    // Atau jika menggunakan DataTables, refresh tabel:
+                                    // $('#table-id').DataTable().ajax.reload();
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);

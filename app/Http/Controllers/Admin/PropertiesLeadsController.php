@@ -116,6 +116,16 @@ class PropertiesLeadsController extends Controller
     public function destroy(string $id)
     {
         //
+
+        PropertyLeadsModel::destroy($id);
+
+        $flashData = [
+            'judul' => 'Delete Success',
+            'pesan' => 'Delete Leads Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+
+        return response()->json($flashData);
     }
 
     public function booking(Request $request, $slug = null)

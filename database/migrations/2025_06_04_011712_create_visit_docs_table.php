@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('visit_docs', function (Blueprint $table) {
             $table->id();
             $table->text('name_docs');
-            $table->unsignedBigInteger('client_id')->comment('fk to client table');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email');
+            $table->string('phone_number');
             $table->date('visit_date');
             $table->string('reference_code')->comment('fk to user table');
             $table->timestamps();

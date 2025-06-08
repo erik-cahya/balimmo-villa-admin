@@ -76,6 +76,8 @@
                                 </form>
                             </div>
                         </div>
+                        <!-- /* Modal -->
+
                     </div>
 
                     <div class="row my-4">

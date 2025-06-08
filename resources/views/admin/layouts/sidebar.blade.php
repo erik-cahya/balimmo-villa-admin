@@ -50,11 +50,6 @@
                             <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Properties Listing</a>
                         </li>
 
-                        @if (Auth::user()->role === 'Master')
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('features.index') }}">Feature & Amenities</a>
-                            </li>
-                        @endif
                     </ul>
                 </div>
             </li>
@@ -126,6 +121,15 @@
                             <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
                         </span>
                         <span class="nav-text">Localization Management</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('features.*') ? 'active' : '' }}" href="{{ route('features.index') }}">
+                        <span class="nav-icon">
+                            <iconify-icon icon="mynaui:air-conditioner-solid" class="fs-18 align-middle"></iconify-icon>
+                        </span>
+                        <span class="nav-text">Features & Ammenities</span>
                     </a>
                 </li>
             @endrole

@@ -114,7 +114,7 @@
                                                         <li>
                                                             <form action="{{ route('visit.pdf.english.post') }}" method="POST">
                                                                 @csrf
-                                                                {{-- {{ dd($visit->id) }} --}}
+                                                                {{-- {{ dd($visit->phone_number) }} --}}
                                                                 <input type="hidden" name="email" value="{{ $visit->email }}">
                                                                 <input type="hidden" name="phone_number" value="{{ $visit->phone_number }}">
                                                                 <input type="hidden" name="first_name" value="{{ $visit->first_name }}">
@@ -129,11 +129,11 @@
                                                                     <input type="hidden" name="properties[{{ $index }}][selling_price_idr]" value="{{ $properties->selling_price_idr }}">
                                                                     <input type="hidden" name="properties[{{ $index }}][selling_price_usd]" value="{{ $properties->selling_price_usd }}">
                                                                 @endforeach
-                                                                <button type="submit" class="dropdown-item" target="_blank"><iconify-icon icon="twemoji:flag-liberia" class="fs-12 align-middle"></iconify-icon> English Version</button>
+                                                                <button type="submit" class="dropdown-item" target="_blank"><iconify-icon icon="material-symbols:download-rounded" class="fs-12 align-middle"></iconify-icon> Download Document</button>
                                                             </form>
                                                         </li>
-                                                        <li><a class="dropdown-item disabled" href="javascript:void(0);" target="_blank"><iconify-icon icon="openmoji:flag-indonesia" class="fs-12 align-middle"></iconify-icon> Indonesia Version</a></li>
-                                                        <li><a class="dropdown-item disabled" href="javascript:void(0);" target="_blank"><iconify-icon icon="openmoji:flag-france" class="fs-12 align-middle"></iconify-icon> France Version</a></li>
+                                                        {{-- <li><a class="dropdown-item disabled" href="javascript:void(0);" target="_blank"><iconify-icon icon="openmoji:flag-indonesia" class="fs-12 align-middle"></iconify-icon> Indonesia Version</a></li> --}}
+                                                        {{-- <li><a class="dropdown-item disabled" href="javascript:void(0);" target="_blank"><iconify-icon icon="openmoji:flag-france" class="fs-12 align-middle"></iconify-icon> France Version</a></li> --}}
                                                     </ul>
                                                 </div>
                                             </td>

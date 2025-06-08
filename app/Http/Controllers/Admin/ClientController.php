@@ -54,6 +54,24 @@ class ClientController extends Controller
         return back()->with('flashData', $flashData);
     }
 
+    public function update(Request $request, $id)
+    {
+        ClientModel::where('id', $id)->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+        ]);
+
+        $flashData = [
+            'judul' => 'Edit Success',
+            'pesan' => 'Data Client Edited Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+
+        return redirect()->route('clients.index')->with('flashData', $flashData);
+    }
+
     public function search(Request $request)
     {
         $query = $request->get('query');
@@ -73,7 +91,7 @@ class ClientController extends Controller
     public function dataFromLeads(Request $request)
     {
         if ($request->leadsData === null) {
-            return back()->withErrors(['dataLeads' => 'Data Leads Not Found']);
+            return back()->withErrors(['dataLeads' => 'Please Check Data Leads']);
         }
         foreach ($request->leadsData as $leads) {
             $dataLeads = PropertyLeadsModel::where('id', $leads)->first();
@@ -91,6 +109,8 @@ class ClientController extends Controller
                 'email' => $dataLeads->cust_email,
                 'phone_number' => $dataLeads->cust_telp,
             ]);
+
+            PropertyLeadsModel::destroy($dataLeads->id);
         }
 
         $flashData = [
@@ -100,5 +120,19 @@ class ClientController extends Controller
         ];
 
         return back()->with('flashData', $flashData);
+    }
+
+
+    public function destroy($id)
+    {
+        ClientModel::destroy($id);
+
+        $flashData = [
+            'judul' => 'Delete Success',
+            'pesan' => 'Data Client Deleted Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+
+        return response()->json($flashData);
     }
 }

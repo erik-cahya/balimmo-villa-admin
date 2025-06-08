@@ -68,7 +68,7 @@
             <p><span class="label">Date de la visite:</span> [ {{ $visit_date }} ]</p>
             <p><span class="label">Name:</span> [ {{ $first_name . ' ' . $last_name }} ]</p>
             <p><span class="label">Surname:</span> [ {{ $first_name }} ]</p>
-            <p><span class="label">Phone:</span> [ {{ $phone_number }} ] </p>
+            <p><span class="label">Phone:</span> [ {{ implode('-', str_split(preg_replace('/\D/', '', $phone_number), 4)) }} ] </p>
 
         </div>
         <div class="col right">

@@ -11,8 +11,7 @@ Docs
     <select class="form-control" id="{{ $name }}" name="{{ $name }}" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
         <option value="" selected disabled>Choose {{ $label }}</option>
         @foreach ($options ?? $defaultOptions as $key => $value)
-            <option value="{{ is_numeric($key) ? $value : $key }}"
-                {{ old($name, $selected) === (is_numeric($key) ? $value : $key) ? 'selected' : '' }}>
+            <option value="{{ is_numeric($key) ? $value : $key }}" {{ old($name, $selected) === (is_numeric($key) ? $value : $key) ? 'selected' : '' }}>
                 {{ $value }}
             </option>
         @endforeach

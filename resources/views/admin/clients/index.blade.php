@@ -53,7 +53,7 @@
                                         </form>
                                     </div>
                                     <div class="col-lg-4">
-                                        <h5 class="text-dark fw-medium mb-0"> <span class="text-muted">20 Client</span></h5>
+                                        <h5 class="text-dark fw-medium mb-0"> <span class="text-muted">{{ $data_client->count() }} Client</span></h5>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                     <form action="{{ route('client.fromLeads') }}" method="POST">
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Import from leads</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Import from leads <span class="badge bg-danger text-capitalize me-1">{{ $data_leads->count() }}</span></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -247,17 +247,24 @@
         </script>
     @endif
 
+    {{-- Checkbox --}}
     <script>
         $('#selectAll').on('change', function() {
             $('.form-check-input').prop('checked', this.checked);
         });
     </script>
+    {{-- /* Checkbox --}}
+
+    {{-- Data Table --}}
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
         });
     </script>
+    {{-- /* Data Table --}}
 
+
+    {{-- Search --}}
     <script>
         function debounce(func, delay) {
             let timer;
@@ -287,11 +294,12 @@
             $('#search_props').on('keyup', debounce(fetchFilteredProperties, 300));
         });
     </script>
+    {{-- /*Search --}}
 
-    {{-- Sweet Alert --}}
+
+    {{-- Sweet Alert Delete --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Saat halaman sudah ready
             const deleteButtons = document.querySelectorAll('.deleteButton');
 
             deleteButtons.forEach(button => {
@@ -300,6 +308,8 @@
 
                     let propertyName = this.getAttribute('data-nama');
                     let propertyId = this.parentElement.querySelector('.propertyId').value;
+
+                    const rowToDelete = this.closest('tr');
 
                     Swal.fire({
                         title: 'Are you sure?',
@@ -311,8 +321,7 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Kirim DELETE request manual lewat JavaScript
-                            fetch('/agent/' + propertyId, {
+                            fetch('/clients/' + propertyId, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -327,10 +336,13 @@
                                         icon: data.swalFlashIcon,
                                     });
 
-                                    // Optional: reload table / halaman
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 1500);
+                                    // Hapus baris dari DOM tanpa reload halaman
+                                    if (rowToDelete) {
+                                        rowToDelete.remove();
+                                    }
+
+                                    // Atau jika menggunakan DataTables, refresh tabel:
+                                    // $('#table-id').DataTable().ajax.reload();
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
@@ -343,6 +355,6 @@
         });
     </script>
 
-    {{-- /* End Sweet Alert --}}
+    {{-- /* End Sweet Alert Delete --}}
 
 @endpush

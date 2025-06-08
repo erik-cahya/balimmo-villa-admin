@@ -36,12 +36,6 @@ Route::get('/search-agent', [AgentController::class, 'search'])->name('agent.sea
 Route::get('/client-agent', [ClientController::class, 'search'])->name('client.search');
 
 
-
-// view our form page
-// Route::get('/form', [FormController::class, 'index'])->name('form.index');
-// Route::post('/form-submit', [FormController::class, 'submit'])->name('form.submit');
-// Route::post('/form-upload', [FormController::class, 'upload'])->name('form.upload');
-
 // ############################################################### Landing Page Controller
 Route::get('/', [LandingPageController::class, 'index'])->name('landing-page.index');
 Route::get('/contact', [LandingPageController::class, 'contact'])->name('landing-page.contact');
@@ -64,18 +58,18 @@ Route::middleware('auth')->group(function () {
 
     // ############################################################### Admin Panel Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::post('/properties/change_acceptance/{slug}', [PropertiesController::class, 'changeAcceptance'])->name('properties.changeAcceptance');
+    Route::post('/properties/change_acceptance/{slug}', [PropertiesController::class, 'changeAcceptance'])->name('properties.changeAcceptance'); // Accept Listing Properties
     Route::resource('/properties', PropertiesController::class)->except(['show']);
 
     Route::resource('/properties/features', PropertiesFeatureController::class)->except(['show', 'create']);
 
-    Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details');
+    Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details'); // See Properties Detail
 
-    Route::get('/agent/{refcode}/properties', [AgentController::class, 'agentProperty'])->name('agent.properties');
-    Route::get('/agent/{refcode}', [AgentController::class, 'detailAgent'])->name('agent.detail');
-    Route::post('/agent/change-password', [AgentController::class, 'changePassword'])->name('agent.changePassword');
-    Route::resource('/agent', AgentController::class);
-    Route::post('/agent/reactivate/{id}', [AgentController::class, 'reactivate']);
+    Route::get('/agent/{refcode}/properties', [AgentController::class, 'agentProperty'])->name('agent.properties'); // See Properties Listing From Agents
+    Route::get('/agent/{refcode}', [AgentController::class, 'detailAgent'])->name('agent.detail'); // See Detail Data Agents
+    Route::post('/agent/change-password', [AgentController::class, 'changePassword'])->name('agent.changePassword'); // Change Password Agents
+    Route::resource('/agent', AgentController::class); // CRUD Agent
+    Route::post('/agent/reactivate/{id}', [AgentController::class, 'reactivate']); // Turn ON Agent Account
 
     Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');
     Route::resource('/leads', PropertiesLeadsController::class);
@@ -92,24 +86,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/visit/generate/english', [DocsVisitController::class, 'generateEnglishPDF'])->name('visit.pdf.english.post');
     Route::resource('/visit', DocsVisitController::class);
 
-    // Route::get('clients', [ClientController::class, 'index'])->name('client.index');
-    // Route::post('clients', [ClientController::class, 'store'])->name('client.store');
     Route::post('clients/leads', [ClientController::class, 'dataFromLeads'])->name('client.fromLeads');
     Route::resource('/clients', ClientController::class);
 
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
+    Route::post('localization/addRegion', [LocalizationController::class, 'addRegion'])->name('localization.addRegion')->middleware('role:Master');
     Route::resource('localization', LocalizationController::class)->middleware('role:Master');
 });
 
-// Route::get('signature', function () {
-//     return view('signature');
-// });
-
-// Route::post('/signature/save', [DocsVisitController::class, 'storeSignature'])->name('signature.save');
-
-
-
-
-Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
+// Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
 
 require __DIR__ . '/auth.php';

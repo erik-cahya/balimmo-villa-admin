@@ -40,43 +40,93 @@
         </div>
         <!-- ========== Page Title End ========== -->
 
-        <form action="{{ route('features.store') }}" method="POST">
-            @csrf
-            <div class="row">
-                <div class="col xl-12">
-                    <div class="card">
-                        <div class="card-header bg-dark text-light d-flex justify-content-between align-items-center border-bottom" style="border-radius: 10px 10px 0px 0px">
-                            <div>
-                                <h4 class="card-title">Create Properties Feature</h4>
-                            </div>
-                        </div>
+        <div class="row ">
 
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header bg-dark text-light d-flex justify-content-between align-items-center border-bottom" style="border-radius: 10px 10px 0px 0px">
+                        <div>
+                            <h4 class="card-title">Create Region Data</h4>
+                        </div>
+                    </div>
+                    <form action="{{ route('localization.addRegion') }}" method="POST">
+                        @csrf
                         <div class="card-body p-0">
                             <div class="row mx-4 mt-4">
-                                <x-form-input className="col-lg-4" type="text" name="name_category" label="Name" />
-                                <x-form-select className="col-lg-4" name="feature_category" label="Feature Category"
-                                    :options="['Indoor', 'Outdoor']" />
+                                <x-form-input className="col-lg-12" type="text" name="region" label="Region Name" />
                             </div>
                         </div>
 
                         <div class="mx-4 mb-4 rounded">
                             <div class="row">
-                                <div class="col-lg-2">
-                                    <button type="submit" class="btn btn-outline-primary w-100">Create Feature List</button>
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-outline-primary w-100">Create New Region</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
+
                 </div>
             </div>
-        </form>
+
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header bg-dark text-light d-flex justify-content-between align-items-center border-bottom" style="border-radius: 10px 10px 0px 0px">
+                        <div>
+                            <h4 class="card-title">Create Sub Region</h4>
+                        </div>
+                    </div>
+                    <form action="{{ route('localization.store') }}" method="POST">
+                        @csrf
+                        <div class="card-body p-0">
+                            <div class="row mx-4 mt-4">
+                                <div class="col-lg-6 text-capitalize mb-3" id="group_region">
+                                    <label for="region" class="form-label">Select Region</label>
+
+                                    <select class="form-control" id="region" name="region" data-choices data-choices-sorting-false data-toggle-target="region">
+                                        <option value="" selected disabled>Choose Region</option>
+                                        @foreach ($region as $rgn)
+                                            <option value="{{ $rgn->id }}">
+                                                {{ $rgn->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('region')
+                                        <style>
+                                            .choices__inner {
+                                                border-color: #e96767 !important;
+                                            }
+                                        </style>
+
+                                        <div class="alert alert-danger m-0">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <x-form-input className="col-lg-6" type="text" name="sub_region" label="Sub Region" />
+                            </div>
+                        </div>
+
+                        <div class="mx-4 mb-4 rounded">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-outline-primary w-100">Create New Sub Region</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="card-title">Latest Listing Properties</h4>
+                            <h4 class="card-title">Region & Sub Region List</h4>
                         </div>
                     </div>
                     <div class="card-body p-0">
@@ -91,8 +141,8 @@
                                 <tbody>
                                     @foreach ($region as $rgn)
                                         <tr>
-                                            <td>{{ $rgn->name }}</td>
-                                            <td>
+                                            <td class="text-dark fw-medium fs-15">{{ $rgn->name }}</td>
+                                            <td class="fs-15">
                                                 @foreach ($subRegion->where('region_id', $rgn->id) as $subRgn)
                                                     <span class="badge bg-primary me-1">{{ $subRgn->name }}</span>
                                                 @endforeach

@@ -87,8 +87,7 @@
                                         @foreach ($feature_list_indoor as $featureIndoor)
                                             <div class="form-check mx-3 mb-2">
 
-                                                <input type="checkbox" id="feature[{{ $featureIndoor->slug }}]" name="feature[{{ $featureIndoor->slug }}]" value="{{ $featureIndoor->id }}" class="form-check-input"
-                                                    {{ in_array($featureIndoor->id, $selected_feature_ids) ? 'checked' : '' }}>
+                                                <input type="checkbox" id="feature[{{ $featureIndoor->slug }}]" name="feature[{{ $featureIndoor->slug }}]" value="{{ $featureIndoor->id }}" class="form-check-input" {{ in_array($featureIndoor->id, $selected_feature_ids) ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="feature[{{ $featureIndoor->slug }}]">{{ $featureIndoor->name }}</label>
 
                                             </div>
@@ -104,8 +103,7 @@
                                         @foreach ($feature_list_outdoor as $featureOutdoor)
                                             <div class="form-check mx-3 mb-2">
 
-                                                <input type="checkbox" id="feature[{{ $featureOutdoor->slug }}]" name="feature[{{ $featureOutdoor->slug }}]" value="{{ $featureOutdoor->id }}" class="form-check-input"
-                                                    {{ in_array($featureOutdoor->id, $selected_feature_ids) ? 'checked' : '' }}>
+                                                <input type="checkbox" id="feature[{{ $featureOutdoor->slug }}]" name="feature[{{ $featureOutdoor->slug }}]" value="{{ $featureOutdoor->id }}" class="form-check-input" {{ in_array($featureOutdoor->id, $selected_feature_ids) ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="feature[{{ $featureOutdoor->slug }}]">{{ $featureOutdoor->name }}</label>
 
                                             </div>
@@ -247,8 +245,7 @@
                         </div>
                         <div class="card-body">
 
-                            <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category"
-                                :options="['Leasehold', 'Freehold']" :selected="old('legal_category', $data_properties->legal_status ?? '')" />
+                            <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category" :options="['Leasehold', 'Freehold']" :selected="old('legal_category', $data_properties->legal_status ?? '')" />
 
                             <div class="row">
                                 <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="freehold_group">
