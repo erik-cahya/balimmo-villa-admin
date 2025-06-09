@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->date('visit_date');
             $table->string('reference_code')->comment('fk to user table');
+            $table->tinyInteger('status_docs')->comment('0:cancel | 1:Done Visit | 2:Pending');
             $table->timestamps();
         });
     }

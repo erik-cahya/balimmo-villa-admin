@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-xl-8">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
                             <div>
                                 <h4 class="card-title">Select Properties</h4>
                             </div>
@@ -76,7 +76,9 @@
 
                                                     <div class="d-flex flex-column">
                                                         {{ $property->property_name }}
-                                                        <span class="fst-italic badge bg-dark text-light fs-11">{{ $property->property_code }}</span>
+                                                        <div class="d-flex">
+                                                            <span class="fst-italic badge bg-dark text-light fs-11 px-3">{{ $property->property_code }}</span>
+                                                        </div>
                                                         <span class="fst-italic fs-12">{{ Str::limit($property->property_address, 100) }}</span>
                                                     </div>
 
@@ -100,7 +102,7 @@
 
                 <div class="col-xl-4">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
                             <div>
                                 <h4 class="card-title">Select Clients</h4>
                             </div>
@@ -132,7 +134,7 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
                             <div>
                                 <h4 class="card-title">Date Visit</h4>
                             </div>

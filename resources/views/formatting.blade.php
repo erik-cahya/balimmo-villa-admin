@@ -16,6 +16,9 @@
 
     {{-- Number Phone Formatting  --}}
     {{ implode('-', str_split(preg_replace('/\D/', '', $client->phone_number), 4)) }}
+
+    {{-- String Limitter --}}
+    {{ Str::limit($dt_surat->alamat_tuk, 50) }}
 </body>
 
 </html>

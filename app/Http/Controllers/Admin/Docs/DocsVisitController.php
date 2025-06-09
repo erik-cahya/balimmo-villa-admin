@@ -27,6 +27,8 @@ class DocsVisitController extends Controller
                 'visit_docs.last_name',
                 'visit_docs.email',
                 'visit_docs.phone_number',
+                'visit_docs.status_docs',
+                'visit_docs.visit_date',
             )
             ->get();
 
@@ -129,7 +131,8 @@ class DocsVisitController extends Controller
             'email' => $dataClient[0],
             'phone_number' => $dataClient[3],
             'visit_date' => Carbon::createFromFormat('d-m-Y', $request->date_visit)->format('Y-m-d'),
-            'reference_code' => Auth::user()->reference_code
+            'reference_code' => Auth::user()->reference_code,
+            'status_docs' => 2
         ]);
 
         foreach ($request->propertyId as $idProperty) {
@@ -142,6 +145,41 @@ class DocsVisitController extends Controller
         $flashData = [
             'judul' => 'Create Success',
             'pesan' => 'Document Visit Successfully Created',
+            'swalFlashIcon' => 'success',
+        ];
+        return redirect()->route('visit.index')->with('flashData', $flashData);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($id);
+        // dd($request->all());
+
+        if ($request->status_visit == 'Cancel') {
+            $status = 0;
+        } elseif ($request->status_visit == 'Done Visit') {
+            $status = 1;
+        } else {
+            $status = 2;
+        }
+
+        $data = [
+            'first_name'   => $request->customer_first_name,
+            'last_name'    => $request->customer_last_name,
+            'email'        => $request->customer_email,
+            'phone_number' => $request->customer_phone,
+            'visit_date' => $request->date_visit,
+        ];
+
+        if ($request->status_visit !== null) {
+            $data['status_docs'] = $status;
+        }
+
+        VisitDocsModel::where('id', $id)->update($data);
+
+        $flashData = [
+            'judul' => 'Edit Success',
+            'pesan' => 'Document Visit Edited Successfully',
             'swalFlashIcon' => 'success',
         ];
         return redirect()->route('visit.index')->with('flashData', $flashData);
@@ -172,5 +210,18 @@ class DocsVisitController extends Controller
 
 
         return $pdf->stream('test.pdf');
+    }
+
+    public function destroy($id)
+    {
+        VisitDocsModel::destroy($id);
+
+        $flashData = [
+            'judul' => 'Delete Success',
+            'pesan' => 'Document Visit Deleted Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+
+        return response()->json($flashData);
     }
 }
