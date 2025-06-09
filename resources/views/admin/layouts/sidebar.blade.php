@@ -32,7 +32,7 @@
                 </a>
             </li>
 
-            <li class="menu-title">Management App</li>
+            <li class="menu-title">Management Properties</li>
 
             <li class="nav-item">
                 <a class="nav-link menu-arrow {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="#sidebarProperty" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProperty">
@@ -83,6 +83,8 @@
                 </a>
             </li>
 
+            <li class="menu-title">Document Management</li>
+
             <li class="nav-item">
                 <a class="nav-link menu-arrow {{ request()->routeIs('visit.*') ? 'active' : '' }}" href="#sidebarVisit" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarVisit">
                     <span class="nav-icon">
@@ -97,6 +99,26 @@
                         </li>
                         <li class="sub-nav-item">
                             <a class="sub-nav-link" href="{{ route('visit.create') }}">Create Visit </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link menu-arrow {{ request()->routeIs('offer-purchase.*') ? 'active' : '' }}" href="#offerToPurchase" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="offerToPurchase">
+                    <span class="nav-icon">
+                        <iconify-icon icon="carbon:document" class="fs-18 align-middle"></iconify-icon>
+                    </span>
+                    <span class="nav-text"> Offer To Purchase </span>
+                </a>
+                <div class="{{ request()->routeIs('offer-purchase.*') ? 'show' : '' }} collapse" id="offerToPurchase">
+                    <ul class="nav sub-navbar-nav">
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('offer-purchase.index') }}">List Offer to Purchase</a>
+                        </li>
+                        <li class="sub-nav-item">
+                            <a class="sub-nav-link" href="{{ route('offer-purchase.create') }}">Create Offer to Purchase </a>
                         </li>
 
                     </ul>

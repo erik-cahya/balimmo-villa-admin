@@ -152,9 +152,6 @@ class DocsVisitController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($id);
-        // dd($request->all());
-
         if ($request->status_visit == 'Cancel') {
             $status = 0;
         } elseif ($request->status_visit == 'Done Visit') {
