@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Docs\DocsVisitController;
-use App\Http\Controllers\Admin\Docs\OfferToPurchaseController;
+use App\Http\Controllers\Admin\Docs\DocsOfferToPurchaseController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\LocalizationController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -91,8 +91,11 @@ Route::middleware('auth')->group(function () {
     Route::post('localization/addRegion', [LocalizationController::class, 'addRegion'])->name('localization.addRegion')->middleware('role:Master');
     Route::resource('localization', LocalizationController::class)->middleware('role:Master');
 
-    Route::get('offer-purchase/generate/english', [OfferToPurchaseController::class, 'generateEnglishPDF'])->name('offer-purchase.pdf.english');
-    Route::resource('offer-purchase', OfferToPurchaseController::class);
+    Route::get('offer-purchase/generate/english', [DocsOfferToPurchaseController::class, 'generateEnglishPDF'])->name('offer-purchase.pdf.english');
+    Route::resource('offer-purchase', DocsOfferToPurchaseController::class);
+
+    Route::get('getDataProperties/{id}', [DocsOfferToPurchaseController::class, 'getPropertiesAjax'])->name('getPropertiesAjax');
+    Route::get('getDataClients/{id}', [DocsOfferToPurchaseController::class, 'getClientsAjax'])->name('getClientsAjax');
 });
 
 // Route::get('/mail', [MailController::class, 'send'])->name('sendmail');

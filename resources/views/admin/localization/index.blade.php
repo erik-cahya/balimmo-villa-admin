@@ -40,7 +40,7 @@
         </div>
         <!-- ========== Page Title End ========== -->
 
-        <div class="row ">
+        <div class="row">
 
             <div class="col-xl-6">
                 <div class="card">

@@ -30,94 +30,53 @@
 
                 <div class="col-xl-6 col-lg-6">
                     {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Properties Information Form  --}}
+                    {{-- Properties Select Form  --}}
                     {{-- -------------------------------------------------------------------------  --}}
                     <div class="card">
                         <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Property Owners</h4>
+                            <h4 class="card-title text-uppercase">Property</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
 
                                 <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 1</h5>
+                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Select The Property</h5>
                                     <hr>
                                     <div class="row my-3">
 
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][first_name]">
-                                            <label for="owners[0][first_name]" class="form-label">First Name</label>
+                                        <div class="col-lg-12 text-capitalize mb-3" id="group_select_property">
+                                            <label for="select_property" class="form-label">Choose Property</label>
 
-                                            <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
+                                            <select class="form-control" id="select_property" name="select_property" data-choices data-choices-sorting-false data-toggle-target="select_property">
+                                                <option value="" selected disabled>Choose Property</option>
+                                                @foreach ($data_property as $property)
+                                                    <option value="{{ $property->id }}">
+                                                        {{ $property->property_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
 
-                                            @error('owners.0.first_name')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                            @error('select_property')
+                                                <style>
+                                                    .choices__inner {
+                                                        border-color: #e96767 !important;
+                                                    }
+                                                </style>
+
+                                                <div class="alert alert-danger m-0">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
 
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][last_name]">
-                                            <label for="owners[0][last_name]" class="form-label">Last Name</label>
-
-                                            <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
-
-                                            @error('owners.0.last_name')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][email]">
-                                            <label for="owners[0][email]" class="form-label">Emails</label>
-
-                                            <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
-
-                                            @error('owners.0.email')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][phone_number]">
-                                            <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
-
-                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.phone_number') }}">
-
-                                            @error('owners.0.phone_number')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Email" />
-
-                                    </div>
-                                </div>
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <x-form-input className="col-lg-12" type="text" name="company_name" label="Company Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_first_name" label="Legal Representative First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Legal Representative Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="legal_rep_email" label="Email" />
+                                        <x-form-input className="col-lg-12" type="text" name="property_name" label="Property Name" />
+                                        <x-form-input className="col-lg-12" type="text" name="property_address" label="Property Address" />
+                                        <x-form-input className="col-lg-6" type="text" name="number_bathroom" label="Number Bathroom" />
+                                        <x-form-input className="col-lg-6" type="text" name="number_bedroom" label="Number Bedroom" />
+                                        <x-form-input className="col-lg-6" type="text" name="title_type" label="Title Type" />
+                                        <x-form-input className="col-lg-6" type="text" name="remaining_lease_period" label="Remaining Lease Period" />
+                                        <x-form-input className="col-lg-6" type="text" name="idr_price" label="IDR Price" />
+                                        <x-form-input className="col-lg-6" type="text" name="usd_price" label="USD Price" />
 
                                     </div>
                                 </div>
@@ -132,298 +91,55 @@
                 <div class="col-xl-6 col-lg-6">
 
                     {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Purpose of The Mandate Section Form  --}}
+                    {{-- Client Select Form  --}}
                     {{-- -------------------------------------------------------------------------  --}}
                     <div class="card">
                         <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Purpose of The Mandate</h4>
+                            <h4 class="card-title text-uppercase">Property</h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
 
-                                <div class="col-lg-12 mb-3" id="group_internal_reference">
-                                    <label for="internal_reference" class="form-label">Internal Reference</label>
-                                    <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
-                                </div>
-
-                                <x-form-input className="col-lg-12" type="text" name="property_name" label="Property Name" />
-
-                                <div class="col-lg-6 mb-3" id="group_region">
-                                    <label for="region" class="form-label">Region</label>
-                                    <select id="region" class="form-select" name="region">
-                                        <option value="" selected disabled>Select Region</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-lg-6 mb-3" id="group_region">
-                                    <label for="region" class="form-label">Sub Region</label>
-                                    <select id="subregion" class="form-select" name="subregion">
-                                        <option value="" selected disabled>Select Region First </option>
-                                    </select>
-                                </div>
-
-                                <div class="col-lg-12 mb-3" id="group_property_address">
-                                    <label for="property_address" class="form-label">Property Address</label>
-                                    <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address">{{ old('property_address') }}</textarea>
-                                </div>
-
-                                <div class="col-lg-12 mb-3" id="group_description">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ old('description') }}</textarea>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Technical Details of The Property Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Technical Details of The Property</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" />
-                                <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" />
-                                <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" />
-
-                                <x-form-input className="col-lg-6" type="number" name="bedroom" label="Bedroom" />
-                                <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" />
-
-                                <x-form-input className="col-lg-6" type="number" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" />
-                                <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Rental Yield Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Rental Yield</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <x-form-input className="col-lg-6" type="text" name="average_nightly_rate" label="Average Nightly Rate (IDR) *" />
-
-                                <div class="col-md-6" id="group_average_occupancy_rate">
-                                    <label for="average_occupancy_rate" class="form-label">Average Occupancy Rate (%) *</label>
-                                    <div class="input-group">
-                                        <input type="number" name="average_occupancy_rate" class="form-control" placeholder="Input Avg Occupancy Rate" value="{{ old('average_occupancy_rate') }}">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6" id="group_month_rented_per_year">
-                                    <label for="month_rented_per_year" class="form-label">Months Rented per Year *</label>
-                                    <div class="input-group">
-                                        <input type="number" name="month_rented_per_year" class="form-control" min="1" max="120" placeholder="Months Rented per Year" value="{{ old('month_rented_per_year') }}">
-                                        <span class="input-group-text">month(s)</span>
-                                    </div>
-                                </div>
-
-                                <x-form-input className="col-lg-6" type="text" name="estimated_annual_turnover" label="Estimated Annual Turnover (IDR) *" />
-                                <div class="col-lg-12 mb-3">
-                                    <label for="file_rental_support" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
-                                    <input type="file" id="file_rental_support" name="file_rental_support" class="form-control" placeholder="">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Legal Status of the Property Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Legal Status of the Property</h4>
-                        </div>
-                        <div class="card-body">
-
-                            <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category"
-                                :options="['Leasehold', 'Freehold']" />
-
-                            <div class="row">
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="freehold_group">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Freehold (Hak Milik)</h5>
+                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
+                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Select Client</h5>
                                     <hr>
                                     <div class="row my-3">
 
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" />
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
+                                        <div class="col-lg-12 text-capitalize mb-3" id="group_select_client">
+                                            <label for="select_client" class="form-label">Choose Client</label>
 
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="row">
-                                                <label for="" class="form-label">Zoning</label>
-                                                <div class="col-12">
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone">
-                                                        <label class="form-check-label" for="freehold_green_zone">Green Zone</label>
-                                                    </div>
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone">
-                                                        <label class="form-check-label" for="freehold_yellow_zone">Yellow Zone</label>
-                                                    </div>
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone">
-                                                        <label class="form-check-label" for="freehold_pink_zone">Pink Zone</label>
-                                                    </div>
+                                            <select class="form-control" id="select_client" name="select_client" data-choices data-choices-sorting-false data-toggle-target="select_client">
+                                                <option value="" selected disabled>Choose Client</option>
+                                                @foreach ($data_client as $client)
+                                                    <option value="{{ $client->id }}">
+                                                        {{ $client->first_name . ' ' . $client->last_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('select_client')
+                                                <style>
+                                                    .choices__inner {
+                                                        border-color: #e96767 !important;
+                                                    }
+                                                </style>
+
+                                                <div class="alert alert-danger m-0">
+                                                    {{ $message }}
                                                 </div>
-                                            </div>
+                                            @enderror
                                         </div>
+
+                                        <x-form-input className="col-lg-6" type="text" name="client_first_name" label="Client First Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="client_last_name" label="Client Last Name" />
+                                        <x-form-input className="col-lg-6" type="text" name="client_email" label="Client Email" />
+                                        <x-form-input className="col-lg-6" type="text" name="client_phone_number" label="Phone Number" />
 
                                     </div>
                                 </div>
 
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="leasehold_group">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Leasehold (Hak Sewa)</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
-
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" />
-
-                                    </div>
-                                </div>
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="extension_leasehold_group">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Extension Details</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
-
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="row">
-                                                <label for="" class="form-label">Zoning</label>
-                                                <div class="col-12">
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone">
-                                                        <label class="form-check-label" for="leasehold_green_zone">Green Zone</label>
-                                                    </div>
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone">
-                                                        <label class="form-check-label" for="leasehold_yellow_zone">Yellow Zone</label>
-                                                    </div>
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone">
-                                                        <label class="form-check-label" for="leasehold_pink_zone">Pink Zone</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Sale Price & Conditions Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Sale Price & Conditions</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <x-form-input className="col-lg-6" type="text" name="idr_price" label="Desired Selling Price" />
-                                <x-form-input className="col-lg-6" type="text" name="usd_price" label="Estimated USD Conversion" disabled="true" />
-                                <input type="hidden" name="usd_price" id="usd_price_raw">
-
-                                <x-form-input className="col-lg-4" type="text" name="commision_rate" label="Commision Rate (%)" value="4%" disabled="true" />
-
-                                <x-form-input className="col-lg-4" type="text" name="estimated_commision_idr" label="Est. Commision Ammount" value="IDR 0" disabled="true" />
-                                <x-form-input className="col-lg-4" type="text" name="estimated_commision_usd" label="Est. Commision Ammount" value="$0" disabled="true" />
-
-                                <x-form-input className="col-lg-6" type="text" name="net_seller_price_idr" label="Net Seller price (Excluding Commision)" value="IDR 0" disabled="true" />
-                                <x-form-input className="col-lg-6" type="text" name="net_seller_price_usd" label="Net Seller price (Excluding Commision)" value="$0" disabled="true" />
-                                <p id="exchange_rate_info" class="text-muted"></p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Type of Mandate Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Type of Mandate</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <div class="col-lg-12 mb-3">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate">
-                                                <label class="form-check-label" for="esstentials_mandate">Essentials Mandate</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate">
-                                                <label class="form-check-label" for="booster_mandate">Booster Mandate</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 mb-3">
-                                    <label for="file_type_of_mandate" class="form-label">Supporting Document</label>
-                                    <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Document & Attachment Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Document & Attachment</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <div class="col-lg-12 mb-3">
-                                    <label for="gallery" class="form-label">Property Gallery (min 4)</label>
-
-                                    <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
-                                    <div id="previewContainer" class="d-flex flex-wrap gap-3"></div>
-
-                                    <input type="hidden" name="order" id="imageOrder">
-
-                                    @error('images')
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-
-                                </div>
-
-                                <x-form-input className="col-lg-12" type="text" name="url_virtual_tour" label="Virtual Tour Link" placeholder="Input Youtube URL" />
-                                <x-form-input className="col-lg-12" type="text" name="url_lifestyle" label="Lifestyle" placeholder="Input Youtube URL" />
-                                <x-form-input className="col-lg-12" type="text" name="url_experience" label="Experience" placeholder="Input Youtube URL" />
-
-                            </div>
                         </div>
                     </div>
 
@@ -444,6 +160,8 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave-phone.us.js') }}"></script>
@@ -453,6 +171,67 @@
     <script src="{{ asset('admin/assets/js/custom/currency-format.js') }}"></script>
 
     <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
+
+    {{-- Get Dynamic Data --}}
+    <script>
+        $(document).ready(function() {
+            $('#group_remaining_lease_period').hide();
+
+            $('#select_property').change(function() {
+                let id_property = $('#select_property').val();
+                // console.log(id_property);
+                $.ajax({
+                    url: '/getDataProperties/' + id_property,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response);
+                        $('#property_name').val(response['data'].property_name);
+                        $('#property_address').val(response['data'].property_address);
+                        $('#number_bathroom').val(response['data'].bathroom);
+                        $('#number_bedroom').val(response['data'].bedroom);
+                        $('#title_type').val(response['data'].legal_status);
+                        $('#idr_price').val(response['data'].selling_price_idr);
+                        $('#usd_price').val(response['data'].selling_price_usd);
+                        if (response['data'].legal_status == 'Leasehold') {
+                            $('#group_remaining_lease_period').attr('style', 'display: block !important');
+                        } else {
+                            $('#group_remaining_lease_period').hide();
+                        }
+                        $('#remaining_lease_period').val(response['data'].datasProperty);
+
+                    }
+                })
+            })
+
+            $('#select_client').change(function() {
+                let id_client = $('#select_client').val();
+                console.log(id_client);
+                // $.ajax({
+                //     url: '/getDataProperties/' + id_client,
+                //     type: 'GET',
+                //     dataType: 'json',
+                //     success: function(response) {
+                //         console.log(response);
+                //         $('#property_name').val(response['data'].property_name);
+                //         $('#property_address').val(response['data'].property_address);
+                //         $('#number_bathroom').val(response['data'].bathroom);
+                //         $('#number_bedroom').val(response['data'].bedroom);
+                //         $('#title_type').val(response['data'].legal_status);
+                //         $('#idr_price').val(response['data'].selling_price_idr);
+                //         $('#usd_price').val(response['data'].selling_price_usd);
+                //         if (response['data'].legal_status == 'Leasehold') {
+                //             $('#group_remaining_lease_period').attr('style', 'display: block !important');
+                //         } else {
+                //             $('#group_remaining_lease_period').hide();
+                //         }
+                //         $('#remaining_lease_period').val(response['data'].datasProperty);
+
+                //     }
+                // })
+            })
+        });
+    </script>
 
     {{-- Custom Toggle --}}
     <script>
@@ -617,104 +396,4 @@
             dateFormat: "d-m-Y"
         });
     </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const regionSelect = document.getElementById('region');
-            const subregionSelect = document.getElementById('subregion');
-
-            const regionChoices = new Choices(regionSelect, {
-                searchEnabled: false
-            });
-            const subregionChoices = new Choices(subregionSelect, {
-                searchEnabled: false
-            });
-
-            const url = "{{ route('api.regions') }}";
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    const regions = Object.keys(data);
-                    regionChoices.setChoices(
-                        regions.map(region => ({
-                            value: region,
-                            label: region.charAt(0).toUpperCase() + region.slice(1)
-                        })),
-                        'value',
-                        'label',
-                        true
-                    );
-
-                    regionSelect.addEventListener('change', function() {
-                        const selectedRegion = this.value;
-                        const subregions = data[selectedRegion] || [];
-
-                        subregionChoices.clearChoices();
-                        subregionChoices.setChoices(
-                            subregions.map(sub => ({
-                                value: sub,
-                                label: sub
-                            })),
-                            'value',
-                            'label',
-                            true
-                        );
-                    });
-                })
-                .catch(error => {
-                    console.error("Failed to load region data:", error);
-                });
-        });
-    </script>
-
-    {{-- ######################### Gallery Upload ######################### --}}
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-
-    <script>
-        const imageInput = document.getElementById('imageInput');
-        const previewContainer = document.getElementById('previewContainer');
-        const imageOrder = document.getElementById('imageOrder');
-        const galleryForm = document.getElementById('galleryForm');
-        let files = [];
-
-        imageInput.addEventListener('change', (e) => {
-            files = Array.from(e.target.files);
-            previewContainer.innerHTML = '';
-
-            files.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const imgDiv = document.createElement('div');
-                    imgDiv.classList.add('img-preview');
-                    imgDiv.setAttribute('data-index', index);
-                    imgDiv.innerHTML = `
-                              <img src="${event.target.result}" alt="Image Preview"
-                                   style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
-                              <p class="text-center mt-1">Image ${index + 1}</p>
-                         `;
-                    previewContainer.appendChild(imgDiv);
-                };
-                reader.readAsDataURL(file);
-            });
-
-            updateOrder();
-        });
-
-        function updateOrder() {
-            const items = document.querySelectorAll('.img-preview');
-            imageOrder.value = Array.from(items).map(item => item.getAttribute('data-index')).join(',');
-        }
-
-        new Sortable(previewContainer, {
-            animation: 150,
-            onEnd: () => updateOrder(),
-        });
-
-        // 👇 Tambahkan ini agar order selalu terupdate saat form disubmit
-        galleryForm.addEventListener('submit', function(e) {
-            updateOrder(); // pastikan order diperbarui dulu
-        });
-    </script>
-    {{-- /* Gallery Upload */ --}}
 @endpush

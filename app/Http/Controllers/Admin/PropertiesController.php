@@ -434,6 +434,8 @@ class PropertiesController extends Controller
                 'property_legal.start_date',
                 'property_legal.end_date',
                 'property_legal.purchase_date',
+                'property_legal.extension_cost',
+                'property_legal.purchase_cost',
                 'property_legal.deadline_payment',
                 'property_legal.zoning',
             )
@@ -498,6 +500,8 @@ class PropertiesController extends Controller
                 'property_legal.start_date',
                 'property_legal.end_date',
                 'property_legal.purchase_date',
+                'property_legal.extension_cost',
+                'property_legal.purchase_cost',
                 'property_legal.deadline_payment',
                 'property_legal.zoning',
             )
@@ -587,7 +591,6 @@ class PropertiesController extends Controller
                 'freehold_zoning' => null,
             ]);
         }
-
         // ==========================================================================================================================================
         // ########### Edit Properties Data ##############
         // ==========================================================================================================================================

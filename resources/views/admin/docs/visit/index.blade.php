@@ -50,12 +50,6 @@
                             <table class="table-hover table-centered fs-14 table text-nowrap" id="visitDocsTable">
                                 <thead class="table-light">
                                     <tr>
-                                        <th style="width: 20px;">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="customCheck1">
-                                                <label class="form-check-label" for="customCheck1"></label>
-                                            </div>
-                                        </th>
                                         <th>No</th>
                                         <th>Customer Name</th>
                                         <th>Property Name</th>
@@ -68,12 +62,6 @@
                                 <tbody>
                                     @foreach ($visit_docs as $visit)
                                         <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                    <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                </div>
-                                            </td>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <div class="d-flex flex-column">

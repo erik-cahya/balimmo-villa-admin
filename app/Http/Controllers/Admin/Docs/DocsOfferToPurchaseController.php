@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Admin\Docs;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClientModel;
+use App\Models\PropertiesModel;
 use App\Models\VisitDocsModel;
 use App\Models\VisitPropertyDocsModel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class OfferToPurchaseController extends Controller
+class DocsOfferToPurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -49,7 +53,11 @@ class OfferToPurchaseController extends Controller
      */
     public function create()
     {
-        return view('admin.docs.offer-purchase.create');
+        $data['data_property'] = PropertiesModel::where('internal_reference', Auth::user()->reference_code)->get();
+        $data['data_client'] = ClientModel::where('reference_code', Auth::user()->reference_code)->get();
+
+
+        return view('admin.docs.offer-purchase.create', $data);
     }
 
     /**
@@ -104,5 +112,34 @@ class OfferToPurchaseController extends Controller
 
 
         return $pdf->stream('test.pdf');
+    }
+
+    public function getPropertiesAjax($id)
+    {
+        $propertyData = PropertiesModel::where('properties.id', $id)
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+            ->first();
+
+        if (!$propertyData) {
+            return response()->json(['error' => 'Property not found'], 404);
+        }
+
+        $tanggalAkhir = Carbon::parse($propertyData->end_date);
+        $tanggalAwal = Carbon::now();
+        $sisaHari = $tanggalAwal->diffInDays($tanggalAkhir, false);
+
+        // Tambahkan properti tambahan lainnya
+        $propertyData->datasProperty = $sisaHari . ' Days';
+
+        return response()->json(['data' => $propertyData]);
+    }
+
+    public function getClientsAjax($id)
+    {
+        $clientData = ClientModel::where('id', $id)
+            ->first();
+
+        return response()->json(['data' => $clientData]);
     }
 }

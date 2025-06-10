@@ -209,8 +209,8 @@
 
                                                                 <div class="col-lg-6">
                                                                     <h4 class="card-title mb-2">Extension Details :</h4>
-                                                                    <p class="mb-2"><span class="fw-medium text-dark">Negotiation Extension Cost</span><span class="mx-2">:</span>IDR {{ isset($data_properties->extension_cost) ? $data_properties->extension_cost : '-' }}</p>
-                                                                    <p class="mb-2"><span class="fw-medium text-dark">Purchase Cost</span><span class="mx-2">:</span>IDR {{ isset($data_properties->purchase_cost) ? $data_properties->purchase_cost : '-' }}</p>
+                                                                    <p class="mb-2"><span class="fw-medium text-dark">Negotiation Extension Cost</span><span class="mx-2">:</span>{{ isset($data_properties->extension_cost) ? $data_properties->extension_cost : '-' }}</p>
+                                                                    <p class="mb-2"><span class="fw-medium text-dark">Purchase Cost</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_cost) ? $data_properties->purchase_cost : '-' }}</p>
                                                                     <p class="mb-2"><span class="fw-medium text-dark">Deadline for Payment to Secure Rate</span><span class="mx-2">:</span>{{ isset($data_properties->deadline_payment) ? $data_properties->deadline_payment : '-' }}</p>
 
                                                                     <div class="d-flex align-items-center mt-3 flex-wrap gap-2">
