@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('offering_docs', function (Blueprint $table) {
             $table->id();
+            $table->string('reference_code')->comment('fk to user table');
             $table->unsignedBigInteger('properties_id')->comment('fk to properties table');
             $table->unsignedBigInteger('client_id')->comment('fk to customer table');
             $table->string('client_passport_number')->nullable();

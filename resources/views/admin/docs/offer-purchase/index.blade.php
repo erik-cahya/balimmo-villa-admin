@@ -42,58 +42,53 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table-hover table-centered fs-14 table text-nowrap" id="visitDocsTable">
+                            <table class="table-hover table-centered table text-nowrap" id="visitDocsTable">
                                 <thead class="table-light">
                                     <tr>
                                         <th>No</th>
                                         <th>Customer Name</th>
                                         <th>Property Name</th>
+                                        <th>Deposit Ammount</th>
+                                        <th>Client Nationality</th>
                                         <th>Docs Created</th>
-                                        <th>Date Visit</th>
-                                        <th>Status</th>
+                                        @role('Master')
+                                            <th>Reference</th>
+                                        @endrole
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($visit_docs as $visit)
+                                    @foreach ($offering_docs as $offering)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <div class="d-flex flex-column">
-                                                    <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="qlementine-icons:user-16" class="fs-16 align-middle"></iconify-icon> {{ $visit->first_name . ' ' . $visit->last_name }}</a>
+                                                    <a href="#!" class="text-dark fw-medium"><iconify-icon icon="qlementine-icons:user-16" class="fs-16 align-middle"></iconify-icon> {{ $offering->first_name . ' ' . $offering->last_name }}</a>
                                                     <div>
 
-                                                        <span class="fst-italic fs-12">{{ $visit->email }}</span>
+                                                        <span class="fst-italic fs-12">{{ $offering->email }}</span>
                                                         |
-                                                        <span class="fst-italic fs-12">{{ implode('-', str_split(preg_replace('/\D/', '', $visit->phone_number), 4)) }}</span>
+                                                        <span class="fst-italic fs-12">{{ implode('-', str_split(preg_replace('/\D/', '', $offering->phone_number), 4)) }}</span>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="d-flex flex-wrap gap-1">
-                                                    @foreach ($property_list[$visit->id] ?? [] as $properties)
-                                                        <span class="badge bg-dark text-light" style="font-size: 10px"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> {{ $properties->property_name }}</span>
-                                                    @endforeach
-                                                </div>
+                                                <span class="badge bg-dark text-light fs-12"><iconify-icon icon="f7:house-fill" class="align-middle"></iconify-icon> {{ $offering->property_name }}</span>
+                                            </td>
+                                            <td class="fs-13 fw-medium">
+                                                <iconify-icon icon="ph:hand-deposit-duotone" class="fs-20 align-middle"></iconify-icon>IDR {{ number_format($offering->deposit_ammount, 2, ',', '.') }}
+                                            </td>
+                                            <td class="fs-12 text-uppercase">
+                                                <iconify-icon icon="streamline-ultimate:flag-bold" class="fs-20 align-middle"></iconify-icon> {{ $offering->client_nationality }}
                                             </td>
                                             <td class="fs-12">
-                                                <iconify-icon icon="eos-icons:modified-date-outlined" class="fs-20 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($visit->created_at)->format('d F, Y') }}
+                                                <iconify-icon icon="fluent-mdl2:event-date" class="fs-20 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($offering->created_at)->format('d F, Y') }}
                                             </td>
-                                            <td class="fs-12">
-                                                <iconify-icon icon="fluent-mdl2:event-date" class="fs-20 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($visit->visit_date)->format('d F, Y') }}
-                                            </td>
-                                            <td>
-                                                @if ($visit->status_docs == 0)
-                                                    {{-- Cancel --}}
-                                                    <span class="badge text-danger bg-danger-subtle fs-12 px-2 py-1">Cancel</span>
-                                                @elseif ($visit->status_docs == 1)
-                                                    {{-- Accept --}}
-                                                    <span class="badge text-success bg-success-subtle fs-12 px-2 py-1">Done Visit</span>
-                                                @else
-                                                    {{-- Pending --}}
-                                                    <span class="badge text-warning bg-warning-subtle fs-12 px-2 py-1">Pending</span>
-                                                @endif
-                                            </td>
+                                            @role('Master')
+                                                <td>
+                                                    <span class="badge bg-dark text-light fs-12"><iconify-icon icon="si:user-fill" class="align-middle"></iconify-icon> {{ $offering->reference_code }}</span>
+                                                </td>
+                                            @endrole
                                             <td>
                                                 <div class="btn-group mb-1 me-1">
 
@@ -101,8 +96,8 @@
                                                     <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
 
                                                     {{-- Delete Btn --}}
-                                                    <input type="hidden" class="propertyId" value="{{ $visit->id }}">
-                                                    <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $visit->first_name . ' ' . $visit->last_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+                                                    <input type="hidden" class="propertyId" value="{{ $offering->id }}">
+                                                    <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $offering->first_name . ' ' . $offering->last_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
                                                     {{-- Download Btn --}}
                                                     <button id="dropdown" type="button" class="btn btn-xs btn-primary text-light dropdown-toggle fw-medium" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Download
@@ -111,21 +106,7 @@
                                                         <li>
                                                             <form action="{{ route('offer-purchase.pdf.english') }}" method="GET">
                                                                 @csrf
-                                                                {{-- {{ dd($visit->phone_number) }} --}}
-                                                                <input type="hidden" name="email" value="{{ $visit->email }}">
-                                                                <input type="hidden" name="phone_number" value="{{ $visit->phone_number }}">
-                                                                <input type="hidden" name="first_name" value="{{ $visit->first_name }}">
-                                                                <input type="hidden" name="last_name" value="{{ $visit->last_name }}">
-                                                                <input type="hidden" name="visit_date" value="{{ $visit->visit_date }}">
 
-                                                                <input type="hidden" name="internal_reference" value="{{ $property_list[$visit->id][0]->internal_reference }}">
-                                                                @foreach ($property_list[$visit->id] ?? [] as $index => $properties)
-                                                                    {{-- {{ dd($properties) }} --}}
-                                                                    <input type="hidden" name="properties[{{ $index }}][name]" value="{{ $properties->property_name }}">
-                                                                    <input type="hidden" name="properties[{{ $index }}][address]" value="{{ $properties->property_address }}">
-                                                                    <input type="hidden" name="properties[{{ $index }}][selling_price_idr]" value="{{ $properties->selling_price_idr }}">
-                                                                    <input type="hidden" name="properties[{{ $index }}][selling_price_usd]" value="{{ $properties->selling_price_usd }}">
-                                                                @endforeach
                                                                 <button type="submit" class="dropdown-item"><iconify-icon icon="material-symbols:download-rounded" class="fs-12 align-middle"></iconify-icon> Download Document</button>
                                                             </form>
                                                         </li>
@@ -137,7 +118,7 @@
                                                 <!-- Modal Edit-->
                                                 <div class="modal modal-lg fade" id="resetPasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
-                                                        <form action="{{ route('visit.update', $visit->id) }}" method="POST">
+                                                        <form action="{{ route('visit.update', $offering->id) }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="modal-content">
@@ -148,11 +129,11 @@
                                                                 <div class="modal-body">
                                                                     <div class="row">
                                                                         {{-- <input type="hidden" name="reference_code" value="{{ $profile->id }}"> --}}
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_first_name" label="First Name" value="{{ $visit->first_name }}" />
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_last_name" label="Last Name" value="{{ $visit->last_name }}" />
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_email" label="Customer Email" value="{{ $visit->email }}" />
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_phone" label="No Phone" value="{{ $visit->phone_number }}" />
-                                                                        <x-form-input className="col-lg-6" type="date" name="date_visit" label="Date Visit" value="{{ $visit->visit_date }}" />
+                                                                        <x-form-input className="col-lg-6" type="text" name="customer_first_name" label="First Name" value="{{ $offering->first_name }}" />
+                                                                        <x-form-input className="col-lg-6" type="text" name="customer_last_name" label="Last Name" value="{{ $offering->last_name }}" />
+                                                                        <x-form-input className="col-lg-6" type="text" name="customer_email" label="Customer Email" value="{{ $offering->email }}" />
+                                                                        <x-form-input className="col-lg-6" type="text" name="customer_phone" label="No Phone" value="{{ $offering->phone_number }}" />
+                                                                        <x-form-input className="col-lg-6" type="date" name="date_visit" label="Date Visit" value="{{ $offering->visit_date }}" />
                                                                         <x-form-select className="col-lg-6" name="status_visit" label="Status Visit"
                                                                             :options="['Cancel', 'Done Visit', 'Pending Visit']" />
                                                                     </div>
@@ -219,7 +200,7 @@
 
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Delete Document Visit " + propertyName + "?",
+                        text: "Delete Offering Docs " + propertyName + "?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -228,7 +209,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/visit/' + propertyId, {
+                            fetch('/offer-purchase/' + propertyId, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

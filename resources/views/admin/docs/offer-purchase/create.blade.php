@@ -284,14 +284,11 @@
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Offer Validity</h5>
                                     <hr>
                                     <div class="row my-3">
-
                                         <x-form-input className="col-lg-12" type="text" name="offer_validity" label="Input Offer Validity" />
-
                                     </div>
                                 </div>
 
                             </div>
-
                         </div>
                     </div>
 
@@ -333,6 +330,12 @@
                 }
             }, {
                 id: '#price_idr_price',
+                options: {
+                    prefix: 'IDR '
+                }
+            },
+            {
+                id: '#loan_ammount',
                 options: {
                     prefix: 'IDR '
                 }

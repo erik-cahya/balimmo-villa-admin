@@ -46,6 +46,33 @@ class DocsOfferToPurchaseController extends Controller
             ->get()
             ->groupBy('docs_visit_id');
 
+        if (Auth::user()->role == 'Master') {
+            $data['offering_docs'] = OfferingDocsModel::join('client', 'client.id', '=', 'offering_docs.client_id')
+                ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
+                ->select(
+                    'offering_docs.*',
+                    'properties.property_name',
+                    'client.first_name',
+                    'client.last_name',
+                    'client.email',
+                    'client.phone_number',
+                )
+                ->get();
+        } else {
+            $data['offering_docs'] = OfferingDocsModel::where('offering_docs.reference_code', Auth::user()->reference_code)
+                ->join('client', 'client.id', '=', 'offering_docs.client_id')
+                ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
+                ->select(
+                    'offering_docs.*',
+                    'properties.property_name',
+                    'client.first_name',
+                    'client.last_name',
+                    'client.email',
+                    'client.phone_number',
+                )
+                ->get();
+        }
+
         return view('admin.docs.offer-purchase.index', $data);
     }
 
@@ -80,6 +107,7 @@ class DocsOfferToPurchaseController extends Controller
         }
 
         OfferingDocsModel::create([
+            'reference_code' => Auth::user()->reference_code,
             'properties_id' => $request->id_property,
             'client_id' => $request->id_client,
             'client_passport_number' => $request->client_passport_number,
@@ -135,7 +163,16 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        OfferingDocsModel::destroy($id);
+
+        $flashData = [
+            'judul' => 'Delete Success',
+            'pesan' => 'Offering Docs Deleted Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+
+        return response()->json($flashData);
     }
 
     public function generateEnglishPDF()
