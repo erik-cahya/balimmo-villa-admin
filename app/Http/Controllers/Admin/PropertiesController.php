@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FeatureListModel;
-use App\Models\PropertiesFeatureModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyFinancialModel;
@@ -13,7 +12,6 @@ use App\Models\PropertyGalleryModel;
 use App\Models\PropertyLegalModel;
 use App\Models\PropertyOwnerModel;
 use App\Models\PropertyUrlAttachmentModel;
-use App\Models\RegionModel;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

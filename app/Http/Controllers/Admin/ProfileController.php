@@ -83,6 +83,7 @@ class ProfileController extends Controller
 
         // Update field lainnya
         $user->name = $request->name;
+        $user->email = $request->email;
         $user->phone_number = $request->phone;
         $user->description = $request->description;
         $user->tagline = $request->tagline;

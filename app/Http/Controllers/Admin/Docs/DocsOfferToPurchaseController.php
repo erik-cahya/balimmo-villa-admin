@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Docs;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClientModel;
+use App\Models\OfferingDocsModel;
 use App\Models\PropertiesModel;
 use App\Models\VisitDocsModel;
 use App\Models\VisitPropertyDocsModel;
@@ -65,9 +66,46 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        // dd($request->all());
+        $request->validate([
+            'client_nationality' => 'required',
+            'client_passport_number' => 'required',
+            'offer_validity' => 'required',
+        ]);
 
+        if ($request->financing_terms === 'Cash Purchase') {
+            $request->loan_ammount == null;
+            $request->bank_name == null;
+            $request->approval_deadline == null;
+        }
+
+        OfferingDocsModel::create([
+            'properties_id' => $request->id_property,
+            'client_id' => $request->id_client,
+            'client_passport_number' => $request->client_passport_number,
+            'client_nationality' => $request->client_nationality,
+            'idr_price' => $this->convertToInteger($request->price_idr_price),
+            'usd_price' => (float)str_replace(['USD', "\u{A0}", ',', ' '], '', $request->price_usd_price),
+            'deposit_ammount' => $this->convertToInteger($request->price_deposit_ammount),
+            'satisfactory_technical_inspection' => $request->satisfactory_technical_inspection === 'on' ? 1 : null,
+            'loan_approval' => $request->approval_loan === 'on' ? 1 : null,
+            'legal_due_diligence' => $request->legal_due_diligence === 'on' ? 1 : null,
+            'others_contingency' => $request->others_contingency,
+            'financing_terms' => $request->financing_terms,
+            'loan_ammount' => $request->loan_ammount == null ? null : $this->convertToInteger($request->loan_ammount),
+            'bank_name' => $request->bank_name,
+            'approval_deadline' => $request->approval_deadline == null ? null : $this->dateConversion($request->approval_deadline),
+            'offer_validity' => $this->dateConversion($request->offer_validity),
+        ]);
+
+        $flashData = [
+            'judul' => 'Create Docs Success',
+            'pesan' => 'New Offering Docs successfully created',
+            'swalFlashIcon' => 'success',
+        ];
+        return redirect()->route('offer-purchase.create')->with('flashData', $flashData);
+    }
+    // USD 2207531
     /**
      * Display the specified resource.
      */
@@ -119,6 +157,23 @@ class DocsOfferToPurchaseController extends Controller
         $propertyData = PropertiesModel::where('properties.id', $id)
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+            ->select(
+                'properties.id',
+                'properties.property_name',
+                'properties.property_name',
+                'properties.bathroom',
+                'properties.bedroom',
+
+                'property_legal.legal_status',
+                'property_legal.company_name',
+                'property_legal.rep_first_name',
+                'property_legal.rep_last_name',
+                'property_legal.phone as rep_phone',
+                'property_legal.email as rep_email',
+
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
+            )
             ->first();
 
         if (!$propertyData) {
@@ -141,5 +196,15 @@ class DocsOfferToPurchaseController extends Controller
             ->first();
 
         return response()->json(['data' => $clientData]);
+    }
+
+    private function dateConversion($date)
+    {
+        return Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+    }
+
+    private function convertToInteger($value)
+    {
+        return (int)preg_replace('/[^0-9]/', '', $value);
     }
 }

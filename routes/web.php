@@ -92,10 +92,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('localization', LocalizationController::class)->middleware('role:Master');
 
     Route::get('offer-purchase/generate/english', [DocsOfferToPurchaseController::class, 'generateEnglishPDF'])->name('offer-purchase.pdf.english');
-    Route::resource('offer-purchase', DocsOfferToPurchaseController::class);
-
     Route::get('getDataProperties/{id}', [DocsOfferToPurchaseController::class, 'getPropertiesAjax'])->name('getPropertiesAjax');
     Route::get('getDataClients/{id}', [DocsOfferToPurchaseController::class, 'getClientsAjax'])->name('getClientsAjax');
+    Route::resource('offer-purchase', DocsOfferToPurchaseController::class);
 });
 
 // Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
