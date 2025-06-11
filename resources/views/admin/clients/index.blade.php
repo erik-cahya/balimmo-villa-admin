@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="text-md-end mt-md-0 mt-3">
-                                    <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#addNewClientModal"><i class="ri-add-line me-1"></i> Add New Customer</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#addNewClientModal"><i class="ri-add-line me-1"></i> Add New Clients</button>
                                     <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#importLeads"><i class="ri-user-line me-1"></i> Import From Leads</button>
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <!-- Add New Customer Modal -->
+        <!-- Add New Clients Modal -->
         <div class="modal modal-lg fade" id="addNewClientModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -90,7 +90,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Understood</button>
+                            <button type="submit" class="btn btn-primary">Add Data</button>
                         </div>
                     </form>
                 </div>
@@ -180,6 +180,9 @@
                                         <th scope="col">Client Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone Number</th>
+                                        @role('Master')
+                                            <th scope="col">From Agent</th>
+                                        @endrole
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -263,7 +266,6 @@
     </script>
     {{-- /* Data Table --}}
 
-
     {{-- Search --}}
     <script>
         function debounce(func, delay) {
@@ -296,7 +298,6 @@
     </script>
     {{-- /*Search --}}
 
-
     {{-- Sweet Alert Delete --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -313,7 +314,7 @@
 
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Delete agent " + propertyName + "?",
+                        text: "Delete clients " + propertyName + "?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',

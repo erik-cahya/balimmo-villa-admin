@@ -20,8 +20,20 @@ class DocsVisitController extends Controller
 {
     public function index()
     {
-        $data['visit_docs'] = VisitDocsModel::where('visit_docs.reference_code', Auth::user()->reference_code)
-            ->select(
+        // $data['visit_docs'] = Auth::user()->role == 'Master' ? VisitDocsModel::select(
+        //     'visit_docs.id',
+        //     'visit_docs.first_name',
+        //     'visit_docs.last_name',
+        //     'visit_docs.email',
+        //     'visit_docs.phone_number',
+        //     'visit_docs.status_docs',
+        //     'visit_docs.visit_date',
+        // )->get()
+        //     :
+
+
+        if (Auth::user()->role == 'Master') {
+            $data['visit_docs'] = VisitDocsModel::select(
                 'visit_docs.id',
                 'visit_docs.first_name',
                 'visit_docs.last_name',
@@ -29,8 +41,19 @@ class DocsVisitController extends Controller
                 'visit_docs.phone_number',
                 'visit_docs.status_docs',
                 'visit_docs.visit_date',
-            )
-            ->get();
+            )->get();
+        } else {
+            $data['visit_docs'] = VisitDocsModel::where('visit_docs.reference_code', Auth::user()->reference_code)
+                ->select(
+                    'visit_docs.id',
+                    'visit_docs.first_name',
+                    'visit_docs.last_name',
+                    'visit_docs.email',
+                    'visit_docs.phone_number',
+                    'visit_docs.status_docs',
+                    'visit_docs.visit_date',
+                )->get();
+        }
 
         $data['property_list'] = VisitPropertyDocsModel::join('properties', 'properties.id', '=', 'visit_property_docs.property_id')
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')

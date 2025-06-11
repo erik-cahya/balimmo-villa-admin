@@ -12,15 +12,17 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $data['data_client'] = ClientModel::where('reference_code', Auth::user()->reference_code)->get();
-
-
         $clientEmails = ClientModel::pluck('email')->toArray();
 
+        // If Master : get all data
+        $data['data_client'] = Auth::user()->role == 'Master'
+            ? ClientModel::get()
+            : ClientModel::where('reference_code', Auth::user()->reference_code)->get();
 
-        $data['data_leads'] = PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)
-            ->where('agent_code', Auth::user()->reference_code)
-            ->get();
+        $data['data_leads'] = Auth::user()->role == 'Master'
+            ? PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)->get()
+            : PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)
+            ->where('agent_code', Auth::user()->reference_code)->get();
 
         return view('admin.clients.index', $data);
     }

@@ -41,7 +41,7 @@
                     <div class="dropdown topbar-item">
                         <a type="button" class="topbar-button" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="d-flex align-items-center">
-                                <img class="rounded-circle avatar-sm" src="{{ asset('admin') }}{{ Auth::user()->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . Auth::user()->reference_code . '/' . Auth::user()->profile }}" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
+                                <img class="rounded-circle avatar-sm" src="{{ asset('admin') }}{{ Auth::user()->profile == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . Auth::user()->reference_code . '/' . Auth::user()->profile }}" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">

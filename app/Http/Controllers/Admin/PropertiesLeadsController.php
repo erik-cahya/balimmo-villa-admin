@@ -24,18 +24,33 @@ class PropertiesLeadsController extends Controller
             return redirect()->route('login');
         }
 
+        // if (Auth::user()->role == 'Master') {
+        //     $data['data_leads'] = PropertyLeadsModel::select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+        //         ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+        //         ->get();
+        // } else {
+        //     $data['data_leads'] = PropertyLeadsModel::where('property_leads.agent_code', Auth::user()->reference_code)
+        //         ->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+        //         ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+        //         ->get();
+        // }
+
         if (Auth::user()->role == 'Master') {
-            $data['data_customers'] = PropertyLeadsModel::select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+            $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
                 ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
                 ->get();
         } else {
-            $data['data_customers'] = PropertyLeadsModel::where('property_leads.agent_code', Auth::user()->reference_code)
-                ->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
                 ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
                 ->get();
         }
 
-        $leads = $data['data_customers'];
+        $data['data_leads_matches'] = PropertyLeadsModel::where('agent_code', null)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+            ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+            ->get();
+
+
+        $leads = $data['data_leads_matches'];
         $data['matchProperties'] = [];
 
         if ($leads->isNotEmpty()) {
@@ -43,7 +58,7 @@ class PropertiesLeadsController extends Controller
             $regions = $leads->pluck('localization')->unique()->toArray();
             $maxBudget = $leads->max('cust_budget');
 
-            // dd($maxBudget);
+            // dd($regions);
             // Ambil semua properti yang mungkin cocok sekaligus
             $properties = PropertiesModel::whereIn('sub_region', $regions)
                 ->with(['featuredImage' => function ($query) {
@@ -69,6 +84,8 @@ class PropertiesLeadsController extends Controller
             // Kosongkan jika tidak ada leads
             $data['matchProperties'] = [];
         }
+
+        // dd($data['matchProperties']);
 
         return view('admin.leads.index', $data);
     }

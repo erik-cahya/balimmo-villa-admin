@@ -55,7 +55,7 @@
                                         <th>Property Name</th>
                                         <th>Docs Created</th>
                                         <th>Date Visit</th>
-                                        <th>Status</th>
+                                        <th>Status Visit</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

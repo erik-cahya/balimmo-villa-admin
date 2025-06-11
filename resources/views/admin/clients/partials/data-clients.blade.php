@@ -14,10 +14,14 @@
          </td>
          <td>{{ $client->email }}</td>
          <td>{{ implode('-', str_split(preg_replace('/\D/', '', $client->phone_number), 4)) }}</td>
+         @role('Master')
+             <td>
+                 <span class="badge bg-primary fs-11 text-white">{{ $client->reference_code }}</span>
+             </td>
+         @endrole
          <td>
              <div class="d-flex gap-2">
                  <a href="#!" class="btn btn-soft-primary btn-sm"><iconify-icon icon="solar:pen-2-broken" class="fs-18 align-middle" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"></iconify-icon></a>
-
 
                  <input type="hidden" class="propertyId" value="{{ $client->id }}">
                  <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $client->first_name . ' ' . $client->last_name }}"><iconify-icon icon="fe:trash" class="fs-18 align-middle"></iconify-icon></button>

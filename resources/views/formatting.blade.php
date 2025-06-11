@@ -19,6 +19,11 @@
 
     {{-- String Limitter --}}
     {{ Str::limit($dt_surat->alamat_tuk, 50) }}
+
+    @php
+        // If Master : get all data
+        $data['data_client'] = Auth::user()->role == 'Master' ? ClientModel::get() : ClientModel::where('reference_code', Auth::user()->reference_code)->get();
+    @endphp
 </body>
 
 </html>

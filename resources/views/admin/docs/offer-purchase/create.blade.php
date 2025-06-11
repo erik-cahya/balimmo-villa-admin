@@ -183,7 +183,7 @@
                                             <select class="form-control" id="select_client" name="id_client" data-choices data-choices-sorting-false data-toggle-target="select_client">
                                                 <option value="" selected disabled>Choose Client</option>
                                                 @foreach ($data_client as $client)
-                                                    <option value="{{ $client->id }}">
+                                                    <option value="{{ $client->id }}" {{ old('id_client') == $client->id ? 'selected' : '' }}>
                                                         {{ $client->first_name . ' ' . $client->last_name }}
                                                     </option>
                                                 @endforeach
@@ -202,12 +202,12 @@
                                             @enderror
                                         </div>
 
+                                        <x-form-input className="col-lg-6" type="text" name="client_passport_number" label="Passport Number" />
+                                        <x-form-input className="col-lg-6" type="text" name="client_nationality" label="Nationality" />
                                         <x-form-input className="col-lg-6" type="text" name="client_first_name" label="Client First Name" disabled="true" />
                                         <x-form-input className="col-lg-6" type="text" name="client_last_name" label="Client Last Name" disabled="true" />
                                         <x-form-input className="col-lg-6" type="text" name="client_email" label="Client Email" disabled="true" />
                                         <x-form-input className="col-lg-6" type="text" name="client_phone_number" label="Phone Number" disabled="true" />
-                                        <x-form-input className="col-lg-6" type="text" name="client_passport_number" label="Passport Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="client_nationality" label="Nationality" />
 
                                     </div>
                                 </div>
@@ -458,6 +458,27 @@
                 })
             })
             // /* Get Dynamic Client Data
+
+            // @Old Clien Data Trigger
+            let oldClientId = "{{ old('id_client') }}";
+            if (oldClientId) {
+                $('#select_client').val(oldClientId).trigger('change');
+
+                // Atau langsung panggil AJAX-nya tanpa trigger event
+                $.ajax({
+                    url: '/getDataClients/' + oldClientId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#client_first_name').val(response['data'].first_name);
+                        $('#client_last_name').val(response['data'].last_name);
+                        $('#client_email').val(response['data'].email);
+                        $('#client_phone_number').val(response['data'].phone_number);
+                    }
+                });
+            }
+            // @Old Clien Data Trigger
+
 
 
             // Get Data Kurs/Rate

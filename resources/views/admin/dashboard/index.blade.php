@@ -146,7 +146,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div>
-                                                        <img src="{{ asset('admin') }}{{ $property->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . $property->reference_code . '/' . $property->profile }}" class="avatar-sm rounded-circle me-2" alt="profile picture" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
+                                                        <img src="{{ asset('admin') }}{{ $property->profile == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $property->reference_code . '/' . $property->profile }}" class="avatar-sm rounded-circle me-2" alt="profile picture" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
 
                                                     </div>
                                                     <div class="d-flex flex-column">
