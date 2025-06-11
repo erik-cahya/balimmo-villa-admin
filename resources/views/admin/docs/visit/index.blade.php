@@ -158,8 +158,7 @@
                                                                         <x-form-input className="col-lg-6" type="text" name="customer_email" label="Customer Email" value="{{ $visit->email }}" />
                                                                         <x-form-input className="col-lg-6" type="text" name="customer_phone" label="No Phone" value="{{ $visit->phone_number }}" />
                                                                         <x-form-input className="col-lg-6" type="date" name="date_visit" label="Date Visit" value="{{ $visit->visit_date }}" />
-                                                                        <x-form-select className="col-lg-6" name="status_visit" label="Status Visit"
-                                                                            :options="['Cancel', 'Done Visit', 'Pending Visit']" />
+                                                                        <x-form-select className="col-lg-6" name="status_visit" label="Status Visit" :options="['Cancel', 'Done Visit', 'Pending Visit']" />
                                                                     </div>
 
                                                                 </div>

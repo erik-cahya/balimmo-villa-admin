@@ -71,7 +71,7 @@
                                     <div class="mb-3">
                                         <label class="form-label" for="password">Password</label>
                                         <input type="password" id="password" name="password" class="form-control bg-light border-light bg-opacity-50 py-2" placeholder="Enter your password" required>
-                                        <a href="{{ route('password.request') }}" class="text-muted text-unline-dashed float-end ms-1">Reset password</a>
+                                        {{-- <a href="{{ route('password.request') }}" class="text-muted text-unline-dashed float-end ms-1">Reset password</a> --}}
                                     </div>
 
                                     <div class="mb-3">

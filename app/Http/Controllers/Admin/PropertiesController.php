@@ -128,6 +128,8 @@ class PropertiesController extends Controller
             'year_renovated' => 'required',
             'feature' => 'required|array|min:1',
 
+            'legal_category' => 'required',
+
             'images' => 'required',
             'url_virtual_tour' => 'required',
             'url_lifestyle' => 'required',
@@ -411,6 +413,7 @@ class PropertiesController extends Controller
 
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
 
+
         $data['data_properties'] = PropertiesModel::where('property_slug', $slug)
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
@@ -420,7 +423,20 @@ class PropertiesController extends Controller
             }])
             ->select(
                 'properties.*',
-                'property_financial.*',
+                // 'property_financial.*',
+
+                'property_financial.avg_nightly_rate',
+                'property_financial.avg_occupancy_rate',
+                'property_financial.months_rented',
+                'property_financial.annual_turnover',
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
+                'property_financial.commision_ammount_idr',
+                'property_financial.commision_ammount_usd',
+                'property_financial.net_seller_idr',
+                'property_financial.net_seller_usd',
+
+
                 'property_legal.company_name',
                 'property_legal.rep_first_name',
                 'property_legal.rep_last_name',
@@ -486,7 +502,19 @@ class PropertiesController extends Controller
             }])
             ->select(
                 'properties.*',
-                'property_financial.*',
+                // 'property_financial.*',
+
+                'property_financial.avg_nightly_rate',
+                'property_financial.avg_occupancy_rate',
+                'property_financial.months_rented',
+                'property_financial.annual_turnover',
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
+                'property_financial.commision_ammount_idr',
+                'property_financial.commision_ammount_usd',
+                'property_financial.net_seller_idr',
+                'property_financial.net_seller_usd',
+
                 'property_legal.company_name',
                 'property_legal.rep_first_name',
                 'property_legal.rep_last_name',

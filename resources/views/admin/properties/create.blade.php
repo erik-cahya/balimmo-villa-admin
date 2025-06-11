@@ -298,8 +298,7 @@
                         </div>
                         <div class="card-body">
 
-                            <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category"
-                                :options="['Leasehold', 'Freehold']" />
+                            <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category" :options="['Leasehold', 'Freehold']" />
 
                             <div class="row">
                                 <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="freehold_group">
