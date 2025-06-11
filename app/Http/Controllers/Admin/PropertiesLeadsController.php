@@ -36,14 +36,43 @@ class PropertiesLeadsController extends Controller
         // }
 
         if (Auth::user()->role == 'Master') {
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+            $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)
+                ->select(
+                    'property_leads.*',
+                    'properties.id as properties_id',
+                    'properties.property_name',
+                    'properties.property_address',
+                    'properties.region',
+                    'properties.sub_region',
+                    'properties.bedroom',
+                    'properties.bathroom',
+                )
                 ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
-                ->get();
+                ->get()->groupBy('cust_email');
         } else {
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)
+                ->select(
+                    'property_leads.*',
+                    'properties.id as properties_id',
+                    'properties.property_name',
+                    'properties.property_address',
+                    'properties.region',
+                    'properties.sub_region',
+                    'properties.bedroom',
+                    'properties.bathroom',
+                )
                 ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
-                ->get();
+                ->get()->groupBy('cust_email');
         }
+
+        // $data['group'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+        //     ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+        //     ->get()->groupBy('email');;
+
+        // dd($data['group']);
+
+
+
 
         $data['data_leads_matches'] = PropertyLeadsModel::where('agent_code', null)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
             ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
@@ -134,7 +163,7 @@ class PropertiesLeadsController extends Controller
     {
         //
 
-        PropertyLeadsModel::destroy($id);
+        PropertyLeadsModel::where('cust_email', $id)->delete();
 
         $flashData = [
             'judul' => 'Delete Success',
