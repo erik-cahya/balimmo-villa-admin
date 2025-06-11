@@ -91,7 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::post('localization/addRegion', [LocalizationController::class, 'addRegion'])->name('localization.addRegion')->middleware('role:Master');
     Route::resource('localization', LocalizationController::class)->middleware('role:Master');
 
-    Route::get('offer-purchase/generate/english', [DocsOfferToPurchaseController::class, 'generateEnglishPDF'])->name('offer-purchase.pdf.english');
+    Route::post('offer-purchase/generate/english', [DocsOfferToPurchaseController::class, 'generateEnglishPDF'])->name('offer-purchase.pdf.english');
     Route::get('getDataProperties/{id}', [DocsOfferToPurchaseController::class, 'getPropertiesAjax'])->name('getPropertiesAjax');
     Route::get('getDataClients/{id}', [DocsOfferToPurchaseController::class, 'getClientsAjax'])->name('getClientsAjax');
     Route::resource('offer-purchase', DocsOfferToPurchaseController::class);

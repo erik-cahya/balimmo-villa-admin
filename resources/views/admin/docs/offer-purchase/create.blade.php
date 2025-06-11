@@ -246,11 +246,11 @@
                                         <div class="col-lg-12 mb-2">
                                             <div class="mb-3 mt-2" bis_skin_checked="1">
                                                 <div class="form-check form-check-inline" bis_skin_checked="1">
-                                                    <input class="form-check-input" type="radio" name="financing_terms" id="cash_purchase" value="Cash Purchase">
+                                                    <input class="form-check-input" type="radio" name="financing_terms" id="cash_purchase" value="Cash Purchase" {{ old('financing_terms') == 'Cash Purchase' ? 'checked' : '' }} >
                                                     <label class="form-check-label" for="cash_purchase">Cash Purchase</label>
                                                 </div>
                                                 <div class="form-check form-check-inline" bis_skin_checked="1">
-                                                    <input class="form-check-input" type="radio" name="financing_terms" id="loan_approval" value="Subject to Loan Approval">
+                                                    <input class="form-check-input" type="radio" name="financing_terms" id="loan_approval" value="Subject to Loan Approval" {{ old('financing_terms') == 'Subject to Loan Approval' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="loan_approval">Subject to Loan Approval</label>
                                                 </div>
                                             </div>
@@ -284,7 +284,7 @@
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Offer Validity</h5>
                                     <hr>
                                     <div class="row my-3">
-                                        <x-form-input className="col-lg-12" type="text" name="offer_validity" label="Input Offer Validity" />
+                                        <x-form-input className="col-lg-12" type="text" name="offer_validity" label="Offer Validity" />
                                     </div>
                                 </div>
 
@@ -373,6 +373,22 @@
             $('#pt_pma_group').hide();
 
 
+            // Cek nilai old dari server
+            const oldFinancingTerms = "{{ old('financing_terms') }}";
+
+            console.log(oldFinancingTerms);
+
+            if (oldFinancingTerms === 'Subject to Loan Approval') {
+                $('#group_loan_ammount').show();
+                $('#group_bank_name').show();
+                $('#group_approval_deadline').show();
+            } else if (oldFinancingTerms === 'Cash Purchase') {
+                $('#group_loan_ammount').hide();
+                $('#group_bank_name').hide();
+                $('#group_approval_deadline').hide();
+            }
+
+
 
             $('input[name="financing_terms"]').change(function() {
                 if ($('#loan_approval').is(':checked')) {
@@ -426,10 +442,8 @@
                         $('#remaining_lease_period').val(response['data'].datasProperty);
 
                         if (response['data'].company_name !== null) {
-                            console.log('tidak kosong')
                             $('#pt_pma_group').show();
                         } else {
-                            console.log('kosong')
                             $('#pt_pma_group').hide();
                         }
 

@@ -104,8 +104,12 @@
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown">
                                                         <li>
-                                                            <form action="{{ route('offer-purchase.pdf.english') }}" method="GET">
+                                                            <form action="{{ route('offer-purchase.pdf.english') }}" method="POST">
                                                                 @csrf
+                                                                <input type="hidden" name="offering_id" value="{{ $offering->id }}">
+                                                                {{-- <input type="hidden" name="last_name" value="{{ $offering->last_name }}">
+                                                                <input type="hidden" name="phone_number" value="{{ $offering->phone_number }}">
+                                                                <input type="hidden" name="email" value="{{ $offering->email }}"> --}}
 
                                                                 <button type="submit" class="dropdown-item"><iconify-icon icon="material-symbols:download-rounded" class="fs-12 align-middle"></iconify-icon> Download Document</button>
                                                             </form>

@@ -337,11 +337,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties1.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties1.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Canggu</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <h5 class="popular__featured--subtitle">See All Properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -354,11 +354,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties2.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties2.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Nyanyi</h3>
-                                        <h5 class="popular__featured--subtitle">More DETAILS
+                                        <h5 class="popular__featured--subtitle">See All Properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -371,11 +371,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-sanur.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-sanur.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Sanur</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <h5 class="popular__featured--subtitle">See All Properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -388,11 +388,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-nusapenida.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-nusapenida.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Nusa Penida</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <h5 class="popular__featured--subtitle">See All Properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -405,11 +405,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-ubud.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-ubud.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Ubud</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <h5 class="popular__featured--subtitle">See All Properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -422,11 +422,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-lovina.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-lovina.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Lovina</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <h5 class="popular__featured--subtitle">See All Properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>

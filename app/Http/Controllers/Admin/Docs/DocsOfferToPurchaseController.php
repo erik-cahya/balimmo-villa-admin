@@ -13,6 +13,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+
 
 class DocsOfferToPurchaseController extends Controller
 {
@@ -21,30 +24,30 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function index()
     {
-        $data['visit_docs'] = VisitDocsModel::where('visit_docs.reference_code', Auth::user()->reference_code)
-            ->select(
-                'visit_docs.id',
-                'visit_docs.first_name',
-                'visit_docs.last_name',
-                'visit_docs.email',
-                'visit_docs.phone_number',
-                'visit_docs.status_docs',
-                'visit_docs.visit_date',
-            )
-            ->get();
+        // $data['visit_docs'] = VisitDocsModel::where('visit_docs.reference_code', Auth::user()->reference_code)
+        //     ->select(
+        //         'visit_docs.id',
+        //         'visit_docs.first_name',
+        //         'visit_docs.last_name',
+        //         'visit_docs.email',
+        //         'visit_docs.phone_number',
+        //         'visit_docs.status_docs',
+        //         'visit_docs.visit_date',
+        //     )
+        //     ->get();
 
-        $data['property_list'] = VisitPropertyDocsModel::join('properties', 'properties.id', '=', 'visit_property_docs.property_id')
-            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-            ->select(
-                'properties.property_address',
-                'properties.internal_reference',
-                'properties.property_name',
-                'property_financial.selling_price_idr',
-                'property_financial.selling_price_usd',
-                'visit_property_docs.docs_visit_id'
-            )
-            ->get()
-            ->groupBy('docs_visit_id');
+        // $data['property_list'] = VisitPropertyDocsModel::join('properties', 'properties.id', '=', 'visit_property_docs.property_id')
+        //     ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+        //     ->select(
+        //         'properties.property_address',
+        //         'properties.internal_reference',
+        //         'properties.property_name',
+        //         'property_financial.selling_price_idr',
+        //         'property_financial.selling_price_usd',
+        //         'visit_property_docs.docs_visit_id'
+        //     )
+        //     ->get()
+        //     ->groupBy('docs_visit_id');
 
         if (Auth::user()->role == 'Master') {
             $data['offering_docs'] = OfferingDocsModel::join('client', 'client.id', '=', 'offering_docs.client_id')
@@ -98,13 +101,22 @@ class DocsOfferToPurchaseController extends Controller
             'client_nationality' => 'required',
             'client_passport_number' => 'required',
             'offer_validity' => 'required',
+            'price_deposit_ammount' => 'required',
         ]);
 
         if ($request->financing_terms === 'Cash Purchase') {
             $request->loan_ammount == null;
             $request->bank_name == null;
             $request->approval_deadline == null;
+        } else {
+            $request->validate([
+                'financing_terms' => 'required',
+                'loan_ammount' => 'required',
+                'bank_name' => 'required',
+                'approval_deadline' => 'required',
+            ]);
         }
+        // dd($request->all());
 
         OfferingDocsModel::create([
             'reference_code' => Auth::user()->reference_code,
@@ -131,7 +143,7 @@ class DocsOfferToPurchaseController extends Controller
             'pesan' => 'New Offering Docs successfully created',
             'swalFlashIcon' => 'success',
         ];
-        return redirect()->route('offer-purchase.create')->with('flashData', $flashData);
+        return redirect()->route('offer-purchase.index')->with('flashData', $flashData);
     }
     // USD 2207531
     /**
@@ -175,14 +187,68 @@ class DocsOfferToPurchaseController extends Controller
         return response()->json($flashData);
     }
 
-    public function generateEnglishPDF()
+    public function generateEnglishPDF(Request $request)
     {
+
+        $data['docs_offering'] = OfferingDocsModel::where('offering_docs.id', $request->offering_id)
+            ->join('client', 'client.id', '=', 'offering_docs.client_id')
+            ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
+            ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+            ->select(
+                'offering_docs.*',
+
+                'client.first_name',
+                'client.last_name',
+                'client.email',
+                'client.phone_number',
+
+                'properties.property_name',
+                'properties.property_address',
+                'properties.region',
+                'properties.sub_region',
+                'properties.total_land_area',
+                'properties.villa_area',
+                'properties.bedroom',
+                'properties.bathroom',
+                'properties.pool_area',
+
+                'property_legal.legal_status',
+                'property_legal.company_name',
+                'property_legal.rep_first_name',
+                'property_legal.rep_last_name',
+                'property_legal.phone as rep_phone',
+
+
+            )
+            ->first();
+
+        // dd($data['docs_offering']);
+
+        if ($data['docs_offering']->legal_status == 'Leasehold') {
+
+            $tanggalAkhir = Carbon::parse($data['docs_offering']->end_date);
+            $tanggalAwal = Carbon::now();
+            $sisaHari = $tanggalAwal->diffInDays($tanggalAkhir, false);
+            $data['docs_offering']->rest_times = $sisaHari . ' Days';
+
+            // dd($sisaHari);
+        }
+        $data['docs_offering']->usdRates = $this->getUSDtoIDRRate();
+
+        // dd($data['docs_offering']);
+
+        // dd($this->getUSDtoIDRRate());
+
+
+        // Tambahkan properti tambahan lainnya
+
+
         // SET OPTION lebih dulu
         Pdf::setOption('isHtml5ParserEnabled', true);
         Pdf::setOption('isPhpEnabled', true);
 
         // Load view
-        $pdf = Pdf::loadView('admin.docs.offer-purchase.pdf.english.pdf-offer-purchase')
+        $pdf = Pdf::loadView('admin.docs.offer-purchase.pdf.english.pdf-offer-purchase', $data)
             ->setPaper('A4', 'portrait');
 
 
@@ -200,6 +266,7 @@ class DocsOfferToPurchaseController extends Controller
                 'properties.property_name',
                 'properties.bathroom',
                 'properties.bedroom',
+                'properties.property_address',
 
                 'property_legal.legal_status',
                 'property_legal.company_name',
@@ -243,5 +310,17 @@ class DocsOfferToPurchaseController extends Controller
     private function convertToInteger($value)
     {
         return (int)preg_replace('/[^0-9]/', '', $value);
+    }
+
+    private function getUSDtoIDRRate()
+    {
+        return Cache::remember('usd_to_idr_rate', now()->addHours(1), function () {
+            try {
+                $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
+                return $response['rates']['IDR'] ?? 15000;
+            } catch (\Exception $e) {
+                return 15000;
+            }
+        });
     }
 }
