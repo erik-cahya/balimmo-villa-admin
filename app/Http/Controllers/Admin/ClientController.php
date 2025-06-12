@@ -14,6 +14,8 @@ class ClientController extends Controller
     {
         $clientEmails = ClientModel::pluck('email')->toArray();
 
+        // dd($clientEmails);
+
         // If Master : get all data
         $data['data_client'] = Auth::user()->role == 'Master'
             ? ClientModel::get()
@@ -23,6 +25,8 @@ class ClientController extends Controller
             ? PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)->get()
             : PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)
             ->where('agent_code', Auth::user()->reference_code)->get();
+
+        // dd($data['data_leads']);
 
         return view('admin.clients.index', $data);
     }

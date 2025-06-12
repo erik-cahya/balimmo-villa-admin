@@ -24,16 +24,6 @@ class PropertiesLeadsController extends Controller
             return redirect()->route('login');
         }
 
-        // if (Auth::user()->role == 'Master') {
-        //     $data['data_leads'] = PropertyLeadsModel::select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-        //         ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
-        //         ->get();
-        // } else {
-        //     $data['data_leads'] = PropertyLeadsModel::where('property_leads.agent_code', Auth::user()->reference_code)
-        //         ->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-        //         ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
-        //         ->get();
-        // }
 
         if (Auth::user()->role == 'Master') {
             $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)
@@ -64,15 +54,6 @@ class PropertiesLeadsController extends Controller
                 ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
                 ->get()->groupBy('cust_email');
         }
-
-        // $data['group'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-        //     ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
-        //     ->get()->groupBy('email');;
-
-        // dd($data['group']);
-
-
-
 
         $data['data_leads_matches'] = PropertyLeadsModel::where('agent_code', null)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
             ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')

@@ -105,8 +105,6 @@
 
                                                     <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
 
-
-
                                                     <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties</button>
                                                 </div>
 
@@ -223,124 +221,126 @@
                                             $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
                                             // Ambil properti yang sudah difilter
                                             $filteredMatchLeads = $referenceCode ? $matchProperties[$matchLeads->id]->where('internal_reference', $referenceCode) : $matchProperties[$matchLeads->id];
+
                                         @endphp
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-1">
-                                                    <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
-                                                    <div class="d-block">
-                                                        <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->cust_name }}</h5>
-                                                        <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</p>
-
-                                            </td>
-                                            <td>
-
-                                                <p class="mb-0"><iconify-icon icon="tdesign:money-filled" class="fs-16 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}</p>
-
-                                            </td>
-                                            <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
-
-                                            <td>{{ $matchLeads->message }}</td>
-                                            <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</td>
-
-                                            <td>
-                                                @if ($filteredMatchLeads->count() == 0)
-                                                    <span class="btn btn-sm btn-primary">No Match Properties</span>
-                                                @else
-                                                    <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#matchProperties">
-                                                        Show {{ $filteredMatchLeads->count() }} Properties
-                                                    </button>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        <!-- Modal -->
-                                        <div class="modal modal-xl fade" id="matchProperties" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <form action="{{ route('agent.changePassword') }}" method="POST">
-                                                    @csrf
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="staticBackdropLabel">Reset User Password</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        @if ($filteredMatchLeads->count() > 0)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-1">
+                                                        <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
+                                                        <div class="d-block">
+                                                            <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->cust_name }}</h5>
+                                                            <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                @foreach ($filteredMatchLeads as $properties)
-                                                                    <div class="col-md-6 col-xl-6">
-                                                                        <div class="card bg-primary bg-gradient">
-                                                                            <div class="card-body">
-                                                                                <div class="row align-items-center justify-content-between">
-                                                                                    <div class="col-xl-7 col-lg-6 col-md-6">
-                                                                                        <h3 class="fw-bold fs-18 text-white">{{ $properties->property_name }}</h3>
-                                                                                        <hr>
-                                                                                        <div class="row">
-                                                                                            <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                                <div class="d-flex gap-2">
-                                                                                                    <div class="avatar-sm flex-shrink-0">
-                                                                                                        <span class="avatar-title bg-success rounded bg-opacity-50 text-white">
-                                                                                                            <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                                        </span>
-                                                                                                    </div>
-                                                                                                    <div class="d-block">
-                                                                                                        <h5 class="fw-medium mb-0 text-white">{{ $properties->bedroom }}</h5>
-                                                                                                        <p class="text-white-50 mb-0">Bedroom</p>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                                <div class="d-flex gap-2">
-                                                                                                    <div class="avatar-sm flex-shrink-0">
-                                                                                                        <span class="avatar-title bg-danger rounded bg-opacity-50 text-white">
-                                                                                                            <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                                        </span>
-                                                                                                    </div>
-                                                                                                    <div class="d-block">
-                                                                                                        <h5 class="fw-medium mb-0 text-white">{{ $properties->bathroom }}</h5>
-                                                                                                        <p class="text-white-50 mb-0">Bathrom</p>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <hr>
-                                                                                        <h3 class="fw-normal fs-16 fst-italic text-white">IDR {{ number_format($properties->selling_price_idr, 2, ',', '.') }}</h3>
-                                                                                        <h3 class="fw-normal fs-16 fst-italic text-white">{{ $properties->region }} - {{ $properties->sub_region }}</h3>
-                                                                                        <h3 class="fw-normal fs-11 fst-italic text-white">{{ $properties->internal_reference }}</h3>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</p>
+                                                </td>
+                                                <td>
 
-                                                                                    </div>
-                                                                                    <div class="col-xl-5 col-lg-4 col-md-4">
-                                                                                        <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
+                                                    <p class="mb-0"><iconify-icon icon="tdesign:money-filled" class="fs-16 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}</p>
+
+                                                </td>
+                                                <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
+
+                                                <td>{{ $matchLeads->message }}</td>
+                                                <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</td>
+
+                                                <td>
+                                                    @if ($filteredMatchLeads->count() == 0)
+                                                        <span class="btn btn-sm btn-primary">No Match Properties</span>
+                                                    @else
+                                                        <button class="btn btn-sm btn-primary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#matchProperties">
+                                                            Show {{ $filteredMatchLeads->count() }} Properties
+                                                        </button>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <!-- Modal -->
+                                            <div class="modal modal-xl fade" id="matchProperties" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <form action="{{ route('agent.changePassword') }}" method="POST">
+                                                        @csrf
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">Reset User Password</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    @foreach ($filteredMatchLeads as $properties)
+                                                                        <div class="col-md-6 col-xl-6">
+                                                                            <div class="card bg-primary bg-gradient">
+                                                                                <div class="card-body">
+                                                                                    <div class="row align-items-center justify-content-between">
+                                                                                        <div class="col-xl-7 col-lg-6 col-md-6">
+                                                                                            <h3 class="fw-bold fs-18 text-white">{{ $properties->property_name }}</h3>
+                                                                                            <hr>
+                                                                                            <div class="row">
+                                                                                                <div class="col-lg-6 col-lg-6 col-md-6 col-6">
+                                                                                                    <div class="d-flex gap-2">
+                                                                                                        <div class="avatar-sm flex-shrink-0">
+                                                                                                            <span class="avatar-title bg-success rounded bg-opacity-50 text-white">
+                                                                                                                <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                        <div class="d-block">
+                                                                                                            <h5 class="fw-medium mb-0 text-white">{{ $properties->bedroom }}</h5>
+                                                                                                            <p class="text-white-50 mb-0">Bedroom</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-lg-6 col-lg-6 col-md-6 col-6">
+                                                                                                    <div class="d-flex gap-2">
+                                                                                                        <div class="avatar-sm flex-shrink-0">
+                                                                                                            <span class="avatar-title bg-danger rounded bg-opacity-50 text-white">
+                                                                                                                <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                        <div class="d-block">
+                                                                                                            <h5 class="fw-medium mb-0 text-white">{{ $properties->bathroom }}</h5>
+                                                                                                            <p class="text-white-50 mb-0">Bathrom</p>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <hr>
+                                                                                            <h3 class="fw-normal fs-16 fst-italic text-white">IDR {{ number_format($properties->selling_price_idr, 2, ',', '.') }}</h3>
+                                                                                            <h3 class="fw-normal fs-16 fst-italic text-white">{{ $properties->region }} - {{ $properties->sub_region }}</h3>
+                                                                                            <h3 class="fw-normal fs-11 fst-italic text-white">{{ $properties->internal_reference }}</h3>
+
+                                                                                        </div>
+                                                                                        <div class="col-xl-5 col-lg-4 col-md-4">
+                                                                                            <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Change Password</button>
-                                                        </div>
-
-                                                        @if ($errors->any())
-                                                            <div class="alert alert-danger">
-                                                                <ul class="mb-0">
-                                                                    @foreach ($errors->all() as $message)
-                                                                        <li>{{ $message }}</li>
                                                                     @endforeach
-                                                                </ul>
+                                                                </div>
                                                             </div>
-                                                        @endif
-                                                </form>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Change Password</button>
+                                                            </div>
+
+                                                            @if ($errors->any())
+                                                                <div class="alert alert-danger">
+                                                                    <ul class="mb-0">
+                                                                        @foreach ($errors->all() as $message)
+                                                                            <li>{{ $message }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            @endif
+                                                    </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <!-- /* Modal -->
+                                            <!-- /* Modal -->
+                                        @endif
                                     @endforeach
 
                                 </tbody>
