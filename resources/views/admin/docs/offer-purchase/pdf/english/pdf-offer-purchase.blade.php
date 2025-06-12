@@ -224,16 +224,6 @@
     <p>Date / Tanggal : </p>
     <p style="font-weight: bold">Name / Nama : </p>
     <p style="font-weight: bold">Signature / Tanda Tangan : </p>
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>

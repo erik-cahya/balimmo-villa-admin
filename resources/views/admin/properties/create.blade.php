@@ -456,7 +456,19 @@
                                     <label for="gallery" class="form-label">Property Gallery (min 4)</label>
 
                                     <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
-                                    <div id="previewContainer" class="d-flex flex-wrap gap-3"></div>
+
+                                    <div id="previewContainer" class="d-flex flex-wrap gap-3">
+                                        @if (session('old_images'))
+                                            @foreach (session('old_images') as $index => $img)
+                                                <div class="img-preview" data-index="{{ $index }}">
+                                                    <img src="{{ asset('public/tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
+                                                        style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
+                                                    <p class="mt-1 text-center">Image {{ $index + 1 }}</p>
+                                                    <input type="hidden" name="old_images[]" value="{{ $img }}">
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
 
                                     <input type="hidden" name="order" id="imageOrder">
 
@@ -652,6 +664,7 @@
 
     {{-- /* Convert IDR to USD --}}
 
+    {{-- Flatpickr --}}
     <script>
         $("#leasehold_start_date").flatpickr({
             dateFormat: "d-m-Y"
@@ -666,7 +679,13 @@
             dateFormat: "d-m-Y"
         });
     </script>
+    {{-- /* Flatpickr --}}
 
+    {{-- Get Region & Subregion --}}
+    <script>
+        const oldRegion = @json(old('region'));
+        const oldSubregion = @json(old('subregion'));
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const regionSelect = document.getElementById('region');
@@ -685,6 +704,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const regions = Object.keys(data);
+
                     regionChoices.setChoices(
                         regions.map(region => ({
                             value: region,
@@ -695,6 +715,29 @@
                         true
                     );
 
+                    // ✅ Set old region setelah setChoices selesai
+                    if (oldRegion) {
+                        regionChoices.setChoiceByValue(oldRegion);
+
+                        // ✅ Load subregion berdasarkan region lama
+                        const subregions = data[oldRegion] || [];
+                        subregionChoices.setChoices(
+                            subregions.map(sub => ({
+                                value: sub,
+                                label: sub
+                            })),
+                            'value',
+                            'label',
+                            true
+                        );
+
+                        // ✅ Set old subregion
+                        if (oldSubregion) {
+                            subregionChoices.setChoiceByValue(oldSubregion);
+                        }
+                    }
+
+                    // 🔁 Handle perubahan region (user memilih)
                     regionSelect.addEventListener('change', function() {
                         const selectedRegion = this.value;
                         const subregions = data[selectedRegion] || [];
@@ -716,6 +759,8 @@
                 });
         });
     </script>
+
+    {{-- /* Get Region & Subregion --}}
 
     {{-- ######################### Gallery Upload ######################### --}}
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>

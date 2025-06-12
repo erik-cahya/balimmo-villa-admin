@@ -90,6 +90,11 @@ class PropertiesController extends Controller
         // dd(explode('-', Auth::user()->reference_code)[0]);
         $slug = $this->generatePropertiesSlug($request->property_name);
 
+        $validated = $request->validate([
+            'images' => 'required|array|min:4',
+            'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
         $rules = [];
         foreach ($request->owners as $index => $owner) {
             $prefix = "owners.$index.";
@@ -148,6 +153,9 @@ class PropertiesController extends Controller
             'feature' => 'Please Choose features & Amenities',
             'images' => 'Please Upload your Property Images',
         ]);
+
+
+
 
 
         // Freehold Validation
@@ -390,6 +398,7 @@ class PropertiesController extends Controller
         // /* Gallery Handler
 
         Cache::forget('properties_list_cache');
+
 
         $flashData = [
             'judul' => 'Create Property Success',
