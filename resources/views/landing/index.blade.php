@@ -1,6 +1,41 @@
 @extends('landing.layouts.master')
 @push('style')
     <link href="{{ asset('admin') }}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('landing/assets/css/select2.min.css') }}">
+    <style>
+        /* Ubah border dan padding */
+.select2-container .select2-selection--single {
+    height: 52px;
+    width: 288px;
+    padding: 14px 12px;
+    border: 1px solid #0000;
+    border-radius: 6px;
+}
+
+/* Ubah warna saat fokus */
+.select2-container--default .select2-selection--single:focus,
+.select2-container--default .select2-selection--single:hover {
+    border-color: #0000;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+/* Ubah warna teks */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #333;
+    /* font-weight: 500; */
+}
+
+/* Icon dropdown */
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #0000 transparent transparent transparent;
+}
+
+.select2-results{
+    padding: 8px;
+}
+
+    </style>
+
 @endpush
 @section('content')
     <!-- Start Hero section -->
@@ -15,19 +50,19 @@
 
                     <!-- Advance search filter -->
                     <div class="advance__search--filter">
-                        <ul class="nav advance__tab--btn justify-content-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
+                        {{-- <ul class="nav advance__tab--btn justify-content-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
                             <li class="nav-item advance__tab--btn__list">
-                                <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Buy
+                                <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Search
                                 </button>
                             </li>
-                        </ul>
+                        </ul> --}}
                         <form action="{{ route('filter.properties') }}" method="POST">
                             @csrf
                             <div class="tab-content" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
                                 <div class="tab-pane fade show active" id="buy">
                                     <div class="advance__search--inner d-flex">
                                         <div class="advance__search--items">
-                                            <input class="advance__search--input" name="name" placeholder="Enter Keyword..." type="text">
+                                            <input class="advance__search--input" name="name" placeholder="Enter Properties Name..." type="text">
                                         </div>
                                         <div class="advance__search--items">
                                             <select class="advance__search--select" name="property_type">
@@ -37,11 +72,20 @@
                                             </select>
                                         </div>
                                         <div class="advance__search--items position-relative">
-                                            <input class="advance__search--input location" name="location" placeholder="Which Place?" type="text">
-                                            <span class="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            {{-- <input class="advance__search--input location" name="location" placeholder="Which Place?" type="text"> --}}
+                                            {{-- <span class="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#8B8B8B" />
                                                 </svg>
-                                            </span>
+                                            </span> --}}
+
+                                            <select class="advance__search--select" name="location">
+                                                <option disabled selected>Select Location</option>
+                                                @foreach ($sub_regions as $rgn)
+                                                    <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            
                                         </div>
 
                                         <button type="submit" class="advance__search--btn solid__btn">Search Now <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1232,6 +1276,17 @@
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
+
+    <script src="{{ asset('landing/assets/js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#selectLocation').select2({
+            placeholder: "Select a state",
+                allowClear: true
+
+            });
+        });
+    </script>
 
     <script>
         $("#timing").flatpickr({

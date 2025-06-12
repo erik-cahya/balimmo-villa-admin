@@ -221,7 +221,7 @@
                                 <div class="d-flex align-items-center justify-content-between border-bottom mt-2 flex-wrap gap-2 pb-2">
                                     <div class="d-flex align-items-center gap-2">
                                         <div class="avatar">
-                                            <img src="{{ asset('admin') }}{{ $agent->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . $agent->reference_code . '/' . $agent->profile }}" alt="avatar-3" class="img-fluid rounded-circle" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
+                                            <img src="{{ asset('admin') }}{{ $agent->profile == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $agent->reference_code . '/' . $agent->profile }}" alt="avatar-3" class="img-fluid rounded-circle" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
                                         </div>
                                         <div class="d-block">
                                             <span class="text-dark">

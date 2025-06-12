@@ -44,7 +44,7 @@
                                                                 <a class="featured__thumbnail--link" href="{{ route('landing-page.listing.detail', $property->property_slug) }}"><img class="featured__thumbnail--img" src="{{ asset($property->featuredImage->image_path) }}" alt="featured-img" style="background-color: red; height: 20rem; object-fit: cover"></a>
                                                             </div>
                                                             <div class="featured__badge">
-                                                                <span class="badge__field style2">{{ $property->region }}</span>
+                                                                <span class="badge__field style2">{{ $property->sub_region }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="listing__featured--content">

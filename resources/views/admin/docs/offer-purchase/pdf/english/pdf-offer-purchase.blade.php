@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <h2 style="text-align: center; margin-top: 10px; font-size: 18px;">Buyer Information 1:</h2>
+    <h2 style="text-align: center; margin-top: 30px; font-size: 18px;">Buyer Information 1:</h2>
 
     <div class="row">
         <div class="col" style="margin-left: 50px">
@@ -87,22 +87,24 @@
         </div>
     </div>
 
-    <h3 style="text-align: center; margin-top: 10px; font-size: 18px;">Buyer Information 2 (IF COMPANY PT PMA)</h3>
+    @if ($docs_offering->company_name !== null)
+        <h3 style="text-align: center; margin-top: 30px; font-size: 18px;">Buyer Information 2 (IF COMPANY PT PMA)</h3>
 
-    <div class="row">
-        <div class="col" style="margin-left: 50px">
-            <p><span class="label">Name:</span> [ .....AUTO.... ]</p>
-            <p><span class="label">Surname:</span> [ .....AUTO.... ]</p>
-            <p><span class="label">Phone:</span> [ .....AUTO.... ]</p>
+        <div class="row">
+            <div class="col" style="margin-left: 50px">
+                <p><span class="label">Name:</span> {{ $docs_offering->company_name }} </p>
+                <p><span class="label">Surname:</span> {{ $docs_offering->rep_first_name . ' ' . $docs_offering->rep_last_name }} </p>
+                <p><span class="label">Phone:</span> {{ $docs_offering->rep_phone }} </p>
+            </div>
+            <div class="col right">
+                <p><span class="label">Email:</span> {{ $docs_offering->rep_email }} </p>
+                <p><span class="label">N Passport:</span> ................................</p>
+                <p><span class="label">Nationality:</span> ................................</p>
+            </div>
         </div>
-        <div class="col right">
-            <p><span class="label">Email:</span> [ .....AUTO.... ]</p>
-            <p><span class="label">N Passport:</span> ................................</p>
-            <p><span class="label">Nationality:</span> ................................</p>
-        </div>
-    </div>
+    @endif
 
-    <h2 style="text-align: center; margin-top: 10px; font-size: 18px;">Property Details</h2>
+    <h2 style="text-align: center; margin-top: 30px; font-size: 18px;">Property Details</h2>
 
     <div class="" style="margin-left: 50px">
         <p><span class="label">Villa Name:</span> {{ $docs_offering->property_name }} </p>
@@ -116,11 +118,11 @@
         @if ($docs_offering->legal_status == 'Leasehold')
             <p><span class="label">Leasehold:</span> {{ $docs_offering->rest_times }}</p>
         @else
-            <p><span class="label">Freehold:</span> [ .....AUTO ADD.... ]</p>
+            <p><span class="label">Freehold:</span> {{ \Carbon\Carbon::parse($docs_offering->purchase_date)->format('d F, Y') }}</p>
         @endif
     </div>
 
-    <h2 style="text-align: center; margin-top: 10px; font-size: 18px;">Offered Price :</h2>
+    <h2 style="text-align: center; margin-top: 30px; font-size: 18px;">Offered Price :</h2>
     <div style="margin-left: 50px; margin-top: 20px">
         <p><span class="label">Montant en IDR / Amount in IDR:</span> IDR {{ number_format($docs_offering->idr_price, 0, ',', '.') }}</p>
         <p><span class="label">Montant en USD / Amount in USD:</span> USD {{ number_format($docs_offering->usd_price, 0, ',', '.') }}</p>

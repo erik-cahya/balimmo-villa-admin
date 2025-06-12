@@ -109,7 +109,7 @@
 
                         </div>
                         <div class="card-body">
-                            <div class="col-lg-12 text-capitalize mb-3" id="group_dataClients">
+                            <div class="col-lg-12 mb-3" id="group_dataClients">
                                 <select class="form-control" id="dataClients" name="dataClients" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
                                     <option value="" selected disabled>Choose Clients</option>
                                     @foreach ($data_client as $client)

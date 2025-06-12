@@ -6,10 +6,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="fw-semibold mb-0">Customer Overview</h4>
+                    <h4 class="fw-semibold mb-0">Profile Overview</h4>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Customers</a></li>
-                        <li class="breadcrumb-item active">Customer Overview</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Profiles</a></li>
+                        <li class="breadcrumb-item active">Profile Overview</li>
                     </ol>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     <div class="card-body">
 
                         <div class="d-flex align-items-center my-3 gap-3">
-                            <img src="{{ asset('admin') }}{{ Auth::user()->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . Auth::user()->reference_code . '/' . Auth::user()->profile }}" alt="" class="rounded-circle avatar-xl img-thumbnail" style="object-fit: cover">
+                            <img src="{{ asset('admin') }}{{ Auth::user()->profile == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . Auth::user()->reference_code . '/' . Auth::user()->profile }}" alt="" class="rounded-circle avatar-xl img-thumbnail" style="object-fit: cover">
                             <div>
                                 <h3 class="fw-semibold mb-1">{{ $profile->name }} </h3>
                                 <span class="badge bg-primary fs-12">{{ Auth::user()->reference_code }}</span>
@@ -53,38 +53,6 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-4">
-                                <h4 class="card-title mb-2">Social Media :</h4>
-                                <ul class="list-inline d-flex align-items-center mb-0 mt-3 gap-1">
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="btn btn-soft-primary avatar-sm d-flex align-items-center justify-content-center fs-20">
-                                            <i class="ri-facebook-fill"></i>
-                                        </a>
-                                    </li>
-
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="btn btn-soft-danger avatar-sm d-flex align-items-center justify-content-center fs-20">
-                                            <i class="ri-instagram-fill"></i>
-                                        </a>
-                                    </li>
-
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="btn btn-soft-info avatar-sm d-flex align-items-center justify-content-center fs-20">
-                                            <i class="ri-twitter-fill"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="btn btn-soft-success avatar-sm d-flex align-items-center justify-content-center fs-20">
-                                            <i class="ri-whatsapp-fill"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="javascript: void(0);" class="btn btn-soft-warning avatar-sm d-flex align-items-center justify-content-center fs-20">
-                                            <i class="ri-mail-fill"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                             <div class="col-lg-8">
                                 <h4 class="card-title mb-2">Description :</h4>
                                 <p class="mb-0">{{ $profile->description == null ? '-' : $profile->description }}</p>

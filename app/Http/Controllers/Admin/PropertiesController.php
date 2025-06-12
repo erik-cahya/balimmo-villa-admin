@@ -87,6 +87,7 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
+        // dd(explode('-', Auth::user()->reference_code)[0]);
         $slug = $this->generatePropertiesSlug($request->property_name);
 
         $rules = [];
@@ -226,7 +227,8 @@ class PropertiesController extends Controller
             'year_construction' => $request->year_construction,
             'year_renovated' => $request->year_renovated,
             'type_mandate' => $request->type_mandate,
-            'type_acceptance' => 'pending',
+
+            'type_acceptance' => explode('-', Auth::user()->reference_code)[0] == 'BPM' ? 'accept' : 'pending',
         ]);
 
         // ==========================================================================================================================================
@@ -387,6 +389,8 @@ class PropertiesController extends Controller
         }
         // /* Gallery Handler
 
+        Cache::forget('properties_list_cache');
+
         $flashData = [
             'judul' => 'Create Property Success',
             'pesan' => 'New property successfully listed',
@@ -397,19 +401,6 @@ class PropertiesController extends Controller
 
     public function detail($slug)
     {
-        // $allProps = PropertiesModel::where('property_slug', $slug)
-        //     ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-        //     ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
-        //     ->with(['featuredImage' => function ($query) {
-        //         $query->select('image_path', 'property_gallery.id');
-        //         $query->where('is_featured', 1);
-        //     }])
-        //     ->select(
-        //         'properties.*'
-        //     )
-        //     ->first();
-
-        // dd($allProps);
 
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
 

@@ -216,7 +216,10 @@ class DocsOfferToPurchaseController extends Controller
                 'property_legal.company_name',
                 'property_legal.rep_first_name',
                 'property_legal.rep_last_name',
+                'property_legal.purchase_date',
                 'property_legal.phone as rep_phone',
+                'property_legal.email as rep_email',
+
 
 
             )
