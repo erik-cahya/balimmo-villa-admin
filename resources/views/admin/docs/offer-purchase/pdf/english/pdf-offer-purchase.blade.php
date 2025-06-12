@@ -65,10 +65,10 @@
 
     <div class="row">
         <div class="col" style="margin-left: 50px">
-            <p><span class="label">Date de la visite:</span> ................................</p>
+            <p><span class="label">Offer to Purchase:</span> ................................</p>
         </div>
         <div class="col right">
-            <p><span class="label">Name of Agent:</span> ................................</p>
+            <p><span class="label">Name of Agent:</span> {{ $docs_offering->agentName }}</p>
         </div>
     </div>
 

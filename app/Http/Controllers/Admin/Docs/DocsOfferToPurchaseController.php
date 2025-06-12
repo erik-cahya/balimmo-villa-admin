@@ -194,6 +194,7 @@ class DocsOfferToPurchaseController extends Controller
             ->join('client', 'client.id', '=', 'offering_docs.client_id')
             ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+            ->join('users', 'users.reference_code', '=', 'offering_docs.reference_code')
             ->select(
                 'offering_docs.*',
 
@@ -219,6 +220,8 @@ class DocsOfferToPurchaseController extends Controller
                 'property_legal.purchase_date',
                 'property_legal.phone as rep_phone',
                 'property_legal.email as rep_email',
+
+                'users.name as agentName'
 
 
 
