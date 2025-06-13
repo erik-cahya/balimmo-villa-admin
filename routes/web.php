@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
 use App\Http\Controllers\Admin\PropertiesLeadsController;
+use App\Http\Controllers\Admin\ProspectController;
 use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
@@ -57,10 +58,8 @@ Route::middleware('auth')->group(function () {
     // ############################################################### Admin Panel Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/properties/change_acceptance/{slug}', [PropertiesController::class, 'changeAcceptance'])->name('properties.changeAcceptance'); // Accept Listing Properties
-    Route::resource('/properties', PropertiesController::class)->except(['show']);
-
-    Route::resource('/properties/features', PropertiesFeatureController::class)->except(['show', 'create']);
-
+    Route::resource('/properties', PropertiesController::class)->except(['show']); // CRUD Property Management
+    Route::resource('/properties/features', PropertiesFeatureController::class)->except(['show', 'create']); // CRUD Feature & Ammenities
     Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details'); // See Properties Detail
 
     Route::get('/agent/{refcode}/properties', [AgentController::class, 'agentProperty'])->name('agent.properties'); // See Properties Listing From Agents
@@ -72,7 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');
     Route::resource('/leads', PropertiesLeadsController::class);
 
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
+    // Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 
     Route::resource('/profile', ProfileController::class);
 
@@ -95,6 +94,8 @@ Route::middleware('auth')->group(function () {
     Route::get('getDataProperties/{id}', [DocsOfferToPurchaseController::class, 'getPropertiesAjax'])->name('getPropertiesAjax');
     Route::get('getDataClients/{id}', [DocsOfferToPurchaseController::class, 'getClientsAjax'])->name('getClientsAjax');
     Route::resource('offer-purchase', DocsOfferToPurchaseController::class);
+
+    Route::resource('prospects', ProspectController::class);
 });
 
 // Route::get('/mail', [MailController::class, 'send'])->name('sendmail');

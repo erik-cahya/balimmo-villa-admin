@@ -65,12 +65,23 @@
                 </li>
             @endrole
 
+            <li class="menu-title">Customer Management</li>
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
                     <span class="nav-icon">
                         <i class="ri-user-shared-2-line"></i>
                     </span>
                     <span class="nav-text">Leads</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('prospects.*') ? 'active' : '' }}" href="{{ route('prospects.index') }}">
+                    <span class="nav-icon">
+                        <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
+                    </span>
+                    <span class="nav-text">Prospects</span>
                 </a>
             </li>
 

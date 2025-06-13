@@ -13,10 +13,13 @@
 
     <!-- Vendor css (Require in all Page) -->
     <link href="{{ asset('admin') }}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
+
     <!-- Icons css (Require in all Page) -->
     <link href="{{ asset('admin') }}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
     <!-- App css (Require in all Page) -->
     <link href="{{ asset('admin') }}/assets/css/app.css" rel="stylesheet" type="text/css" />
+
     <!-- Theme Config js (Require in all Page) -->
     <script src="{{ asset('admin') }}/assets/js/config.min.js"></script>
 
@@ -58,7 +61,6 @@
     </div>
 
     {{-- <script src="{{ asset('js/sweetalert2.min.js') }}"></script> --}}
-
     <script src="{{ asset('admin') }}/assets/js/components/extended-sweetalert.js"></script>
 
     <!-- Vendor Javascript (Require in all Page) -->
