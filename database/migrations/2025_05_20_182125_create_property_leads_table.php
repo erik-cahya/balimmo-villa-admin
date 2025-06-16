@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('localization')->nullable();
             $table->date('date')->nullable();
             $table->text('message')->nullable();
+            $table->boolean('prospect_status')->comment('1 : True/Prospect | 0 : False');
             $table->timestamps();
 
             // Foreign Key Constraint with ON DELETE CASCADE

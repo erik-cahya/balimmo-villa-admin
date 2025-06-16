@@ -38,7 +38,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('properties_id')->references('id')->on('properties')->onDelete('cascade');
-            $table->foreign('client_id')->references('id')->on('client')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('property_client')->onDelete('cascade');
         });
     }
 

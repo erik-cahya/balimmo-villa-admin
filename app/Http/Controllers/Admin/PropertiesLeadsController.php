@@ -26,7 +26,7 @@ class PropertiesLeadsController extends Controller
 
 
         if (Auth::user()->role == 'Master') {
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)
+            $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)->where('properties_id', '!=', null)
                 ->select(
                     'property_leads.*',
                     'properties.id as properties_id',
@@ -40,7 +40,7 @@ class PropertiesLeadsController extends Controller
                 ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
                 ->get()->groupBy('cust_email');
         } else {
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)
+            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)->where('prospect_status', 0)
                 ->select(
                     'property_leads.*',
                     'properties.id as properties_id',
@@ -197,6 +197,7 @@ class PropertiesLeadsController extends Controller
             'localization' => $request->location == null ? $property->sub_region : $request->location,
             'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
             'message' => $request->message,
+            'prospect_status' => $slug == null ? 0 : 1
         ]);
 
         // event(new BookingCre ated($booking));

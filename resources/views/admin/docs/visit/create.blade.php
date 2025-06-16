@@ -59,6 +59,7 @@
                                                 </div>
                                             </th>
                                             <th>Properties Name</th>
+                                            <th>Owned By</th>
                                             <th>Properties Price</th>
                                         </tr>
                                     </thead>
@@ -82,6 +83,12 @@
                                                         <span class="fst-italic fs-12">{{ Str::limit($property->property_address, 100) }}</span>
                                                     </div>
 
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="fst-italic fw-medium text-dark">{{ Str::limit($property->agentName, 100) }}</span>
+                                                        <span class="fst-italic badge bg-dark text-light fs-11 px-3">{{ $property->internal_reference }}</span>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex flex-column gap-1">
@@ -152,7 +159,7 @@
     </div>
 
     <div class="toast-container position-fixed end-0 top-0 p-3">
-        <div id="liveToast2" class="toast text-bg-primary" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="liveToast2" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <div class="auth-logo me-auto">
                     <img class="logo-dark" src="{{ asset('admin') }}/assets/images/logo-dark.png" alt="logo-dark" height="18" />

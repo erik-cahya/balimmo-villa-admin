@@ -440,7 +440,7 @@
                     <div class="mb-3 rounded">
                         <div class="row justify-content-end g-2">
                             <div class="col-lg-3">
-                                <button type="submit" class="btn btn-outline-primary w-100">Create Properties</button>
+                                <button type="submit" class="btn btn-outline-primary w-100">Edit Properties</button>
                             </div>
                             <div class="col-lg-2">
                                 <a href="#!" class="btn btn-danger w-100">Cancel</a>

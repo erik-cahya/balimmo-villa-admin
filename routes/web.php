@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
     Route::get('getDataClients/{id}', [DocsOfferToPurchaseController::class, 'getClientsAjax'])->name('getClientsAjax');
     Route::resource('offer-purchase', DocsOfferToPurchaseController::class);
 
+    Route::post('prospects/make-prospect/{id}', [ProspectController::class, 'leadsToProspect'])->name('leadsToProspect'); // Make data leads to prospects
     Route::resource('prospects', ProspectController::class);
 });
 

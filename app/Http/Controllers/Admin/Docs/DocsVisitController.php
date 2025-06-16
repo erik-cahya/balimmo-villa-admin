@@ -20,18 +20,6 @@ class DocsVisitController extends Controller
 {
     public function index()
     {
-        // $data['visit_docs'] = Auth::user()->role == 'Master' ? VisitDocsModel::select(
-        //     'visit_docs.id',
-        //     'visit_docs.first_name',
-        //     'visit_docs.last_name',
-        //     'visit_docs.email',
-        //     'visit_docs.phone_number',
-        //     'visit_docs.status_docs',
-        //     'visit_docs.visit_date',
-        // )->get()
-        //     :
-
-
         if (Auth::user()->role == 'Master') {
             $data['visit_docs'] = VisitDocsModel::select(
                 'visit_docs.id',
@@ -41,6 +29,7 @@ class DocsVisitController extends Controller
                 'visit_docs.phone_number',
                 'visit_docs.status_docs',
                 'visit_docs.visit_date',
+                'visit_docs.reference_code as agentCode'
             )->get();
         } else {
             $data['visit_docs'] = VisitDocsModel::where('visit_docs.reference_code', Auth::user()->reference_code)
@@ -52,6 +41,8 @@ class DocsVisitController extends Controller
                     'visit_docs.phone_number',
                     'visit_docs.status_docs',
                     'visit_docs.visit_date',
+                    'visit_docs.reference_code as agentCode'
+
                 )->get();
         }
 
@@ -75,66 +66,58 @@ class DocsVisitController extends Controller
 
     public function create()
     {
-        $dataClient = ClientModel::where('reference_code', Auth::user()->reference_code)
-            ->select('first_name', 'last_name', 'email', 'phone_number')
-            ->get();
-
-        $clientEmails = $dataClient->pluck('email')->toArray();
         $rawDataLeads = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)
+            ->where('prospect_status', 1)
             ->select('cust_name', 'cust_email', 'cust_telp')
-            ->get();
+            ->get()
+            ->groupBy('cust_email');
 
         $finalData = [];
-        foreach ($dataClient as $client) {
+
+        foreach ($rawDataLeads as $email => $leads) {
+            $lead = $leads->first(); // Ambil satu instance untuk ambil nama dan telp
+
+            $nameParts = explode(' ', $lead->cust_name);
+            $firstName = array_shift($nameParts);
+            $lastName  = implode(' ', $nameParts);
+
             $finalData[] = [
-                'first_name'   => $client->first_name,
-                'last_name'    => $client->last_name,
-                'email'        => $client->email,
-                'phone_number' => $client->phone_number,
+                'first_name'   => $firstName,
+                'last_name'    => $lastName,
+                'email'        => $lead->cust_email,
+                'phone_number' => $lead->cust_telp,
             ];
         }
-        foreach ($rawDataLeads as $lead) {
-            if (!in_array($lead->cust_email, $clientEmails)) {
-                $nameParts = explode(' ', $lead->cust_name);
-                $firstName = array_shift($nameParts);
-                $lastName  = implode(' ', $nameParts);
 
-                $finalData[] = [
-                    'first_name'   => $firstName,
-                    'last_name'    => $lastName,
-                    'email'        => $lead->cust_email,
-                    'phone_number' => $lead->cust_telp,
-                ];
-            }
-        }
+        $data['data_client'] = $finalData;
 
-        $data['data_property'] = PropertiesModel::where('internal_reference', Auth::user()->reference_code)
-            ->select(
-                'properties.id',
-                'properties.id as propertyId',
-                'properties.property_code',
-                'properties.property_name',
-                'properties.property_address',
-                'properties.region',
-                'properties.sub_region',
-                'property_financial.selling_price_idr',
-                'property_financial.selling_price_usd',
-            )
+        $data['data_property'] = PropertiesModel::select(
+            'properties.id',
+            'properties.id as propertyId',
+            'properties.internal_reference',
+            'properties.property_code',
+            'properties.property_name',
+            'properties.property_address',
+            'properties.region',
+            'properties.sub_region',
+            'property_financial.selling_price_idr',
+            'property_financial.selling_price_usd',
+
+            'users.name as agentName'
+        )
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->join('users', 'users.reference_code', '=', 'properties.internal_reference')
             ->with(['featuredImage' => function ($query) {
                 $query->where('is_featured', 1);
             }])
             ->get();
-
-        $data['data_client'] = $finalData;
-
-        // dd($data['data_client']);
 
         return view('admin.docs.visit.create', $data);
     }
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $dataClient = explode('||', $request->input('dataClients'));
 
         $request->validate([
