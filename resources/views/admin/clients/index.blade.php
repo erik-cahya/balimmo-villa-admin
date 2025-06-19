@@ -55,7 +55,7 @@
                             <div class="col-lg-6">
                                 <div class="text-md-end mt-md-0 mt-3">
                                     <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#addNewClientModal"><i class="ri-add-line me-1"></i> Add New Clients</button>
-                                    <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#importLeads"><i class="ri-user-line me-1"></i> Import From Leads</button>
+                                    <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#importProspect"><i class="ri-user-line me-1"></i> Import From Prospects</button>
                                 </div>
                             </div>
                         </div>
@@ -92,14 +92,14 @@
             </div>
         </div>
 
-        <!-- Import from leads Modal -->
-        <div class="modal modal-lg fade" id="importLeads" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <!-- Import from prospect Modal -->
+        <div class="modal modal-lg fade" id="importProspect" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="{{ route('client.fromLeads') }}" method="POST">
                         @csrf
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Import from leads <span class="badge bg-danger text-capitalize me-1">{{ $data_leads->count() }}</span></h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Import From Data Prospect <span class="badge bg-danger text-capitalize me-1">{{ $data_leads->count() }}</span></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -110,7 +110,7 @@
                                             <th style="width: 20px;">
                                                 <div class="form-check">
                                                     <input type="checkbox" class="form-check-input" id="selectAll">
-                                                    <label class="form-check-label" fid="selectAll"></label>
+                                                    <label class="form-check-label" id="selectAll"></label>
                                                 </div>
                                             </th>
                                             <th>Customer Name </th>
@@ -123,8 +123,8 @@
                                             <tr>
                                                 <td>
                                                     <div class="form-check">
-                                                        <input type="checkbox" name="leadsData[]" class="form-check-input" id="{{ $leads->id }}" value="{{ $leads->id }}">
-                                                        <label class="form-check-label" for="{{ $leads->id }}">&nbsp;</label>
+                                                        <input type="checkbox" name="leadsData[]" class="form-check-input" id="{{ $leads['id'] }}" value="{{ $leads['id'] }}">
+                                                        <label class="form-check-label" for="{{ $leads['id'] }}">&nbsp;</label>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -133,13 +133,13 @@
                                                             <img src="{{ asset('admin') }}/assets/images/users/default.jpg" alt="" class="avatar-sm rounded-circle">
                                                         </div>
                                                         <div>
-                                                            <a href="#!" class="text-dark fw-medium fs-15">{{ $leads->cust_name }}</a>
+                                                            <a href="#!" class="text-dark fw-medium fs-15">{{ $leads['cust_name'] }}</a>
                                                         </div>
                                                     </div>
 
                                                 </td>
-                                                <td>{{ $leads->cust_email }}</td>
-                                                <td>{{ implode('-', str_split(preg_replace('/\D/', '', $leads->cust_telp), 4)) }}</td>
+                                                <td>{{ $leads['cust_email'] }}</td>
+                                                <td>{{ implode('-', str_split(preg_replace('/\D/', '', $leads['cust_telp']), 4)) }}</td>
                                             </tr>
                                         @endforeach
 

@@ -21,12 +21,26 @@ class ClientController extends Controller
             ? ClientModel::get()
             : ClientModel::where('reference_code', Auth::user()->reference_code)->get();
 
-        $data['data_leads'] = Auth::user()->role == 'Master'
-            ? PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)->get()
-            : PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)
-            ->where('agent_code', Auth::user()->reference_code)->get();
+        $rawDataLeads = Auth::user()->role == 'Master'
+            ? PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)->where('prospect_status', 1)->get()->groupBy('cust_email')
 
-        // dd($data['data_leads']);
+            : PropertyLeadsModel::whereNotIn('cust_email', $clientEmails)
+            ->where('agent_code', Auth::user()->reference_code)->where('prospect_status', 1)->get()->groupBy('cust_email');
+
+        $finalData = [];
+
+        foreach ($rawDataLeads as $email => $leads) {
+            $lead = $leads->first();
+
+            $finalData[] = [
+                'id' => $lead->id,
+                'cust_name' => $lead->cust_name,
+                'cust_email' => $lead->cust_email,
+                'cust_telp' => $lead->cust_telp,
+            ];
+        }
+
+        $data['data_leads'] = collect($finalData);
 
         return view('admin.clients.index', $data);
     }

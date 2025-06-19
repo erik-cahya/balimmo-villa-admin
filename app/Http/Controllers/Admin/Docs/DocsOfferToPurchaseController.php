@@ -24,54 +24,29 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function index()
     {
-        // $data['visit_docs'] = VisitDocsModel::where('visit_docs.reference_code', Auth::user()->reference_code)
-        //     ->select(
-        //         'visit_docs.id',
-        //         'visit_docs.first_name',
-        //         'visit_docs.last_name',
-        //         'visit_docs.email',
-        //         'visit_docs.phone_number',
-        //         'visit_docs.status_docs',
-        //         'visit_docs.visit_date',
-        //     )
-        //     ->get();
-
-        // $data['property_list'] = VisitPropertyDocsModel::join('properties', 'properties.id', '=', 'visit_property_docs.property_id')
-        //     ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-        //     ->select(
-        //         'properties.property_address',
-        //         'properties.internal_reference',
-        //         'properties.property_name',
-        //         'property_financial.selling_price_idr',
-        //         'property_financial.selling_price_usd',
-        //         'visit_property_docs.docs_visit_id'
-        //     )
-        //     ->get()
-        //     ->groupBy('docs_visit_id');
-
         if (Auth::user()->role == 'Master') {
-            $data['offering_docs'] = OfferingDocsModel::join('client', 'client.id', '=', 'offering_docs.client_id')
+            $data['offering_docs'] = OfferingDocsModel::join('property_client', 'property_client.id', '=', 'offering_docs.client_id')
                 ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
                 ->select(
                     'offering_docs.*',
                     'properties.property_name',
-                    'client.first_name',
-                    'client.last_name',
-                    'client.email',
-                    'client.phone_number',
+                    'property_client.first_name',
+                    'property_client.last_name',
+                    'property_client.email',
+                    'property_client.phone_number',
                 )
                 ->get();
         } else {
             $data['offering_docs'] = OfferingDocsModel::where('offering_docs.reference_code', Auth::user()->reference_code)
-                ->join('client', 'client.id', '=', 'offering_docs.client_id')
+                ->join('property_client', 'property_client.id', '=', 'offering_docs.client_id')
                 ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
                 ->select(
                     'offering_docs.*',
                     'properties.property_name',
-                    'client.first_name',
-                    'client.last_name',
-                    'client.email',
-                    'client.phone_number',
+                    'property_client.first_name',
+                    'property_client.last_name',
+                    'property_client.email',
+                    'property_client.phone_number',
                 )
                 ->get();
         }
@@ -191,17 +166,17 @@ class DocsOfferToPurchaseController extends Controller
     {
 
         $data['docs_offering'] = OfferingDocsModel::where('offering_docs.id', $request->offering_id)
-            ->join('client', 'client.id', '=', 'offering_docs.client_id')
+            ->join('property_client', 'property_client.id', '=', 'offering_docs.client_id')
             ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
             ->join('users', 'users.reference_code', '=', 'offering_docs.reference_code')
             ->select(
                 'offering_docs.*',
 
-                'client.first_name',
-                'client.last_name',
-                'client.email',
-                'client.phone_number',
+                'property_client.first_name',
+                'property_client.last_name',
+                'property_client.email',
+                'property_client.phone_number',
 
                 'properties.property_name',
                 'properties.property_address',

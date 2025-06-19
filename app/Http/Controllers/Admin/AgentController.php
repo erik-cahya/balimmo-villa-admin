@@ -35,12 +35,6 @@ class AgentController extends Controller
         return view('admin.agent.index', $data);
     }
 
-    // public function index()
-    // {
-    //     $data_agent = User::withCount('properties')->paginate(2);
-    //     return view('admin.agent.index', compact('data_agent'));
-    // }
-
     public function store(Request $request)
     {
 

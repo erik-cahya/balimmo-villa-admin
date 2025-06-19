@@ -138,7 +138,10 @@
                                 <ul class="properties__details--info__wrapper d-flex">
                                     <li class="properties__details--info__list d-flex justify-content-between">
                                         <span class="properties__details--info__title">Price:</span>
-                                        <span class="properties__details--info__subtitle">IDR {{ number_format($property->sellingPriceIDR, 2, ',', '.') }}</span>
+                                        <div class="d-flex flex-column">
+                                            <span class="properties__details--info__subtitle">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
+                                            <span class="properties__details--info__subtitle">USD {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
+                                        </div>
                                     </li>
                                     <li class="properties__details--info__list d-flex justify-content-between">
                                         <span class="properties__details--info__title">Property ID:</span>
