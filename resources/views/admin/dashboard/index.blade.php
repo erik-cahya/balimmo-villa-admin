@@ -32,10 +32,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="fw-semibold mb-0">Analytics</h4>
+                    <h4 class="fw-semibold mb-0">Dashboard</h4>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Analytics</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
                     </ol>
                 </div>
             </div>
@@ -106,7 +105,8 @@
         </div> <!-- end row -->
 
         <div class="row">
-            <div class="{{ Auth::user()->role === 'Master' ? 'col-xl-9' : 'col-xl-12' }}">
+            {{-- <div class="{{ Auth::user()->role === 'Master' ? 'col-xl-9' : 'col-xl-12' }}"> --}}
+            <div class="{{ Auth::user()->role === 'Master' ? 'col-xl-9' : 'col-xl-9' }}">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div>
@@ -245,6 +245,67 @@
                     </div>
                 </div>
             @endif
+
+            <div class="col-xl-3 col-lg-6" bis_skin_checked="1">
+                <div class="card" bis_skin_checked="1">
+                    <div class="card-header d-flex align-items-center border-bottom border-dashed" bis_skin_checked="1">
+                        <h4 class="card-title mb-0">Agenda</h4>
+                    </div>
+                    <div class="card-body" bis_skin_checked="1">
+                        <div class="row" bis_skin_checked="1">
+                            <div class="col-lg-6" bis_skin_checked="1">
+                                <h5 class="text-dark fw-medium mb-1">{{ $data_visit->count() }}</h5>
+                                <p class="text-muted mb-0">Total visit </p>
+                            </div>
+                            <div class="col-lg-6 text-end" bis_skin_checked="1">
+                                <h5 class="text-dark fw-medium mb-1">{{ $data_visit->where('status_docs', 2)->count() }}</h5>
+                                <p class="text-muted mb-0">Pending Visit</p>
+                            </div>
+                        </div>
+                        <div class="progress progress-lg bg-light-subtle rounded-0 mt-2 gap-1 overflow-visible" style="height: 10px" bis_skin_checked="1">
+                            <div class="progress-bar bg-primary rounded-pill" role="progressbar" style="width: 50%" bis_skin_checked="1">
+                            </div>
+                            <div class="progress-bar bg-warning rounded-pill" role="progressbar" style="width: 50%" bis_skin_checked="1">
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center justify-content-center mt-3" bis_skin_checked="1">
+
+                            @foreach ($data_visit->take(4) as $visit)
+                                @php
+                                    if ($visit->status_docs === 1) {
+                                        $status = 'Done Visit';
+                                        $class = 'bg-success-subtle text-success';
+                                    } elseif ($visit->status_docs === 2) {
+                                        $status = 'Pending';
+                                        $class = 'bg-warning-subtle text-warning';
+                                    } else {
+                                        $status = 'Cancel';
+                                        $class = 'bg-danger-subtle text-danger';
+                                    }
+                                @endphp
+                                <div class="col-lg-12 col-12 pb-2" bis_skin_checked="1">
+                                    <div class="d-flex align-items-center gap-2" bis_skin_checked="1">
+                                        <div class="avatar bg-light rounded bg-opacity-50" bis_skin_checked="1">
+                                            <iconify-icon icon="material-symbols:docs-outline-sharp" class="fs-26 text-primary avatar-title"></iconify-icon>
+                                        </div>
+                                        <div bis_skin_checked="1">
+                                            <p class="fs-14 text-dark fw-semibold mb-0"> {{ \Carbon\Carbon::parse($visit->visit_date)->format('d F, Y') }}</p>
+                                            <small><span class="badge {{ $class }} text-capitalize me-1">{{ $status }}</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer d-flex justify-content-between py-2" bis_skin_checked="1">
+                        <a href="{{ route('visit.index') }}" class="text-muted d-flex align-items-center mb-0 gap-1">See More Visit</a>
+                    </div>
+
+                </div>
+            </div>
 
         </div>
 
