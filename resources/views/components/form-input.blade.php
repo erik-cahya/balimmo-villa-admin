@@ -23,8 +23,6 @@
     @enderror
 </div>
 
-
-
 {{-- Ga Pake Component
     <div class="col-lg-6 mb-3" id="group_owner_name">
         <label for="owner_name" class="form-label">Masukkan Nama Owner</label>
@@ -43,4 +41,3 @@
 {{-- Pake Component --}}
 {{-- <x-form-input type="text" name="owner_name" label="Masukkan Nama Owner" placeholder="Input Owner Name" /> --}}
 {{-- <x-form-input type="text" name="owner_contact" label="Masukkan Kontak Owner" placeholder="Input Owner Contact" /> --}}
-

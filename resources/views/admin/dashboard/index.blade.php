@@ -106,7 +106,7 @@
 
         <div class="row">
             {{-- <div class="{{ Auth::user()->role === 'Master' ? 'col-xl-9' : 'col-xl-12' }}"> --}}
-            <div class="{{ Auth::user()->role === 'Master' ? 'col-xl-9' : 'col-xl-9' }}">
+            <div class="{{ Auth::user()->role === 'Master' ? 'col-xl-12' : 'col-xl-9' }}">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div>
@@ -206,46 +206,6 @@
                 </div>
             </div>
 
-            @if (Auth::user()->role === 'Master')
-                <div class="col-xl-3">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center border-0">
-                            <div>
-                                <h4 class="card-title mb-1">Recent Join Agent</h4>
-                                <p class="fs-13 mb-0">{{ $data_agent->count() }} Agent Join</p>
-                            </div>
-                        </div>
-                        <div class="card-body pt-2">
-
-                            @foreach ($data_agent->take(4) as $agent)
-                                <div class="d-flex align-items-center justify-content-between border-bottom mt-2 flex-wrap gap-2 pb-2">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="avatar">
-                                            <img src="{{ asset('admin') }}{{ $agent->profile == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $agent->reference_code . '/' . $agent->profile }}" alt="avatar-3" class="img-fluid rounded-circle" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
-                                        </div>
-                                        <div class="d-block">
-                                            <span class="text-dark">
-                                                <a href="#!" class="text-dark fw-medium fs-15">{{ $agent->name }}</a>
-                                            </span>
-                                            <p class="fs-13 text-muted mb-0">{{ $agent->email }}</p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="text-muted fw-medium mb-0">
-                                            {{ Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $agent->created_at)->locale('en')->isoFormat('DD MMMM YYYY') }}
-                                        </p>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                        </div>
-                        <div class="card-footer border-top">
-                            <a href="{{ route('agent.index') }}" class="btn btn-primary w-100">View All</a>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
             <div class="col-xl-3 col-lg-6" bis_skin_checked="1">
                 <div class="card" bis_skin_checked="1">
                     <div class="card-header d-flex align-items-center border-bottom border-dashed" bis_skin_checked="1">
@@ -306,6 +266,46 @@
 
                 </div>
             </div>
+
+            @if (Auth::user()->role === 'Master')
+                <div class="col-xl-4">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center border-0">
+                            <div>
+                                <h4 class="card-title mb-1">Recent Join Agent</h4>
+                                <p class="fs-13 mb-0">{{ $data_agent->count() }} Agent Join</p>
+                            </div>
+                        </div>
+                        <div class="card-body pt-2">
+
+                            @foreach ($data_agent->take(4) as $agent)
+                                <div class="d-flex align-items-center justify-content-between border-bottom mt-2 flex-wrap gap-2 pb-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="avatar">
+                                            <img src="{{ asset('admin') }}{{ $agent->profile == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $agent->reference_code . '/' . $agent->profile }}" alt="avatar-3" class="img-fluid rounded-circle" style="width: 3rem; height: 3rem; object-fit:cover; border-radius: 10px">
+                                        </div>
+                                        <div class="d-block">
+                                            <span class="text-dark">
+                                                <a href="#!" class="text-dark fw-medium fs-15">{{ $agent->name }}</a>
+                                            </span>
+                                            <p class="fs-13 text-muted mb-0">{{ $agent->email }}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted fw-medium mb-0">
+                                            {{ Illuminate\Support\Carbon::createFromFormat('Y-m-d H:i:s', $agent->created_at)->locale('en')->isoFormat('DD MMMM YYYY') }}
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </div>
+                        <div class="card-footer border-top">
+                            <a href="{{ route('agent.index') }}" class="btn btn-primary w-100">View All</a>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
         </div>
 

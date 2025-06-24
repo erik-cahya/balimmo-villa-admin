@@ -33,7 +33,8 @@
                                     $filteredMatchLeads = $referenceCode ? $matchProperties[$matchLeads->id]->where('internal_reference', $referenceCode) : $matchProperties[$matchLeads->id];
 
                                 @endphp
-                                @if ($filteredMatchLeads->count() > 0)
+
+                                @if (Auth::user()->role == 'Master' || ($filteredMatchLeads->count() > 0 && Auth::user()->role == 'agent'))
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
@@ -164,6 +165,7 @@
                                     </div>
                                     <!-- /* Modal Properties -->
 
+                                    {{-- Modal Make Prospect --}}
                                     <div class="modal modal-lg fade" id="editMatchProperties-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -176,8 +178,8 @@
 
                                                     <div class="modal-body">
                                                         <div class="row">
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $matchLeads->properties_id }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_email" label="Name" value="{{ $matchLeads->cust_email }}" disabled />
+                                                            <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $matchLeads->cust_name }}" disabled />
+                                                            <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $matchLeads->cust_email }}" disabled />
                                                             <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $matchLeads->cust_telp }}" disabled />
                                                             <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}" disabled />
                                                             <x-form-input className="col-lg-6" type="text" name="leads_localization" label="Localization" value="{{ $matchLeads->localization }}" disabled />
@@ -236,6 +238,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- Modal Make Prospect --}}
                                 @endif
                             @endforeach
 

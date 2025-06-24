@@ -38,7 +38,7 @@ class ProspectController extends Controller
                 ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
                 ->get()->groupBy('cust_email');
         } else {
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)
+            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)->where('prospect_status', 1)
                 ->select(
                     'property_leads.*',
                     'properties.id as properties_id',
@@ -158,27 +158,54 @@ class ProspectController extends Controller
         }
 
         $status_prospect = PropertyLeadsModel::where('id', $id)->first();
-        $internalReference = PropertiesModel::where('id', $request->selected_properties_id)->select('id', 'internal_reference')->first();
 
-        // Cek apakah data leads sudah diambil atau belum
-        if ($status_prospect->agent_code == null) {
-            PropertyLeadsModel::where('id', $id)->update([
-                'properties_id' => $internalReference->id,
-                'agent_code' => $internalReference->internal_reference,
+
+        // dd($status_prospect->properties_id);
+
+        if ($status_prospect->properties_id == null) {
+
+            $internalReference = PropertiesModel::where('id', $request->selected_properties_id)->select('id', 'internal_reference')->first();
+
+            if (!isset($internalReference->id)) {
+                $flashData = [
+                    'judul' => 'Prospect Change Cancelled',
+                    'pesan' => 'Please select the properties to assign',
+                    'swalFlashIcon' => 'error',
+                ];
+                return back()->with('flashData', $flashData);
+            }
+            // Cek apakah data leads sudah diambil atau belum
+            if ($status_prospect->agent_code == null) {
+                PropertyLeadsModel::where('id', $id)->update([
+                    'properties_id' => $internalReference->id,
+                    'agent_code' => $internalReference->internal_reference,
+                    'prospect_status' => 1
+                ]);
+
+                $flashData = [
+                    'judul' => 'Prospect Change Success',
+                    'pesan' => 'Leads success change into prospects',
+                    'swalFlashIcon' => 'success',
+                ];
+                return back()->with('flashData', $flashData);
+            } else {
+                $flashData = [
+                    'judul' => 'Prospect failed to update',
+                    'pesan' => 'Prospect data has been taken',
+                    'swalFlashIcon' => 'error',
+                ];
+                return back()->with('flashData', $flashData);
+            }
+        } else {
+
+            PropertyLeadsModel::where('cust_email', $status_prospect->cust_email)->update([
                 'prospect_status' => 1
             ]);
 
             $flashData = [
-                'judul' => 'Prospect Change Success',
-                'pesan' => 'Leads success change into prospects',
+                'judul' => 'Leads Change to Prospect',
+                'pesan' => 'Leads Data Changed Successfully',
                 'swalFlashIcon' => 'success',
-            ];
-            return back()->with('flashData', $flashData);
-        } else {
-            $flashData = [
-                'judul' => 'Prospect failed to update',
-                'pesan' => 'Prospect data has been taken',
-                'swalFlashIcon' => 'error',
             ];
             return back()->with('flashData', $flashData);
         }

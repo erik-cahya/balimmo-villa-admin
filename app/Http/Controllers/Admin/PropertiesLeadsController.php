@@ -59,6 +59,7 @@ class PropertiesLeadsController extends Controller
             ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
             ->get();
 
+        // dd($data['data_leads_matches']);
 
         $leads = $data['data_leads_matches'];
         $data['matchProperties'] = [];
@@ -180,7 +181,6 @@ class PropertiesLeadsController extends Controller
             ]);
         }
 
-        // dd($request->all());
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
 
@@ -197,10 +197,10 @@ class PropertiesLeadsController extends Controller
             'localization' => $request->location == null ? $property->sub_region : $request->location,
             'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
             'message' => $request->message,
-            'prospect_status' => $slug == null ? 0 : 1
+            'prospect_status' => 0
         ]);
 
-        // event(new BookingCre ated($booking));
+        // event(new BookingCreated($booking));
 
         $flashData = [
             'judul' => 'Form Submit Success',
