@@ -71,7 +71,7 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'client_nationality' => 'required',
             'client_passport_number' => 'required',

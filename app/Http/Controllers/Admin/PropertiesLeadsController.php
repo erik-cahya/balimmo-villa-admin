@@ -26,7 +26,7 @@ class PropertiesLeadsController extends Controller
 
 
         if (Auth::user()->role == 'Master') {
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)->where('properties_id', '!=', null)
+            $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)->where('properties_id', '!=', null)->where('prospect_status', 0)
                 ->select(
                     'property_leads.*',
                     'properties.id as properties_id',

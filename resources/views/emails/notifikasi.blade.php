@@ -60,6 +60,9 @@
             <p style="color: #555;">
                 We couldn't find any villas that match your selected budget and location. <br> You can try widening your criteria or contact us — our team would be happy to assist you in finding the perfect villa.
             </p>
+
+            <a href="#" style="display: inline-block; background-color: #4CAF50; color: white; padding: 8px 12px; text-decoration: none; border-radius: 6px; font-size: 13px;">Contact US</a>
+
         </div>
     @endif
 
