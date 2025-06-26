@@ -120,7 +120,7 @@
                                 <select class="form-control" id="dataClients" name="dataClients" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
                                     <option value="" selected disabled>Choose Clients</option>
                                     @foreach ($data_client as $client)
-                                        <option value="{{ $client['email'] }}||{{ $client['first_name'] }}||{{ $client['last_name'] }}||{{ $client['phone_number'] }}">
+                                        <option value="{{ $client['email'] }}||{{ $client['first_name'] }}||{{ $client['last_name'] }}||{{ $client['phone_number'] }}||{{ $client['leadsId'] }}">
                                             {{ $client['first_name'] . ' ' . $client['last_name'] }}
                                         </option>
                                     @endforeach

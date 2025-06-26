@@ -76,8 +76,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <x-form-input className="col-lg-6" type="text" name="client_first_name" label="Input First Name" />
-                                <x-form-input className="col-lg-6" type="text" name="client_last_name" label="Input Last Name" />
+                                <x-form-input className="col-lg-12" type="text" name="client_name" label="Input First Name" />
                                 <x-form-input className="col-lg-6" type="email" name="client_email" label="Input Email" />
                                 <x-form-input className="col-lg-6" type="number" name="client_phone" label="Input Phone Number" />
                             </div>

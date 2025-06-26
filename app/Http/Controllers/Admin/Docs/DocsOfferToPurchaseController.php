@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ClientModel;
 use App\Models\OfferingDocsModel;
 use App\Models\PropertiesModel;
+use App\Models\PropertyLeadsModel;
 use App\Models\VisitDocsModel;
 use App\Models\VisitPropertyDocsModel;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -25,28 +26,26 @@ class DocsOfferToPurchaseController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'Master') {
-            $data['offering_docs'] = OfferingDocsModel::join('property_client', 'property_client.id', '=', 'offering_docs.client_id')
+            $data['offering_docs'] = OfferingDocsModel::join('property_leads', 'property_leads.id', '=', 'offering_docs.client_id')
                 ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
                 ->select(
                     'offering_docs.*',
                     'properties.property_name',
-                    'property_client.first_name',
-                    'property_client.last_name',
-                    'property_client.email',
-                    'property_client.phone_number',
+                    'property_leads.cust_name as custName',
+                    'property_leads.cust_email as email',
+                    'property_leads.cust_telp',
                 )
                 ->get();
         } else {
             $data['offering_docs'] = OfferingDocsModel::where('offering_docs.reference_code', Auth::user()->reference_code)
-                ->join('property_client', 'property_client.id', '=', 'offering_docs.client_id')
+                ->join('property_leads', 'property_leads.id', '=', 'offering_docs.client_id')
                 ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
                 ->select(
                     'offering_docs.*',
                     'properties.property_name',
-                    'property_client.first_name',
-                    'property_client.last_name',
-                    'property_client.email',
-                    'property_client.phone_number',
+                    'property_leads.cust_name as custName',
+                    'property_leads.cust_email as email',
+                    'property_leads.cust_telp',
                 )
                 ->get();
         }
@@ -60,8 +59,9 @@ class DocsOfferToPurchaseController extends Controller
     public function create()
     {
         $data['data_property'] = PropertiesModel::where('internal_reference', Auth::user()->reference_code)->get();
-        $data['data_client'] = ClientModel::where('reference_code', Auth::user()->reference_code)->get();
+        $data['data_prospect'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('prospect_status', 1)->get();
 
+        // dd($data['data_prospect']);
 
         return view('admin.docs.offer-purchase.create', $data);
     }
@@ -71,7 +71,7 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $request->validate([
             'client_nationality' => 'required',
             'client_passport_number' => 'required',
@@ -91,8 +91,11 @@ class DocsOfferToPurchaseController extends Controller
                 'approval_deadline' => 'required',
             ]);
         }
-        // dd($request->all());
 
+
+        PropertyLeadsModel::where('id', $request->id_client)->update(['docs_status' => 2]);
+
+        // dd($request->all());
         OfferingDocsModel::create([
             'reference_code' => Auth::user()->reference_code,
             'properties_id' => $request->id_property,
@@ -112,6 +115,8 @@ class DocsOfferToPurchaseController extends Controller
             'approval_deadline' => $request->approval_deadline == null ? null : $this->dateConversion($request->approval_deadline),
             'offer_validity' => $this->dateConversion($request->offer_validity),
         ]);
+
+        // dd($leads);
 
         $flashData = [
             'judul' => 'Create Docs Success',
@@ -151,6 +156,9 @@ class DocsOfferToPurchaseController extends Controller
     public function destroy(string $id)
     {
 
+        $dataOffering = OfferingDocsModel::where('id', $id)->value('client_id');
+        PropertyLeadsModel::where('id', $dataOffering)->update(['docs_status' => null]);
+
         OfferingDocsModel::destroy($id);
 
         $flashData = [
@@ -166,17 +174,16 @@ class DocsOfferToPurchaseController extends Controller
     {
 
         $data['docs_offering'] = OfferingDocsModel::where('offering_docs.id', $request->offering_id)
-            ->join('property_client', 'property_client.id', '=', 'offering_docs.client_id')
+            ->join('property_leads', 'property_leads.id', '=', 'offering_docs.client_id')
             ->join('properties', 'properties.id', '=', 'offering_docs.properties_id')
             ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
             ->join('users', 'users.reference_code', '=', 'offering_docs.reference_code')
             ->select(
                 'offering_docs.*',
 
-                'property_client.first_name',
-                'property_client.last_name',
-                'property_client.email',
-                'property_client.phone_number',
+                'property_leads.cust_name',
+                'property_leads.cust_email as email',
+                'property_leads.cust_telp as phone_number',
 
                 'properties.property_name',
                 'properties.property_address',
@@ -222,6 +229,16 @@ class DocsOfferToPurchaseController extends Controller
 
 
         // Tambahkan properti tambahan lainnya
+
+        $nameParts = explode(' ', $data['docs_offering']->cust_name);
+        $firstName = array_shift($nameParts);
+        $lastName  = implode(' ', $nameParts);
+
+        if (empty($lastName)) {
+            $lastName = $firstName;
+        }
+        $data['docs_offering']->first_name = $firstName;
+        $data['docs_offering']->last_name = $lastName;
 
 
         // SET OPTION lebih dulu

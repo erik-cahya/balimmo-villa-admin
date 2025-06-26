@@ -59,8 +59,6 @@ class PropertiesLeadsController extends Controller
             ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
             ->get();
 
-        // dd($data['data_leads_matches']);
-
         $leads = $data['data_leads_matches'];
         $data['matchProperties'] = [];
 
@@ -141,6 +139,19 @@ class PropertiesLeadsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    public function deleteSingle(string $id)
+    {
+        PropertyLeadsModel::where('id', $id)->delete();
+
+        $flashData = [
+            'judul' => 'Delete Success',
+            'pesan' => 'Delete Leads Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+
+        return response()->json($flashData);
+    }
+
     public function destroy(string $id)
     {
         //
@@ -184,8 +195,6 @@ class PropertiesLeadsController extends Controller
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
 
-
-
         $booking = PropertyLeadsModel::create([
             'properties_id' => $slug == null ? null : $property->id,
             'agent_code' => $slug == null ? null : $property->internal_reference,
@@ -200,20 +209,78 @@ class PropertiesLeadsController extends Controller
             'prospect_status' => 0
         ]);
 
+        // Form di landing page
+        if ($slug === null) {
+            dd($slug);
+            // dd($booking->id);
+
+            $data['data_leads_matches'] = PropertyLeadsModel::where('property_leads.id', $booking->id)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+                ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+                ->get();
+
+            // dd($data['data_leads_matches']);
+
+            $leads = $data['data_leads_matches'];
+            $data['matchProperties'] = collect();
+
+            if ($leads->isNotEmpty()) {
+                // Ambil semua lokasi & budget maksimum
+                $regions = $leads->pluck('localization')->unique()->toArray();
+                $maxBudget = $leads->max('cust_budget');
+
+                // dd($regions);
+                // Ambil semua properti yang mungkin cocok sekaligus
+                $properties = PropertiesModel::whereIn('sub_region', $regions)
+                    ->with(['featuredImage' => function ($query) {
+                        $query->select('image_path', 'property_gallery.id');
+                        $query->where('is_featured', 1);
+                    }])
+                    ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+                    ->where('selling_price_idr', '<=', $maxBudget)
+                    ->get();
+
+                // Kelompokkan properti berdasarkan region
+                $groupedProperties = $properties->groupBy('sub_region');
+
+                // Kelompokkan kembali sesuai budget masing-masing lead
+                foreach ($leads as $lead) {
+                    $regionProps = $groupedProperties[$lead->localization] ?? collect();
+
+                    $filtered = $regionProps->filter(function ($property) use ($lead) {
+                        return $property->selling_price_idr <= $lead->cust_budget;
+                    });
+
+                    $data['matchProperties'] = $data['matchProperties']->merge($filtered);
+                }
+
+                $emailTo = 'erikcp38@gmail.com';
+
+                Mail::to($emailTo)->send(new NotifikasiEmail([
+                    'properties' => $data['matchProperties'],
+                ]));
+            } else {
+                // Kosongkan jika tidak ada leads
+                $data['matchProperties'] = collect();
+
+                $emailTo = 'erikcp38@gmail.com';
+
+                Mail::to($emailTo)->send(new NotifikasiEmail([
+                    'properties' => $data['matchProperties'],
+                ]));
+            }
+            // dd($data['matchProperties']);
+
+            return view('error.thankyou-page');
+        }
+
         // event(new BookingCreated($booking));
 
-        $flashData = [
-            'judul' => 'Form Submit Success',
-            'pesan' => 'Thank you, we have received your data.',
-            'swalFlashIcon' => 'success',
-        ];
 
-        return back()->with('flashData', $flashData);
+        return view('error.thankyou-page');
     }
 
     public function sendMail(Request $request)
     {
-        // dd($request->cust_email);
         $data = $request->all();
 
         $propertyNames = $data['property_name'];

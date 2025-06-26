@@ -103,7 +103,7 @@
                                                 <div class="btn-group mb-1 me-1">
 
                                                     {{-- Edit Btn --}}
-                                                    <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
+                                                    <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editVisitDocs-{{ $visit->id }}"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
 
                                                     {{-- Delete Btn --}}
                                                     <input type="hidden" class="propertyId" value="{{ $visit->id }}">
@@ -141,25 +141,34 @@
                                                 </div>
 
                                                 <!-- Modal Edit-->
-                                                <div class="modal modal-lg fade" id="resetPasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal modal-lg fade" id="editVisitDocs-{{ $visit->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <form action="{{ route('visit.update', $visit->id) }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Data Docs</h5>
+                                                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Data Docs {{ $visit->id }}</h5>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="row">
                                                                         {{-- <input type="hidden" name="reference_code" value="{{ $profile->id }}"> --}}
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_first_name" label="First Name" value="{{ $visit->first_name }}" />
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_last_name" label="Last Name" value="{{ $visit->last_name }}" />
+                                                                        <x-form-input className="col-lg-12" type="text" name="customer_first_name" label="Full Name" value="{{ $visit->first_name . ' ' . $visit->last_name }}" />
+                                                                        {{-- <x-form-input className="col-lg-6" type="text" name="customer_last_name" label="Last Name" value="{{ $visit->last_name }}" /> --}}
                                                                         <x-form-input className="col-lg-6" type="text" name="customer_email" label="Customer Email" value="{{ $visit->email }}" />
                                                                         <x-form-input className="col-lg-6" type="text" name="customer_phone" label="No Phone" value="{{ $visit->phone_number }}" />
                                                                         <x-form-input className="col-lg-6" type="date" name="date_visit" label="Date Visit" value="{{ $visit->visit_date }}" />
                                                                         <x-form-select className="col-lg-6" name="status_visit" label="Status Visit" :options="['Cancel', 'Done Visit', 'Pending Visit']" />
+
+                                                                        <div class="col-lg-12">
+                                                                            <div class="d-flex mt-2 flex-wrap gap-1">
+                                                                                @foreach ($property_list[$visit->id] ?? [] as $properties)
+                                                                                    <span class="badge bg-dark text-light" style="font-size: 10px"><iconify-icon icon="f7:house-fill" class="fs-10 align-middle"></iconify-icon> {{ $properties->property_name }}</span>
+                                                                                @endforeach
+                                                                            </div>
+                                                                        </div>
+
                                                                     </div>
 
                                                                 </div>

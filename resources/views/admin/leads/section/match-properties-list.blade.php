@@ -64,6 +64,9 @@
                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
                                             </button>
 
+                                            <input type="hidden" class="leadsId" value="{{ $matchLeads->id }}">
+                                            <button type="button" class="btn btn-xs btn-danger deleteButtonSingle" data-nama="{{ $matchLeads->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+
                                             @if ($filteredMatchLeads->count() == 0)
                                                 <span class="btn btn-sm btn-primary">No Match Properties</span>
                                             @else

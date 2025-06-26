@@ -117,6 +117,62 @@
                     });
                 });
             });
+
+            // Single Delete
+            const deleteButtonSingle = document.querySelectorAll('.deleteButtonSingle');
+
+            deleteButtonSingle.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    let propertyName = this.getAttribute('data-nama');
+                    let leadsId = this.parentElement.querySelector('.leadsId').value;
+                    console.log(leadsId);
+
+                    const rowToDelete = this.closest('tr');
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Delete leads " + propertyName + "?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Kirim DELETE request manual lewat JavaScript
+                            fetch('/leadsSingle/' + leadsId, {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Content-Type': 'application/json'
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    Swal.fire({
+                                        title: data.judul,
+                                        text: data.pesan,
+                                        icon: data.swalFlashIcon,
+                                    });
+
+                                    // Hapus baris dari DOM tanpa reload halaman
+                                    if (rowToDelete) {
+                                        rowToDelete.remove();
+                                    }
+
+                                    // Atau jika menggunakan DataTables, refresh tabel:
+                                    // $('#table-id').DataTable().ajax.reload();
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire('Error', 'Something went wrong!', 'error');
+                                });
+                        }
+                    });
+                });
+            });
         });
     </script>
 

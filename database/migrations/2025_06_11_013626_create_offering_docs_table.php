@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('reference_code')->comment('fk to user table');
             $table->unsignedBigInteger('properties_id')->comment('fk to properties table');
-            $table->unsignedBigInteger('client_id')->comment('fk to customer table');
+            $table->unsignedBigInteger('client_id')->comment('fk to leads/prospect table');
             $table->string('client_passport_number')->nullable();
             $table->string('client_nationality')->nullable();
 
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('properties_id')->references('id')->on('properties')->onDelete('cascade');
-            $table->foreign('client_id')->references('id')->on('property_client')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('property_leads')->onDelete('cascade');
         });
     }
 

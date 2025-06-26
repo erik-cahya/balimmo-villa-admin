@@ -63,12 +63,12 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 <div class="d-flex flex-column">
-                                                    <a href="#!" class="text-dark fw-medium"><iconify-icon icon="qlementine-icons:user-16" class="fs-16 align-middle"></iconify-icon> {{ $offering->first_name . ' ' . $offering->last_name }}</a>
+                                                    <a href="#!" class="text-dark fw-medium"><iconify-icon icon="qlementine-icons:user-16" class="fs-16 align-middle"></iconify-icon> {{ $offering->custName }}</a>
                                                     <div>
 
                                                         <span class="fst-italic fs-12">{{ $offering->email }}</span>
                                                         |
-                                                        <span class="fst-italic fs-12">{{ implode('-', str_split(preg_replace('/\D/', '', $offering->phone_number), 4)) }}</span>
+                                                        <span class="fst-italic fs-12">{{ implode('-', str_split(preg_replace('/\D/', '', $offering->cust_telp), 4)) }}</span>
                                                     </div>
                                                 </div>
                                             </td>

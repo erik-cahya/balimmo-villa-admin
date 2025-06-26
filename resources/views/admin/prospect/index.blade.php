@@ -5,7 +5,6 @@
     <style>
         .dataTables_filter input {
             border: 1px solid #eaedf1 !important;
-            /* border: 1px solid red; */
             padding: 6px;
             border-radius: 5px;
         }
@@ -64,6 +63,7 @@
                                         <th scope="col">Localization</th>
                                         <th scope="col">Property Selected</th>
                                         <th scope="col">Date</th>
+                                        <th scope="col">Status</th>
 
                                         <th scope="col">Action</th>
                                     </tr>
@@ -98,6 +98,18 @@
 
                                             <td><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> {{ $cst->count() }} Properties Selected</td>
                                             <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
+                                            @php
+                                                if ($customerData->docs_status == null) {
+                                                    $customerData->docs_status = 'New Prospect';
+                                                } elseif ($customerData->docs_status == 0) {
+                                                    $customerData->docs_status = 'Declined';
+                                                } elseif ($customerData->docs_status == 1) {
+                                                    $customerData->docs_status = 'Visit';
+                                                } elseif ($customerData->docs_status == 2) {
+                                                    $customerData->docs_status = 'Offering';
+                                                }
+                                            @endphp
+                                            <td class="fw-medium text-dark fst-italic">{{ $customerData->docs_status }}</td>
                                             <td>
                                                 <div class="btn-group mb-1 me-1">
                                                     <button type="button" class="btn btn-xs btn-warning"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
@@ -106,7 +118,16 @@
 
                                                     <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
 
-                                                    <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties</button>
+                                                    {{-- <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties</button> --}}
+                                                    <button id="verticalDropdown" type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                                                        More Action
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="verticalDropdown" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-0.555556px, 114.444px, 0px);" data-popper-placement="bottom-end">
+                                                        <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}"><iconify-icon icon="weui:eyes-on-outlined" class="fs-12 align-middle"></iconify-icon> See Properties</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('visit.create') }}"><iconify-icon icon="material-symbols:docs-sharp" class="fs-12 align-middle"></iconify-icon> Create Visit Docs</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('offer-purchase.create') }}"><iconify-icon icon="streamline-ultimate:paper-write" class="fs-12 align-middle"></iconify-icon> Create Offering Docs</a></li>
+
+                                                    </ul>
                                                 </div>
 
                                                 <!-- Modal -->
@@ -156,7 +177,9 @@
                                                                 </script>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <a href="{{ route('visit.create') }}" class="btn btn-sm btn-primary">Create Visit Docs</a>
+                                                                <a href="{{ route('offer-purchase.create') }}" class="btn btn-sm btn-primary">Create Offering Docs</a>
+                                                                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                 {{-- <button type="submit" class="btn btn-primary">Change Password</button> --}}
                                                             </div>
 
@@ -173,19 +196,15 @@
                                                     </div>
                                                 </div>
                                                 <!-- /* Modal -->
-
                                             </td>
-
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
         {{-- Match Properties --}}
@@ -246,13 +265,9 @@
                                         icon: data.swalFlashIcon,
                                     });
 
-                                    // Hapus baris dari DOM tanpa reload halaman
                                     if (rowToDelete) {
                                         rowToDelete.remove();
                                     }
-
-                                    // Atau jika menggunakan DataTables, refresh tabel:
-                                    // $('#table-id').DataTable().ajax.reload();
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);

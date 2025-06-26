@@ -173,7 +173,7 @@
                             <div class="row">
 
                                 <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Select Client</h5>
+                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Select Prospect Client</h5>
                                     <hr>
                                     <div class="row my-3">
 
@@ -182,9 +182,9 @@
 
                                             <select class="form-control" id="select_client" name="id_client" data-choices data-choices-sorting-false data-toggle-target="select_client">
                                                 <option value="" selected disabled>Choose Client</option>
-                                                @foreach ($data_client as $client)
-                                                    <option value="{{ $client->id }}" {{ old('id_client') == $client->id ? 'selected' : '' }}>
-                                                        {{ $client->first_name . ' ' . $client->last_name }}
+                                                @foreach ($data_prospect as $prospect)
+                                                    <option value="{{ $prospect->id }}" {{ old('id_client') == $prospect->id ? 'selected' : '' }}>
+                                                        {{ $prospect->cust_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -246,7 +246,7 @@
                                         <div class="col-lg-12 mb-2">
                                             <div class="mb-3 mt-2" bis_skin_checked="1">
                                                 <div class="form-check form-check-inline" bis_skin_checked="1">
-                                                    <input class="form-check-input" type="radio" name="financing_terms" id="cash_purchase" value="Cash Purchase" {{ old('financing_terms') == 'Cash Purchase' ? 'checked' : '' }} >
+                                                    <input class="form-check-input" type="radio" name="financing_terms" id="cash_purchase" value="Cash Purchase" {{ old('financing_terms') == 'Cash Purchase' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="cash_purchase">Cash Purchase</label>
                                                 </div>
                                                 <div class="form-check form-check-inline" bis_skin_checked="1">

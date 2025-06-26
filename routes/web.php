@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/agent/reactivate/{id}', [AgentController::class, 'reactivate']); // Turn ON Agent Account
 
     Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');
+    Route::delete('/leadsSingle/{id}', [PropertiesLeadsController::class, 'deleteSingle']);
     Route::resource('/leads', PropertiesLeadsController::class);
 
     // Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');

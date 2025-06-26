@@ -59,7 +59,6 @@ class DocsVisitController extends Controller
             ->get()
             ->groupBy('docs_visit_id');
 
-        // dd($data['visit_docs']);
 
         return view('admin.docs.visit.index', $data);
     }
@@ -68,7 +67,7 @@ class DocsVisitController extends Controller
     {
         $rawDataLeads = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)
             ->where('prospect_status', 1)
-            ->select('cust_name', 'cust_email', 'cust_telp')
+            ->select('property_leads.id as leadsId', 'cust_name', 'cust_email', 'cust_telp')
             ->get()
             ->groupBy('cust_email');
 
@@ -86,6 +85,7 @@ class DocsVisitController extends Controller
                 'last_name'    => $lastName,
                 'email'        => $lead->cust_email,
                 'phone_number' => $lead->cust_telp,
+                'leadsId' => $lead->leadsId,
             ];
         }
 
@@ -119,6 +119,7 @@ class DocsVisitController extends Controller
     {
         // dd($request->all());
         $dataClient = explode('||', $request->input('dataClients'));
+        // dd($dataClient[4]);
 
         $request->validate([
             'dataClients' => 'required',
@@ -148,6 +149,8 @@ class DocsVisitController extends Controller
             ]);
         }
 
+        PropertyLeadsModel::where('id', $dataClient[4])->update(['docs_status' => 1]);
+
         $flashData = [
             'judul' => 'Create Success',
             'pesan' => 'Document Visit Successfully Created',
@@ -166,9 +169,18 @@ class DocsVisitController extends Controller
             $status = 2;
         }
 
+        $nameParts = explode(' ', $request->customer_first_name);
+        $firstName = array_shift($nameParts);
+        $lastName  = implode(' ', $nameParts);
+
+        // Jika lastName kosong, gunakan firstName sebagai lastName
+        if (empty($lastName)) {
+            $lastName = $firstName;
+        }
+
         $data = [
-            'first_name'   => $request->customer_first_name,
-            'last_name'    => $request->customer_last_name,
+            'first_name'   => $firstName,
+            'last_name'    => $lastName,
             'email'        => $request->customer_email,
             'phone_number' => $request->customer_phone,
             'visit_date' => $request->date_visit,

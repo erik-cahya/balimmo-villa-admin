@@ -162,7 +162,6 @@
         <p style="font-weight: bold"> {{ $docs_offering->others_contingency !== null ? $docs_offering->others_contingency : '............................................................................................................................................................................................' }} </p>
     </div>
 
-
     <h2 style="text-align: center; margin-top: 10px; font-size: 18px;">Offer Validity Period</h2>
     <div style="margin-left: 50px; margin-top: 20px">
         <p>This offer is valid until : {{ \Carbon\Carbon::parse($docs_offering->offer_validity)->format('d / m / Y') }} </p>
@@ -173,7 +172,6 @@
         <p style="text-align: center; margin-top: 10px;">Signature preceded by the statement "Good for purchase"</p>
         <p style="text-align: center; margin-top: 10px;">Signed in: [..................................................], on: [........../........../..........]</p>
     </div>
-
 
     <h2 style="text-align: center; margin-top: 10px; page-break-before: always;">Seller's Response / Tanggapan Penjual</h2>
     <p style="text-align: center"><strong>Property:</strong> [Property Name / Nama Properti] : {{ $docs_offering->property_name }}</p>

@@ -50,17 +50,24 @@ class ClientController extends Controller
         // dd(Auth::user()->reference_code);
 
         $request->validate([
-            'client_first_name' => 'required',
-            'client_last_name' => 'required',
-            'client_email' => 'required|unique:client,email',
+            'client_name' => 'required',
+            'client_email' => 'required|unique:property_client,email',
             'client_phone' => 'required',
 
         ]);
+        $nameParts = explode(' ', $request->client_name);
+        $firstName = array_shift($nameParts);
+        $lastName  = implode(' ', $nameParts);
+
+        // Jika lastName kosong, gunakan firstName sebagai lastName
+        if (empty($lastName)) {
+            $lastName = $firstName;
+        }
 
         ClientModel::create([
             'reference_code' => Auth::user()->reference_code,
-            'first_name' => $request->client_first_name,
-            'last_name' => $request->client_last_name,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
             'email' => $request->client_email,
             'phone_number' => $request->client_phone,
         ]);
