@@ -211,7 +211,6 @@ class PropertiesLeadsController extends Controller
 
         // Form di landing page
         if ($slug === null) {
-            dd($slug);
             // dd($booking->id);
 
             $data['data_leads_matches'] = PropertyLeadsModel::where('property_leads.id', $booking->id)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
@@ -253,7 +252,7 @@ class PropertiesLeadsController extends Controller
                     $data['matchProperties'] = $data['matchProperties']->merge($filtered);
                 }
 
-                $emailTo = 'erikcp38@gmail.com';
+                $emailTo = $request->email;
 
                 Mail::to($emailTo)->send(new NotifikasiEmail([
                     'properties' => $data['matchProperties'],
@@ -262,7 +261,7 @@ class PropertiesLeadsController extends Controller
                 // Kosongkan jika tidak ada leads
                 $data['matchProperties'] = collect();
 
-                $emailTo = 'erikcp38@gmail.com';
+                $emailTo = $request->email;
 
                 Mail::to($emailTo)->send(new NotifikasiEmail([
                     'properties' => $data['matchProperties'],
