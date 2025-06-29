@@ -4,10 +4,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="fw-semibold mb-0">Agent List</h4>
+                    <h4 class="fw-semibold mb-0">Notary List</h4>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Agents</a></li>
-                        <li class="breadcrumb-item active">Agent List</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Notary</a></li>
+                        <li class="breadcrumb-item active">Notary List</li>
                     </ol>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                                     <div class="col-lg-6">
                                         <form class="app-search d-md-block me-auto">
                                             <div class="position-relative">
-                                                <input type="text" class="form-control" id="search_props" placeholder="Search Agent" autocomplete="off">
+                                                <input type="text" class="form-control" id="search_props" placeholder="Search Notary" autocomplete="off">
                                                 <iconify-icon icon="solar:magnifer-broken" class="search-widget-icon"></iconify-icon>
                                             </div>
                                         </form>
@@ -35,7 +35,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="text-md-end mt-md-0 mt-3">
-                                    <button type="button" class="btn btn-sm btn-outline-dark me-1 rounded" data-bs-toggle="collapse" data-bs-target="#addNewAgent" aria-expanded="false" aria-controls="addNewAgent"><i class="ri-add-line me-1"></i> Add New Agent</button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark me-1 rounded" data-bs-toggle="collapse" data-bs-target="#addNewAgent" aria-expanded="false" aria-controls="addNewAgent"><i class="ri-add-line me-1"></i> Add New Notary</button>
                                 </div>
                             </div>
 
@@ -49,13 +49,13 @@
                 <div class="{{ $errors->any() ? 'show' : '' }} collapse" id="addNewAgent">
                     <div class="card">
                         <div class="card-header text-bg-dark" style="border-radius: 20px 0px 20px 0px">
-                            <h5 class="card-title">Add Data Agent</h5>
+                            <h5 class="card-title">Add Data Notary</h5>
                         </div>
                         <div class="card-body">
                             <div class="row">
 
-                                <x-form-input className="col-lg-4" type="text" name="name" label="Agent Name" />
-                                <x-form-input className="col-lg-4" type="email" name="email" label="Email Agent" />
+                                <x-form-input className="col-lg-4" type="text" name="name" label="Notary Name" />
+                                <x-form-input className="col-lg-4" type="email" name="email" label="Email Notary" />
 
                                 <x-form-input className="col-lg-4" type="number" name="phone_number" label="Phone Number" />
 
@@ -94,7 +94,7 @@
                             <div class="mb-3 rounded">
                                 <div class="row justify-content-end g-2">
                                     <div class="col-lg-2">
-                                        <button type="submit" class="btn btn-outline-primary w-100">Add Agent</button>
+                                        <button type="submit" class="btn btn-outline-primary w-100">Add Notary</button>
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                         <div>
-                            <h4 class="card-title">All Agent List</h4>
+                            <h4 class="card-title">All Notary List</h4>
                         </div>
                     </div>
                     <div class="card-body p-0">
@@ -126,7 +126,7 @@
                                         </th>
                                         <th>Reference ID</th>
 
-                                        <th>Agent Name</th>
+                                        <th>Notary Name</th>
                                         <th>Email</th>
                                         <th>Contact</th>
                                         <th>Listing Property</th>
@@ -213,7 +213,7 @@
 
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Disabled agent " + propertyName + "?",
+                        text: "Disabled notary " + propertyName + "?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',

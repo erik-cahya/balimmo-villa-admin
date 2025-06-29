@@ -112,8 +112,6 @@
                                             <td class="fw-medium text-dark fst-italic">{{ $customerData->docs_status }}</td>
                                             <td>
                                                 <div class="btn-group mb-1 me-1">
-                                                    <button type="button" class="btn btn-xs btn-warning"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
-
                                                     <input type="hidden" class="propertyId" value="{{ $customer }}">
 
                                                     <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>

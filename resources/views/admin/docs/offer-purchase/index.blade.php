@@ -54,6 +54,8 @@
                                         @role('Master')
                                             <th>Reference</th>
                                         @endrole
+                                        <th>Letter Status</th>
+
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -83,12 +85,32 @@
                                             </td>
                                             <td class="fs-12">
                                                 <iconify-icon icon="fluent-mdl2:event-date" class="fs-20 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($offering->created_at)->format('d F, Y') }}
+
                                             </td>
                                             @role('Master')
                                                 <td>
                                                     <span class="badge bg-dark text-light fs-12"><iconify-icon icon="si:user-fill" class="align-middle"></iconify-icon> {{ $offering->reference_code }}</span>
                                                 </td>
                                             @endrole
+                                            <td>
+                                                <div class="d-flex flex-column gap-2">
+                                                    @php
+                                                        if ($offering->status_docs == 'New Offering') {
+                                                            $className = 'bg-secondary';
+                                                        } elseif ($offering->status_docs == 'Offer Accepted') {
+                                                            $className = 'bg-success';
+                                                        } elseif ($offering->status_docs == 'Counter Offer') {
+                                                            $className = 'bg-warning';
+                                                        } else {
+                                                            $className = 'bg-danger';
+                                                        }
+                                                    @endphp
+                                                    <span class="badge {{ $className }} text-light fs-12"><iconify-icon icon="pajamas:status" class="align-middle"></iconify-icon> {{ $offering->status_docs }}</span>
+                                                    @if ($offering->response_docs_path !== null)
+                                                        <a target="_blank" href="{{ asset('admin/attachment/' . $offering->property_slug . '/' . $offering->response_docs_path) }}" class="btn btn-xs btn-primary"><iconify-icon icon="material-symbols-light:download-rounded" class="fs-20 align-middle"></iconify-icon> Download Response</a>
+                                                    @endif
+                                                </div>
+                                            </td>
                                             <td>
                                                 <div class="btn-group mb-1 me-1">
 
@@ -111,59 +133,76 @@
                                                                 <input type="hidden" name="phone_number" value="{{ $offering->phone_number }}">
                                                                 <input type="hidden" name="email" value="{{ $offering->email }}"> --}}
 
-                                                                <button type="submit" class="dropdown-item"><iconify-icon icon="material-symbols:download-rounded" class="fs-12 align-middle"></iconify-icon> Download Document</button>
+                                                                <button type="submit" class="dropdown-item"><iconify-icon icon="material-symbols:download-rounded" class="fs-12 align-middle"></iconify-icon> Download Offering Docs</button>
                                                             </form>
                                                         </li>
-                                                        {{-- <li><a class="dropdown-item disabled" href="javascript:void(0);" target="_blank"><iconify-icon icon="openmoji:flag-indonesia" class="fs-12 align-middle"></iconify-icon> Indonesia Version</a></li> --}}
+                                                        @if ($offering->response_docs_path !== null)
+                                                            <li><a class="dropdown-item" href="{{ asset('admin/attachment/' . $offering->property_slug . '/' . $offering->response_docs_path) }}" target="_blank"><iconify-icon icon="material-symbols:download-rounded" class="fs-12 align-middle"></iconify-icon> Download Response Docs</a></li>
+                                                        @endif
                                                         {{-- <li><a class="dropdown-item disabled" href="javascript:void(0);" target="_blank"><iconify-icon icon="openmoji:flag-france" class="fs-12 align-middle"></iconify-icon> France Version</a></li> --}}
                                                     </ul>
                                                 </div>
-
-                                                <!-- Modal Edit-->
-                                                <div class="modal modal-lg fade" id="resetPasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <form action="{{ route('visit.update', $offering->id) }}" method="POST">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Data Docs</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="row">
-                                                                        {{-- <input type="hidden" name="reference_code" value="{{ $profile->id }}"> --}}
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_first_name" label="First Name" value="{{ $offering->first_name }}" />
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_last_name" label="Last Name" value="{{ $offering->last_name }}" />
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_email" label="Customer Email" value="{{ $offering->email }}" />
-                                                                        <x-form-input className="col-lg-6" type="text" name="customer_phone" label="No Phone" value="{{ $offering->phone_number }}" />
-                                                                        <x-form-input className="col-lg-6" type="date" name="date_visit" label="Date Visit" value="{{ $offering->visit_date }}" />
-                                                                        <x-form-select className="col-lg-6" name="status_visit" label="Status Visit"
-                                                                            :options="['Cancel', 'Done Visit', 'Pending Visit']" />
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-primary">Edit Data</button>
-                                                                </div>
-
-                                                                @if ($errors->any())
-                                                                    <div class="alert alert-danger">
-                                                                        <ul class="mb-0">
-                                                                            @foreach ($errors->all() as $message)
-                                                                                <li>{{ $message }}</li>
-                                                                            @endforeach
-                                                                        </ul>
-                                                                    </div>
-                                                                @endif
-
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                                <!-- /* Modal Edit-->
                                             </td>
                                         </tr>
+
+                                        <!-- Modal Edit-->
+                                        <div class="modal modal-lg fade" id="resetPasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <form action="{{ route('offer-purchase.update', $offering->id) }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Edit Offering Docs</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                {{-- {{ dd($offering) }} --}}
+                                                                {{-- <input type="hidden" name="reference_code" value="{{ $profile->id }}"> --}}
+                                                                <x-form-input className="col-lg-6" type="text" name="customer_first_name" label="Customer Name" value="{{ $offering->custName }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="customer_nationality" label="Customer Nationality" value="{{ $offering->client_nationality }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="customer_email" label="Customer Email" value="{{ $offering->email }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="customer_phone" label="No Phone" value="{{ $offering->cust_telp }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="date" name="date_visit" label="Offer Validity" value="{{ $offering->offer_validity }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="deposit_ammount" label="Deposit Ammount" value="{{ $offering->offer_validity }}" disabled />
+
+                                                                <hr>
+                                                                <div class="col-lg-6">
+                                                                    <label class="form-label" for="status_docs">Status Docs</label>
+                                                                    <select name="status_docs" id="status_docs" class="form-control">
+                                                                        <option value="" selected disabled>Choose Status Docs</option>
+                                                                        <option value="New Offering" {{ $offering->status_docs == 'New Offering' ? 'selected' : '' }}>New Offering</option>
+                                                                        <option value="Offer Accepted" {{ $offering->status_docs == 'Offer Accepted' ? 'selected' : '' }}>Offer Accepted</option>
+                                                                        <option value="Counter Offer" {{ $offering->status_docs == 'Counter Offer' ? 'selected' : '' }}>Counter Offer</option>
+                                                                        <option value="Refused"{{ $offering->status_docs == 'Refused' ? 'selected' : '' }}>Refused</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-lg-6 mb-3">
+                                                                    <label for="response_docs" class="form-label">Upload Response Docs</label>
+                                                                    <input type="file" id="response_docs" name="response_docs" class="form-control" placeholder="">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-xs btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-xs btn-primary">Save Data Offering</button>
+                                                        </div>
+
+                                                        @if ($errors->any())
+                                                            <div class="alert alert-danger">
+                                                                <ul class="mb-0">
+                                                                    @foreach ($errors->all() as $message)
+                                                                        <li>{{ $message }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- /* Modal Edit-->
                                     @endforeach
 
                                 </tbody>

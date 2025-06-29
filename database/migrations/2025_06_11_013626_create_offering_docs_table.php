@@ -34,6 +34,8 @@ return new class extends Migration
             $table->date('approval_deadline')->nullable();
 
             $table->date('offer_validity')->nullable();
+            $table->string('status_docs')->nullable();
+            $table->text('response_docs_path');
 
             $table->timestamps();
 

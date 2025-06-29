@@ -31,6 +31,7 @@ class DocsOfferToPurchaseController extends Controller
                 ->select(
                     'offering_docs.*',
                     'properties.property_name',
+                    'properties.property_slug',
                     'property_leads.cust_name as custName',
                     'property_leads.cust_email as email',
                     'property_leads.cust_telp',
@@ -43,6 +44,7 @@ class DocsOfferToPurchaseController extends Controller
                 ->select(
                     'offering_docs.*',
                     'properties.property_name',
+                    'properties.property_slug',
                     'property_leads.cust_name as custName',
                     'property_leads.cust_email as email',
                     'property_leads.cust_telp',
@@ -163,7 +165,29 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->all());
+
+        $dataOffering = OfferingDocsModel::where('offering_docs.id', $id)->join('properties', 'properties.id', '=', 'offering_docs.properties_id')->first();
+        $slug = $dataOffering->property_slug;
+
+        // If there is a previous url path, then use that path.. but if not, pass null
+        $responseDocs = $dataOffering->response_docs_path !== null ? $dataOffering->response_docs_path : null;
+        if (isset($request->response_docs)) {
+            $responseDocs = $request->response_docs->getClientOriginalName();
+            $request->response_docs->move(public_path('admin/attachment/' . $slug), $responseDocs);
+        }
+
+        OfferingDocsModel::where('id', $id)->update([
+            'status_docs' => $request->status_docs,
+            'response_docs_path' => $responseDocs
+        ]);
+
+        $flashData = [
+            'judul' => 'Change Data Success',
+            'pesan' => 'Document Offering Successfully Changed',
+            'swalFlashIcon' => 'success',
+        ];
+        return redirect()->route('offer-purchase.index')->with('flashData', $flashData);
     }
 
     /**
