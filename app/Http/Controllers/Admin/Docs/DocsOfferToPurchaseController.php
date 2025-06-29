@@ -58,10 +58,26 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function create()
     {
-        $data['data_property'] = PropertiesModel::where('internal_reference', Auth::user()->reference_code)->get();
-        $data['data_prospect'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('prospect_status', 1)->get();
+        // dd('dd');
+        $data['data_property'] = PropertiesModel::get();
+
+        $rawDataLeads = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('prospect_status', 1)->where('docs_status', 1)->get()->groupBy('cust_email');
+
+        $finalData = [];
+        foreach ($rawDataLeads as $email => $leads) {
+            $lead = $leads->first(); // Ambil satu instance untuk ambil nama dan telp
+            $finalData[] = [
+                'cust_name'    => $lead->cust_name,
+                'email'        => $lead->cust_email,
+                'phone_number' => $lead->cust_telp,
+                'leadsId' => $lead->id,
+            ];
+        }
+
+        $data['data_prospect'] = $finalData;
 
         // dd($data['data_prospect']);
+        // dd($data['data_property']);
 
         return view('admin.docs.offer-purchase.create', $data);
     }
@@ -294,7 +310,7 @@ class DocsOfferToPurchaseController extends Controller
 
     public function getClientsAjax($id)
     {
-        $clientData = ClientModel::where('id', $id)
+        $clientData = PropertyLeadsModel::where('id', $id)
             ->first();
 
         return response()->json(['data' => $clientData]);

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Docs\DocsVisitController;
 use App\Http\Controllers\Admin\Docs\DocsOfferToPurchaseController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\LocalizationController;
+use App\Http\Controllers\Admin\NotaryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
@@ -98,8 +99,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('prospects/make-prospect/{id}', [ProspectController::class, 'leadsToProspect'])->name('leadsToProspect'); // Make data leads to prospects
     Route::resource('prospects', ProspectController::class);
-});
 
+    Route::resource('/notary', NotaryController::class);
+});
 // Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
 
 require __DIR__ . '/auth.php';

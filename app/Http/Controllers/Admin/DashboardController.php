@@ -17,7 +17,6 @@ class DashboardController extends Controller
     public function index()
     {
 
-
         $data['data_visit'] = VisitDocsModel::where('reference_code', Auth::user()->reference_code)->get();
 
         $data['data_agent'] = User::where('role', 'agent',)->select('name', 'created_at', 'email', 'profile', 'reference_code')->orderBy('created_at', 'ASC')->get();

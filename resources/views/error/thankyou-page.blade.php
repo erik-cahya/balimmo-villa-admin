@@ -50,9 +50,9 @@
 
                                             {{-- <img src="{{ asset('admin') }}/assets/images/404.svg" alt="auth" height="250" class="mb-3 mt-5" /> --}}
 
-                                            <h3 class="text-dark p-4">Thankyou</h3>
+                                            <img src="{{ asset('admin') }}/assets/images/thankyou.jpg" alt="auth" height="250" class="mb-3 mt-5" />
 
-                                            <h2 class="fs-22 lh-base">Thankyou!!</h2>
+                                            <h2 class="fs-22 lh-base">Thank You!!</h2>
                                             <p class="text-muted mb-4 mt-1">Please check your email to get suitable villa recommendations from us. <br> If you don't get the email, please check your spam folder.</p>
 
                                             <div class="text-center">

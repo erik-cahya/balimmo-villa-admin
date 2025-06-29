@@ -209,7 +209,7 @@
             <div class="col-xl-3 col-lg-6" bis_skin_checked="1">
                 <div class="card" bis_skin_checked="1">
                     <div class="card-header d-flex align-items-center border-bottom border-dashed" bis_skin_checked="1">
-                        <h4 class="card-title mb-0">Agenda</h4>
+                        <h4 class="card-title mb-0">Timeline</h4>
                     </div>
                     <div class="card-body" bis_skin_checked="1">
                         <div class="row" bis_skin_checked="1">

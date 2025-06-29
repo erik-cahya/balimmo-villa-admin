@@ -100,6 +100,8 @@ class DocsVisitController extends Controller
             'properties.property_address',
             'properties.region',
             'properties.sub_region',
+            'properties.bedroom',
+            'properties.bathroom',
             'property_financial.selling_price_idr',
             'property_financial.selling_price_usd',
 
@@ -119,7 +121,7 @@ class DocsVisitController extends Controller
     {
         // dd($request->all());
         $dataClient = explode('||', $request->input('dataClients'));
-        // dd($dataClient[4]);
+        // dd($dataClient[0]);
 
         $request->validate([
             'dataClients' => 'required',
@@ -149,7 +151,7 @@ class DocsVisitController extends Controller
             ]);
         }
 
-        PropertyLeadsModel::where('id', $dataClient[4])->update(['docs_status' => 1]);
+        PropertyLeadsModel::where('cust_email', $dataClient[0])->update(['docs_status' => 1]);
 
         $flashData = [
             'judul' => 'Create Success',

@@ -1,4 +1,4 @@
-@foreach ($data_agent->where('role', '!=', 'notary') as $agent)
+@foreach ($data_notary as $agent)
     <tr class="{{ Auth::user()->id === $agent->id ? 'table-active' : '' }}">
 
         <td>

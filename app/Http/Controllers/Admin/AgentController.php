@@ -54,9 +54,17 @@ class AgentController extends Controller
         $numberID = $request->number_id == null ? random_int(1000, 99999) : $request->number_id;
 
         // Generate reference code
-        $reference_code = $request->role == 'Master'
-            ? 'BPM-' . Str::upper($request->initial_name) . '-' . $numberID
-            : 'BPA-' . Str::upper($request->initial_name) . '-' . $numberID;
+        if ($request->role == 'Master') {
+            $reference_code = 'BPM-' . Str::upper($request->initial_name) . '-' . $numberID;
+        } elseif ($request->role == 'Notary') {
+            $reference_code = 'BPN-' . Str::upper($request->initial_name) . '-' . $numberID;
+        } else {
+            $reference_code = 'BPA-' . Str::upper($request->initial_name) . '-' . $numberID;
+        }
+
+        // $reference_code = $request->role == 'Master'
+        //     ? 'BPM-' . Str::upper($request->initial_name) . '-' . $numberID
+        //     : 'BPA-' . Str::upper($request->initial_name) . '-' . $numberID;
 
         // Cek apakah reference_code sudah digunakan
         if (User::where('reference_code', $reference_code)->exists()) {
@@ -64,7 +72,6 @@ class AgentController extends Controller
                 ->withErrors(['number_id' => 'Code number already exists. Please choose a different Number ID.'])
                 ->withInput();
         }
-
 
         User::create([
             'name' => $request->name,
@@ -76,6 +83,18 @@ class AgentController extends Controller
             'status' => 1
         ]);
 
+
+        // if notary user, redirect to notary page
+        if ($request->role == 'Notary') {
+            $flashData = [
+                'judul' => 'Create Notary Success',
+                'pesan' => 'New Notary Added Successfully',
+                'swalFlashIcon' => 'success',
+            ];
+            return redirect()->route('notary.index')->with('flashData', $flashData);
+        }
+
+        // if agent user, redirect to agent page
         $flashData = [
             'judul' => 'Create Agent Success',
             'pesan' => 'New Agent Added Successfully',

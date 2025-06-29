@@ -32,29 +32,107 @@
                 </a>
             </li>
 
-            <li class="menu-title">Management Properties</li>
+            @role('Master|agent')
+                <li class="menu-title">Management Properties</li>
 
-            <li class="nav-item">
-                <a class="nav-link menu-arrow {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="#sidebarProperty" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProperty">
-                    <span class="nav-icon">
-                        <i class="ri-community-line"></i>
-                    </span>
-                    <span class="nav-text"> Properties </span>
-                </a>
-                <div class="{{ request()->routeIs('properties.*') ? 'show' : '' }} collapse" id="sidebarProperty">
-                    <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('properties.index') }}">Properties List</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Properties Listing</a>
-                        </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-arrow {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="#sidebarProperty" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProperty">
+                        <span class="nav-icon">
+                            <i class="ri-community-line"></i>
+                        </span>
+                        <span class="nav-text"> Properties </span>
+                    </a>
+                    <div class="{{ request()->routeIs('properties.*') ? 'show' : '' }} collapse" id="sidebarProperty">
+                        <ul class="nav sub-navbar-nav">
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('properties.index') }}">Properties List</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Properties Listing</a>
+                            </li>
 
-                    </ul>
-                </div>
-            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endrole
+
+            @role('Master|agent')
+                <li class="menu-title">Customer Management</li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
+                        <span class="nav-icon">
+                            <i class="ri-user-shared-2-line"></i>
+                        </span>
+                        <span class="nav-text">Leads</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('prospects.*') ? 'active' : '' }}" href="{{ route('prospects.index') }}">
+                        <span class="nav-icon">
+                            <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
+                        </span>
+                        <span class="nav-text">Prospects</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('clients.index') }}">
+                        <span class="nav-icon">
+                            <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
+                        </span>
+                        <span class="nav-text">Clients</span>
+                    </a>
+                </li>
+            @endrole
+
+            @role('Master|agent')
+                <li class="menu-title">Document Management</li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-arrow {{ request()->routeIs('visit.*') ? 'active' : '' }}" href="#sidebarVisit" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarVisit">
+                        <span class="nav-icon">
+                            <iconify-icon icon="carbon:document" class="fs-18 align-middle"></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Visit </span>
+                    </a>
+                    <div class="{{ request()->routeIs('visit.*') ? 'show' : '' }} collapse" id="sidebarVisit">
+                        <ul class="nav sub-navbar-nav">
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('visit.index') }}">List Document Visit</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('visit.create') }}">Create Visit </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-arrow {{ request()->routeIs('offer-purchase.*') ? 'active' : '' }}" href="#offerToPurchase" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="offerToPurchase">
+                        <span class="nav-icon">
+                            <iconify-icon icon="carbon:document" class="fs-18 align-middle"></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Offer To Purchase </span>
+                    </a>
+                    <div class="{{ request()->routeIs('offer-purchase.*') ? 'show' : '' }} collapse" id="offerToPurchase">
+                        <ul class="nav sub-navbar-nav">
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('offer-purchase.index') }}">List Offer to Purchase</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('offer-purchase.create') }}">Create Offer to Purchase </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+            @endrole
 
             @role('Master')
+                <li class="menu-title">User Management</li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('agent.*') ? 'active' : '' }}" href="{{ route('agent.index') }}">
                         <span class="nav-icon">
@@ -63,80 +141,18 @@
                         <span class="nav-text">Agent</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('notary.*') ? 'active' : '' }}" href="{{ route('notary.index') }}">
+                        <span class="nav-icon">
+                            <i class="ri-group-line"></i>
+                        </span>
+                        <span class="nav-text">Notary</span>
+                    </a>
+                </li>
             @endrole
 
-            <li class="menu-title">Customer Management</li>
-
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
-                    <span class="nav-icon">
-                        <i class="ri-user-shared-2-line"></i>
-                    </span>
-                    <span class="nav-text">Leads</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('prospects.*') ? 'active' : '' }}" href="{{ route('prospects.index') }}">
-                    <span class="nav-icon">
-                        <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
-                    </span>
-                    <span class="nav-text">Prospects</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('clients.index') }}">
-                    <span class="nav-icon">
-                        <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
-                    </span>
-                    <span class="nav-text">Clients</span>
-                </a>
-            </li>
-
-            <li class="menu-title">Document Management</li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-arrow {{ request()->routeIs('visit.*') ? 'active' : '' }}" href="#sidebarVisit" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarVisit">
-                    <span class="nav-icon">
-                        <iconify-icon icon="carbon:document" class="fs-18 align-middle"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Visit </span>
-                </a>
-                <div class="{{ request()->routeIs('visit.*') ? 'show' : '' }} collapse" id="sidebarVisit">
-                    <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('visit.index') }}">List Document Visit</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('visit.create') }}">Create Visit </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link menu-arrow {{ request()->routeIs('offer-purchase.*') ? 'active' : '' }}" href="#offerToPurchase" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="offerToPurchase">
-                    <span class="nav-icon">
-                        <iconify-icon icon="carbon:document" class="fs-18 align-middle"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Offer To Purchase </span>
-                </a>
-                <div class="{{ request()->routeIs('offer-purchase.*') ? 'show' : '' }} collapse" id="offerToPurchase">
-                    <ul class="nav sub-navbar-nav">
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('offer-purchase.index') }}">List Offer to Purchase</a>
-                        </li>
-                        <li class="sub-nav-item">
-                            <a class="sub-nav-link" href="{{ route('offer-purchase.create') }}">Create Offer to Purchase </a>
-                        </li>
-
-                    </ul>
-                </div>
-            </li>
-
-            <li class="menu-title">Account Management</li>
+            <li class="menu-title">Personal</li>
 
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
@@ -148,6 +164,7 @@
             </li>
 
             @role('Master')
+                <li class="menu-title">Setting</li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('localization.*') ? 'active' : '' }}" href="{{ route('localization.index') }}">
                         <span class="nav-icon">
@@ -167,6 +184,9 @@
                 </li>
             @endrole
 
+            @role('notary')
+                <li class="menu-title">NOTARY MENU</li>
+            @endrole
         </ul>
     </div>
 </div>

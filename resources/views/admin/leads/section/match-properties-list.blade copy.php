@@ -9,7 +9,7 @@
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table-hover table-centered table text-nowrap" id="specificPropertyTable">
+                    <table class="table-hover table-centered table text-nowrap" id="leadsTable">
                         <thead class="table-light">
                             <tr>
                                 <th scope="col">No</th>

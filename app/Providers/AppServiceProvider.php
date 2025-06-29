@@ -27,8 +27,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        Blade::if('role', function ($role) {
-            return auth()->check() && auth()->user()->role === $role;
+        Blade::if('role', function ($roles) {
+            $roles = is_array($roles) ? $roles : explode('|', $roles);
+            return auth()->check() && in_array(auth()->user()->role, $roles);
         });
     }
 }

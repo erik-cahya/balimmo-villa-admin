@@ -29,7 +29,7 @@
                                         </form>
                                     </div>
                                     <div class="col-lg-4">
-                                        <h5 class="text-dark fw-medium mb-0">{{ $data_agent->count() }} <span class="text-muted"> Agent</span></h5>
+                                        <h5 class="text-dark fw-medium mb-0">{{ $data_notary->count() }} <span class="text-muted"> Notary</span></h5>
                                     </div>
                                 </div>
                             </div>
@@ -58,12 +58,20 @@
                                 <x-form-input className="col-lg-4" type="email" name="email" label="Email Agent" />
 
                                 <x-form-input className="col-lg-4" type="number" name="phone_number" label="Phone Number" />
-                                <x-form-select className="col-lg-6" name="role" label="User Role" :options="['Agent', 'Master']" />
+
+                                <div class="col-md-6" id="group_role">
+                                    <label for="role" class="form-label">User Role</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Initial Name" value="Notary" disabled>
+                                        <input type="hidden" name="role" value="Notary">
+                                    </div>
+                                </div>
+                                {{-- <x-form-select className="col-lg-6" name="role" label="User Role" :options="['Agent', 'Master', 'Notary']" /> --}}
 
                                 <div class="col-md-6" id="group_month_rented_per_year">
                                     <label for="month_rented_per_year" class="form-label">Reference ID</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="prefix-text">BPM</span>
+                                        <span class="input-group-text" id="prefix-text">BPN</span>
                                         <input type="text" name="initial_name" class="form-control @error('initial_name') validation-form @enderror" placeholder="Initial Name" value="{{ old('initial_name') }}">
                                         <input type="text" name="number_id" maxlength="4" class="form-control @error('number_id') validation-form @enderror" min="1" max="9999" placeholder="Number ID" pattern="[0-9]{4}" value="{{ old('number_id') }}">
                                     </div>
@@ -78,8 +86,9 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <x-form-input className="col-lg-6" type="password" name="password" label="Password Login" />
-                                <x-form-input className="col-lg-6" type="password" name="password_confirmation" label="Confirm Password" />
+
+                                <x-form-input className="col-lg-6 mt-3" type="password" name="password" label="Password Login" />
+                                <x-form-input className="col-lg-6 mt-3" type="password" name="password_confirmation" label="Confirm Password" />
 
                             </div>
                             <div class="mb-3 rounded">
@@ -128,7 +137,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="property-list">
-                                    @include('admin.agent.partials.data-agent', ['data_agent' => $data_agent])
+                                    @include('admin.notary.partials.data-notary')
                                 </tbody>
                             </table>
                         </div>

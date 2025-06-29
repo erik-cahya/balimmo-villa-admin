@@ -53,7 +53,7 @@
                                                 <option value="" selected disabled>Choose Property</option>
                                                 @foreach ($data_property as $property)
                                                     <option value="{{ $property->id }}">
-                                                        {{ $property->property_name }}
+                                                        {{ $property->property_name }}<span class="fw-bold text-dark fs-11"> | {{ $property->internal_reference }}</span>
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -173,18 +173,18 @@
                             <div class="row">
 
                                 <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Select Prospect Client</h5>
+                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Select Data Prospect</h5>
                                     <hr>
                                     <div class="row my-3">
 
                                         <div class="col-lg-12 text-capitalize mb-3" id="group_select_client">
-                                            <label for="select_client" class="form-label">Choose Client</label>
+                                            <label for="select_client" class="form-label">Choose Prospect</label>
 
                                             <select class="form-control" id="select_client" name="id_client" data-choices data-choices-sorting-false data-toggle-target="select_client">
-                                                <option value="" selected disabled>Choose Client</option>
+                                                <option value="" selected disabled>Choose Prospect</option>
                                                 @foreach ($data_prospect as $prospect)
-                                                    <option value="{{ $prospect->id }}" {{ old('id_client') == $prospect->id ? 'selected' : '' }}>
-                                                        {{ $prospect->cust_name }}
+                                                    <option value="{{ $prospect['leadsId'] }}">
+                                                        {{ $prospect['cust_name'] }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -204,8 +204,8 @@
 
                                         <x-form-input className="col-lg-6" type="text" name="client_passport_number" label="Passport Number" />
                                         <x-form-input className="col-lg-6" type="text" name="client_nationality" label="Nationality" />
-                                        <x-form-input className="col-lg-6" type="text" name="client_first_name" label="Client First Name" disabled="true" />
-                                        <x-form-input className="col-lg-6" type="text" name="client_last_name" label="Client Last Name" disabled="true" />
+                                        <x-form-input className="col-lg-12" type="text" name="client_first_name" label="Client Name" disabled="true" />
+                                        {{-- <x-form-input className="col-lg-6" type="text" name="client_last_name" label="Client Last Name" disabled="true" /> --}}
                                         <x-form-input className="col-lg-6" type="text" name="client_email" label="Client Email" disabled="true" />
                                         <x-form-input className="col-lg-6" type="text" name="client_phone_number" label="Phone Number" disabled="true" />
 
@@ -463,10 +463,9 @@
                     dataType: 'json',
                     success: function(response) {
                         console.log(response);
-                        $('#client_first_name').val(response['data'].first_name);
-                        $('#client_last_name').val(response['data'].last_name);
-                        $('#client_email').val(response['data'].email);
-                        $('#client_phone_number').val(response['data'].phone_number);
+                        $('#client_first_name').val(response['data'].cust_name);
+                        $('#client_email').val(response['data'].cust_email);
+                        $('#client_phone_number').val(response['data'].cust_telp);
 
                     }
                 })

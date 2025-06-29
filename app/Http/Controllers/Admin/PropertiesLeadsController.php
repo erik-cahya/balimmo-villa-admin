@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Mail\NotifikasiEmail;
 use App\Models\PropertiesModel;
 use App\Models\PropertyLeadsModel;
+use App\Models\SubRegionModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -94,6 +96,11 @@ class PropertiesLeadsController extends Controller
             $data['matchProperties'] = [];
         }
 
+        $data['data_localization'] = SubRegionModel::select('name')->get();
+        $data['data_agent'] = User::where('role', 'agent')->get();
+
+        $data['data_properties'] = PropertiesModel::where('type_acceptance', 'accept')->get();
+
         // dd($data['matchProperties']);
 
         return view('admin.leads.index', $data);
@@ -133,7 +140,27 @@ class PropertiesLeadsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->all());
+
+        // Jika ada input property specific
+        $propertiesData = null;
+        if (isset($request->input_specific_properties)) {
+            $propertiesData = PropertiesModel::where('property_slug', $request->input_specific_properties)->first();
+        }
+
+        PropertyLeadsModel::where('id', $id)->update([
+            'properties_id' => $propertiesData?->id,
+            'agent_code' => $propertiesData?->internal_reference,
+            'cust_budget' => $this->convertToInteger($request->leads_budget),
+            'localization' => $request->localization,
+        ]);
+
+        $flashData = [
+            'judul' => 'Success',
+            'pesan' => 'Data Leads Successfully Update',
+            'swalFlashIcon' => 'success',
+        ];
+        return redirect()->route('leads.index')->with('flashData', $flashData);
     }
 
     /**
@@ -324,5 +351,10 @@ class PropertiesLeadsController extends Controller
             'swalFlashIcon' => 'success',
         ];
         return redirect()->route('leads.index')->with('flashData', $flashData);
+    }
+
+    private function convertToInteger($value)
+    {
+        return (int)preg_replace('/[^0-9]/', '', $value);
     }
 }

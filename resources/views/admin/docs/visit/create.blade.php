@@ -40,7 +40,66 @@
         <form action="{{ route('visit.store') }}" method="POST">
             @csrf
             <div class="row">
-                <div class="col-xl-8">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
+                            <div>
+                                <h4 class="card-title">Select Clients</h4>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="col-lg-12 mb-3" id="group_dataClients">
+                                <select class="form-control" id="dataClients" name="dataClients" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
+                                    <option value="" selected disabled>Choose Clients</option>
+                                    @foreach ($data_client as $client)
+                                        <option value="{{ $client['email'] }}||{{ $client['first_name'] }}||{{ $client['last_name'] }}||{{ $client['phone_number'] }}||{{ $client['leadsId'] }}">
+                                            {{ $client['first_name'] . ' ' . $client['last_name'] . ' ( ' . $client['email'] . ' )' }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                @error('dataClient')
+                                    <style>
+                                        .choices__inner {
+                                            border-color: #e96767 !important;
+                                        }
+                                    </style>
+
+                                    <div class="alert alert-danger m-0">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
+                            <div>
+                                <h4 class="card-title">Date Visit</h4>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            {{-- <x-form-input className="col-lg-12" type="text" name="date_visit" /> --}}
+
+                            <div class="col-lg-12 mb-3" id="group_date_visit">
+                                <input type="text" id="date_visit" name="date_visit" class="form-control @error('date_visit') validation-form @enderror" placeholder="Input Visit Date">
+
+                                @error('date_visit')
+                                    <div class="alert alert-danger mt-1 p-1" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12">
+
                     <div class="card">
                         <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
                             <div>
@@ -61,6 +120,7 @@
                                             <th>Properties Name</th>
                                             <th>Owned By</th>
                                             <th>Properties Price</th>
+                                            <th>Rooms</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -96,6 +156,12 @@
                                                         <span class="fst-italic fs-12">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <div class="d-flex flex-column gap-1">
+                                                        <span class="fst-italic fs-12">Bedroom : {{ $property->bedroom }}</span>
+                                                        <span class="fst-italic fs-12">Bathroom : {{ $property->bathroom }}</span>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @endforeach
 
@@ -103,52 +169,6 @@
                                 </table>
                             </div>
                             <!-- end table-responsive -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4">
-                    <div class="card">
-                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
-                            <div>
-                                <h4 class="card-title">Select Clients</h4>
-                            </div>
-
-                        </div>
-                        <div class="card-body">
-                            <div class="col-lg-12 mb-3" id="group_dataClients">
-                                <select class="form-control" id="dataClients" name="dataClients" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
-                                    <option value="" selected disabled>Choose Clients</option>
-                                    @foreach ($data_client as $client)
-                                        <option value="{{ $client['email'] }}||{{ $client['first_name'] }}||{{ $client['last_name'] }}||{{ $client['phone_number'] }}||{{ $client['leadsId'] }}">
-                                            {{ $client['first_name'] . ' ' . $client['last_name'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                                @error('dataClient')
-                                    <style>
-                                        .choices__inner {
-                                            border-color: #e96767 !important;
-                                        }
-                                    </style>
-
-                                    <div class="alert alert-danger m-0">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
-                            <div>
-                                <h4 class="card-title">Date Visit</h4>
-                            </div>
-
-                        </div>
-                        <div class="card-body">
-                            <x-form-input className="col-lg-12" type="text" name="date_visit" label="Date Visit" />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-outline-primary">Create Document Visit</button>
