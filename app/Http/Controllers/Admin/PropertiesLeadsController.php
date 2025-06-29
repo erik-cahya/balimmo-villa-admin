@@ -142,6 +142,7 @@ class PropertiesLeadsController extends Controller
     {
         // dd($request->all());
 
+        $propertiesLeads = PropertyLeadsModel::where('id', $id)->first();
         // Jika ada input property specific
         $propertiesData = null;
         if (isset($request->input_specific_properties)) {
@@ -149,8 +150,8 @@ class PropertiesLeadsController extends Controller
         }
 
         PropertyLeadsModel::where('id', $id)->update([
-            'properties_id' => $propertiesData?->id,
-            'agent_code' => $propertiesData?->internal_reference,
+            'properties_id' => $propertiesLeads->properties_id == null ? $propertiesData?->id : $propertiesLeads->properties_id,
+            'agent_code' => $propertiesLeads->agent_code == null ? $propertiesData?->internal_reference : $propertiesLeads->agent_code,
             'cust_budget' => $this->convertToInteger($request->leads_budget),
             'localization' => $request->localization,
         ]);

@@ -51,6 +51,8 @@
 @push('scripts')
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/cleave-phone.us.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -175,6 +177,27 @@
             });
         });
     </script>
-
     {{-- /* End Sweet Alert --}}
+
+    {{-- Currency Format --}}
+    <script>
+        const cleaveFields = [{
+            id: '#leads_budget11',
+            options: {
+                prefix: 'IDR '
+            }
+        }];
+
+        cleaveFields.forEach(field => {
+            new Cleave(field.id, {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand',
+                prefix: '$ ',
+                noImmediatePrefix: true,
+                numeralDecimalMark: ',',
+                delimiter: '.',
+                ...field.options // spread operator untuk custom config
+            });
+        });
+    </script>
 @endpush

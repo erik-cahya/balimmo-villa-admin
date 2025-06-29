@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\File;
+
 
 
 class DocsOfferToPurchaseController extends Controller
@@ -172,7 +174,9 @@ class DocsOfferToPurchaseController extends Controller
 
         // If there is a previous url path, then use that path.. but if not, pass null
         $responseDocs = $dataOffering->response_docs_path !== null ? $dataOffering->response_docs_path : null;
+
         if (isset($request->response_docs)) {
+            $dataOffering->response_docs_path !== null ? File::delete(public_path('admin/attachment/' . $slug . '/' . $dataOffering->response_docs_path)) : '';
             $responseDocs = $request->response_docs->getClientOriginalName();
             $request->response_docs->move(public_path('admin/attachment/' . $slug), $responseDocs);
         }
@@ -244,9 +248,6 @@ class DocsOfferToPurchaseController extends Controller
                 'property_legal.email as rep_email',
 
                 'users.name as agentName'
-
-
-
             )
             ->first();
 

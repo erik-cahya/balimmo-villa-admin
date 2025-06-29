@@ -263,7 +263,7 @@
                                                             <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $matchLeads->cust_name }}" disabled />
                                                             <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $matchLeads->cust_email }}" disabled />
                                                             <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $matchLeads->cust_telp }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="{{ $matchLeads->cust_budget }}" />
 
                                                             {{-- if master user : can edit/change localization data, but agent, can't --}}
                                                             @if (Auth::user()->role == 'Master')

@@ -56,18 +56,20 @@
                                     <td><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> {{ $cst->count() }} Properties Selected</td>
                                     <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
                                     <td>
-                                        <div class="btn-group mb-1 me-1">
 
-                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}">
-                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                            </button>
+                                        <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $customerData->id }}">
+                                            <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
+                                        </button>
 
-                                            <input type="hidden" class="propertyId" value="{{ $customer }}">
+                                        <button type="button" class="btn btn-xs btn-secondary" data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}">
+                                            Make to Prospect
+                                        </button>
 
-                                            <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+                                        <input type="hidden" class="propertyId" value="{{ $customer }}">
 
-                                            <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties</button>
-                                        </div>
+                                        <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+
+                                        <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties</button>
 
                                         <!-- Modal -->
                                         <div class="modal modal-xl fade" id="seeProperties-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -147,7 +149,7 @@
 
                                                         <div class="modal-body">
                                                             <div class="row">
-                                                                <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $customerData->id }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $customerData->cust_name }}" disabled />
                                                                 <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $customerData->cust_email }}" disabled />
                                                                 <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $customerData->cust_telp }}" disabled />
                                                                 <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="IDR {{ number_format($customerData->cust_budget, 2, ',', '.') }}" disabled />
@@ -187,6 +189,66 @@
                                             </div>
                                         </div>
                                         {{-- Modal Make Prospect --}}
+
+                                        {{-- Modal Edit Data Leads --}}
+                                        <div class="modal modal-lg fade" id="editLeads-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Edit Data Leads</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="{{ route('leads.update', $customerData->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $customerData->cust_name }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $customerData->cust_email }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $customerData->cust_telp }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="{{ $customerData->cust_budget }}" />
+
+                                                                {{-- if master user : can edit/change localization data, but agent, can't --}}
+
+                                                                <div class="col-lg-6 mb-3" id="group_localization">
+                                                                    <label for="localization" class="form-label">Localization</label>
+                                                                    <select id="localization" class="form-select" name="localization">
+                                                                        <option value="" disabled selected>Select Region</option>
+                                                                        @foreach ($data_localization as $localization)
+                                                                            <option value="{{ $localization->name }}" {{ $localization->name == $customerData->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}" disabled />
+
+                                                            </div>
+
+                                                            {{-- If it is a master, you can input it directly to a specific agent so that the selected agent gets the leads. --}}
+                                                            @if (Auth::user()->role == 'Master')
+                                                                <hr>
+                                                                <div class="col-lg-6 mb-3" id="group_input_specific_properties">
+                                                                    <label for="input_specific_properties" class="form-label">Input to Specific Leads</label>
+                                                                    <select id="input_specific_properties" class="form-select" name="input_specific_properties">
+                                                                        <option value="" disabled selected>Select Properties</option>
+                                                                        @foreach ($data_properties as $properties)
+                                                                            <option value="{{ $properties->property_slug }}">{{ $properties->property_name . ' | ' . $properties->internal_reference }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-xs btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-xs btn-primary">Edit Leads Data</button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- END Modal Edit Data Leads --}}
 
                                     </td>
 
