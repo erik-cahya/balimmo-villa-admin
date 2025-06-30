@@ -134,6 +134,8 @@ class DocsOfferToPurchaseController extends Controller
             'bank_name' => $request->bank_name,
             'approval_deadline' => $request->approval_deadline == null ? null : $this->dateConversion($request->approval_deadline),
             'offer_validity' => $this->dateConversion($request->offer_validity),
+            'status_docs' => 'New Offering',
+            'response_docs_path' => null,
         ]);
 
         // dd($leads);
