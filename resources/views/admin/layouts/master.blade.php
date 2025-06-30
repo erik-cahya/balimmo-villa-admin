@@ -68,6 +68,7 @@
 
     <!-- App Javascript (Require in all Page) -->
     <script src="{{ asset('admin') }}/assets/js/app.js"></script>
+    <script src="{{ asset('admin/assets/js/iconify.min.js') }}"></script>
 
     {{-- <script src="{{ asset('admin') }}/assets/js/components/form-flatepicker.js"></script> --}}
 

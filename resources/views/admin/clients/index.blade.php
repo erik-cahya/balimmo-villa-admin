@@ -55,7 +55,7 @@
                             <div class="col-lg-6">
                                 <div class="text-md-end mt-md-0 mt-3">
                                     <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#addNewClientModal"><i class="ri-add-line me-1"></i> Add New Clients</button>
-                                    <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#importProspect"><i class="ri-user-line me-1"></i> Import From Prospects</button>
+                                    {{-- <button type="button" class="btn btn-sm btn-outline-primary btn-disabled me-1" data-bs-toggle="modal" data-bs-target="#importProspect"><i class="ri-user-line me-1"></i> Import From Prospects</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -251,14 +251,6 @@
         });
     </script>
     {{-- /* Checkbox --}}
-
-    {{-- Data Table --}}
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-        });
-    </script>
-    {{-- /* Data Table --}}
 
     {{-- Search --}}
     <script>

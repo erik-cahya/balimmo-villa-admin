@@ -114,16 +114,24 @@
                                             <td>
                                                 <div class="btn-group mb-1 me-1">
 
-                                                    {{-- Edit Btn --}}
-                                                    <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon></button>
+                                                    @if ($offering->status_docs == 'Offer Accepted')
+                                                        <form action="{{ route('client.fromOffering') }}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="cust_id" value="{{ $offering->client_id }}">
+                                                            <button type="submit" class="btn btn-xs btn-outline-primary">Make Client</button>
+                                                        </form>
+                                                    @endif
 
-                                                    {{-- Delete Btn --}}
-                                                    <input type="hidden" class="propertyId" value="{{ $offering->id }}">
-                                                    <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $offering->first_name . ' ' . $offering->last_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
                                                     {{-- Download Btn --}}
                                                     <button id="dropdown" type="button" class="btn btn-xs btn-primary text-light dropdown-toggle fw-medium" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Download
                                                     </button>
+                                                    <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><iconify-icon icon="ep:edit" class="fs-12 align-middle"></iconify-icon></button>
+
+                                                    {{-- Delete Btn --}}
+                                                    <input type="hidden" class="propertyId" value="{{ $offering->id }}">
+                                                    <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $offering->first_name . ' ' . $offering->last_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+
                                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown">
                                                         <li>
                                                             <form action="{{ route('offer-purchase.pdf.english') }}" method="POST">

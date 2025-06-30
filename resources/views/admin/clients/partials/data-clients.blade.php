@@ -7,7 +7,7 @@
                      <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle">
                  </div>
                  <div>
-                     <a href="#!" class="text-dark fw-medium fs-15">{{ $client->first_name . ' ' . $client->last_name }}</a>
+                     <a href="#!" class="text-dark fw-medium fs-15">{{ $client->client_name }}</a>
                  </div>
              </div>
 

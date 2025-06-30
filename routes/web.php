@@ -86,6 +86,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/visit', DocsVisitController::class);
 
     Route::post('clients/leads', [ClientController::class, 'dataFromLeads'])->name('client.fromLeads');
+    Route::post('clients/offering', [ClientController::class, 'importFromOffering'])->name('client.fromOffering');
     Route::resource('/clients', ClientController::class);
 
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');

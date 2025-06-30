@@ -45,8 +45,45 @@ class ClientController extends Controller
         return view('admin.clients.index', $data);
     }
 
+    public function importFromOffering(Request $request)
+    {
+        $dataCustomer = PropertyLeadsModel::where('id', $request->cust_id)->first();
+
+        PropertyLeadsModel::where('id', $dataCustomer->id)->update([
+            'prospect_status' => 3,
+        ]);
+
+        $dataClient = ClientModel::where('email', $dataCustomer->cust_email)->count();
+
+        if ($dataClient >= 1) {
+            $flashData = [
+                'judul' => 'Add New Client Failed',
+                'pesan' => 'The email client already exists',
+                'swalFlashIcon' => 'error',
+            ];
+
+            return back()->with('flashData', $flashData);
+        }
+
+        ClientModel::create([
+            'reference_code' => $dataCustomer->agent_code,
+            'client_name' => $dataCustomer->cust_name,
+            'email' => $dataCustomer->cust_email,
+            'phone_number' => $dataCustomer->cust_telp
+        ]);
+
+        $flashData = [
+            'judul' => 'Add New Client Success',
+            'pesan' => 'New Client successfully added',
+            'swalFlashIcon' => 'success',
+        ];
+
+        return redirect()->route('clients.index')->with('flashData', $flashData);
+    }
+
     public function store(Request $request)
     {
+
         // dd(Auth::user()->reference_code);
 
         $request->validate([
@@ -55,19 +92,10 @@ class ClientController extends Controller
             'client_phone' => 'required',
 
         ]);
-        $nameParts = explode(' ', $request->client_name);
-        $firstName = array_shift($nameParts);
-        $lastName  = implode(' ', $nameParts);
-
-        // Jika lastName kosong, gunakan firstName sebagai lastName
-        if (empty($lastName)) {
-            $lastName = $firstName;
-        }
 
         ClientModel::create([
             'reference_code' => Auth::user()->reference_code,
-            'first_name' => $firstName,
-            'last_name' => $lastName,
+            'client_name' => $request->client_name,
             'email' => $request->client_email,
             'phone_number' => $request->client_phone,
         ]);
