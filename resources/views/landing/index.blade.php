@@ -1,41 +1,6 @@
 @extends('landing.layouts.master')
 @push('style')
     <link href="{{ asset('admin') }}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('landing/assets/css/select2.min.css') }}">
-    <style>
-        /* Ubah border dan padding */
-.select2-container .select2-selection--single {
-    height: 52px;
-    width: 288px;
-    padding: 14px 12px;
-    border: 1px solid #0000;
-    border-radius: 6px;
-}
-
-/* Ubah warna saat fokus */
-.select2-container--default .select2-selection--single:focus,
-.select2-container--default .select2-selection--single:hover {
-    border-color: #0000;
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-}
-
-/* Ubah warna teks */
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: #333;
-    /* font-weight: 500; */
-}
-
-/* Icon dropdown */
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-color: #0000 transparent transparent transparent;
-}
-
-.select2-results{
-    padding: 8px;
-}
-
-    </style>
-
 @endpush
 @section('content')
     <!-- Start Hero section -->
@@ -44,25 +9,25 @@
             <div class="hero__section--inner">
                 <div class="hero__section--wrapper">
                     <div class="hero__content text-center">
-                        <p class="hero__content--desc" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="50">More than <span class="color-hover">1000+</span> house avaiable for sell & rent in country</p>
-                        <h2 class="hero__content--title h1" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">Find Your <span class="color-hover">Dream</span> Home</h2>
+                        <p class="hero__content--desc" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="50">Discover your dream villa in <span class="color-hover">Bali</span> among our selection of exceptional properties, tested for you.</p>
+                        <h2 class="hero__content--title h1" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">Find Your Perfect <span class="color-hover">Villa</span> With Us</h2>
                     </div>
 
                     <!-- Advance search filter -->
                     <div class="advance__search--filter">
-                        {{-- <ul class="nav advance__tab--btn justify-content-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
+                        <ul class="nav advance__tab--btn justify-content-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
                             <li class="nav-item advance__tab--btn__list">
-                                <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Search
-                                </button>
+                                <!-- <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Buy
+                                    </button> -->
                             </li>
-                        </ul> --}}
+                        </ul>
                         <form action="{{ route('filter.properties') }}" method="POST">
                             @csrf
                             <div class="tab-content" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
                                 <div class="tab-pane fade show active" id="buy">
                                     <div class="advance__search--inner d-flex">
                                         <div class="advance__search--items">
-                                            <input class="advance__search--input" name="name" placeholder="Enter Properties Name..." type="text">
+                                            <input class="advance__search--input" name="name" placeholder="Enter Keyword..." type="text">
                                         </div>
                                         <div class="advance__search--items">
                                             <select class="advance__search--select" name="property_type">
@@ -72,20 +37,11 @@
                                             </select>
                                         </div>
                                         <div class="advance__search--items position-relative">
-                                            {{-- <input class="advance__search--input location" name="location" placeholder="Which Place?" type="text"> --}}
-                                            {{-- <span class="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <input class="advance__search--input location" name="location" placeholder="Which Place?" type="text">
+                                            <span class="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#8B8B8B" />
                                                 </svg>
-                                            </span> --}}
-
-                                            <select class="advance__search--select" name="location">
-                                                <option disabled selected>Select Location</option>
-                                                @foreach ($sub_regions as $rgn)
-                                                    <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
-                                                @endforeach
-                                            </select>
-
-                                            
+                                            </span>
                                         </div>
 
                                         <button type="submit" class="advance__search--btn solid__btn">Search Now <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -157,10 +113,9 @@
                                     </clipPath>
                                 </defs>
                             </svg>
-                            Trusted Real estate Care</h3>
-                        <h2 class="section__heading--title">Dream living Spaces
-                            Setting New Build</h2>
-                        <p class="section__heading--desc">Transmds is the world’s driving worldwide coordinations supplier — we uphold industry and exchange the worldwide trade of merchandi</p>
+                            Trusted Real estate agency</h3>
+                        <h2 class="section__heading--title">Be sure of the quality of your future villa</h2>
+                        <p class="section__heading--desc">Each villa offered by Balimmo is tested in real conditions to guarantee you an investment 100% tailored to you.</p>
                     </div>
                     <div class="about__content--info d-flex">
                         <div class="about__content--info__list d-flex align-items-center">
@@ -180,42 +135,42 @@
                     </div>
                     <div class="about__content--details d-flex align-items-center">
                         <div class="about__experince">
-                            <span class="about__experince--number">13</span>
-                            <span class="about__experince--text">Years of Experince</span>
+                            <span class="about__experince--number">25</span>
+                            <span class="about__experince--text">Years of experience in international real estate</span>
                         </div>
                         <div class="living__details--content__wrapper">
                             <p class="living__details--content__list"><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.5 0.25C3.95 0.25 0.25 3.95 0.25 8.5C0.25 13.05 3.95 16.75 8.5 16.75C13.05 16.75 16.75 13.05 16.75 8.5C16.75 3.95 13.05 0.25 8.5 0.25ZM8.5 15.25C4.775 15.25 1.75 12.225 1.75 8.5C1.75 4.775 4.775 1.75 8.5 1.75C12.225 1.75 15.25 4.775 15.25 8.5C15.25 12.225 12.225 15.25 8.5 15.25Z" fill="#DDAB70" />
                                     <path d="M11.625 5.97505L7.525 9.87505L5.4 7.75005C5.1 7.45005 4.625 7.45005 4.35 7.75005C4.05 8.05005 4.05 8.52505 4.35 8.80005L7 11.45C7.15 11.6 7.35 11.675 7.525 11.675C7.7 11.675 7.9 11.6 8.05 11.475L12.675 7.07505C12.975 6.80005 12.975 6.32505 12.7 6.02505C12.4 5.70005 11.925 5.70005 11.625 5.97505Z" fill="#DDAB70" />
                                 </svg>
-                                Living rooms are pre-wired for Surround
+                                High-quality property selection
                             </p>
                             <p class="living__details--content__list"><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.5 0.25C3.95 0.25 0.25 3.95 0.25 8.5C0.25 13.05 3.95 16.75 8.5 16.75C13.05 16.75 16.75 13.05 16.75 8.5C16.75 3.95 13.05 0.25 8.5 0.25ZM8.5 15.25C4.775 15.25 1.75 12.225 1.75 8.5C1.75 4.775 4.775 1.75 8.5 1.75C12.225 1.75 15.25 4.775 15.25 8.5C15.25 12.225 12.225 15.25 8.5 15.25Z" fill="#DDAB70" />
                                     <path d="M11.625 5.97505L7.525 9.87505L5.4 7.75005C5.1 7.45005 4.625 7.45005 4.35 7.75005C4.05 8.05005 4.05 8.52505 4.35 8.80005L7 11.45C7.15 11.6 7.35 11.675 7.525 11.675C7.7 11.675 7.9 11.6 8.05 11.475L12.675 7.07505C12.975 6.80005 12.975 6.32505 12.7 6.02505C12.4 5.70005 11.925 5.70005 11.625 5.97505Z" fill="#DDAB70" />
                                 </svg>
-                                Luxurious interior design and amenities
+                                Tested for you in real-life conditions
                             </p>
                             <p class="living__details--content__list"><svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.5 0.25C3.95 0.25 0.25 3.95 0.25 8.5C0.25 13.05 3.95 16.75 8.5 16.75C13.05 16.75 16.75 13.05 16.75 8.5C16.75 3.95 13.05 0.25 8.5 0.25ZM8.5 15.25C4.775 15.25 1.75 12.225 1.75 8.5C1.75 4.775 4.775 1.75 8.5 1.75C12.225 1.75 15.25 4.775 15.25 8.5C15.25 12.225 12.225 15.25 8.5 15.25Z" fill="#DDAB70" />
                                     <path d="M11.625 5.97505L7.525 9.87505L5.4 7.75005C5.1 7.45005 4.625 7.45005 4.35 7.75005C4.05 8.05005 4.05 8.52505 4.35 8.80005L7 11.45C7.15 11.6 7.35 11.675 7.525 11.675C7.7 11.675 7.9 11.6 8.05 11.475L12.675 7.07505C12.975 6.80005 12.975 6.32505 12.7 6.02505C12.4 5.70005 11.925 5.70005 11.625 5.97505Z" fill="#DDAB70" />
                                 </svg>
-                                Nestled in the Buckhead
+                                A simple and trustworthy process to buy or sell
                             </p>
 
                         </div>
                     </div>
-                    <div class="about__content--footer d-flex align-items-center">
-                        <a class="solid__btn" href="about.html">More about us</a>
-                        <div class="about__video--play">
-                            <a class="about__video--icon glightbox" href="https://vimeo.com/115041822" data-gallery="video">
-                                <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
-                                </svg>
-                                <span class="visually-hidden">Video Play</span>
-                            </a>
-                        </div>
-                    </div>
+                    <!-- <div class="about__content--footer d-flex align-items-center">
+                            <a class="solid__btn" href="about.html">More about us</a>
+                            <div class="about__video--play">
+                                <a class="about__video--icon glightbox" href="https://vimeo.com/115041822" data-gallery="video">
+                                    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
+                                    </svg>
+                                    <span class="visually-hidden">Video Play</span>
+                                </a>
+                            </div>
+                        </div> -->
                 </div>
             </div>
         </div>
@@ -226,19 +181,19 @@
     <section class="featured__section section--padding" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
         <div class="container-fluid">
             <div class="section__heading mb-40">
-                <h3 class="section__heading--subtitle h5"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_15_6)">
-                            <path d="M9.00021 4.72925L2.5806 10.0215C2.5806 10.029 2.57872 10.04 2.57497 10.055C2.57129 10.0698 2.56934 10.0806 2.56934 10.0883V15.4473C2.56934 15.6408 2.64008 15.8085 2.78152 15.9497C2.92292 16.091 3.09037 16.1621 3.2839 16.1621H7.571V11.8747H10.4295V16.1622H14.7165C14.91 16.1622 15.0777 16.0913 15.2189 15.9497C15.3603 15.8086 15.4313 15.6408 15.4313 15.4473V10.0883C15.4313 10.0586 15.4272 10.0361 15.4201 10.0215L9.00021 4.72925Z" fill="#063436" />
-                            <path d="M17.8758 8.81572L15.4309 6.78374V2.2285C15.4309 2.12437 15.3974 2.03872 15.3302 1.9717C15.2636 1.90475 15.178 1.87128 15.0736 1.87128H12.93C12.8258 1.87128 12.7401 1.90475 12.6731 1.9717C12.6062 2.03872 12.5727 2.1244 12.5727 2.2285V4.4056L9.8486 2.12792C9.61069 1.93439 9.3278 1.83765 9.00026 1.83765C8.67275 1.83765 8.3899 1.93439 8.15175 2.12792L0.124063 8.81572C0.0496462 8.87516 0.00885955 8.95517 0.00127316 9.05567C-0.00627412 9.15609 0.0197308 9.2438 0.079366 9.31818L0.771565 10.1444C0.831201 10.2113 0.909254 10.2523 1.00604 10.2673C1.09539 10.2748 1.18475 10.2486 1.27411 10.1891L9.00002 3.74687L16.726 10.1891C16.7857 10.241 16.8637 10.2669 16.9605 10.2669H16.994C17.0907 10.2522 17.1686 10.211 17.2285 10.1442L17.9208 9.31814C17.9803 9.2436 18.0064 9.15605 17.9987 9.05551C17.991 8.95528 17.9501 8.87527 17.8758 8.81572Z" fill="#063436" />
-                        </g>
-                        <defs>
-                            <clipPath>
-                                <rect width="18" height="18" fill="white" />
-                            </clipPath>
-                        </defs>
-                    </svg>
-                    Trusted Real estate Care</h3>
-                <h2 class="section__heading--title">Our Latest Properties</h2>
+                <!-- <h3 class="section__heading--subtitle h5"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_15_6)">
+                                <path d="M9.00021 4.72925L2.5806 10.0215C2.5806 10.029 2.57872 10.04 2.57497 10.055C2.57129 10.0698 2.56934 10.0806 2.56934 10.0883V15.4473C2.56934 15.6408 2.64008 15.8085 2.78152 15.9497C2.92292 16.091 3.09037 16.1621 3.2839 16.1621H7.571V11.8747H10.4295V16.1622H14.7165C14.91 16.1622 15.0777 16.0913 15.2189 15.9497C15.3603 15.8086 15.4313 15.6408 15.4313 15.4473V10.0883C15.4313 10.0586 15.4272 10.0361 15.4201 10.0215L9.00021 4.72925Z" fill="#063436" />
+                                <path d="M17.8758 8.81572L15.4309 6.78374V2.2285C15.4309 2.12437 15.3974 2.03872 15.3302 1.9717C15.2636 1.90475 15.178 1.87128 15.0736 1.87128H12.93C12.8258 1.87128 12.7401 1.90475 12.6731 1.9717C12.6062 2.03872 12.5727 2.1244 12.5727 2.2285V4.4056L9.8486 2.12792C9.61069 1.93439 9.3278 1.83765 9.00026 1.83765C8.67275 1.83765 8.3899 1.93439 8.15175 2.12792L0.124063 8.81572C0.0496462 8.87516 0.00885955 8.95517 0.00127316 9.05567C-0.00627412 9.15609 0.0197308 9.2438 0.079366 9.31818L0.771565 10.1444C0.831201 10.2113 0.909254 10.2523 1.00604 10.2673C1.09539 10.2748 1.18475 10.2486 1.27411 10.1891L9.00002 3.74687L16.726 10.1891C16.7857 10.241 16.8637 10.2669 16.9605 10.2669H16.994C17.0907 10.2522 17.1686 10.211 17.2285 10.1442L17.9208 9.31814C17.9803 9.2436 18.0064 9.15605 17.9987 9.05551C17.991 8.95528 17.9501 8.87527 17.8758 8.81572Z" fill="#063436" />
+                            </g>
+                            <defs>
+                                <clipPath>
+                                    <rect width="18" height="18" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                        Trusted Real estate Care</h3> -->
+                <h2 class="section__heading--title">Find your properties</h2>
             </div>
             <div class="featured__inner position-relative">
                 <div class="featured__column4 swiper">
@@ -371,9 +326,9 @@
                             </clipPath>
                         </defs>
                     </svg>
-                    <span>Trusted</span> Real estate Care
+                    Find your property wherever you want
                 </h3>
-                <h2 class="section__heading--title color__white">Most <span>Popular</span> Cities</h2>
+                <h2 class="section__heading--title color__white">Most <span>popular</span> locations in Bali</h2>
             </div>
             <div class="popular__featured--inner" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
                 <div class="popular__featured--column5 swiper">
@@ -381,11 +336,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties1.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties1.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Canggu</h3>
-                                        <h5 class="popular__featured--subtitle">See All Properties
+                                        <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -398,11 +353,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties2.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties2.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Nyanyi</h3>
-                                        <h5 class="popular__featured--subtitle">See All Properties
+                                        <h5 class="popular__featured--subtitle">More DETAILS
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -415,11 +370,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-sanur.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-sanur.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Sanur</h3>
-                                        <h5 class="popular__featured--subtitle">See All Properties
+                                        <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -432,11 +387,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-nusapenida.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-nusapenida.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Nusa Penida</h3>
-                                        <h5 class="popular__featured--subtitle">See All Properties
+                                        <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -449,11 +404,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-ubud.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-ubud.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Ubud</h3>
-                                        <h5 class="popular__featured--subtitle">See All Properties
+                                        <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -466,11 +421,11 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="{{ route('landing-page.listing') }}"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-lovina.png" alt="popular-properties"></a>
+                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-lovina.png" alt="popular-properties"></a>
                                     <span class="popular__featured--badge">13</span>
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Lovina</h3>
-                                        <h5 class="popular__featured--subtitle">See All Properties
+                                        <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
@@ -493,7 +448,7 @@
                         </svg>
                     </div>
                 </div>
-                <p class="featured__support--desc text-center">Enjoy discounts, eBox, pickup and <a href="javascript:void(0)">delivery</a> with 24 hour support.</p>
+                <p class="featured__support--desc text-center">Wondering where to invest in Bali? <a href="{{ route('landing-page.contact') }}">Contact our team.</a></p>
             </div>
         </div>
     </section>
@@ -1276,17 +1231,6 @@
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
-
-    <script src="{{ asset('landing/assets/js/select2.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#selectLocation').select2({
-            placeholder: "Select a state",
-                allowClear: true
-
-            });
-        });
-    </script>
 
     <script>
         $("#timing").flatpickr({
