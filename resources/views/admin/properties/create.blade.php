@@ -47,7 +47,7 @@
                                         <div class="col-lg-6 mb-3" id="group_owners[0][first_name]">
                                             <label for="owners[0][first_name]" class="form-label">First Name</label>
 
-                                            <input value="Erik" type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
+                                            <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
 
                                             @error('owners.0.first_name')
                                                 <div class="alert alert-danger mt-1 p-1" role="alert">
@@ -59,7 +59,7 @@
                                         <div class="col-lg-6 mb-3" id="group_owners[0][last_name]">
                                             <label for="owners[0][last_name]" class="form-label">Last Name</label>
 
-                                            <input value="Cahya Pradana" type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
+                                            <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
 
                                             @error('owners.0.last_name')
                                                 <div class="alert alert-danger mt-1 p-1" role="alert">
@@ -71,7 +71,7 @@
                                         <div class="col-lg-6 mb-3" id="group_owners[0][email]">
                                             <label for="owners[0][email]" class="form-label">Emails</label>
 
-                                            <input value="erikcp38@gmail.com" type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
+                                            <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
 
                                             @error('owners.0.email')
                                                 <div class="alert alert-danger mt-1 p-1" role="alert">
@@ -83,7 +83,7 @@
                                         <div class="col-lg-6 mb-3" id="group_owners[0][phone_number]">
                                             <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
 
-                                            <input value="0895226485273" type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.phone_number') }}">
+                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.phone_number') }}">
 
                                             @error('owners.0.phone_number')
                                                 <div class="alert alert-danger mt-1 p-1" role="alert">
@@ -102,8 +102,8 @@
 
                                         <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" />
                                         <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
+                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Emails" />
                                         <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Email" />
 
                                     </div>
                                 </div>
@@ -116,8 +116,8 @@
                                         <x-form-input className="col-lg-12" type="text" name="company_name" label="Company Name" />
                                         <x-form-input className="col-lg-6" type="text" name="legal_rep_first_name" label="Legal Representative First Name" />
                                         <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Legal Representative Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
                                         <x-form-input className="col-lg-6" type="email" name="legal_rep_email" label="Email" />
+                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
 
                                     </div>
                                 </div>
