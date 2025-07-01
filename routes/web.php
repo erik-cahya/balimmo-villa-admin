@@ -41,8 +41,8 @@ Route::get('/', [LandingPageController::class, 'index'])->name('landing-page.ind
 Route::get('/contact', [LandingPageController::class, 'contact'])->name('landing-page.contact');
 Route::get('/about', [LandingPageController::class, 'about'])->name('landing-page.about');
 
-Route::get('/listing', [LandingPageController::class, 'listing'])->name('landing-page.listing');
-Route::get('/listing/{slug}', [LandingPageController::class, 'listingDetail'])->name('landing-page.listing.detail');
+Route::get('/buy-villa', [LandingPageController::class, 'listing'])->name('landing-page.listing');
+Route::get('/buy-villa/{slug}', [LandingPageController::class, 'listingDetail'])->name('landing-page.listing.detail');
 
 Route::get('/blog', [LandingPageController::class, 'blog'])->name('landing-page.blog');
 Route::get('/landing-login', [LandingPageController::class, 'login'])->name('landing-page.login');

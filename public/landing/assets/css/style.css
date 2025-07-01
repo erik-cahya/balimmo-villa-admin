@@ -683,7 +683,7 @@ hr {
 }
 
 .swiper-button-next, .swiper-button-prev{
-  width: calc(var(--swiper-navigation-size) / 44 * 44) !important;
+  width: calc(var(--swiper-navigation-size) / 44 * 40) !important;
   color: #FFF !important;
 }
 
@@ -2744,8 +2744,8 @@ body.overlay__active::before,
 
 @media only screen and (min-width: 480px) {
   .advance__search--btn {
-    width: 160px;
-    min-width: 160px;
+    width: 180px;
+    min-width: 180px;
     padding: 0 2rem;
   }
 }
@@ -9994,7 +9994,7 @@ body.overlay__active::before,
 }
 
 .footer__widget--info_list svg {
-  color: var(--color-primary);
+  color: var(--color-foreground);
 }
 
 .footer__widget--info_list p {
@@ -10008,7 +10008,7 @@ body.overlay__active::before,
 }
 
 .footer__widget--info_list a:hover {
-  color: var(--color-hover);
+  color: var(--color-primary);
 }
 
 .footer__widget--info_list.mb-20 {

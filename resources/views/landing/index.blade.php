@@ -23,11 +23,17 @@
                         </ul>
                         <form action="{{ route('filter.properties') }}" method="POST">
                             @csrf
-                            <div class="tab-content" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
+                            <div class="tab-content" style="padding: 1rem;" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="200">
                                 <div class="tab-pane fade show active" id="buy">
                                     <div class="advance__search--inner d-flex">
                                         <div class="advance__search--items">
-                                            <input class="advance__search--input" name="name" placeholder="Enter Keyword..." type="text">
+                                            <select class="advance__search--select" name="property_bedroom">
+                                                <option selected disabled>Select Bedroom</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
                                         </div>
                                         <div class="advance__search--items">
                                             <select class="advance__search--select" name="property_type">
@@ -36,15 +42,19 @@
                                                 <option value="Freehold">Freehold</option>
                                             </select>
                                         </div>
-                                        <div class="advance__search--items position-relative">
-                                            <input class="advance__search--input location" name="location" placeholder="Which Place?" type="text">
-                                            <span class="advance__location--icon"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#8B8B8B" />
-                                                </svg>
-                                            </span>
+                                        <div class="advance__search--items">
+                                            <select class="advance__search--select" name="property_location">
+                                                <option selected disabled>Select Location</option>
+                                                <option value="Canggu">Canggu</option>
+                                                <option value="Seminyak">Seminyak</option>
+                                                <option value="Ubud">Ubud</option>
+                                                <option value="Cemagi">Cemagi</option>
+                                            </select>
                                         </div>
 
-                                        <button type="submit" class="advance__search--btn solid__btn">Search Now <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <button type="submit" class="advance__search--btn solid__btn">
+                                            Find My Villa
+                                            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
                                                 <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />
                                             </svg>
@@ -336,16 +346,17 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties1.png" alt="popular-properties"></a>
-                                    <span class="popular__featured--badge">13</span>
+                                    <!-- <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties1.png" alt="popular-properties"></a> -->
+                                    <div class="popular__featured--link"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties1.png" alt="popular-properties"></div>
+                                    <!-- <span class="popular__featured--badge">13</span> -->
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Canggu</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <!-- <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                        </h5>
+                                        </h5> -->
                                     </div>
                                 </div>
                             </article>
@@ -353,16 +364,17 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties2.png" alt="popular-properties"></a>
-                                    <span class="popular__featured--badge">13</span>
+                                    <!-- <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties2.png" alt="popular-properties"></a> -->
+                                    <div class="popular__featured--link"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties2.png" alt="popular-properties"></div>
+                                    <!-- <span class="popular__featured--badge">13</span> -->
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Nyanyi</h3>
-                                        <h5 class="popular__featured--subtitle">More DETAILS
+                                        <!-- <h5 class="popular__featured--subtitle">More DETAILS
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                        </h5>
+                                        </h5> -->
                                     </div>
                                 </div>
                             </article>
@@ -370,16 +382,17 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-sanur.png" alt="popular-properties"></a>
-                                    <span class="popular__featured--badge">13</span>
+                                    <!-- <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-sanur.png" alt="popular-properties"></a> -->
+                                    <div class="popular__featured--link"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-sanur.png" alt="popular-properties"></div>
+                                    <!-- <span class="popular__featured--badge">13</span> -->
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Sanur</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <!-- <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                        </h5>
+                                        </h5> -->
                                     </div>
                                 </div>
                             </article>
@@ -387,16 +400,17 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-nusapenida.png" alt="popular-properties"></a>
-                                    <span class="popular__featured--badge">13</span>
+                                    <!-- <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-nusapenida.png" alt="popular-properties"></a> -->
+                                    <div class="popular__featured--link"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-nusapenida.png" alt="popular-properties"></div>
+                                    <!-- <span class="popular__featured--badge">13</span> -->
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Nusa Penida</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <!-- <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                        </h5>
+                                        </h5> -->
                                     </div>
                                 </div>
                             </article>
@@ -404,16 +418,17 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-ubud.png" alt="popular-properties"></a>
-                                    <span class="popular__featured--badge">13</span>
+                                    <!-- <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-ubud.png" alt="popular-properties"></a> -->
+                                    <div class="popular__featured--link"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-ubud.png" alt="popular-properties"></div>
+                                    <!-- <span class="popular__featured--badge">13</span> -->
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Ubud</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <!-- <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                        </h5>
+                                        </h5> -->
                                     </div>
                                 </div>
                             </article>
@@ -421,16 +436,17 @@
                         <div class="swiper-slide">
                             <article class="popular__featured--card">
                                 <div class="popular__featured--thumbnail position-relative">
-                                    <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-lovina.png" alt="popular-properties"></a>
-                                    <span class="popular__featured--badge">13</span>
+                                    <!-- <a class="popular__featured--link" href="#"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-lovina.png" alt="popular-properties"></a> -->
+                                    <div class="popular__featured--link"><img class="popular__featured--img" src="{{ asset('landing') }}/assets/img/property/popular-properties-lovina.png" alt="popular-properties"></div>
+                                    <!-- <span class="popular__featured--badge">13</span> -->
                                     <div class="popular__featured--content">
                                         <h3 class="popular__featured--title">Lovina</h3>
-                                        <h5 class="popular__featured--subtitle">13 properties
+                                        <!-- <h5 class="popular__featured--subtitle">13 properties
                                             <span><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M17.4219 1.67528L17.3926 13.422C17.3918 13.7573 17.2595 14.0725 17.0207 14.3101C16.7816 14.548 16.4657 14.6784 16.1306 14.6777L15.0639 14.6749C14.729 14.6742 14.4135 14.5421 14.1757 14.3031C13.938 14.0643 13.8 13.7405 13.801 13.4056L13.8106 6.54525L2.89752 17.4038C2.40548 17.8934 1.63343 17.895 1.14372 17.4028L0.391553 16.6469C-0.098156 16.1547 -0.131297 15.3438 0.360739 14.8543L11.3128 3.95695L4.39453 3.95165C4.05934 3.95068 3.74986 3.82469 3.51207 3.5857C3.27453 3.34697 3.14693 3.03368 3.14777 2.69863L3.15202 1.63372C3.15286 1.29841 3.28561 0.984048 3.52473 0.746117C3.76359 0.50845 4.07993 0.378344 4.41525 0.379184L16.1618 0.408607C16.4981 0.40958 16.8147 0.542466 17.0521 0.782382C17.2914 1.02191 17.423 1.33917 17.4219 1.67528Z" fill="currentColor" />
                                                 </svg>
                                             </span>
-                                        </h5>
+                                        </h5> -->
                                     </div>
                                 </div>
                             </article>
@@ -490,7 +506,9 @@
         <div class="container">
             <div class="call__action--container">
                 <div class="call__action--inner d-flex align-items-center justify-content-between">
-                    <h2 class="call__action--title">Find Local Real estate agents</h2>
+                    <div>
+                        <h2 class="call__action--title">Need infos ?<br>Book an appointment with one of our consultants</h2>
+                    </div>
                     <div class="call__action--right d-flex align-items-center">
                         <div class="call__action--info d-flex align-items-center">
                             <span class="call__action--icon"><svg width="36" height="29" viewBox="0 0 36 29" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -519,7 +537,7 @@
                                 <a href="tel:(671)555-0110">(+62) 85 333 777 500</a>
                             </p>
                         </div>
-                        <a class="call__action--btn solid__btn" href="">Get a quoate</a>
+                        <a class="call__action--btn solid__btn" href="{{ route('landing-page.contact') }}"  >Contact the team</a>
                     </div>
                 </div>
             </div>
@@ -542,25 +560,25 @@
                             </clipPath>
                         </defs>
                     </svg>
-                    Real estate agency</h3>
-                <h2 class="section__heading--title">Looking for to buy a property?</h2>
+                    Contact us</h3>
+                <h2 class="section__heading--title">Find your property faster with our help</h2>
             </div>
             <div class="contact__property--inner d-flex">
                 <div class="contact__property--content" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
-                    <p class="contact__property--desc">Browse our property listing and find your best With over 1 million+ homes for sale available on the website you with a house you will want to call home. and </p>
+                    <p class="contact__property--desc">Trust a team who knows the market. Our experts are ready to help you find the place that perfectly fit your needs and makes you feel home.</p>
                     <ul class="contact__property--info">
                         <li class="contact__property--info__text"><svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.9001 1.62081C14.0668 1.78748 14.1501 1.98986 14.1501 2.22796C14.1501 2.46605 14.0668 2.66843 13.9001 2.8351L7.43583 9.29939L6.22154 10.5137C6.05487 10.6803 5.85249 10.7637 5.6144 10.7637C5.3763 10.7637 5.17392 10.6803 5.00725 10.5137L3.79297 9.29939L0.560826 6.06724C0.394159 5.90058 0.310826 5.6982 0.310826 5.4601C0.310826 5.222 0.394159 5.01962 0.560826 4.85296L1.77511 3.63867C1.94178 3.472 2.14416 3.38867 2.38225 3.38867C2.62035 3.38867 2.82273 3.472 2.9894 3.63867L5.6144 6.2726L11.4715 0.406528C11.6382 0.239862 11.8406 0.156528 12.0787 0.156528C12.3168 0.156528 12.5192 0.239862 12.6858 0.406528L13.9001 1.62081Z" fill="currentColor" />
                             </svg>
-                            Living rooms are pre-wired for Surround</li>
+                            Leasehold or freehold.</li>
                         <li class="contact__property--info__text"><svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.9001 1.62081C14.0668 1.78748 14.1501 1.98986 14.1501 2.22796C14.1501 2.46605 14.0668 2.66843 13.9001 2.8351L7.43583 9.29939L6.22154 10.5137C6.05487 10.6803 5.85249 10.7637 5.6144 10.7637C5.3763 10.7637 5.17392 10.6803 5.00725 10.5137L3.79297 9.29939L0.560826 6.06724C0.394159 5.90058 0.310826 5.6982 0.310826 5.4601C0.310826 5.222 0.394159 5.01962 0.560826 4.85296L1.77511 3.63867C1.94178 3.472 2.14416 3.38867 2.38225 3.38867C2.62035 3.38867 2.82273 3.472 2.9894 3.63867L5.6144 6.2726L11.4715 0.406528C11.6382 0.239862 11.8406 0.156528 12.0787 0.156528C12.3168 0.156528 12.5192 0.239862 12.6858 0.406528L13.9001 1.62081Z" fill="currentColor" />
                             </svg>
-                            Luxurious interior design and amenities</li>
+                            Invest or living. </li>
                         <li class="contact__property--info__text"><svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.9001 1.62081C14.0668 1.78748 14.1501 1.98986 14.1501 2.22796C14.1501 2.46605 14.0668 2.66843 13.9001 2.8351L7.43583 9.29939L6.22154 10.5137C6.05487 10.6803 5.85249 10.7637 5.6144 10.7637C5.3763 10.7637 5.17392 10.6803 5.00725 10.5137L3.79297 9.29939L0.560826 6.06724C0.394159 5.90058 0.310826 5.6982 0.310826 5.4601C0.310826 5.222 0.394159 5.01962 0.560826 4.85296L1.77511 3.63867C1.94178 3.472 2.14416 3.38867 2.38225 3.38867C2.62035 3.38867 2.82273 3.472 2.9894 3.63867L5.6144 6.2726L11.4715 0.406528C11.6382 0.239862 11.8406 0.156528 12.0787 0.156528C12.3168 0.156528 12.5192 0.239862 12.6858 0.406528L13.9001 1.62081Z" fill="currentColor" />
                             </svg>
-                            Nestled in the Buckhead</li>
+                            Anywhere you want in Bali</li>
                     </ul>
                     <div class="contact__property--thumb">
                         <img src="{{ asset('landing') }}/assets/img/other/contact-property-thumb.avif" alt="img">
@@ -579,7 +597,7 @@
                                 @enderror
                             </div>
                             <div class="contact__property--form__input">
-                                <label for="phone_number">Number *</label>
+                                <label for="phone_number">Phone number*</label>
                                 <input id="phone_number" name="phone_number" placeholder="Enter your number" type="tel">
                                 @error('name')
                                     <p class="text-danger my-2">{{ $message }}</p>
@@ -635,7 +653,7 @@
                                     <p class="text-danger my-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <button class="contact__property--btn solid__btn" type="submit">Send Messege</button>
+                            <button class="contact__property--btn solid__btn" type="submit">Send message</button>
                         </div>
                     </form>
                 </div>
@@ -659,9 +677,9 @@
                             </clipPath>
                         </defs>
                     </svg>
-                    Trusted Real estate Care
+                    Our client talks about us
                 </h3>
-                <h2 class="section__heading--title">Find Client’s Feedback</h2>
+                <h2 class="section__heading--title">Like you, they buy or sold their properties with Balimmo</h2>
             </div>
             <div class="testimonial__container position-relative" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
                 <div class="testimonial__inner testimonial__swiper--column2 swiper">
@@ -825,7 +843,7 @@
     <!-- Testimonial section .\ -->
 
     <!-- Video section -->
-    <div class="video__banner--area" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
+    <!-- <div class="video__banner--area" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
         <div class="video__thumbnail position-relative">
             <video playsinline="playsinline" autoplay="autoplay" loop="loop" class="video__field" id="video" preload="metadata" poster="{{ asset('landing') }}/assets/img/other/video-banner.png">
                 <source src="{{ asset('landing') }}/assets/video/background.mp4" type="video/mp4">
@@ -836,7 +854,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Video section .\ -->
 
     <!-- Building Amenities section -->
@@ -854,9 +872,9 @@
                             </clipPath>
                         </defs>
                     </svg>
-                    Building Amenities
+                    What’s your need ?
                 </h3>
-                <h2 class="section__heading--title">Building Amenities</h2>
+                <h2 class="section__heading--title">Find the properties that fit your need</h2>
             </div>
             <div class="building__amenities--inner d-flex" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
                 <div class="amenities__box">
@@ -876,7 +894,7 @@
                     <div class="amenities__content">
                         <span class="amenities__count--number">01</span>
                         <h3 class="amenities__title">Parking Space</h3>
-                        <p class="amenities__desc">Enimad minim veniam quis no exercitation ullamco lab</p>
+                        <p class="amenities__desc">Secure on-site parking for residents and guests.</p>
                     </div>
                 </div>
                 <div class="amenities__box">
@@ -899,7 +917,7 @@
                     <div class="amenities__content">
                         <span class="amenities__count--number">02</span>
                         <h3 class="amenities__title">Swimming Pool</h3>
-                        <p class="amenities__desc">Enimad minim veniam quis no exercitation ullamco lab</p>
+                        <p class="amenities__desc">Private pool designed for relaxation and leisure.</p>
                     </div>
                 </div>
                 <div class="amenities__box">
@@ -921,8 +939,8 @@
                     </div>
                     <div class="amenities__content">
                         <span class="amenities__count--number">03</span>
-                        <h3 class="amenities__title">Privat Security</h3>
-                        <p class="amenities__desc">Enimad minim veniam quis no exercitation ullamco lab</p>
+                        <h3 class="amenities__title">Private Security</h3>
+                        <p class="amenities__desc">24/7 professional security ensuring your peace of mind.</p>
                     </div>
                 </div>
                 <div class="amenities__box">
@@ -941,7 +959,7 @@
                     <div class="amenities__content">
                         <span class="amenities__count--number">04</span>
                         <h3 class="amenities__title">Medical Center</h3>
-                        <p class="amenities__desc">Enimad minim veniam quis no exercitation ullamco lab</p>
+                        <p class="amenities__desc">Quick access to medical facilities within the community.</p>
                     </div>
                 </div>
                 <div class="amenities__box">
@@ -962,7 +980,7 @@
                     <div class="amenities__content">
                         <span class="amenities__count--number">05</span>
                         <h3 class="amenities__title">Library Area</h3>
-                        <p class="amenities__desc">Enimad minim veniam quis no exercitation ullamco lab</p>
+                        <p class="amenities__desc">A quiet space to read and work in complete comfort.</p>
                     </div>
                 </div>
                 <div class="amenities__box">
@@ -987,7 +1005,7 @@
                     <div class="amenities__content">
                         <span class="amenities__count--number">06</span>
                         <h3 class="amenities__title">King Size Beds</h3>
-                        <p class="amenities__desc">Enimad minim veniam quis no exercitation ullamco lab</p>
+                        <p class="amenities__desc">Spacious bedrooms with premium king-size beds.</p>
                     </div>
                 </div>
                 <div class="amenities__box">
@@ -1007,7 +1025,7 @@
                     <div class="amenities__content">
                         <span class="amenities__count--number">07</span>
                         <h3 class="amenities__title">Smart Homes</h3>
-                        <p class="amenities__desc">Enimad minim veniam quis no exercitation ullamco lab</p>
+                        <p class="amenities__desc">Modern automation for lighting, climate, and security.</p>
                     </div>
                 </div>
                 <div class="amenities__box">
@@ -1027,7 +1045,7 @@
                     <div class="amenities__content">
                         <span class="amenities__count--number">08</span>
                         <h3 class="amenities__title">Kid’s Playland</h3>
-                        <p class="amenities__desc">Enimad minim veniam quis no exercitation ullamco lab</p>
+                        <p class="amenities__desc">Safe and fun play areas designed for children.</p>
                     </div>
                 </div>
             </div>
@@ -1091,10 +1109,10 @@
         <div class="container">
             <div class="agents__consult--inner position-relative">
                 <div class="agents__consult__content">
-                    <h5 class="agents__consult--subtitle">About Real Estate</h5>
-                    <h2 class="agents__consult--title">Consult with agents for listing</h2>
-                    <p class="agents__consult--desc">Our company provides a full range of services for the construction</p>
-                    <a class="agents__consult--link" href="javascript:void(0)">Let's Get Started</a>
+                    <h5 class="agents__consult--subtitle">Ready to find the place of your dream ?</h5>
+                    <h2 class="agents__consult--title">Book an appointment with one of our consultants</h2>
+                    <p class="agents__consult--desc">Entrust your search for the perfect villa in Bali to our experienced team.</p>
+                    <a class="agents__consult--link" href="{{ route('landing-page.contact') }}">Find my dream villa</a>
                 </div>
                 <div class="agents__consult--thumb">
                     <img src="{{ asset('landing') }}/assets/img/other/agents-thumb.png" alt="img">
@@ -1146,10 +1164,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="advance__apeartment--list">
+                            <!-- <div class="advance__apeartment--list">
                                 <label class="advance__apeartment--label">Property ID</label>
                                 <input class="advance__apeartment--input__field" name="property_code" placeholder="Th26157096" type="text">
-                            </div>
+                            </div> -->
                             <div class="advance__apeartment--list">
                                 <label class="advance__apeartment--label">Bedrooms</label>
                                 <div class="select">
