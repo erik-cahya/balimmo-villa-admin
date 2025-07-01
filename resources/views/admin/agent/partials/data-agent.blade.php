@@ -21,7 +21,7 @@
 
         </td>
         <td>{{ $agent->email }}</td>
-        <td>{{ $agent->phone_number }}</td>
+        <td>{{ implode('-', str_split(preg_replace('/\D/', '', $agent->phone_number), 4)) }} </td>
         <td>
             <a href="{{ route('agent.properties', strtolower($agent->reference_code)) }}">{{ $agent->properties_count }} Property
                 <iconify-icon icon="majesticons:eye-line" class="fs-18 align-middle"></iconify-icon></a>
