@@ -92,7 +92,7 @@ class PropertiesController extends Controller
 
         $validated = $request->validate([
             'images' => 'required|array|min:4',
-            'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
         ]);
 
         $rules = [];

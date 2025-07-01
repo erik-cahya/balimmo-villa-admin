@@ -169,8 +169,6 @@ class DocsOfferToPurchaseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
-
         $dataOffering = OfferingDocsModel::where('offering_docs.id', $id)->join('properties', 'properties.id', '=', 'offering_docs.properties_id')->first();
         $slug = $dataOffering->property_slug;
 

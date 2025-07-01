@@ -83,7 +83,7 @@
                                         <div class="col-lg-6 mb-3" id="group_owners[0][phone_number]">
                                             <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
 
-                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.phone_number') }}">
+                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.0.phone_number') }}">
 
                                             @error('owners.0.phone_number')
                                                 <div class="alert alert-danger mt-1 p-1" role="alert">

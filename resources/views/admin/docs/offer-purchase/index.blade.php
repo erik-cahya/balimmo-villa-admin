@@ -126,7 +126,7 @@
                                                     <button id="dropdown" type="button" class="btn btn-xs btn-primary text-light dropdown-toggle fw-medium" data-bs-toggle="dropdown" aria-expanded="false">
                                                         Download
                                                     </button>
-                                                    <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><iconify-icon icon="ep:edit" class="fs-12 align-middle"></iconify-icon></button>
+                                                    <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#resetPasswordModal-{{ $offering->id }}"><iconify-icon icon="ep:edit" class="fs-12 align-middle"></iconify-icon></button>
 
                                                     {{-- Delete Btn --}}
                                                     <input type="hidden" class="propertyId" value="{{ $offering->id }}">
@@ -154,7 +154,7 @@
                                         </tr>
 
                                         <!-- Modal Edit-->
-                                        <div class="modal modal-lg fade" id="resetPasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal modal-lg fade" id="resetPasswordModal-{{ $offering->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <form action="{{ route('offer-purchase.update', $offering->id) }}" method="POST" enctype="multipart/form-data">
                                                     @csrf

@@ -16,7 +16,6 @@ use App\Http\Controllers\Admin\PropertiesLeadsController;
 use App\Http\Controllers\Admin\ProspectController;
 use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\RegionController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -103,17 +102,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('prospects', ProspectController::class);
 
     Route::resource('/notary', NotaryController::class);
-});
-
-Route::get('/clear/cache', function (Illuminate\Http\Request $request) {
-    if ($request->query('key') !== 'secret123') {
-        abort(403);
-    }
-
-    Artisan::call('cache:clear');
-    Artisan::call('view:clear');
-
-    return 'Cache cleared!';
 });
 // Route::get('/mail', [MailController::class, 'send'])->name('sendmail');
 
