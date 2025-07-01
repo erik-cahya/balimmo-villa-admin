@@ -14,7 +14,7 @@
                     </a>
                 </div>
                 <div class="main__logo">
-                    <h1 class="main__logo--title"><a class="main__logo--link" href="">
+                    <h1 class="main__logo--title"><a class="main__logo--link" href="/">
                         <img class="main__logo--img" src="{{ asset('landing') }}/assets/img/logo/nav-logo.png" alt="logo-img" width="250px">
                     </a></h1>
                 </div>
