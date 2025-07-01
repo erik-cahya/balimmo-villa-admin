@@ -26,6 +26,7 @@ class PropertiesController extends Controller
 {
     public function index()
     {
+
         if (Auth::user()->role == 'Master') {
             $data['data_property'] = PropertiesModel::select(
                 'properties.id',
@@ -75,7 +76,14 @@ class PropertiesController extends Controller
 
     public function create()
     {
+
         // $regions = RegionModel::with('subRegions')->get();
+
+        // session()->forget('old_images'); // hapus setelah sukses
+
+        // if (file_exists(public_path('tmp_uploads/' . Auth::user()->reference_code))) {
+        //     File::deleteDirectory(public_path('tmp_uploads/' . Auth::user()->reference_code));
+        // };
 
         // dd($regions);
 
@@ -87,13 +95,15 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->images);
         // dd(explode('-', Auth::user()->reference_code)[0]);
+
         $slug = $this->generatePropertiesSlug($request->property_name);
 
-        $validated = $request->validate([
-            'images' => 'required|array|min:4',
-            'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
-        ]);
+        // $validated = $request->validate([
+        //     'images' => 'required|array|min:4',
+        //     // 'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
+        // ]);
 
         $rules = [];
         foreach ($request->owners as $index => $owner) {
@@ -119,6 +129,8 @@ class PropertiesController extends Controller
         $request->validate($rules, $messages);
 
         $request->validate([
+            // 'images' => 'required|array|min:4',
+            // 'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
 
             'property_name' => 'required',
             'description' => 'required',
@@ -136,7 +148,6 @@ class PropertiesController extends Controller
 
             'legal_category' => 'required',
 
-            'images' => 'required',
             'url_virtual_tour' => 'required',
             'url_lifestyle' => 'required',
             'url_experience' => 'required',
@@ -151,7 +162,7 @@ class PropertiesController extends Controller
             // 'images.*' => 'required|image|max:2048',
         ], [
             'feature' => 'Please Choose features & Amenities',
-            'images' => 'Please Upload your Property Images',
+
         ]);
 
 
@@ -375,24 +386,53 @@ class PropertiesController extends Controller
             'description' => 'deskripsi',
         ]);
 
-        if (!file_exists(public_path('admin/gallery/' . $slug))) {
-            mkdir(public_path('admin/gallery/' . $slug), 0755, true);
-        }
+        if ($request->has('old_images')) {
+            foreach ($request->old_images as $i => $filename) {
+                $from = public_path("tmp_uploads/" . Auth::user()->reference_code . "/$filename");
+                $targetDir = public_path("admin/gallery/{$slug}");
+                $to = $targetDir . '/' . $filename;
 
-        $order = explode(',', $request->order);
+                if (!file_exists($targetDir)) {
+                    mkdir($targetDir, 0755, true);
+                }
 
-        foreach ($order as $i => $index) {
-            if (isset($request->images[$index])) {
-                $image = $request->images[$index];
-                $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('admin/gallery/' . $slug), $filename);
+                if (file_exists($from)) {
+                    rename($from, $to);
 
-                PropertyGalleryImageModel::create([
-                    'gallery_id' => $gallery->id,
-                    'image_path' => 'admin/gallery/' . $slug . '/' . $filename,
-                    'order' => $i,
-                    'is_featured' => $i === 0,
-                ]);
+                    PropertyGalleryImageModel::create([
+                        'gallery_id' => $gallery->id,
+                        'image_path' => "admin/gallery/{$slug}/{$filename}",
+                        'order' => $i,
+                        'is_featured' => $i === 0,
+                    ]);
+                }
+            }
+
+            session()->forget('old_images'); // hapus setelah sukses
+
+            if (file_exists(public_path('tmp_uploads/' . Auth::user()->reference_code))) {
+                File::deleteDirectory(public_path('tmp_uploads/' . Auth::user()->reference_code));
+            };
+        } else {
+            if (!file_exists(public_path('admin/gallery/' . $slug))) {
+                mkdir(public_path('admin/gallery/' . $slug), 0755, true);
+            }
+
+            $order = explode(',', $request->order);
+
+            foreach ($order as $i => $index) {
+                if (isset($request->images[$index])) {
+                    $image = $request->images[$index];
+                    $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('admin/gallery/' . $slug), $filename);
+
+                    PropertyGalleryImageModel::create([
+                        'gallery_id' => $gallery->id,
+                        'image_path' => 'admin/gallery/' . $slug . '/' . $filename,
+                        'order' => $i,
+                        'is_featured' => $i === 0,
+                    ]);
+                }
             }
         }
         // /* Gallery Handler
@@ -567,7 +607,7 @@ class PropertiesController extends Controller
     public function update(Request $request, string $id)
     {
         // dd($id);
-        // dd($request->all());
+
 
         // Freehold
         if ($request->legal_category === 'Freehold') {
@@ -946,5 +986,22 @@ class PropertiesController extends Controller
         Cache::forget('properties_list_cache');
 
         return redirect()->route('properties.index')->with('flashData', $flashData);
+    }
+
+    // GalleryController.php
+    public function uploadTemp(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $userFolder = 'tmp_uploads/' . Auth::user()->reference_code;
+
+            $file->move(public_path($userFolder), $filename);
+
+            session()->push('old_images', $filename); // simpan ke session
+            return response()->json(['success' => true, 'filename' => $filename]);
+        }
+
+        return response()->json(['success' => false], 400);
     }
 }

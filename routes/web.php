@@ -103,6 +103,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('prospects', ProspectController::class);
 
     Route::resource('/notary', NotaryController::class);
+
+
+    Route::post('/upload-temp-gallery', [PropertiesController::class, 'uploadTemp'])->name('gallery.upload.temp');
 });
 
 Route::get('/clear/cache', function (Illuminate\Http\Request $request) {

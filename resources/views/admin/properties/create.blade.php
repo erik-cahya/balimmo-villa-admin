@@ -98,12 +98,64 @@
                                 <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
                                     <hr>
-                                    <div class="row my-3">
+                                    {{-- <div class="row my-3">
 
                                         <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" />
                                         <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
                                         <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Emails" />
                                         <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
+
+                                    </div> --}}
+
+                                    <div class="row my-3">
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[1][first_name]">
+                                            <label for="owners[1][first_name]" class="form-label">First Name</label>
+
+                                            <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.1.first_name') }}">
+
+                                            @error('owners.1.first_name')
+                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[1][last_name]">
+                                            <label for="owners[1][last_name]" class="form-label">Last Name</label>
+
+                                            <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.1.last_name') }}">
+
+                                            @error('owners.1.last_name')
+                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[1][email]">
+                                            <label for="owners[1][email]" class="form-label">Emails</label>
+
+                                            <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.1.email') }}">
+
+                                            @error('owners.1.email')
+                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[1][phone_number]">
+                                            <label for="owners[1][phone_number]" class="form-label">Phone Number</label>
+
+                                            <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.1.phone_number') }}">
+
+                                            @error('owners.1.phone_number')
+                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
 
                                     </div>
                                 </div>
@@ -461,7 +513,7 @@
                                         @if (session('old_images'))
                                             @foreach (session('old_images') as $index => $img)
                                                 <div class="img-preview" data-index="{{ $index }}">
-                                                    <img src="{{ asset('public/tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
+                                                    <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
                                                         style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
                                                     <p class="mt-1 text-center">Image {{ $index + 1 }}</p>
                                                     <input type="hidden" name="old_images[]" value="{{ $img }}">
@@ -773,27 +825,48 @@
         let files = [];
 
         imageInput.addEventListener('change', (e) => {
-            files = Array.from(e.target.files);
+            const newFiles = Array.from(e.target.files);
+
+            if (newFiles.length < 4) {
+                alert('Minimum must be 4 images!');
+                imageInput.value = ''; // reset input
+                return;
+            }
+
             previewContainer.innerHTML = '';
 
-            files.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const imgDiv = document.createElement('div');
-                    imgDiv.classList.add('img-preview');
-                    imgDiv.setAttribute('data-index', index);
-                    imgDiv.innerHTML = `
-                              <img src="${event.target.result}" alt="Image Preview"
-                                   style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
-                              <p class="text-center mt-1">Image ${index + 1}</p>
-                         `;
-                    previewContainer.appendChild(imgDiv);
-                };
-                reader.readAsDataURL(file);
-            });
+            newFiles.forEach((file, index) => {
+                const formData = new FormData();
+                formData.append('file', file);
 
-            updateOrder();
+                // Kirim ke server
+                fetch("{{ route('gallery.upload.temp') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            const imgDiv = document.createElement('div');
+                            imgDiv.classList.add('img-preview');
+                            imgDiv.setAttribute('data-index', index);
+                            imgDiv.innerHTML = `
+                    <img src="/tmp_uploads/{{ Auth::user()->reference_code }}/${data.filename}" 
+                         alt="Preview"
+                         style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
+                    <p class="text-center mt-1">Image ${index + 1}</p>
+                    <input type="hidden" name="old_images[]" value="${data.filename}">
+                `;
+                            previewContainer.appendChild(imgDiv);
+                            updateOrder(); // tetap panggil ini
+                        }
+                    });
+            });
         });
+
 
         function updateOrder() {
             const items = document.querySelectorAll('.img-preview');
