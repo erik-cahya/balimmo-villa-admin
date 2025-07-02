@@ -1,4 +1,7 @@
 @extends('landing.layouts.master')
+@section('title', 'Balimmo Properties | Help you to buy your dream villa in Bali')
+@section('meta_description', 'Who is Balimmo Properties. Discover the real estate agency that help you buy your dream villa in Bali with full transparency and expert guidance at every step.')
+
 @section('content')
     <!-- Breadcrumb section -->
 <section class="breadcrumb__section section--padding">

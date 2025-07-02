@@ -1,6 +1,6 @@
 @extends('landing.layouts.master')
 @push('style')
-    <link href="{{ asset('admin') }}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin') }}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />    
 @endpush
 @section('content')
     <!-- Start Hero section -->

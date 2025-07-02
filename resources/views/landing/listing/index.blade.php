@@ -1,4 +1,7 @@
 @extends('landing.layouts.master')
+@section('title', 'Villas for sale in Bali | Find the best opportunities')
+@section('meta_description', 'Explore our selection of villas for sale in Bali. Exceptional properties, tested for you. Find the perfect investment or holiday home today.')
+
 @section('content')
     <!-- Breadcrumb section -->
     <section class="breadcrumb__section section--padding">

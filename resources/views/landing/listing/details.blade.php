@@ -25,6 +25,14 @@
 @push('style')
     <link href="{{ asset('admin') }}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
 @endpush
+@section('title')
+    Villa for sale in Bali | {{ $property->property_name }}
+@endsection
+
+@section('meta_description')
+    {{ $property->property_description }}
+@endsection
+
 @section('content')
 
     <!-- Hero section -->

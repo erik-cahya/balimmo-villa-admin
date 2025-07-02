@@ -2,11 +2,18 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Balimmo Properties - Real Estate</title>
-  <meta name="description" content="Morden Bootstrap HTML5 Template">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('landing') }}/assets/img/favicon.ico">
+    <meta charset="utf-8">
+    <title>@yield('title', 'Balimmo Properties | Find your dream villa to buy in Bali')</title>
+    <meta name="description" content="@yield('meta_description', 'Discover your dream villa in Bali among our selection of exceptional properties. We guarantee you an investment 100% tailored to you by testing every villa.')">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('landing') }}/assets/img/favicon.ico">
+    <meta property="og:title" content="Balimmo Properties | Find your dream villa to buy in Bali" />
+    <meta property="og:description" content="Discover your dream villa in Bali among our selection of exceptional properties. We guarantee you an investment 100% tailored to you by testing every villa." />
+    <meta property="og:image" content="https://balimmo-construction.com/assets/image/icon/balimmo-villa-construction.png" />
+    <meta property="og:url" content="https://balimmo-properties.com/" />
+    <meta property="og:site_name" content="Balimmo Properties" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
 
    <!-- ======= All CSS Plugins here ======== -->
   <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/plugins/swiper-bundle.min.css">
