@@ -127,7 +127,9 @@
                         <h2 class="section__heading--title">Be sure of the quality of your future villa</h2>
                         <p class="section__heading--desc">Each villa offered by Balimmo is tested in real conditions to guarantee you an investment 100% tailored to you.</p>
                     </div>
-                    <div class="about__content--info d-flex">
+                    <br>
+                    <br>
+                    <!-- <div class="about__content--info d-flex">
                         <div class="about__content--info__list d-flex align-items-center">
                             <div class="about__content--info__icon">
                                 <img src="{{ asset('landing') }}/assets/img/other/about-info-icon3.png" alt="icon">
@@ -142,7 +144,7 @@
                             <h3 class="about__content--info__title">Friendly Support
                                 Team</h3>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="about__content--details d-flex align-items-center">
                         <div class="about__experince">
                             <span class="about__experince--number">25</span>
@@ -477,20 +479,20 @@
                 <div class="col">
                     <div class="counterup__inner d-flex align-items-center">
                         <div class="counterup__items text-center">
-                            <h2 class="counterup__number"> <span class="js-counter" data-count="10">10</span> +</h2>
-                            <h5 class="counterup__subtitle"> Year of Experience</h5>
+                            <h2 class="counterup__number"> <span class="js-counter" data-count="25">25</span></h2>
+                            <h5 class="counterup__subtitle"> Years of experience in international real estate</h5>
                         </div>
                         <div class="counterup__items text-center">
-                            <h2 class="counterup__number"> <span class="js-counter" data-count="120">120</span> K</h2>
-                            <h5 class="counterup__subtitle"> The best property</h5>
+                            <h2 class="counterup__number"> <span class="js-counter" data-count="200">+200</span></h2>
+                            <h5 class="counterup__subtitle"> Villas available</h5>
                         </div>
                         <div class="counterup__items text-center">
-                            <h2 class="counterup__number"> <span class="js-counter" data-count="50">32</span></h2>
-                            <h5 class="counterup__subtitle"> Partners worked</h5>
+                            <h2 class="counterup__number"> <span class="js-counter" data-count="100">100%</span></h2>
+                            <h5 class="counterup__subtitle"> Of satisfaction rate</h5>
                         </div>
                         <div class="counterup__items text-center">
-                            <h2 class="counterup__number"> <span class="js-counter" data-count="50">12</span> K</h2>
-                            <h5 class="counterup__subtitle"> World Clients</h5>
+                            <h2 class="counterup__number"> <span class="js-counter" data-count="1">1</span></h2>
+                            <h5 class="counterup__subtitle"> Commitment. Test our villa before you buy it.</h5>
                         </div>
                         <img class="shape__position" src="{{ asset('landing') }}/assets/img/other/shape1.png" alt="img">
                         <img class="shape__position2" src="{{ asset('landing') }}/assets/img/other/shape2.png" alt="img">
@@ -511,7 +513,7 @@
                     </div>
                     <div class="call__action--right d-flex align-items-center">
                         <div class="call__action--info d-flex align-items-center">
-                            <span class="call__action--icon"><svg width="36" height="29" viewBox="0 0 36 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <span class="call__action--icon"><svg width="36" height="29" viewBox="0 0 36 29" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_1_545)">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M24.3068 17.1114L31.1206 20.7877C33.2472 21.9346 30.8923 24.5371 28.982 25.9993C20.5418 32.4577 -1.18891 11.343 5.51137 3.09162C7.01925 1.23441 9.67601 -1.07127 10.8511 1.00439L14.6177 7.65474C14.9646 8.26739 14.7386 8.92125 14.3061 9.47891L12.9491 11.2291C12.5437 11.7524 12.5182 12.4332 12.8823 12.9843C14.5004 15.4301 16.3402 17.2256 18.8462 18.8053C19.411 19.1608 20.1085 19.1359 20.6447 18.74L22.4378 17.4156C23.0093 16.9934 23.6791 16.7729 24.3068 17.1115L24.3068 17.1114Z" fill="currentColor" />
                                         <path d="M30.6793 12.719C30.683 13.1155 31.0149 13.4351 31.4219 13.4313C31.8289 13.4285 32.1556 13.1037 32.1525 12.7065C32.0864 5.78063 26.2294 0.064642 19.1333 1.89285e-05C18.7271 -0.00282808 18.3943 0.315846 18.3906 0.713108C18.3877 1.1096 18.7142 1.43436 19.1213 1.43796C25.4103 1.49433 30.6206 6.58011 30.6794 12.7188L30.6793 12.719Z" fill="currentColor" />

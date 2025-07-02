@@ -683,7 +683,7 @@ hr {
 }
 
 .swiper-button-next, .swiper-button-prev{
-  width: calc(var(--swiper-navigation-size) / 44 * 40) !important;
+  width: calc(var(--swiper-navigation-size) / 44 * 44) !important;
   color: #FFF !important;
 }
 
@@ -4546,11 +4546,11 @@ body.overlay__active::before,
 }
 
 .call__action--info__text a:hover {
-  color: var(--color-hover);
+  color: var(--color-primary);
 }
 
 .call__action--icon {
-  color: var(--color-hover);
+  color: var(--color-white);
 }
 
 .call__action--title {
