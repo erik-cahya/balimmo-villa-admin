@@ -1141,9 +1141,9 @@
                             <div class="advance__filter--price advance__price--filter">
                                 <div class="widget__price--filtering">
                                     <div class="price-input">
-                                        <input type="text" class="input-min" name="priceMin" id="minPriceFilter" value="100000000">
+                                        <input type="text" class="input-min" name="priceMin" id="minPriceFilter" placeholder="IDR 100 000 000">
                                         <div class="separator">-</div>
-                                        <input type="text" class="input-max" name="priceMax" id="maxPriceFilter" value="500000000">
+                                        <input type="text" class="input-max" name="priceMax" id="maxPriceFilter" placeholder="IDR 500 000 000">
                                     </div>
                                     {{-- <div class="price-slider">
                                         <div class="progress"></div>
@@ -1233,7 +1233,7 @@
                         </div>
                         <div class="advance__filter--footer d-flex justify-content-between align-items-center">
                             <button class="advance__filter--reset__btn">Reset all filters</button>
-                            <button class="advance__filter--search__btn solid__btn">Search <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <button class="advance__filter--search__btn solid__btn">Find My Villa <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
                                     <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />
                                 </svg>
