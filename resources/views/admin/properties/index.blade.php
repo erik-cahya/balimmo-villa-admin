@@ -1,4 +1,31 @@
 @extends('admin.layouts.master')
+@push('style')
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/dataTable.min.css') }}">
+
+    <style>
+        .dataTables_filter input {
+            border: 1px solid #eaedf1 !important;
+            /* border: 1px solid red; */
+            padding: 6px;
+            border-radius: 5px;
+        }
+
+        .dataTables_wrapper {
+            padding: 1rem;
+        }
+
+        .dataTable {
+            margin-top: 3rem !important;
+        }
+
+        .paging_simple_numbers {
+            /* background-color: red; */
+            /* #063436 */
+        }
+    </style>
+    <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/dataTables.min.js') }}"></script>
+@endpush
 @section('content')
     <div class="container-fluid">
 
@@ -24,7 +51,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table-hover table-centered fs-13 mb-0 table text-nowrap align-middle">
+                        <table class="table-hover table-centered fs-13 mb-0 table text-nowrap align-middle" id="tableProperties">
                             <thead class="bg-light-subtle">
                                 <tr>
                                     <th style="width: 20px;">
@@ -38,6 +65,7 @@
                                     <th>Mandates</th>
                                     <th>Bedrooms</th>
                                     <th>Location</th>
+                                    <th>Type Listing</th>
                                     <th>Status Listing</th>
                                     <th>Action</th>
                                 </tr>
@@ -81,6 +109,23 @@
                                                 <span class="fst-italic">{{ Str::limit($property->property_address, 50) }}</span>
                                             </div>
 
+                                        </td>
+
+                                        @php
+                                            switch ($property->type_properties) {
+                                                case 'Properties':
+                                                    $badgeClass = 'bg-warning';
+                                                    break;
+
+                                                default:
+                                                    $badgeClass = 'bg-primary';
+                                                    break;
+                                            }
+                                        @endphp
+                                        <td>
+                                            <span class="badge {{ $badgeClass }} text-light fs-12 text-capitalize px-2 py-1">
+                                                {{ $property->type_properties }}
+                                            </span>
                                         </td>
 
                                         @php
@@ -134,17 +179,6 @@
                         </table>
                     </div>
                     <!-- end table-responsive -->
-                    <div class="card-footer">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                                <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-                            </ul>
-                        </nav>
-                    </div>
                 </div>
             </div>
 
@@ -152,6 +186,17 @@
     </div>
 @endsection
 @push('scripts')
+    <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/cleave-phone.us.js') }}"></script>
+    {{-- Data Table --}}
+    <script>
+        $(document).ready(function() {
+            $('#tableProperties').DataTable();
+        });
+    </script>
+    {{-- /* Data Table --}}
     {{-- Sweet Alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {

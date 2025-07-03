@@ -68,7 +68,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="position-relative">
-                                <img src="{{ asset($data_properties->featuredImage->image_path) }}" alt="" class="img-fluid rounded" style="width: 100%; height: 30rem; object-fit: cover">
+                                <img src="{{ asset($data_properties?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="img-fluid rounded" style="width: 100%; height: 30rem; object-fit: cover">
                                 <span class="position-absolute start-0 top-0 p-2">
                                     <span class="badge bg-warning text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_acceptance }}</span>
                                 </span>
@@ -304,7 +304,7 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center">
-                            <img src="{{ asset('admin') }}{{ $agent_data->profile == null ? '/assets/images/users/default.jpg' : '/profile-image/' . $agent_data->reference_code . '/' . $agent_data->profile }}" alt="" class="avatar-xl rounded-circle border-light mx-auto border border-2" style="width: 8rem; height: 8rem; object-fit:cover; border-radius: 10px">
+                            <img src="{{ asset('admin') }}{{ $agent_data->profile == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $agent_data->reference_code . '/' . $agent_data->profile }}" alt="" class="avatar-xl rounded-circle border-light mx-auto border border-2" style="width: 8rem; height: 8rem; object-fit:cover; border-radius: 10px">
                             <div class="mt-2">
                                 <a href="#!" class="fw-medium text-dark fs-16 text-uppercase">{{ $agent_data->name }}</a>
                                 <p class="text-capitalize mb-0">({{ $agent_data->role }})</p>
@@ -365,53 +365,56 @@
                         </div>
                     </div>
                 </div>
-                {{-- Video --}}
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="card-title">Video</h4>
+                @if (($experience !== null) | ($virtualTour !== null) | ($lifestyle !== null))
+                    {{-- Video --}}
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="card-title">Video</h4>
+                        </div>
+                        <div class="card-body">
+                            @if ($experience !== null)
+                                <div class="card">
+                                    <div class="card-body p-2">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $experience }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                        </div>
+                                        <span class="text-dark d-inline-block my-2">
+                                            <a href="#!" class="text-dark fs-18 fw-medium">Experience Video</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if ($virtualTour !== null)
+                                <div class="card">
+                                    <div class="card-body p-2">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $virtualTour }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                        </div>
+                                        <span class="text-dark d-inline-block my-2">
+                                            <a href="#!" class="text-dark fs-18 fw-medium">Virtual Tour Video</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if ($lifestyle !== null)
+                                <div class="card">
+                                    <div class="card-body p-2">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $lifestyle }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                        </div>
+                                        <span class="text-dark d-inline-block my-2">
+                                            <a href="#!" class="text-dark fs-18 fw-medium">Lifestyle Video</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+
+                        </div>
                     </div>
-                    <div class="card-body">
-                        @if ($experience !== null)
-                            <div class="card">
-                                <div class="card-body p-2">
-                                    <div class="ratio ratio-16x9">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $experience }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
-                                    </div>
-                                    <span class="text-dark d-inline-block my-2">
-                                        <a href="#!" class="text-dark fs-18 fw-medium">Experience Video</a>
-                                    </span>
-                                </div>
-                            </div>
-                        @endif
+                @endif
 
-                        @if ($virtualTour !== null)
-                            <div class="card">
-                                <div class="card-body p-2">
-                                    <div class="ratio ratio-16x9">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $virtualTour }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
-                                    </div>
-                                    <span class="text-dark d-inline-block my-2">
-                                        <a href="#!" class="text-dark fs-18 fw-medium">Virtual Tour Video</a>
-                                    </span>
-                                </div>
-                            </div>
-                        @endif
-
-                        @if ($lifestyle !== null)
-                            <div class="card">
-                                <div class="card-body p-2">
-                                    <div class="ratio ratio-16x9">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $lifestyle }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
-                                    </div>
-                                    <span class="text-dark d-inline-block my-2">
-                                        <a href="#!" class="text-dark fs-18 fw-medium">Lifestyle Video</a>
-                                    </span>
-                                </div>
-                            </div>
-                        @endif
-
-                    </div>
-                </div>
             </div>
         </div>
 

@@ -26,6 +26,18 @@
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <div class="col-12 d-flex flex-row flex-wrap gap-2">
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger fs-11 m-0 p-1">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
             <div class="row">
 
                 <div class="col-xl-6 col-lg-6">
@@ -50,7 +62,7 @@
                                             <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
 
                                             @error('owners.0.first_name')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -62,7 +74,7 @@
                                             <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
 
                                             @error('owners.0.last_name')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -74,7 +86,8 @@
                                             <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
 
                                             @error('owners.0.email')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -86,7 +99,8 @@
                                             <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.0.phone_number') }}">
 
                                             @error('owners.0.phone_number')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -115,7 +129,8 @@
                                             <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.1.first_name') }}">
 
                                             @error('owners.1.first_name')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -127,7 +142,8 @@
                                             <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.1.last_name') }}">
 
                                             @error('owners.1.last_name')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -139,7 +155,8 @@
                                             <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.1.email') }}">
 
                                             @error('owners.1.email')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -151,7 +168,8 @@
                                             <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.1.phone_number') }}">
 
                                             @error('owners.1.phone_number')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -505,7 +523,7 @@
                             <div class="row">
 
                                 <div class="col-lg-12 mb-3">
-                                    <label for="gallery" class="form-label">Property Gallery (min 4)</label>
+                                    <label for="gallery" class="form-label">Property Gallery</label>
 
                                     <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
 

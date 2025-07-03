@@ -25,7 +25,7 @@ Docs
             }
         </style>
 
-        <div class="alert alert-danger m-0">
+        <div class="alert alert-danger fs-11 m-0 p-1">
             {{ $message }}
         </div>
     @enderror

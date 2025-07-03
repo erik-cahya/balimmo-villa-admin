@@ -43,7 +43,8 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="listing__hero--slider__items position-relative">
-                                <img class="listing__hero--slider__media" src="{{ asset($property->featuredImage->image_path) }}" alt="img">
+                                {{-- <img class="listing__hero--slider__media" src="{{ asset($property->featuredImage->image_path) }}" alt="img"> --}}
+                                <img class="listing__hero--slider__media" src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="img">
                                 <div class="listing__hero--slider__container">
                                     <div class="container">
                                         <!-- Hero Content -->
@@ -209,20 +210,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="listing__details--content__step mb-80">
-                                <h3 class="listing__details--content__title mb-40">Gallery</h3>
 
-                                <div class="container">
-                                    <div class="row g-3">
-                                        @foreach ($image_gallery as $gallery)
-                                            <div class="col-6 col-md-4 col-lg-3">
-                                                <a class="chat__profile--photos__link glightbox" href="{{ asset($gallery->image_path) }}" data-gallery="gallery"><img class="chat__profile--photos__media" src="{{ asset($gallery->image_path) }}" alt="img" style="width: 20rem; max-height: 10rem; object-fit:cover; border-radius: 10px"></a>
-                                            </div>
-                                        @endforeach
+                            @if ($image_gallery->count() >= 1)
+                                <div class="listing__details--content__step mb-80">
+                                    <h3 class="listing__details--content__title mb-40">Gallery</h3>
 
+                                    <div class="container">
+                                        <div class="row g-3">
+                                            @foreach ($image_gallery as $gallery)
+                                                <div class="col-6 col-md-4 col-lg-3">
+                                                    <a class="chat__profile--photos__link glightbox" href="{{ asset($gallery->image_path) }}" data-gallery="gallery"><img class="chat__profile--photos__media" src="{{ asset($gallery->image_path) }}" alt="img" style="width: 20rem; max-height: 10rem; object-fit:cover; border-radius: 10px"></a>
+                                                </div>
+                                            @endforeach
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
 
                             <div class="listing__details--content__step mb-80">
                                 <div class="listing__details--location__header d-flex justify-content-between mb-40">
@@ -253,61 +257,68 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="listing__details--content__step mb-80">
-                                <h3 class="listing__details--content__title mb-40">Lifestyle</h3>
-                                <div class="listing__details--video__thumbnail position-relative">
-                                    @if ($lifestyle === null)
-                                        <p class="admin__profile--desc">No Data</p>
-                                    @else
-                                        <img src="https://img.youtube.com/vi/{{ $lifestyle }}/maxresdefault.jpg" alt="img">
-                                        <div class="bideo__play">
-                                            <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $lifestyle }}" data-gallery="video">
-                                                <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
-                                                </svg>
-                                                <span class="visually-hidden">Video Play</span>
-                                            </a>
-                                        </div>
-                                    @endif
+                            @if ($lifestyle !== null)
+                                <div class="listing__details--content__step mb-80">
+                                    <h3 class="listing__details--content__title mb-40">Lifestyle</h3>
+                                    <div class="listing__details--video__thumbnail position-relative">
+                                        @if ($lifestyle === null)
+                                            <p class="admin__profile--desc">No Data</p>
+                                        @else
+                                            <img src="https://img.youtube.com/vi/{{ $lifestyle }}/maxresdefault.jpg" alt="img">
+                                            <div class="bideo__play">
+                                                <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $lifestyle }}" data-gallery="video">
+                                                    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
+                                                    </svg>
+                                                    <span class="visually-hidden">Video Play</span>
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="listing__details--content__step mb-80">
-                                <h3 class="listing__details--content__title mb-40">Virtual Tour</h3>
-                                <div class="listing__details--video__thumbnail position-relative">
-                                    @if ($virtualTour === null)
-                                        <p class="admin__profile--desc">No Data</p>
-                                    @else
-                                        <img src="https://img.youtube.com/vi/{{ $virtualTour }}/maxresdefault.jpg" alt="img">
-                                        <div class="bideo__play">
-                                            <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $virtualTour }}" data-gallery="video">
-                                                <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
-                                                </svg>
-                                                <span class="visually-hidden">Video Play</span>
-                                            </a>
-                                        </div>
-                                    @endif
+                            @endif
+                            @if ($virtualTour !== null)
+                                <div class="listing__details--content__step mb-80">
+                                    <h3 class="listing__details--content__title mb-40">Virtual Tour</h3>
+                                    <div class="listing__details--video__thumbnail position-relative">
+                                        @if ($virtualTour === null)
+                                            <p class="admin__profile--desc">No Data</p>
+                                        @else
+                                            <img src="https://img.youtube.com/vi/{{ $virtualTour }}/maxresdefault.jpg" alt="img">
+                                            <div class="bideo__play">
+                                                <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $virtualTour }}" data-gallery="video">
+                                                    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
+                                                    </svg>
+                                                    <span class="visually-hidden">Video Play</span>
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="listing__details--content__step mb-80">
-                                <h3 class="listing__details--content__title mb-40">Experience</h3>
-                                <div class="listing__details--video__thumbnail position-relative">
-                                    @if ($experience === null)
-                                        <p class="admin__profile--desc">No Data</p>
-                                    @else
-                                        <img src="https://img.youtube.com/vi/{{ $experience }}/maxresdefault.jpg" alt="img">
-                                        <div class="bideo__play">
-                                            <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $experience }}" data-gallery="video">
-                                                <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
-                                                </svg>
-                                                <span class="visually-hidden">Video Play</span>
-                                            </a>
-                                        </div>
-                                    @endif
+                            @endif
 
+                            @if ($experience !== null)
+                                <div class="listing__details--content__step mb-80">
+                                    <h3 class="listing__details--content__title mb-40">Experience</h3>
+                                    <div class="listing__details--video__thumbnail position-relative">
+                                        @if ($experience === null)
+                                            <p class="admin__profile--desc">No Data</p>
+                                        @else
+                                            <img src="https://img.youtube.com/vi/{{ $experience }}/maxresdefault.jpg" alt="img">
+                                            <div class="bideo__play">
+                                                <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $experience }}" data-gallery="video">
+                                                    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
+                                                    </svg>
+                                                    <span class="visually-hidden">Video Play</span>
+                                                </a>
+                                            </div>
+                                        @endif
+
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
                         </div>
                     </div>
@@ -316,7 +327,7 @@
                     <div class="listing__widget">
                         <div class="widget__admin--profile mb-30 text-center">
                             <div class="admin__profile--thumbnail">
-                                <img src="{{ asset('admin') }}{{ $property->profilePicture == null ? '/assets/images/users/avatar-1.jpg' : '/profile-image/' . $property->agent_code . '/' . $property->profilePicture }}" alt="img" style="width: 20rem; max-height: 20rem; object-fit:cover; border-radius: 10px">
+                                <img src="{{ asset('admin') }}{{ $property->profilePicture == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $property->agent_code . '/' . $property->profilePicture }}" alt="img" style="width: 20rem; max-height: 20rem; object-fit:cover; border-radius: 10px">
                             </div>
                             <div class="admin__profile--content">
                                 <h3 class="admin__profile--name">{{ $property->agent_name }}</h3>

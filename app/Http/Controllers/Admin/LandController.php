@@ -97,11 +97,11 @@ class LandController extends Controller
 
             'legal_category' => 'required',
 
-            // ##### Rental Yield
-            'average_nightly_rate' => 'required',
-            'average_occupancy_rate' => 'required',
-            'month_rented_per_year' => 'required',
-            'estimated_annual_turnover' => 'required',
+            // // ##### Rental Yield
+            // 'average_nightly_rate' => 'required',
+            // 'average_occupancy_rate' => 'required',
+            // 'month_rented_per_year' => 'required',
+            // 'estimated_annual_turnover' => 'required',
 
             // ##### Gallery
             // 'images.*' => 'required|image|max:2048',

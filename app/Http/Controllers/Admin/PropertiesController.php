@@ -30,6 +30,7 @@ class PropertiesController extends Controller
         if (Auth::user()->role == 'Master') {
             $data['data_property'] = PropertiesModel::select(
                 'properties.id',
+                'properties.type_properties',
                 'property_name',
                 'property_slug',
                 'internal_reference',
@@ -52,6 +53,7 @@ class PropertiesController extends Controller
             $data['data_property'] = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
                 ->select(
                     'properties.id',
+                    'properties.type_properties',
                     'property_name',
                     'property_slug',
                     'internal_reference',
@@ -148,9 +150,9 @@ class PropertiesController extends Controller
 
             'legal_category' => 'required',
 
-            'url_virtual_tour' => 'required',
-            'url_lifestyle' => 'required',
-            'url_experience' => 'required',
+            // 'url_virtual_tour' => 'required',
+            // 'url_lifestyle' => 'required',
+            // 'url_experience' => 'required',
 
             // ##### Rental Yield
             'average_nightly_rate' => 'required',
@@ -451,7 +453,6 @@ class PropertiesController extends Controller
 
     public function detail($slug)
     {
-
         $property = PropertiesModel::where('property_slug', $slug)->select('id', 'internal_reference')->first();
 
 
@@ -503,7 +504,13 @@ class PropertiesController extends Controller
             ->get();
 
         // dd($data['data_properties']);
-        $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
+
+        $galleryId = optional($data['data_properties']['featuredImage'])->id;
+        $data['image_gallery'] = $galleryId
+            ? PropertyGalleryImageModel::where('gallery_id', $galleryId)->get()
+            : collect();
+
+        // $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
 
         $data['agent_data'] = User::where('reference_code', $property->internal_reference)->first();
 
@@ -512,18 +519,25 @@ class PropertiesController extends Controller
         $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['data_properties']->id)->get();
 
         foreach ($url_attachment as $url) {
-            if ($url->name === 'url_virtual_tour') {
-                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
 
-                $url->path_attachment = $match[1];
-            } elseif ($url->name === 'url_lifestyle') {
-                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
-                $url->path_attachment = $match[1];
-            } elseif ($url->name === 'url_experience') {
-                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
-                $url->path_attachment = $match[1];
+            if (in_array($url->name, ['url_virtual_tour', 'url_lifestyle', 'url_experience'])) {
+
+                preg_match(
+                    '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/',
+                    $url->path_attachment,
+                    $match
+                );
+
+                // Cek apakah $match[1] ada sebelum diakses
+                if (isset($match[1])) {
+                    $url->path_attachment = $match[1];
+                } else {
+                    // Bisa kosongin, kasih nilai default, atau handle error sesuai kebutuhan
+                    $url->path_attachment = null; // atau bisa log error di sini
+                }
             }
         }
+
         $data['attachment'] = collect($url_attachment);
 
         return view('admin.properties.details', $data);
@@ -574,6 +588,9 @@ class PropertiesController extends Controller
             )
             ->first();
 
+        // dd($data['data_properties']['featuredImage']->id);
+
+
 
         // Property Owner
         // dd($data['data_properties']);
@@ -597,7 +614,14 @@ class PropertiesController extends Controller
 
         $data['attachment'] = $attachment;
 
-        $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
+        $galleryId = optional($data['data_properties']['featuredImage'])->id;
+        // dd($galleryId);
+        $data['image_gallery'] = $galleryId
+            ? PropertyGalleryImageModel::where('gallery_id', $galleryId)->get()
+            : collect(); // Jika galleryId null, hasilkan koleksi kosong
+
+        // $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
+
 
         return view('admin.properties.edit', $data);
     }
@@ -607,8 +631,7 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($id);
-
+        // dd($request->all());
 
         // Freehold
         if ($request->legal_category === 'Freehold') {
@@ -621,7 +644,6 @@ class PropertiesController extends Controller
             $holder_name = $request->freehold_certificate_holder_name;
             $holder_number = $request->freehold_certificate_number;
             $zoning = $request->freehold_zoning;
-
 
             $request->merge([
                 'leasehold_start_date' => null,
@@ -846,9 +868,67 @@ class PropertiesController extends Controller
             }
         }
 
+        // ==========================================================================================================================================
+        // ############## Gallery Handler ##############
+        // ==========================================================================================================================================
+        $gallery = PropertyGalleryModel::create([
+            'properties_id' => $id,
+            'description' => 'deskripsi',
+        ]);
+
+        if ($request->has('old_images')) {
+            foreach ($request->old_images as $i => $filename) {
+                $from = public_path("tmp_uploads/" . Auth::user()->reference_code . "/$filename");
+                $targetDir = public_path("admin/gallery/{$slug}");
+                $to = $targetDir . '/' . $filename;
+
+                if (!file_exists($targetDir)) {
+                    mkdir($targetDir, 0755, true);
+                }
+
+                if (file_exists($from)) {
+                    rename($from, $to);
+
+                    PropertyGalleryImageModel::create([
+                        'gallery_id' => $gallery->id,
+                        'image_path' => "admin/gallery/{$slug}/{$filename}",
+                        'order' => $i,
+                        'is_featured' => $i === 0,
+                    ]);
+                }
+            }
+
+            session()->forget('old_images'); // hapus setelah sukses
+
+            if (file_exists(public_path('tmp_uploads/' . Auth::user()->reference_code))) {
+                File::deleteDirectory(public_path('tmp_uploads/' . Auth::user()->reference_code));
+            };
+        } else {
+            if (!file_exists(public_path('admin/gallery/' . $slug))) {
+                mkdir(public_path('admin/gallery/' . $slug), 0755, true);
+            }
+
+            $order = explode(',', $request->order);
+
+            foreach ($order as $i => $index) {
+                if (isset($request->images[$index])) {
+                    $image = $request->images[$index];
+                    $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('admin/gallery/' . $slug), $filename);
+
+                    PropertyGalleryImageModel::create([
+                        'gallery_id' => $gallery->id,
+                        'image_path' => 'admin/gallery/' . $slug . '/' . $filename,
+                        'order' => $i,
+                        'is_featured' => $i === 0,
+                    ]);
+                }
+            }
+        }
+        // /* Gallery Handler
+
         Cache::forget('properties_list_cache');
 
-        // dd($slug->property_slug);
 
         $slug = PropertiesModel::where('id', $id)->first();
         $flashData = [

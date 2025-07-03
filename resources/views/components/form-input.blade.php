@@ -17,7 +17,8 @@
     <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}" class="form-control {{ $inputClassName }} @error($name) validation-form @enderror" placeholder="{{ isset($placeholder) ? $placeholder : 'Input ' . $label }}" value="{{ isset($value) ? old($name, $value) : old($name) }}" {{ $disabled ? 'disabled' : '' }} {{ $required ? 'required' : '' }}>
 
     @error($name)
-        <div class="alert alert-danger mt-1 p-1" role="alert">
+        <div class="alert alert-danger fs-11 m-0 p-1">
+
             {{ $message }}
         </div>
     @enderror

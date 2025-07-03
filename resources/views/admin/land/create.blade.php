@@ -19,13 +19,12 @@
                 <div class="col-12 d-flex flex-row flex-wrap gap-2">
                     @if ($errors->any())
                         @foreach ($errors->all() as $error)
-                            <div class="alert alert-danger m-0">
+                            <div class="alert alert-danger fs-11 m-0 p-1">
                                 {{ $error }}
                             </div>
                         @endforeach
                     @endif
                 </div>
-
             </div>
 
             <div class="row">
@@ -230,7 +229,7 @@
                             <div class="row">
 
                                 <div class="col-lg-12 mb-3">
-                                    <label for="gallery" class="form-label">Land Gallery (min 4)</label>
+                                    <label for="gallery" class="form-label">Land Gallery</label>
 
                                     <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
 

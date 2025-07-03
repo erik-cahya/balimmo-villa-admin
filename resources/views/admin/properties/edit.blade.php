@@ -420,12 +420,36 @@
                                         </a>
                                     @endforeach
 
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <a href="{{ route('gallery.edit', $image_gallery[0]->gallery_id) }}" class="btn btn-sm btn-primary">Edit Gallery</a>
-
+                                    @if (isset($image_gallery[0]->gallery_id))
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <a href="{{ route('gallery.edit', $image_gallery[0]->gallery_id) }}" class="btn btn-sm btn-primary">Edit Gallery</a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
+
+                                        <div id="previewContainer" class="d-flex flex-wrap gap-3">
+                                            @if (session('old_images'))
+                                                @foreach (session('old_images') as $index => $img)
+                                                    <div class="img-preview" data-index="{{ $index }}">
+                                                        <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
+                                                            style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
+                                                        <p class="mt-1 text-center">Image {{ $index + 1 }}</p>
+                                                        <input type="hidden" name="old_images[]" value="{{ $img }}">
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <input type="hidden" name="order" id="imageOrder">
+
+                                        @error('images')
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    @endif
 
                                 </div>
 
@@ -708,9 +732,9 @@
             idrInput.addEventListener('input', debounce(handleIDRInput, 400));
         });
     </script>
-
     {{-- /* Convert IDR to USD --}}
 
+    {{-- Flatpickr --}}
     <script>
         $("#leasehold_start_date").flatpickr({
             dateFormat: "d-m-Y"
@@ -725,6 +749,7 @@
             dateFormat: "d-m-Y"
         });
     </script>
+    {{-- /* Flatpickr --}}
 
     {{-- Region & Sub Region --}}
     <script>
@@ -804,10 +829,7 @@
                 });
         });
     </script>
-
     {{-- Region & Sub Region --}}
-
-    </script>
 
     {{-- ######################### Gallery Upload ######################### --}}
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>

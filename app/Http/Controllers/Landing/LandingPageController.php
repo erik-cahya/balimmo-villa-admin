@@ -143,7 +143,13 @@ class LandingPageController extends Controller
         };
 
 
-        $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['property']['featuredImage']->id)->get();
+        $galleryId = optional($data['property']['featuredImage'])->id;
+        // dd($galleryId);
+        $data['image_gallery'] = $galleryId
+            ? PropertyGalleryImageModel::where('gallery_id', $galleryId)->get()
+            : collect(); // Jika galleryId null, hasilkan koleksi kosong
+
+        // $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['property']['featuredImage']->id)->get();
 
         $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['property']->id)
             ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
@@ -152,15 +158,20 @@ class LandingPageController extends Controller
         $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['property']->id)->get();
 
         foreach ($url_attachment as $url) {
-            if ($url->name === 'url_virtual_tour') {
-                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
-                $url->path_attachment = $match[1];
-            } elseif ($url->name === 'url_lifestyle') {
-                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
-                $url->path_attachment = $match[1];
-            } elseif ($url->name === 'url_experience') {
-                preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $url->path_attachment, $match);
-                $url->path_attachment = $match[1];
+            if (in_array($url->name, ['url_virtual_tour', 'url_lifestyle', 'url_experience'])) {
+                preg_match(
+                    '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/',
+                    $url->path_attachment,
+                    $match
+                );
+
+                // Cek apakah $match[1] ada sebelum diakses
+                if (isset($match[1])) {
+                    $url->path_attachment = $match[1];
+                } else {
+                    // Bisa kosongin, kasih nilai default, atau handle error sesuai kebutuhan
+                    $url->path_attachment = null; // atau bisa log error di sini
+                }
             }
         }
         $data['attachment'] = collect($url_attachment);
@@ -186,8 +197,7 @@ class LandingPageController extends Controller
 
     public function contact()
     {
-        $data['sub_regions'] = SubRegionModel::select('name')->get();
-        return view('landing.contact.index', $data);
+        return view('landing.contact.index');
     }
 
     public function about()
