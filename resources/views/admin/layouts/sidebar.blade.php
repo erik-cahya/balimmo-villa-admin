@@ -33,22 +33,25 @@
             </li>
 
             @role('Master|agent')
-                <li class="menu-title">Management Properties</li>
+                <li class="menu-title">Management Listing</li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-arrow {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="#sidebarProperty" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProperty">
                         <span class="nav-icon">
                             <i class="ri-community-line"></i>
                         </span>
-                        <span class="nav-text"> Properties </span>
+                        <span class="nav-text"> Data Listing </span>
                     </a>
                     <div class="{{ request()->routeIs('properties.*') ? 'show' : '' }} collapse" id="sidebarProperty">
                         <ul class="nav sub-navbar-nav">
                             <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('properties.index') }}">Properties List</a>
+                                <a class="sub-nav-link" href="{{ route('properties.index') }}">Data Listing</a>
                             </li>
                             <li class="sub-nav-item">
                                 <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Properties Listing</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="{{ route('land.create') }}">Create Land Listing</a>
                             </li>
 
                         </ul>

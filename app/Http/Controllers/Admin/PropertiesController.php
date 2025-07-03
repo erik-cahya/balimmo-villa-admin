@@ -97,7 +97,7 @@ class PropertiesController extends Controller
     {
         // dd($request->images);
         // dd(explode('-', Auth::user()->reference_code)[0]);
-
+        $typeProperties = 'Properties';
         $slug = $this->generatePropertiesSlug($request->property_name);
 
         // $validated = $request->validate([
@@ -230,6 +230,7 @@ class PropertiesController extends Controller
         } while (PropertiesModel::where('property_code', $property_code)->exists());
 
         $propertyCreate = PropertiesModel::create([
+            'type_properties' => $typeProperties,
             'property_code' => $property_code,
             'property_name' => $request->property_name,
             'property_slug' => $slug,

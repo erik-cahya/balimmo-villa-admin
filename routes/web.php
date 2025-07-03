@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Docs\DocsVisitController;
 use App\Http\Controllers\Admin\Docs\DocsOfferToPurchaseController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\LandController;
 use App\Http\Controllers\Admin\LocalizationController;
 use App\Http\Controllers\Admin\NotaryController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -106,6 +107,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/upload-temp-gallery', [PropertiesController::class, 'uploadTemp'])->name('gallery.upload.temp');
+
+    Route::resource('/land', LandController::class);
 });
 
 Route::get('/clear/cache', function (Illuminate\Http\Request $request) {
