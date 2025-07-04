@@ -429,7 +429,7 @@
                             @foreach ($other_properties as $oth_props)
                                 <div class="widget__featured--properties" style="margin-top: 20px; border: 1px solid #D9D9D9; padding-bottom: 20px">
                                     <div class="widget__featured--properties__thumbnail position-relative">
-                                        <img src="{{ asset($oth_props->featuredImage->image_path) }}" alt="img">
+                                        <img src="{{ asset($oth_props?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="img">
                                         <div class="featured__badge">
                                             <span class="badge__field">{{ $oth_props->region }}</span>
                                         </div>
