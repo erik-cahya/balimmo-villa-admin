@@ -385,15 +385,15 @@
                                                 <label for="" class="form-label">Zoning</label>
                                                 <div class="col-12">
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone">
+                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone" {{ old('freehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="freehold_green_zone">Green Zone</label>
                                                     </div>
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone">
+                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone" {{ old('freehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="freehold_yellow_zone">Yellow Zone</label>
                                                     </div>
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone">
+                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone" {{ old('freehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="freehold_pink_zone">Pink Zone</label>
                                                     </div>
                                                 </div>
@@ -431,15 +431,15 @@
                                                 <label for="" class="form-label">Zoning</label>
                                                 <div class="col-12">
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone">
+                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone" {{ old('leasehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="leasehold_green_zone">Green Zone</label>
                                                     </div>
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone">
+                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone" {{ old('leasehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="leasehold_yellow_zone">Yellow Zone</label>
                                                     </div>
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone">
+                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone" {{ old('leasehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="leasehold_pink_zone">Pink Zone</label>
                                                     </div>
                                                 </div>
@@ -492,11 +492,11 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate">
+                                                <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="esstentials_mandate">Essentials Mandate</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate">
+                                                <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="booster_mandate">Booster Mandate</label>
                                             </div>
                                         </div>

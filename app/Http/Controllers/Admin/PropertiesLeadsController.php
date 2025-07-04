@@ -198,13 +198,13 @@ class PropertiesLeadsController extends Controller
     public function booking(Request $request, $slug = null)
     {
 
-
+        // dd($request->all());
         if ($slug !== null) {
             $request->validate([
                 'name' => 'required',
                 'phone_number' => 'required',
                 'email' => 'required',
-                'budget' => 'required',
+                // 'budget' => 'required',
                 'timing' => 'required',
                 'bedroom' => 'required',
             ]);
@@ -214,10 +214,18 @@ class PropertiesLeadsController extends Controller
                 'name' => 'required',
                 'phone_number' => 'required',
                 'email' => 'required',
-                'budget' => 'required',
+                // 'budget' => 'required',
                 'location' => 'required',
                 'timing' => 'required',
             ]);
+        }
+
+        if ($request->budget_currency == 'idr') {
+            $custBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr);
+            $custBudgetUSD = null;
+        } else {
+            $custBudgetIDR = null;
+            $custBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->budget_usd));
         }
 
 
@@ -229,7 +237,8 @@ class PropertiesLeadsController extends Controller
             'cust_name' => $request->name,
             'cust_telp' => $request->phone_number,
             'cust_email' => $request->email,
-            'cust_budget' => (int)preg_replace('/[^0-9]/', '', $request->budget),
+            'cust_budget' => $custBudgetIDR,
+            'cust_budget_usd' => $custBudgetUSD,
             'require_bedroom' => $slug == null ? null : $request->bedroom,
             'localization' => $request->location == null ? $property->sub_region : $request->location,
             'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),

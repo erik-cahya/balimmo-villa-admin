@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('cust_telp');
             $table->string('cust_email');
             $table->bigInteger('cust_budget')->nullable();
+            $table->decimal('cust_budget_usd', 18, 2)->nullable();
+
             $table->integer('require_bedroom')->nullable();
             $table->string('localization')->nullable();
             $table->date('date')->nullable();

@@ -364,14 +364,39 @@
                                             <p class="text-danger my-2">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <div class="widget__form--input mb-20">
-                                        <input class="widget__form--input__field" id="budget" placeholder="(IDR) Budget" name="budget" type="text">
 
-                                        @error('budget')
+                                    <div class="contact__property--form__input">
+                                        <label for="budget_currency">Budget Currency*</label>
+
+                                        <div class="advance__search--items">
+                                            <select class="advance__search--select" id="budget_currency" name="budget_currency">
+                                                <option selected disabled>Select Currency</option>
+                                                <option value="usd">Dollar (USD)</option>
+                                                <option value="idr">Rupiah (IDR)</option>
+                                            </select>
+                                        </div>
+
+                                        @error('budget_currency')
                                             <p class="text-danger my-2">{{ $message }}</p>
                                         @enderror
-
                                     </div>
+                                    <div class="contact__property--form__input" id="group_budget_idr">
+                                        <label for="budget_idr">Budget IDR*</label>
+                                        <input id="budget_idr" name="budget_idr" placeholder="IDR Enter your budget" type="text">
+
+                                        @error('budget_idr')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="contact__property--form__input" id="group_budget_usd">
+                                        <label for="budget_usd">Budget USD*</label>
+                                        <input id="budget_usd" name="budget_usd" placeholder="$ Enter your budget" type="text">
+
+                                        @error('budget_usd')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
                                     <div class="widget__form--input mb-20">
                                         <input class="widget__form--input__field" placeholder="Require Bedroom" name="bedroom" type="number">
 
@@ -412,7 +437,7 @@
                                     <div class="widget__featured--properties__content">
                                         <div class="widget__featured--properties__content--top d-flex align-items-center justify-content-between">
                                             <div class="widget__featured--properties__author">
-                                                <img src="{{ asset('admin') }}{{ $property->profilePicture == null ? '/assets/images/users/avatar-1.jpg' : '/profile-image/' . $property->agent_code . '/' . $property->profilePicture }}" alt="img" style="width: 6rem; max-height: 6rem; object-fit:cover; ">
+                                                <img src="{{ asset('admin') }}{{ $property->profilePicture == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $property->agent_code . '/' . $property->profilePicture }}" alt="img" style="width: 6rem; max-height: 6rem; object-fit:cover; ">
                                             </div>
                                         </div>
                                         <p class="widget__featured--properties__desc"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -459,6 +484,27 @@
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('#group_budget_idr').hide();
+            $('#group_budget_usd').hide();
+
+            // Saat user mengganti pilihan
+            $('#budget_currency').on('change', function() {
+                console.log($('#budget_currency').val());
+
+                if ($(this).val() === 'usd') {
+                    $('#group_budget_usd').attr('style', 'display: block !important');
+                    $('#group_budget_idr').attr('style', 'display: none !important');
+                } else {
+                    $('#group_budget_usd').attr('style', 'display: none !important');
+                    $('#group_budget_idr').attr('style', 'display: block !important');
+                }
+            });
+        });
+    </script>
 
     <script>
         $("#timing").flatpickr({

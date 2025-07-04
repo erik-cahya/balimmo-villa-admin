@@ -15,7 +15,8 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Customer Name</th>
                                 <th scope="col">Phone Number</th>
-                                <th scope="col">Budget</th>
+                                <th scope="col">Budget IDR</th>
+                                <th scope="col">Budget USD</th>
                                 <th scope="col">Localization</th>
                                 <th scope="col">Leads Message</th>
                                 <th scope="col">Date</th>
@@ -50,9 +51,10 @@
                                             <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</p>
                                         </td>
                                         <td>
-
-                                            <p class="mb-0"><iconify-icon icon="tdesign:money-filled" class="fs-16 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}</p>
-
+                                            <p class="fs-12 text-dark fw-bold mb-0"><iconify-icon icon="tdesign:money-filled" class="fs-12 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="fs-12 text-dark fw-bold mb-0"><iconify-icon icon="tdesign:money-filled" class="fs-16 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}</p>
                                         </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
 
