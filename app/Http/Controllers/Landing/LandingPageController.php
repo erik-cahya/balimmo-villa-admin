@@ -197,7 +197,8 @@ class LandingPageController extends Controller
 
     public function contact()
     {
-        return view('landing.contact.index');
+        $data['sub_regions'] = SubRegionModel::select('name')->get();
+        return view('landing.contact.index', $data);
     }
 
     public function about()
