@@ -5,7 +5,7 @@
             <div class="featured__thumbnail position-relative">
                 <div class="media">
                     <a class="featured__thumbnail--link" href="{{ route('landing-page.listing.detail', $property->property_slug) }}">
-                        <img class="featured__thumbnail--img" src="{{ asset($property->featuredImage->image_path) }}" alt="featured-img" style="height: 26rem; object-fit: cover">
+                        <img class="featured__thumbnail--img" src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="featured-img" style="height: 26rem; object-fit: cover">
                     </a>
                 </div>
                 <div class="featured__badge">
