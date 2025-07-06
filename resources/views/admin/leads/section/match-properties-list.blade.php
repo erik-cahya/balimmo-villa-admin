@@ -51,10 +51,11 @@
                                             <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</p>
                                         </td>
                                         <td>
-                                            <p class="fs-12 text-dark fw-bold mb-0"><iconify-icon icon="tdesign:money-filled" class="fs-12 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}</p>
+                                            <span class="badge bg-primary fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}</span>
                                         </td>
                                         <td>
-                                            <p class="fs-12 text-dark fw-bold mb-0"><iconify-icon icon="tdesign:money-filled" class="fs-16 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}</p>
+                                            <span class="badge bg-warning fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> USD {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}</span>
+
                                         </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
 
@@ -139,7 +140,11 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <hr>
-                                                                                <h3 class="fw-normal fs-16 fst-italic text-white">IDR {{ number_format($properties->selling_price_idr, 2, ',', '.') }}</h3>
+                                                                                <div class="d-flex fs-10 gap-3">
+                                                                                    <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">IDR {{ number_format($properties->selling_price_idr, 2, ',', '.') }}</h4>
+                                                                                    <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">USD {{ number_format($properties->selling_price_usd, 2, ',', '.') }}</h4>
+                                                                                </div>
+                                                                                <hr>
                                                                                 <h3 class="fw-normal fs-16 fst-italic text-white">{{ $properties->region }} - {{ $properties->sub_region }}</h3>
                                                                                 <h3 class="fw-normal fs-11 fst-italic text-white">{{ $properties->internal_reference }}</h3>
 

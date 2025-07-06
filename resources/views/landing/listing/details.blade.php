@@ -514,11 +514,35 @@
 
     <script>
         const cleaveFields = [{
-            id: '#budget',
-            options: {
-                prefix: 'IDR '
-            }
-        }, ];
+                id: '#budget_idr',
+                options: {
+                    prefix: 'IDR '
+                }
+            },
+            {
+                id: '#budget_usd',
+                options: {
+                    numeral: true,
+                    numeralThousandsGroupStyle: 'thousand',
+                    prefix: '$ ',
+                    noImmediatePrefix: true,
+                    numeralDecimalMark: '.',
+                    delimiter: ',',
+                }
+            },
+            {
+                id: '#minPriceFilter',
+                options: {
+                    prefix: 'IDR '
+                }
+            },
+            {
+                id: '#maxPriceFilter',
+                options: {
+                    prefix: 'IDR '
+                }
+            },
+        ];
 
         cleaveFields.forEach(field => {
             new Cleave(field.id, {
