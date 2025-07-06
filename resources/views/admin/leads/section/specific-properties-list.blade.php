@@ -69,7 +69,7 @@
 
                                         <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
 
-                                        <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties</button>
+                                        <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties Select</button>
 
                                         <!-- Modal -->
                                         <div class="modal modal-xl fade" id="seeProperties-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -86,30 +86,34 @@
                                                             <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-10 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</span>
                                                             <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-10 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</span>
                                                         </div>
-                                                        <table class="table-hover table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
-                                                            <thead class="table-light">
-                                                                <tr>
-                                                                    <th scope="col">No</th>
-                                                                    <th scope="col">Property Name</th>
-                                                                    <th scope="col">Property Address</th>
-                                                                    <th scope="col">Require Customer Bedroom</th>
-                                                                    <th scope="col">Customer Budget</th>
-                                                                    <th scope="col">Customer Message</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($cst as $property)
+                                                        <div class="table-responsive">
+                                                            <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
+                                                                <thead class="table-light">
                                                                     <tr>
-                                                                        <td>{{ $loop->iteration }}</td>
-                                                                        <td>{{ $property->property_name }}</td>
-                                                                        <td>{{ $property->property_address . ' ' . $property->sub_region . ', ' . $property->region }}</td>
-                                                                        <td>{{ $property->require_bedroom }}</td>
-                                                                        <td>IDR {{ number_format($property->cust_budget, 2, ',', '.') }}</td>
-                                                                        <td>{{ $property->message }}</td>
+                                                                        <th scope="col">No</th>
+                                                                        <th scope="col">Property Name</th>
+                                                                        <th scope="col">Property Address</th>
+                                                                        <th scope="col">Require Customer Bedroom</th>
+                                                                        <th scope="col">Customer Budget</th>
+                                                                        <th scope="col">Customer USD</th>
+                                                                        <th scope="col">Customer Message</th>
                                                                     </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($cst as $property)
+                                                                        <tr>
+                                                                            <td>{{ $loop->iteration }}</td>
+                                                                            <td>{{ $property->property_name }}</td>
+                                                                            <td>{{ $property->property_address . ' ' . $property->sub_region . ', ' . $property->region }}</td>
+                                                                            <td>{{ $property->require_bedroom }}</td>
+                                                                            <td>IDR {{ number_format($property->cust_budget, 0, ',', '.') }}</td>
+                                                                            <td>USD {{ number_format($property->cust_budget_usd, 2, ',', '.') }}</td>
+                                                                            <td>{{ $property->message }}</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
 
                                                         <script>
                                                             $(document).ready(function() {

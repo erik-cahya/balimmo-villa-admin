@@ -872,7 +872,7 @@
                             imgDiv.classList.add('img-preview');
                             imgDiv.setAttribute('data-index', index);
                             imgDiv.innerHTML = `
-                    <img src="/tmp_uploads/{{ Auth::user()->reference_code }}/${data.filename}" 
+                    <img src="/tmp_uploads/{{ Auth::user()->reference_code }}/${data.filename}"
                          alt="Preview"
                          style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
                     <p class="text-center mt-1">Image ${index + 1}</p>

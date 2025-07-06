@@ -70,12 +70,21 @@
                             <div class="position-relative">
                                 <img src="{{ asset($data_properties?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="img-fluid rounded" style="width: 100%; height: 30rem; object-fit: cover">
                                 <span class="position-absolute start-0 top-0 p-2">
-                                    <span class="badge bg-warning text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_acceptance }}</span>
+                                    @php
+                                        if ($data_properties->type_acceptance == 'pending') {
+                                            $className = 'bg-warning';
+                                        } elseif ($data_properties->type_acceptance == 'accept') {
+                                            $className = 'bg-success';
+                                        } else {
+                                            $className = 'bg-danger';
+                                        }
+                                    @endphp
+                                    <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_acceptance }}</span>
                                 </span>
                             </div>
                             <div class="d-flex justify-content-between my-3 flex-wrap gap-2">
                                 <div>
-                                    <a href="#!" class="fs-20 text-dark fw-medium text-capitalize">{{ $data_properties->property_name }} - {{ $data_properties->region }}</a>
+                                    <a href="#!" class="fs-20 text-dark fw-medium text-capitalize">{{ $data_properties->property_name }} - {{ $data_properties->sub_region }}, {{ $data_properties->region }}</a>
                                     <p class="d-flex align-items-center mb-0 mt-1 gap-1"><iconify-icon icon="solar:map-point-wave-bold-duotone" class="fs-18 text-primary"></iconify-icon>{{ isset($data_properties->property_address) ? $data_properties->property_address : 'Data Not Found' }}</p>
                                 </div>
                                 <div>
@@ -89,18 +98,6 @@
                                                 <p class="fw-medium text-dark fs-14 mb-0">$ {{ number_format($data_properties->selling_price_usd, 2, '.', ',') }} </p>
                                             </div>
                                         </div>
-                                        <li class="list-inline-item fs-20 dropdown d-none d-md-flex">
-                                            <a href="javascript: void(0);" class="dropdown-toggle arrow-none text-dark" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="ri-more-2-fill"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="javascript: void(0);"><i class="ri-user-6-line me-2"></i>View Profile</a>
-                                                <a class="dropdown-item" href="javascript: void(0);"><i class="ri-music-2-line me-2"></i>Media, Links and Docs</a>
-                                                <a class="dropdown-item" href="javascript: void(0);"><i class="ri-search-2-line me-2"></i>Search</a>
-                                                <a class="dropdown-item" href="javascript: void(0);"><i class="ri-image-line me-2"></i>Wallpaper</a>
-                                                <a class="dropdown-item" href="javascript: void(0);"><i class="ri-arrow-right-circle-line me-2"></i>More</a>
-                                            </div>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>

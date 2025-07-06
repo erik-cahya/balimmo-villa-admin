@@ -1,7 +1,11 @@
-{{-- @php
+@php
+    // Gabungkan semua properti dari setiap grup menjadi satu Collection
+    $properti = collect();
+    foreach ($properties as $props) {
+        $properti = $properti->merge($props);
+    }
 
-    dd($properties);
-@endphp --}}
+@endphp
 <!DOCTYPE html>
 <html>
 
@@ -12,7 +16,7 @@
 
 <body style="font-family: Arial, sans-serif; background-color: #f6f6f6; margin: 0; padding: 20px;">
 
-    @if ($properties->count() >= 1)
+    @if ($properti->count() >= 1)
         <!-- Header -->
         <div style="text-align: center; margin-bottom: 40px;">
             <img src="{{ asset('admin') }}/assets/images/logo-dark.png" alt="Logo" width="200">
@@ -24,13 +28,12 @@
         <div style="max-width: 640px; margin: 0 auto;">
             <!-- Container for properties -->
             <div style="font-size: 0;">
-                @foreach ($properties as $property)
-                    {{-- {{ dd($property->featuredImage->image_path) }} --}}
+                @foreach ($properti as $property)
                     {{-- ============================================== --}}
                     <div style="display: inline-block; vertical-align: top; width: 300px; margin: 10px; background: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden;">
                         <!-- Image -->
                         <div style="position: relative;">
-                            <img src="{{ asset($property->featuredImage->image_path) }}" alt="Villa Image" style="width: 100%; height: 180px; object-fit: cover;">
+                            <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="Villa Image" style="width: 100%; height: 180px; object-fit: cover;">
 
                             <div style="margin-top:6px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px; font-size: 14px;">
                                 IDR {{ $property->selling_price_idr }}
@@ -56,20 +59,24 @@
     @else
         <div style="text-align: center; margin-bottom: 40px;">
             <img src="{{ asset('admin') }}/assets/images/logo-dark.png" alt="Logo" width="200">
+
             <h2 style="margin-top: 30px;">Hi there 👋,</h2>
-            <p style="color: #555;">
-                We couldn't find any villas that match your selected budget and location. <br> You can try widening your criteria or contact us — our team would be happy to assist you in finding the perfect villa.
+            <p style="color: #555; font-weight: 600">
+                We couldn't find any villas that match your selected budget and location. <br><br> You can try widening your criteria or contact us — our team would be happy to assist you in finding the perfect villa.
             </p>
-
+            {{-- KONTOLLLLL --}}
             <a href="#" style="display: inline-block; background-color: #4CAF50; color: white; padding: 8px 12px; text-decoration: none; border-radius: 6px; font-size: 13px;">Contact US</a>
-
         </div>
+
     @endif
+
 
     <!-- Footer -->
     <div style="text-align: center; font-size: 12px; color: #999; margin-top: 40px;">
         &copy; {{ date('Y') }} Balimmo Properties. All rights reserved.
     </div>
+
+    {{-- {{ dd() }} --}}
 
 </body>
 
