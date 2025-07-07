@@ -64,17 +64,30 @@ class ProspectController extends Controller
         if ($leads->isNotEmpty()) {
             // Ambil semua lokasi & budget maksimum
             $regions = $leads->pluck('localization')->unique()->toArray();
-            $maxBudget = $leads->max('cust_budget');
+            $maxBudgetIdr = $leads->max('cust_budget');
+            $maxBudgetUsd = $leads->max('cust_budget_usd');
 
-            // dd($regions);
-            // Ambil semua properti yang mungkin cocok sekaligus
+            // Ambil semua properti yang mungkin cocok
             $properties = PropertiesModel::whereIn('sub_region', $regions)
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
                     $query->where('is_featured', 1);
                 }])
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                ->where('selling_price_idr', '<=', $maxBudget)
+                ->where(function ($query) use ($maxBudgetIdr, $maxBudgetUsd) {
+                    if (!is_null($maxBudgetIdr)) {
+                        $query->where('selling_price_idr', '<=', $maxBudgetIdr);
+                    }
+
+                    if (!is_null($maxBudgetUsd)) {
+                        // Jika sebelumnya sudah ada kondisi (dari IDR), gunakan orWhere
+                        if (!is_null($maxBudgetIdr)) {
+                            $query->orWhere('selling_price_usd', '<=', $maxBudgetUsd);
+                        } else {
+                            $query->where('selling_price_usd', '<=', $maxBudgetUsd);
+                        }
+                    }
+                })
                 ->get();
 
             // Kelompokkan properti berdasarkan region
@@ -85,7 +98,10 @@ class ProspectController extends Controller
                 $regionProps = $groupedProperties[$lead->localization] ?? collect();
 
                 $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
-                    return $property->selling_price_idr <= $lead->cust_budget;
+                    return (
+                        ($property->selling_price_idr !== null && $property->selling_price_idr <= $lead->cust_budget) ||
+                        ($property->selling_price_usd !== null && $property->selling_price_usd <= $lead->cust_budget_usd)
+                    );
                 })->values(); // reset index
             }
         } else {
