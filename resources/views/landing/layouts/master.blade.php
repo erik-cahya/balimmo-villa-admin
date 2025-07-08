@@ -9,7 +9,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('landing') }}/assets/img/favicon.ico">
     <meta property="og:title" content="Balimmo Properties | Find your dream villa to buy in Bali" />
     <meta property="og:description" content="Discover your dream villa in Bali among our selection of exceptional properties. We guarantee you an investment 100% tailored to you by testing every villa." />
-    <meta property="og:image" content="https://balimmo-properties.com/assets/img/balimmo-property.jpg" />
+    <meta property="og:image" content="{{ asset('landing') }}/assets/img/balimmo-property.jpg" />
     <meta property="og:url" content="https://balimmo-properties.com/" />
     <meta property="og:site_name" content="Balimmo Properties" />
     <meta property="og:type" content="website" />
