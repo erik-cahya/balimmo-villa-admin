@@ -15,14 +15,14 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Customer Name</th>
                                 @role('Master')
-                                    <th scope="col">Leads From</th>
+                                    <th scope="col">Agent Name</th>
                                 @endrole
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Localization</th>
                                 <th scope="col">Property Selected</th>
+                                <th scope="col">Property Address</th>
+                                <th scope="col">Price</th>
                                 <th scope="col">Date</th>
 
-                                <th scope="col">Action</th>
+                                <th scope="col">Status / Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,42 +31,365 @@
                             <tr>
                                 <td>1</td>
                                 <td>
-                                    <div class="d-flex align-items-center gap-1">
-                                        <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
-                                        <div class="d-block">
-                                            <h5 class="text-dark fw-medium mb-0">Erik Cahya Pradana</h5>
-                                            <p class="fs-13 mb-0">erikcp38@gmail.com</p>
-                                        </div>
+                                    <div class="d-block" data-bs-toggle="modal" data-bs-target="#seeProperties-1" style="cursor: pointer">
+                                        <h5 class="text-dark fw-medium mb-0 " >Erik Cahya Pradana</h5>
+                                        <p class="fs-13 mb-0">erikcp38@gmail.com</p>
                                     </div>
                                 </td>
                                 @role('Master')
-                                    <td>
-                                        <span class="badge bg-primary text-light"> BLM-221-12</span>
-                                    </td>
-                                @endrole
                                 <td>
-                                    <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', '0895529231'), 4)) }}</p>
+                                    <div class="d-block">
+                                        <h5 class="text-dark fw-medium mb-0">Deva Mahayana</h5>
+                                        <p class="fs-13 mb-0">deva@balimmo-properties.com</p>
+                                    </div>
                                 </td>
-                                <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> Badung</td>
-
-                                <td><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> 20 Properties Selected</td>
-                                <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse('2002-2-3')->format('d F, Y') }}</td>
+                                @endrole
+                                <td><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> Villa Teratai Biru</td>
+                                <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> Jl Raya Canggu No 66</td>
                                 <td>
+                                    <div class="d-block">
+                                        <h5 class="text-dark fw-medium mb-0">IDR 4.000.000.000</h5>
+                                        <p class="fs-13 mb-0">USD 245.324</p>
+                                    </div>
+                                </td>
+                                
+
+                                
+                                <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse('2025-7-3')->format('d F, Y') }}</td>
+                                <td>
+                                    <!-- <button type="button" class="btn btn-xs btn-light" data-bs-toggle="modal" data-bs-target="#seeProperties-1">MOU/LOI Signed</button> -->
+
+                                    <button type="button" class="btn btn-xs btn-light" data-bs-toggle="offcanvas" data-bs-target="#rightOffcanvas" aria-controls="rightOffcanvas">MOU/LOI Signed</button>
 
                                     <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-1">
                                         <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                    </button>
-
-                                    <button type="button" class="btn btn-xs btn-secondary" data-bs-toggle="modal" data-bs-target="#editMatchProperties-1">
-                                        Make to Prospect
-                                    </button>
+                                    </button>                                    
 
                                     <input type="hidden" class="propertyId" value="1">
 
                                     <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="Erik Cahya Pradana"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+                                    
+                                    <!-- right offcanvas -->
+                                    <div class="offcanvas offcanvas-end" style="width: 40%" tabindex="-1" id="rightOffcanvas" aria-labelledby="rightOffcanvasLabel">
+                                        <div class="offcanvas-header">
+                                            <h3 class="offcanvas-title mt-0" id="rightOffcanvasLabel">Status</h3>
+                                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                        </div>
+                                        <div class="offcanvas-body w-full d-flex flex-column gap-4">
+                                            <div class="d-flex gap-1">
+                                                <ul class="list-group container">
+                                                    <li class="list-group-item active" aria-current="true">Client Information</li>
+                                                    <li class="list-group-item">Name : Erik Cahya Pradana</li>
+                                                    <li class="list-group-item">Email : erikcp38@gmail.com</li>
+                                                    <li class="list-group-item">Telephone : +62 323 2342 4322</li>
+                                                    <li class="list-group-item">Property : Villa Teratai Biru</li>                                                
+                                                </ul>
+                                                <ul class="list-group container">
+                                                    <li class="list-group-item active" aria-current="true">Agent Information</li>
+                                                    <li class="list-group-item">Name : Deva Mahayana</li>
+                                                    <li class="list-group-item">Email : deva@balimmo-properties.com</li>
+                                                    <li class="list-group-item">Telephone : +62 323 2342 4322</li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <table class="table table-centered">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Step</th>
+                                                        <th scope="col">Docs</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Step Progress Start -->
+                                                    <tr>
+                                                        <td>
+                                                            <span class="badge bg-success me-1">Done</span>
+                                                        </td>
+                                                        <td data-bs-toggle="collapse" data-bs-target="#MOULOISigned" aria-expanded="false" aria-controls="MOULOISigned" class="cursor-pointer">
+                                                            MOU/LOI Signed
+                                                        </td>
+                                                        <td class="container">
+                                                            <!-- File Uploaded (Downloadable) -->
+                                                            <button type="button" class="btn btn-xs btn-primary me-1">
+                                                                MOU/LOI Signed.pdf 
+                                                                <iconify-icon icon="tabler:download" class="fs-18 align-middle"></iconify-icon>
+                                                            </button>
+                                                        </td>
+                                                        <td class="d-flex gap-1">
+                                                            <!-- Button Upload File -->
+                                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#MOULOISigned" aria-expanded="false" aria-controls="MOULOISigned">
+                                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
+                                                            </button>      
+                                                            <!-- Button Change Status -->
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Status
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a class="dropdown-item" href="#">Pending</a></li>
+                                                                    <li><a class="dropdown-item" href="#">On Progress</a></li>
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                </ul>
+                                                            </div>                                                                                                                       
+                                                        </td>
+                                                    </tr>
 
-                                    <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-1">See Properties Select</button>
+                                                        <!-- Collapse Section For Add/Update File -->
+                                                        <tr class="collapse" id="MOULOISigned">                                                                
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td colspan="2" class="d-flex gap-1">
+                                                                <input type="file" name="doc-progress" class="form-control">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    Save
+                                                                </button>   
+                                                            </td>                                                        
+                                                        </tr>
+                                                    <!-- Step Progress End -->
 
+
+                                                    <!-- Step Progress Start -->
+                                                    <tr>
+                                                        <td>
+                                                            <span class="badge bg-warning me-1">On Progress</span>
+                                                        </td>
+                                                        <td data-bs-toggle="collapse" data-bs-target="#PPJBExecuted" aria-expanded="false" aria-controls="PPJBExecuted" class="cursor-pointer">
+                                                            PPJB Executed
+                                                        </td>
+                                                        <td class="container">
+                                                            <!-- File Uploaded (Downloadable) -->
+                                                            <button type="button" class="btn btn-xs btn-light me-1"
+                                                            data-bs-toggle="collapse" data-bs-target="#PPJBExecuted" aria-expanded="false" aria-controls="PPJBExecuted" class="cursor-pointer">
+                                                                No file choosen 
+                                                            </button>
+                                                        </td>
+                                                        <td class="d-flex gap-1">
+                                                            <!-- Button Upload File -->
+                                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#PPJBExecuted" aria-expanded="false" aria-controls="PPJBExecuted">
+                                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
+                                                            </button>      
+                                                            <!-- Button Change Status -->
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Status
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a class="dropdown-item" href="#">Pending</a></li>
+                                                                    <li><a class="dropdown-item" href="#">On Progress</a></li>
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                </ul>
+                                                            </div>                                                                                                                       
+                                                        </td>
+                                                    </tr>
+
+                                                        <!-- Collapse Section For Add/Update File -->
+                                                        <tr class="collapse" id="PPJBExecuted">                                                                
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td colspan="2" class="d-flex gap-1">
+                                                                <input type="file" name="doc-progress" class="form-control">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    Save
+                                                                </button>   
+                                                            </td>                                                        
+                                                        </tr>
+                                                    <!-- Step Progress End -->
+
+                                                    <!-- Step Progress Start -->
+                                                    <tr>
+                                                        <td>
+                                                            <span class="badge bg-danger me-1">Pending</span>
+                                                        </td>
+                                                        <td data-bs-toggle="collapse" data-bs-target="#DepositSecured" aria-expanded="false" aria-controls="DepositSecured" class="cursor-pointer">
+                                                            Deposit Secured
+                                                        </td>
+                                                        <td class="container">
+                                                            <!-- File Uploaded (Downloadable) -->
+                                                            <button type="button" class="btn btn-xs btn-light me-1"
+                                                            data-bs-toggle="collapse" data-bs-target="#DepositSecured" aria-expanded="false" aria-controls="DepositSecured" class="cursor-pointer">
+                                                                No file choosen 
+                                                            </button>
+                                                        </td>
+                                                        <td class="d-flex gap-1">
+                                                            <!-- Button Upload File -->
+                                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#DepositSecured" aria-expanded="false" aria-controls="DepositSecured">
+                                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
+                                                            </button>      
+                                                            <!-- Button Change Status -->
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Status
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a class="dropdown-item" href="#">Pending</a></li>
+                                                                    <li><a class="dropdown-item" href="#">On Progress</a></li>
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                </ul>
+                                                            </div>                                                                                                                       
+                                                        </td>
+                                                    </tr>
+
+                                                        <!-- Collapse Section For Add/Update File -->
+                                                        <tr class="collapse" id="DepositSecured">                                                                
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td colspan="2" class="d-flex gap-1">
+                                                                <input type="file" name="doc-progress" class="form-control">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    Save
+                                                                </button>   
+                                                            </td>                                                        
+                                                        </tr>
+                                                    <!-- Step Progress End -->
+
+                                                    <!-- Step Progress Start -->
+                                                    <tr>
+                                                        <td>
+                                                            <span class="badge bg-danger me-1">Pending</span>
+                                                        </td>
+                                                        <td data-bs-toggle="collapse" data-bs-target="#DueDiligence" aria-expanded="false" aria-controls="DueDiligence" class="cursor-pointer">
+                                                            Due Diligence 
+                                                        </td>
+                                                        <td class="container">
+                                                            <!-- File Uploaded (Downloadable) -->
+                                                            <button type="button" class="btn btn-xs btn-light me-1"
+                                                            data-bs-toggle="collapse" data-bs-target="#DueDiligence" aria-expanded="false" aria-controls="DueDiligence" class="cursor-pointer">
+                                                                No file choosen 
+                                                            </button>
+                                                        </td>
+                                                        <td class="d-flex gap-1">
+                                                            <!-- Button Upload File -->
+                                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#DueDiligence" aria-expanded="false" aria-controls="DueDiligence">
+                                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
+                                                            </button>      
+                                                            <!-- Button Change Status -->
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Status
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a class="dropdown-item" href="#">Pending</a></li>
+                                                                    <li><a class="dropdown-item" href="#">On Progress</a></li>
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                </ul>
+                                                            </div>                                                                                                                       
+                                                        </td>
+                                                    </tr>
+
+                                                        <!-- Collapse Section For Add/Update File -->
+                                                        <tr class="collapse" id="DueDiligence">                                                                
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td colspan="2" class="d-flex gap-1">
+                                                                <input type="file" name="doc-progress" class="form-control">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    Save
+                                                                </button>   
+                                                            </td>                                                        
+                                                        </tr>
+                                                    <!-- Step Progress End -->
+
+                                                    <!-- Step Progress Start -->
+                                                    <tr>
+                                                        <td>
+                                                            <span class="badge bg-danger me-1">Pending</span>
+                                                        </td>
+                                                        <td data-bs-toggle="collapse" data-bs-target="#AJBSigned" aria-expanded="false" aria-controls="AJBSigned" class="cursor-pointer">
+                                                            AJB Signed 
+                                                        </td>
+                                                        <td class="container">
+                                                            <!-- File Uploaded (Downloadable) -->
+                                                            <button type="button" class="btn btn-xs btn-light me-1"
+                                                            data-bs-toggle="collapse" data-bs-target="#AJBSigned" aria-expanded="false" aria-controls="AJBSigned" class="cursor-pointer">
+                                                                No file choosen 
+                                                            </button>
+                                                        </td>
+                                                        <td class="d-flex gap-1">
+                                                            <!-- Button Upload File -->
+                                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#AJBSigned" aria-expanded="false" aria-controls="AJBSigned">
+                                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
+                                                            </button>      
+                                                            <!-- Button Change Status -->
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Status
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a class="dropdown-item" href="#">Pending</a></li>
+                                                                    <li><a class="dropdown-item" href="#">On Progress</a></li>
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                </ul>
+                                                            </div>                                                                                                                       
+                                                        </td>
+                                                    </tr>
+
+                                                        <!-- Collapse Section For Add/Update File -->
+                                                        <tr class="collapse" id="AJBSigned">                                                                
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td colspan="2" class="d-flex gap-1">
+                                                                <input type="file" name="doc-progress" class="form-control">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    Save
+                                                                </button>   
+                                                            </td>                                                        
+                                                        </tr>
+                                                    <!-- Step Progress End -->
+
+                                                    <!-- Step Progress Start -->
+                                                    <tr>
+                                                        <td>
+                                                            <span class="badge bg-danger me-1">Pending</span>
+                                                        </td>
+                                                        <td data-bs-toggle="collapse" data-bs-target="#TransactionRegistered" aria-expanded="false" aria-controls="TransactionRegistered" class="cursor-pointer">
+                                                            Transaction Registered 
+                                                        </td>
+                                                        <td class="container">
+                                                            <!-- File Uploaded (Downloadable) -->
+                                                            <button type="button" class="btn btn-xs btn-light me-1"
+                                                            data-bs-toggle="collapse" data-bs-target="#TransactionRegistered" aria-expanded="false" aria-controls="TransactionRegistered" class="cursor-pointer">
+                                                                No file choosen 
+                                                            </button>
+                                                        </td>
+                                                        <td class="d-flex gap-1">
+                                                            <!-- Button Upload File -->
+                                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#TransactionRegistered" aria-expanded="false" aria-controls="TransactionRegistered">
+                                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
+                                                            </button>      
+                                                            <!-- Button Change Status -->
+                                                            <div class="dropdown">
+                                                                <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Status
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a class="dropdown-item" href="#">Pending</a></li>
+                                                                    <li><a class="dropdown-item" href="#">On Progress</a></li>
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                </ul>
+                                                            </div>                                                                                                                       
+                                                        </td>
+                                                    </tr>
+
+                                                        <!-- Collapse Section For Add/Update File -->
+                                                        <tr class="collapse" id="TransactionRegistered">                                                                
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td colspan="2" class="d-flex gap-1">
+                                                                <input type="file" name="doc-progress" class="form-control">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    Save
+                                                                </button>   
+                                                            </td>                                                        
+                                                        </tr>
+                                                    <!-- Step Progress End -->
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    
                                     <!-- Modal See Properties Select -->
                                     <div class="modal modal-xl fade" id="seeProperties-1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog">
