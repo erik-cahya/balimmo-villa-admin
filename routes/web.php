@@ -92,7 +92,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('clients/leads', [ClientController::class, 'dataFromLeads'])->name('client.fromLeads');
     Route::post('clients/offering', [ClientController::class, 'importFromOffering'])->name('client.fromOffering');
-    Route::resource('/clients', ClientController::class);
+
+
+    // Route::resource('/clients', ClientController::class);
 
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
     Route::post('localization/addRegion', [LocalizationController::class, 'addRegion'])->name('localization.addRegion')->middleware('role:Master');
@@ -112,6 +114,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/upload-temp-gallery', [PropertiesController::class, 'uploadTemp'])->name('gallery.upload.temp');
 
     Route::resource('/land', LandController::class);
+
+
+    Route::get('/clients', function () {
+        return view('admin.clients.index');
+    })->name('clients.index');
+
+    Route::get('/template', function () {
+        return view('admin.template.index');
+    });
 });
 
 Route::get('/clear/cache', function (Illuminate\Http\Request $request) {
