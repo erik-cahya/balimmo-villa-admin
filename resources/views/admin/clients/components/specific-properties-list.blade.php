@@ -27,22 +27,21 @@
                         </thead>
                         <tbody>
 
-
                             <tr>
                                 <td>1</td>
                                 <td>
                                     <div class="d-block" data-bs-toggle="modal" data-bs-target="#seeProperties-1" style="cursor: pointer">
-                                        <h5 class="text-dark fw-medium mb-0 " >Erik Cahya Pradana</h5>
+                                        <h5 class="text-dark fw-medium mb-0">Erik Cahya Pradana</h5>
                                         <p class="fs-13 mb-0">erikcp38@gmail.com</p>
                                     </div>
                                 </td>
                                 @role('Master')
-                                <td>
-                                    <div class="d-block">
-                                        <h5 class="text-dark fw-medium mb-0">Deva Mahayana</h5>
-                                        <p class="fs-13 mb-0">deva@balimmo-properties.com</p>
-                                    </div>
-                                </td>
+                                    <td>
+                                        <div class="d-block">
+                                            <h5 class="text-dark fw-medium mb-0">Deva Mahayana</h5>
+                                            <p class="fs-13 mb-0">deva@balimmo-properties.com</p>
+                                        </div>
+                                    </td>
                                 @endrole
                                 <td><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> Villa Teratai Biru</td>
                                 <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> Jl Raya Canggu No 66</td>
@@ -52,9 +51,7 @@
                                         <p class="fs-13 mb-0">USD 245.324</p>
                                     </div>
                                 </td>
-                                
 
-                                
                                 <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse('2025-7-3')->format('d F, Y') }}</td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-xs btn-light" data-bs-toggle="modal" data-bs-target="#seeProperties-1">MOU/LOI Signed</button> -->
@@ -63,26 +60,26 @@
 
                                     <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-1">
                                         <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                    </button>                                    
+                                    </button>
 
                                     <input type="hidden" class="propertyId" value="1">
 
                                     <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="Erik Cahya Pradana"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
-                                    
+
                                     <!-- right offcanvas -->
                                     <div class="offcanvas offcanvas-end" style="width: 40%" tabindex="-1" id="rightOffcanvas" aria-labelledby="rightOffcanvasLabel">
                                         <div class="offcanvas-header">
                                             <h3 class="offcanvas-title mt-0" id="rightOffcanvasLabel">Status</h3>
                                             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                         </div>
-                                        <div class="offcanvas-body w-full d-flex flex-column gap-4">
+                                        <div class="offcanvas-body d-flex flex-column w-full gap-4">
                                             <div class="d-flex gap-1">
                                                 <ul class="list-group container">
                                                     <li class="list-group-item active" aria-current="true">Client Information</li>
                                                     <li class="list-group-item">Name : Erik Cahya Pradana</li>
                                                     <li class="list-group-item">Email : erikcp38@gmail.com</li>
                                                     <li class="list-group-item">Telephone : +62 323 2342 4322</li>
-                                                    <li class="list-group-item">Property : Villa Teratai Biru</li>                                                
+                                                    <li class="list-group-item">Property : Villa Teratai Biru</li>
                                                 </ul>
                                                 <ul class="list-group container">
                                                     <li class="list-group-item active" aria-current="true">Agent Information</li>
@@ -91,8 +88,8 @@
                                                     <li class="list-group-item">Telephone : +62 323 2342 4322</li>
                                                 </ul>
                                             </div>
-                                            
-                                            <table class="table table-centered">
+
+                                            <table class="table-centered table">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Status</th>
@@ -113,7 +110,7 @@
                                                         <td class="container">
                                                             <!-- File Uploaded (Downloadable) -->
                                                             <button type="button" class="btn btn-xs btn-primary me-1">
-                                                                MOU/LOI Signed.pdf 
+                                                                MOU/LOI Signed.pdf
                                                                 <iconify-icon icon="tabler:download" class="fs-18 align-middle"></iconify-icon>
                                                             </button>
                                                         </td>
@@ -121,7 +118,7 @@
                                                             <!-- Button Upload File -->
                                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#MOULOISigned" aria-expanded="false" aria-controls="MOULOISigned">
                                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                                            </button>      
+                                                            </button>
                                                             <!-- Button Change Status -->
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -130,25 +127,24 @@
                                                                 <ul class="dropdown-menu">
                                                                     <li><a class="dropdown-item" href="#">Pending</a></li>
                                                                     <li><a class="dropdown-item" href="#">On Progress</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>
                                                                 </ul>
-                                                            </div>                                                                                                                       
+                                                            </div>
                                                         </td>
                                                     </tr>
 
-                                                        <!-- Collapse Section For Add/Update File -->
-                                                        <tr class="collapse" id="MOULOISigned">                                                                
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td colspan="2" class="d-flex gap-1">
-                                                                <input type="file" name="doc-progress" class="form-control">
-                                                                <button type="button" class="btn btn-primary">
-                                                                    Save
-                                                                </button>   
-                                                            </td>                                                        
-                                                        </tr>
+                                                    <!-- Collapse Section For Add/Update File -->
+                                                    <tr class="collapse" id="MOULOISigned">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2" class="d-flex gap-1">
+                                                            <input type="file" name="doc-progress" class="form-control">
+                                                            <button type="button" class="btn btn-primary">
+                                                                Save
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                     <!-- Step Progress End -->
-
 
                                                     <!-- Step Progress Start -->
                                                     <tr>
@@ -161,15 +157,15 @@
                                                         <td class="container">
                                                             <!-- File Uploaded (Downloadable) -->
                                                             <button type="button" class="btn btn-xs btn-light me-1"
-                                                            data-bs-toggle="collapse" data-bs-target="#PPJBExecuted" aria-expanded="false" aria-controls="PPJBExecuted" class="cursor-pointer">
-                                                                No file choosen 
+                                                                data-bs-toggle="collapse" data-bs-target="#PPJBExecuted" aria-expanded="false" aria-controls="PPJBExecuted" class="cursor-pointer">
+                                                                No file choosen
                                                             </button>
                                                         </td>
                                                         <td class="d-flex gap-1">
                                                             <!-- Button Upload File -->
                                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#PPJBExecuted" aria-expanded="false" aria-controls="PPJBExecuted">
                                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                                            </button>      
+                                                            </button>
                                                             <!-- Button Change Status -->
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -178,23 +174,23 @@
                                                                 <ul class="dropdown-menu">
                                                                     <li><a class="dropdown-item" href="#">Pending</a></li>
                                                                     <li><a class="dropdown-item" href="#">On Progress</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>
                                                                 </ul>
-                                                            </div>                                                                                                                       
+                                                            </div>
                                                         </td>
                                                     </tr>
 
-                                                        <!-- Collapse Section For Add/Update File -->
-                                                        <tr class="collapse" id="PPJBExecuted">                                                                
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td colspan="2" class="d-flex gap-1">
-                                                                <input type="file" name="doc-progress" class="form-control">
-                                                                <button type="button" class="btn btn-primary">
-                                                                    Save
-                                                                </button>   
-                                                            </td>                                                        
-                                                        </tr>
+                                                    <!-- Collapse Section For Add/Update File -->
+                                                    <tr class="collapse" id="PPJBExecuted">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2" class="d-flex gap-1">
+                                                            <input type="file" name="doc-progress" class="form-control">
+                                                            <button type="button" class="btn btn-primary">
+                                                                Save
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                     <!-- Step Progress End -->
 
                                                     <!-- Step Progress Start -->
@@ -208,15 +204,15 @@
                                                         <td class="container">
                                                             <!-- File Uploaded (Downloadable) -->
                                                             <button type="button" class="btn btn-xs btn-light me-1"
-                                                            data-bs-toggle="collapse" data-bs-target="#DepositSecured" aria-expanded="false" aria-controls="DepositSecured" class="cursor-pointer">
-                                                                No file choosen 
+                                                                data-bs-toggle="collapse" data-bs-target="#DepositSecured" aria-expanded="false" aria-controls="DepositSecured" class="cursor-pointer">
+                                                                No file choosen
                                                             </button>
                                                         </td>
                                                         <td class="d-flex gap-1">
                                                             <!-- Button Upload File -->
                                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#DepositSecured" aria-expanded="false" aria-controls="DepositSecured">
                                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                                            </button>      
+                                                            </button>
                                                             <!-- Button Change Status -->
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -225,23 +221,23 @@
                                                                 <ul class="dropdown-menu">
                                                                     <li><a class="dropdown-item" href="#">Pending</a></li>
                                                                     <li><a class="dropdown-item" href="#">On Progress</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>
                                                                 </ul>
-                                                            </div>                                                                                                                       
+                                                            </div>
                                                         </td>
                                                     </tr>
 
-                                                        <!-- Collapse Section For Add/Update File -->
-                                                        <tr class="collapse" id="DepositSecured">                                                                
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td colspan="2" class="d-flex gap-1">
-                                                                <input type="file" name="doc-progress" class="form-control">
-                                                                <button type="button" class="btn btn-primary">
-                                                                    Save
-                                                                </button>   
-                                                            </td>                                                        
-                                                        </tr>
+                                                    <!-- Collapse Section For Add/Update File -->
+                                                    <tr class="collapse" id="DepositSecured">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2" class="d-flex gap-1">
+                                                            <input type="file" name="doc-progress" class="form-control">
+                                                            <button type="button" class="btn btn-primary">
+                                                                Save
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                     <!-- Step Progress End -->
 
                                                     <!-- Step Progress Start -->
@@ -250,20 +246,20 @@
                                                             <span class="badge bg-danger me-1">Pending</span>
                                                         </td>
                                                         <td data-bs-toggle="collapse" data-bs-target="#DueDiligence" aria-expanded="false" aria-controls="DueDiligence" class="cursor-pointer">
-                                                            Due Diligence 
+                                                            Due Diligence
                                                         </td>
                                                         <td class="container">
                                                             <!-- File Uploaded (Downloadable) -->
                                                             <button type="button" class="btn btn-xs btn-light me-1"
-                                                            data-bs-toggle="collapse" data-bs-target="#DueDiligence" aria-expanded="false" aria-controls="DueDiligence" class="cursor-pointer">
-                                                                No file choosen 
+                                                                data-bs-toggle="collapse" data-bs-target="#DueDiligence" aria-expanded="false" aria-controls="DueDiligence" class="cursor-pointer">
+                                                                No file choosen
                                                             </button>
                                                         </td>
                                                         <td class="d-flex gap-1">
                                                             <!-- Button Upload File -->
                                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#DueDiligence" aria-expanded="false" aria-controls="DueDiligence">
                                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                                            </button>      
+                                                            </button>
                                                             <!-- Button Change Status -->
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -272,23 +268,23 @@
                                                                 <ul class="dropdown-menu">
                                                                     <li><a class="dropdown-item" href="#">Pending</a></li>
                                                                     <li><a class="dropdown-item" href="#">On Progress</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>
                                                                 </ul>
-                                                            </div>                                                                                                                       
+                                                            </div>
                                                         </td>
                                                     </tr>
 
-                                                        <!-- Collapse Section For Add/Update File -->
-                                                        <tr class="collapse" id="DueDiligence">                                                                
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td colspan="2" class="d-flex gap-1">
-                                                                <input type="file" name="doc-progress" class="form-control">
-                                                                <button type="button" class="btn btn-primary">
-                                                                    Save
-                                                                </button>   
-                                                            </td>                                                        
-                                                        </tr>
+                                                    <!-- Collapse Section For Add/Update File -->
+                                                    <tr class="collapse" id="DueDiligence">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2" class="d-flex gap-1">
+                                                            <input type="file" name="doc-progress" class="form-control">
+                                                            <button type="button" class="btn btn-primary">
+                                                                Save
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                     <!-- Step Progress End -->
 
                                                     <!-- Step Progress Start -->
@@ -297,20 +293,20 @@
                                                             <span class="badge bg-danger me-1">Pending</span>
                                                         </td>
                                                         <td data-bs-toggle="collapse" data-bs-target="#AJBSigned" aria-expanded="false" aria-controls="AJBSigned" class="cursor-pointer">
-                                                            AJB Signed 
+                                                            AJB Signed
                                                         </td>
                                                         <td class="container">
                                                             <!-- File Uploaded (Downloadable) -->
                                                             <button type="button" class="btn btn-xs btn-light me-1"
-                                                            data-bs-toggle="collapse" data-bs-target="#AJBSigned" aria-expanded="false" aria-controls="AJBSigned" class="cursor-pointer">
-                                                                No file choosen 
+                                                                data-bs-toggle="collapse" data-bs-target="#AJBSigned" aria-expanded="false" aria-controls="AJBSigned" class="cursor-pointer">
+                                                                No file choosen
                                                             </button>
                                                         </td>
                                                         <td class="d-flex gap-1">
                                                             <!-- Button Upload File -->
                                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#AJBSigned" aria-expanded="false" aria-controls="AJBSigned">
                                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                                            </button>      
+                                                            </button>
                                                             <!-- Button Change Status -->
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -319,23 +315,23 @@
                                                                 <ul class="dropdown-menu">
                                                                     <li><a class="dropdown-item" href="#">Pending</a></li>
                                                                     <li><a class="dropdown-item" href="#">On Progress</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>
                                                                 </ul>
-                                                            </div>                                                                                                                       
+                                                            </div>
                                                         </td>
                                                     </tr>
 
-                                                        <!-- Collapse Section For Add/Update File -->
-                                                        <tr class="collapse" id="AJBSigned">                                                                
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td colspan="2" class="d-flex gap-1">
-                                                                <input type="file" name="doc-progress" class="form-control">
-                                                                <button type="button" class="btn btn-primary">
-                                                                    Save
-                                                                </button>   
-                                                            </td>                                                        
-                                                        </tr>
+                                                    <!-- Collapse Section For Add/Update File -->
+                                                    <tr class="collapse" id="AJBSigned">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2" class="d-flex gap-1">
+                                                            <input type="file" name="doc-progress" class="form-control">
+                                                            <button type="button" class="btn btn-primary">
+                                                                Save
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                     <!-- Step Progress End -->
 
                                                     <!-- Step Progress Start -->
@@ -344,20 +340,20 @@
                                                             <span class="badge bg-danger me-1">Pending</span>
                                                         </td>
                                                         <td data-bs-toggle="collapse" data-bs-target="#TransactionRegistered" aria-expanded="false" aria-controls="TransactionRegistered" class="cursor-pointer">
-                                                            Transaction Registered 
+                                                            Transaction Registered
                                                         </td>
                                                         <td class="container">
                                                             <!-- File Uploaded (Downloadable) -->
                                                             <button type="button" class="btn btn-xs btn-light me-1"
-                                                            data-bs-toggle="collapse" data-bs-target="#TransactionRegistered" aria-expanded="false" aria-controls="TransactionRegistered" class="cursor-pointer">
-                                                                No file choosen 
+                                                                data-bs-toggle="collapse" data-bs-target="#TransactionRegistered" aria-expanded="false" aria-controls="TransactionRegistered" class="cursor-pointer">
+                                                                No file choosen
                                                             </button>
                                                         </td>
                                                         <td class="d-flex gap-1">
                                                             <!-- Button Upload File -->
                                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="collapse" data-bs-target="#TransactionRegistered" aria-expanded="false" aria-controls="TransactionRegistered">
                                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                                            </button>      
+                                                            </button>
                                                             <!-- Button Change Status -->
                                                             <div class="dropdown">
                                                                 <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -366,30 +362,30 @@
                                                                 <ul class="dropdown-menu">
                                                                     <li><a class="dropdown-item" href="#">Pending</a></li>
                                                                     <li><a class="dropdown-item" href="#">On Progress</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Done</a></li>                                                                    
+                                                                    <li><a class="dropdown-item" href="#">Done</a></li>
                                                                 </ul>
-                                                            </div>                                                                                                                       
+                                                            </div>
                                                         </td>
                                                     </tr>
 
-                                                        <!-- Collapse Section For Add/Update File -->
-                                                        <tr class="collapse" id="TransactionRegistered">                                                                
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td colspan="2" class="d-flex gap-1">
-                                                                <input type="file" name="doc-progress" class="form-control">
-                                                                <button type="button" class="btn btn-primary">
-                                                                    Save
-                                                                </button>   
-                                                            </td>                                                        
-                                                        </tr>
+                                                    <!-- Collapse Section For Add/Update File -->
+                                                    <tr class="collapse" id="TransactionRegistered">
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td colspan="2" class="d-flex gap-1">
+                                                            <input type="file" name="doc-progress" class="form-control">
+                                                            <button type="button" class="btn btn-primary">
+                                                                Save
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                     <!-- Step Progress End -->
                                                 </tbody>
                                             </table>
 
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Modal See Properties Select -->
                                     <div class="modal modal-xl fade" id="seeProperties-1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -406,7 +402,7 @@
                                                         <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-10 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', '08901903123'), 4)) }}</span>
                                                     </div>
                                                     <div class="table-responsive">
-                                                        <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-1">
+                                                        <table class="table-hover table-centered table text-nowrap" id="seePropertiesDetailTable-1">
                                                             <thead class="table-light">
                                                                 <tr>
                                                                     <th scope="col">No</th>
@@ -511,8 +507,6 @@
                                         </div>
                                     </div> --}}
                                     {{-- Modal Make Prospect --}}
-
-
 
                                 </td>
 
