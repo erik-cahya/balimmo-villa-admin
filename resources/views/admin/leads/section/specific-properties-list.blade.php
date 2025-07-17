@@ -15,12 +15,12 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Customer Name</th>
                                 @role('Master')
-                                    <th scope="col">Leads From</th>
+                                    <th scope="col">Assigned to</th>
                                 @endrole
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">Localization</th>
-                                <th scope="col">Property Selected</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Property</th>
+                                <th scope="col">Ready to buy on</th>
 
                                 <th scope="col">Action</th>
                             </tr>
@@ -36,9 +36,12 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <div class="d-flex align-items-center gap-1">
-                                            <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
+                                            <!-- <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1"> -->
                                             <div class="d-block">
-                                                <h5 class="text-dark fw-medium mb-0">{{ $customerData->cust_name }}</h5>
+                                                <h5 class="text-dark fw-medium mb-0" 
+                                                data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}" >
+                                                    {{ $customerData->cust_name }}
+                                                </h5>
                                                 <p class="fs-13 mb-0">{{ $customer }}</p>
                                             </div>
                                         </div>
@@ -53,23 +56,23 @@
                                     </td>
                                     <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $customerData->localization }}</td>
 
-                                    <td><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> {{ $cst->count() }} Properties Selected</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer"><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> {{ $cst->count() }} Properties </td>
                                     <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
                                     <td>
 
-                                        <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $customerData->id }}">
+                                        <!-- <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $customerData->id }}">
                                             <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                        </button>
+                                        </button> -->
 
-                                        <button type="button" class="btn btn-xs btn-secondary" data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}">
+                                        <!-- <button type="button" class="btn btn-xs btn-secondary" data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}">
                                             Make to Prospect
-                                        </button>
+                                        </button> -->
 
                                         <input type="hidden" class="propertyId" value="{{ $customer }}">
 
                                         <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
 
-                                        <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties Select</button>
+                                        <!-- <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}">See Properties Select</button> -->
 
                                         <!-- Modal -->
                                         <div class="modal modal-xl fade" id="seeProperties-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -80,11 +83,19 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5>
                                                         <div class="d-flex gap-2">
-                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-10 align-middle"></iconify-icon> {{ $customerData->cust_name }}</span>
-                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-10 align-middle"></iconify-icon> {{ $customerData->cust_email }}</span>
-                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-10 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</span>
-                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-10 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</span>
+                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $customerData->cust_name }}</span>
+                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $customerData->cust_email }}</span>
+                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</span>
+                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</span>                                                            
+                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                                IDR {{ number_format($customerData->cust_budget, 0, ',', '.') }}
+                                                                |
+                                                                USD {{ number_format($customerData->cust_budget_usd, 2, ',', '.') }}
+                                                            </span>
+                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> 2</span>
+                                                            <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:shower-outline" class="fs-16 align-middle"></iconify-icon> 2</span>
                                                         </div>
                                                         <div class="table-responsive">
                                                             <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
@@ -92,11 +103,13 @@
                                                                     <tr>
                                                                         <th scope="col">No</th>
                                                                         <th scope="col">Property Name</th>
+                                                                        <th scope="col">Agent</th>
                                                                         <th scope="col">Property Address</th>
-                                                                        <th scope="col">Require Customer Bedroom</th>
+                                                                        <th scope="col">Price</th>
+                                                                        <!-- <th scope="col">Require Customer Bedroom</th>
                                                                         <th scope="col">Customer Budget</th>
                                                                         <th scope="col">Customer USD</th>
-                                                                        <th scope="col">Customer Message</th>
+                                                                        <th scope="col">Customer Message</th> -->
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -104,11 +117,21 @@
                                                                         <tr>
                                                                             <td>{{ $loop->iteration }}</td>
                                                                             <td>{{ $property->property_name }}</td>
+                                                                            <td>{{ $property->agent_code }}</td>
                                                                             <td>{{ $property->property_address . ' ' . $property->sub_region . ', ' . $property->region }}</td>
-                                                                            <td>{{ $property->require_bedroom }}</td>
+                                                                            <td>
+                                                                                <div class="d-block">
+                                                                                    <h5 class="text-dark fw-medium mb-0" 
+                                                                                    data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}" >
+                                                                                        IDR 4.000.000.000
+                                                                                    </h5>
+                                                                                    <p class="fs-13 mb-0">USD 400.000</p>
+                                                                                </div>
+                                                                            </td>
+                                                                            <!-- <td>{{ $property->require_bedroom }}</td>
                                                                             <td>IDR {{ number_format($property->cust_budget, 0, ',', '.') }}</td>
-                                                                            <td>USD {{ number_format($property->cust_budget_usd, 2, ',', '.') }}</td>
-                                                                            <td>{{ $property->message }}</td>
+                                                                            <td>USD {{ number_format($property->cust_budget_usd, 2, ',', '.') }}</td> -->
+                                                                            <!-- <td>{{ $property->message }}</td> -->
                                                                         </tr>
                                                                     @endforeach
                                                                 </tbody>
@@ -123,7 +146,8 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        {{-- <button type="submit" class="btn btn-primary">Change Password</button> --}}
+                                                        <button type="submit" class="btn btn-primary">Save to Prospect</button>
+                                                        
                                                     </div>
 
                                                     @if ($errors->any())

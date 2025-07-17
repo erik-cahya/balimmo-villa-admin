@@ -40,7 +40,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <div class="d-flex align-items-center gap-1">
-                                                <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
+                                                <!-- <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1"> -->
                                                 <div class="d-block">
                                                     <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->cust_name }}</h5>
                                                     <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p>
