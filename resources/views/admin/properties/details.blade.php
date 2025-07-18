@@ -35,7 +35,7 @@
                 <div class="page-title-box">
                     <h4 class="fw-semibold mb-0">Property Overview</h4>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Real Estate</a></li>
+                        <li class="breadcrumb-item"><a href="/properties">Data Listing</a></li>
                         <li class="breadcrumb-item active">Property Overview</li>
                     </ol>
                 </div>
@@ -45,9 +45,241 @@
 
         <div class="row">
 
-            <div class="col-xl-8 col-lg-5">
+            <div class="col-xl-7 col-lg-7">
 
-                @if (Auth::user()->role === 'Master')
+                <!-- Data count grid -->
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <span>Person interest</span>
+                                    <h3 class="mb-0">64</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <span>Visit done</span>
+                                    <h3 class="mb-0">12</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <span>Offers</span>
+                                    <h3 class="mb-0">2</h3>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>                
+                
+                <!-- Villa Detail Card Start -->
+                <div class="col-12">
+                    <div class="card">                     
+                        <div class="card-body">
+                            <div>
+                                <!-- Villa Name -->
+                                <div class="d-flex align-items-center gap-2 mb-3">
+                                    <h3 class="fw-medium text-capitalize mb-0">{{ $data_properties->property_name }}</h3>
+                                    <div>
+                                        @php
+                                            if ($data_properties->type_acceptance == 'pending') {
+                                                $className = 'bg-warning';
+                                            } elseif ($data_properties->type_acceptance == 'accept') {
+                                                $className = 'bg-success';
+                                            } else {
+                                                $className = 'bg-danger';
+                                            }
+                                        @endphp
+                                        <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_acceptance }}</span>
+                                    </div>
+                                    <div>
+                                        @php
+                                            if ($data_properties->type_mandate == 'Essentials Mandate') {
+                                                $className = 'bg-warning';                                           
+                                            } else {
+                                                $className = 'bg-secondary';
+                                            }
+                                        @endphp
+                                        <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_mandate }}</span>
+                                    </div>
+                                    <!-- <div class="">
+                                        @if (Auth::user()->role === 'Master')                                    
+                                            <form method="POST" action="{{ route('properties.changeAcceptance', $data_properties->property_slug) }}" class="d-flex w-100 align-items-center flex-wrap gap-2">
+                                                @csrf
+                                                <x-form-select className="w-100" name="type_acceptance" label="" :options="['pending', 'accept', 'decline']" :selected="old('type_acceptance', $data_properties->type_acceptance ?? '')" />
+                                                <button type="submit" class="btn btn-primary">Change</button>
+                                            </form>                                            
+                                        @endif                                        
+                                    </div> -->
+                                    
+                                </div>
+                                <!-- Villa Detail Information -->
+                                <div class="row">
+                                    <div class="col lg-6">
+                                        <p class="mb-2"><span class="fw-medium text-dark">Reference code</span><span class="mx-2">:</span>{{ $agent_data->reference_code }}</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Created date</span><span class="mx-2">:</span>{{ \Carbon\Carbon::parse($data_properties->created_at)->format('d F, Y') }}</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Sector</span><span class="mx-2">:</span>{{ $data_properties->region }}</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Address</span><span class="mx-2">:</span>{{ isset($data_properties->property_address) ? $data_properties->property_address : 'Data Not Found' }}</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Land area</span><span class="mx-2">:</span>{{ $data_properties->total_land_area }} M<sup>2</sup></p>
+                                                                            
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        @foreach ($property_owner as $owner)
+                                        <p class="mb-2"><span class="fw-medium text-dark">Owner {{ $owner->owner_order }}</span><span class="mx-2">:</span>{{ $owner->first_name }} {{ $owner->last_name }}</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Email </span><span class="mx-2">:</span>{{ $owner->email }}</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Number</span><span class="mx-2">:</span>{{ $owner->phone }}</p>
+                                        
+                                        @endforeach
+                                        <p class="mb-2"><span class="fw-medium text-dark">Agent</span><span class="mx-2">:</span>{{ $agent_data->name }}</p>
+                                       
+                                    </div>                                    
+                                </div>
+
+                                <!-- Land Information -->
+                                <div class="row ">
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="card mb-0 border shadow-none">
+                                            <div class="card-body">
+                                                <div class="row justify-content-between align-items-center">
+                                                    <div class="col-xl-12">                          
+                                                        <div class="">
+                                                            @if ($data_properties->legal_status === 'Freehold')
+                                                                {{-- Freehold --}}
+                                                                <h4 class="card-title mb-2">Land Information :</h4>
+                                                                <p class="mb-2"><span class="fw-medium text-dark">Legal Status</span><span class="mx-2">:</span>{{ isset($data_properties->legal_status) ? $data_properties->legal_status : '-' }}</p>
+                                                                <p class="mb-2"><span class="fw-medium text-dark">Certificate Name</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_name : '-' }}</p>
+                                                                <p class="mb-2"><span class="fw-medium text-dark">Certificate Number</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_number : '-' }}</p>
+                                                                <p class="mb-0"><span class="fw-medium text-dark">Purchase Date</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_date) ? $data_properties->purchase_date : '-' }}</p>
+
+                                                                <div class="d-flex align-items-center mt-3 flex-wrap gap-2">
+                                                                    @if ($data_properties->green_zone == 1)
+                                                                        <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Green Zone</span>
+                                                                    @endif
+
+                                                                    @if ($data_properties->yellow_zone == 1)
+                                                                        <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Yellow Zone</span>
+                                                                    @endif
+
+                                                                    @if ($data_properties->red_zone == 1)
+                                                                        <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Red Zone</span>
+                                                                    @endif
+                                                                </div>
+                                                            @else
+                                                                {{-- Leasehold --}}
+                                                                <div class="row">
+                                                                    <div class="col lg-6">
+                                                                        <h4 class="card-title mb-2">Land Information :</h4>
+
+                                                                        <p class="mb-2"><span class="fw-medium text-dark">Legal Status</span><span class="mx-2">:</span>{{ isset($data_properties->legal_status) ? $data_properties->legal_status : '-' }}</p>
+                                                                        <p class="mb-2"><span class="fw-medium text-dark">Contract Holder Name</span><span class="mx-2">:</span>{{ isset($data_properties->holder_name) ? $data_properties->holder_name : '-' }}</p>
+                                                                        <p class="mb-2"><span class="fw-medium text-dark">Contract Number</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_number : '-' }}</p>
+                                                                        <p class="mb-2"><span class="fw-medium text-dark">Start Date</span><span class="mx-2">:</span>{{ isset($data_properties->start_date) ? $data_properties->start_date : '-' }}</p>
+                                                                        <p class="mb-0"><span class="fw-medium text-dark">End Date</span><span class="mx-2">:</span>{{ isset($data_properties->end_date) ? $data_properties->end_date : '-' }}</p>
+                                                                    </div>
+
+                                                                    <div class="col-lg-6">
+                                                                        <h4 class="card-title mb-2">Extension Details :</h4>
+                                                                        <p class="mb-2"><span class="fw-medium text-dark">Negotiation Extension Cost</span><span class="mx-2">:</span>{{ isset($data_properties->extension_cost) ? $data_properties->extension_cost : '-' }}</p>
+                                                                        <p class="mb-2"><span class="fw-medium text-dark">Purchase Cost</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_cost) ? $data_properties->purchase_cost : '-' }}</p>
+                                                                        <p class="mb-2"><span class="fw-medium text-dark">Deadline for Payment to Secure Rate</span><span class="mx-2">:</span>{{ isset($data_properties->deadline_payment) ? $data_properties->deadline_payment : '-' }}</p>
+
+                                                                        <div class="d-flex align-items-center mt-3 flex-wrap gap-2">
+                                                                            @if ($data_properties->green_zone == 1)
+                                                                                <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Green Zone</span>
+                                                                            @endif
+
+                                                                            @if ($data_properties->yellow_zone == 1)
+                                                                                <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Yellow Zone</span>
+                                                                            @endif
+
+                                                                            @if ($data_properties->red_zone == 1)
+                                                                                <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Red Zone</span>
+                                                                            @endif
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Villa Detail Card End -->
+
+                <!-- Rental Yield Card -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Rental Yield</h4>
+                            <div class="row">
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Average Nightly Rate</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Average Occupancy Rate (%) </span><span class="mx-2">:</span>{{ $data_properties->avg_occupancy_rate }} %</p>
+
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Months Rented per Year *</span><span class="mx-2">:</span>{{ $data_properties->months_rented }} Month</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Annual Turnover</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->annual_turnover, 2, ',', '.') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+
+                <!-- Sale Price & Conditions Card -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Sale Price & Conditions</h4>
+                            <div class="row">
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Desired Selling Price (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Desired Selling Price (USD)</span><span class="mx-2">:</span>$ {{ number_format($data_properties->selling_price_usd, 2, ',', '.') }}</p>
+
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Commision Ammount (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->commision_ammount_idr, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Commision Ammount (USD)</span><span class="mx-2">:</span>USD {{ number_format($data_properties->commision_ammount_usd, 2, ',', '.') }}</p>
+
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net Seller price (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->net_seller_idr, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net Seller price (USD)</span><span class="mx-2">:</span>USD {{ number_format($data_properties->net_seller_usd, 2, ',', '.') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property File Card -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>Property File</h4>
+                            <div class="d-flex flex-wrap gap-2">
+                                @foreach ($attachment as $key => $value)
+                                    @if ($value->name !== 'url_virtual_tour' && $value->name !== 'url_lifestyle' && $value->name !== 'url_experience')
+                                        @if ($value->path_attachment !== null)
+                                            <a href="{{ asset('admin/attachment/' . $data_properties->property_slug . '/' . $value->path_attachment) }}" class="text-dark stretched-link d-flex bg-light-subtle align-items-center position-relative gap-1 rounded border p-2 text-start">
+                                                <iconify-icon icon="ph:file-fill" class="text-danger fs-18"></iconify-icon>
+                                                <h4 class="fs-14" style="margin-bottom: -1px !important">{{ $value->path_attachment }}</h4>
+                                                <i class="ri-download-cloud-line fs-16 text-muted"></i>
+                                            </a>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- @if (Auth::user()->role === 'Master')
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
@@ -290,11 +522,122 @@
                         </div>
 
                     </div>
-                </div>
+                </div> -->
             </div>
 
-            <div class="col-xl-4 col-lg-5">
-                {{-- Agent Details --}}
+            <div class="col-xl-5 col-lg-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body"> 
+
+                            <!-- Gallery Data Start -->
+                            <div class="row mb-1">
+                                <h4>Gallery</h4>
+                                <div class="row">
+                                    @foreach ($image_gallery as $gallery)
+                                        <a href="{{ asset($gallery->image_path) }}" class="glightbox col-3 mb-3" data-gallery="property-gallery">
+                                            <img src="{{ asset($gallery->image_path) }}" class="w-100" style="border-radius:5px;">
+                                        </a>
+                                    @endforeach
+                                </div>
+                                
+                            </div>
+                            <!-- Gallery Data End -->
+
+                            <!-- Video Data Start -->
+                            <div class="row mb-1">
+                                <h4>Video</h4>
+                                @if (($experience !== null) | ($virtualTour !== null) | ($lifestyle !== null))
+                                
+                                    @if ($virtualTour !== null)
+                                        <div class="col-4">
+                                            <div class="ratio ratio-16x9">
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $virtualTour }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                            </div>
+                                            <span class="text-dark d-inline-block my-2">
+                                                <a href="https://www.youtube.com/embed/{{ $virtualTour }}">Visit Tour Video</a>
+                                            </span>
+                                        </div>
+                                    @endif
+                                    
+                                    @if ($experience !== null)
+                                        <div class="col-4">                                            
+                                            <div class="ratio ratio-16x9">
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $experience }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                            </div>
+                                            <span class="text-dark d-inline-block my-2">
+                                                <a href="https://www.youtube.com/embed/{{ $experience }}">Experience Video</a>
+                                            </span>
+                                        </div>
+                                    @endif                                
+
+                                    @if ($lifestyle !== null)
+                                        <div class="col-4">
+                                            <div class="ratio ratio-16x9">
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $lifestyle }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                            </div>
+                                            <span class="text-dark d-inline-block my-2">
+                                                <a href="https://www.youtube.com/embed/{{ $lifestyle }}">Lifestyle Video</a>
+                                            </span>
+                                        </div>
+                                    @endif
+                          
+                                @endif
+                            </div>
+                            <!-- Video Data End -->
+
+                            <!-- Villa Description Start -->
+                            <div class="row mb-1">
+                                <h4>Description</h4>
+                                <p>{{ $data_properties->property_description }}</p>
+                            </div>
+                            <!-- Villa Description End -->
+
+                            <!-- Villa Characteristic Start -->
+                            <div class="bg-light-subtle rounded border border-dashed p-2 mb-3">
+                                <div class="row align-items-center g-2 text-center">
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:bed-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bedroom }} Bedroom
+                                        </p>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:bath-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bathroom }} Bathrooms
+                                        </p>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:scale-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->total_land_area }}m² area
+                                        </p>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:swimming-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->pool_area }}m² Pool Area
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Villa Characteristic End -->
+
+                            <!-- Villa Aminities Start -->
+                            <div class="row mb-3">
+                                <h4>Caracteristics :</h4>
+                                <div class="d-flex align-items-center mt-1 flex-wrap gap-2">
+                                    @foreach ($feature_list as $feature)
+                                        <span class="badge bg-light-subtle text-muted fw-medium fs-13 border px-2 py-1 text-center">{{ $feature->feature_name }}</span>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <!-- Villa Aminities End -->
+                             
+                            <div class="row d-flex align-items-center" style="justify-content: space-between !important ">
+                                <button type="submit" class="btn btn-primary col-4">Edit Property</button>
+                                <div class="col-6 ">
+                                    <h4 class="mb-0" style=" text-align: right">IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</h4>
+                                    <p class="mb-0" style=" text-align: right">$ {{ number_format($data_properties->selling_price_usd, 2, ',', '.') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- {{-- Agent Details --}}
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         <h4 class="card-title">Property Agent Details</h4>
@@ -410,7 +753,7 @@
 
                         </div>
                     </div>
-                @endif
+                @endif -->
 
             </div>
         </div>
