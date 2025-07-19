@@ -34,6 +34,31 @@
     </div>
 
     <div class="contact__property--form__input">
+
+        <div class="interior__amenities--area">
+            <h3 class="interior__amenitie--title">Type Asset</h3>
+            <div class="advance__apeartment--iner d-flex">
+                <ul class="interior__amenities--check d-flex list-unstyled flex-wrap">
+                    <li class="interior__amenities--check__list" style="width: 30rem">
+                        <label class="interior__amenities--check__label" for="villa">Villa</label>
+                        <input class="interior__amenities--check__input" id="villa" type="checkbox" name="type_asset" value="villa">
+                        <span class="interior__amenities--checkmark"></span>
+                    </li>
+                    <li class="interior__amenities--check__list" style="width: 30rem">
+                        <label class="interior__amenities--check__label" for="villa">Land</label>
+                        <input class="interior__amenities--check__input" id="villa" type="checkbox" name="type_asset" value="land">
+                        <span class="interior__amenities--checkmark"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        @error('type_asset')
+            <p class="text-danger my-2">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div class="contact__property--form__input">
         <label for="type_asset">Type Asset*</label>
 
         <div class="advance__search--items">
@@ -98,7 +123,7 @@
             <p class="text-danger my-2">{{ $message }}</p>
         @enderror
     </div>
-    
+
     <div id="budget_idr">
 
         <div class="contact__property--form__input">
@@ -120,7 +145,6 @@
         </div>
     </div>
 
-    
     <div id="budget_usd">
         <div class="contact__property--form__input">
             <label for="minimum_budget_usd">Minimum Budget USD*</label>
@@ -140,8 +164,6 @@
             @enderror
         </div>
     </div>
-
-
 
     <div class="contact__property--form__input">
         <label for="location">Location*</label>
