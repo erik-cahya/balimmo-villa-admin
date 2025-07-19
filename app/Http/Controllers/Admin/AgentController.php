@@ -62,10 +62,6 @@ class AgentController extends Controller
             $reference_code = 'BPA-' . Str::upper($request->initial_name) . '-' . $numberID;
         }
 
-        // $reference_code = $request->role == 'Master'
-        //     ? 'BPM-' . Str::upper($request->initial_name) . '-' . $numberID
-        //     : 'BPA-' . Str::upper($request->initial_name) . '-' . $numberID;
-
         // Cek apakah reference_code sudah digunakan
         if (User::where('reference_code', $reference_code)->exists()) {
             return back()
@@ -79,7 +75,7 @@ class AgentController extends Controller
             'phone_number' => $request->phone_number,
             'password' => bcrypt($request->password),
             'reference_code' => $reference_code,
-            'role' => strtolower($request->role),
+            'role' => $request->role,
             'status' => 1
         ]);
 

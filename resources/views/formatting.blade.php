@@ -20,6 +20,23 @@
     {{-- String Limitter --}}
     {{ Str::limit($dt_surat->alamat_tuk, 50) }}
 
+    {{-- Make First Name & Last Name --}}
+    @php
+        $fullName = $dataLeads->cust_name;
+        $parts = explode(' ', $fullName);
+
+        $firstName = array_shift($parts);
+        $lastName = implode(' ', $parts);
+
+        ClientModel::create([
+            'reference_code' => Auth::user()->reference_code,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'email' => $dataLeads->cust_email,
+            'phone_number' => $dataLeads->cust_telp,
+        ]);
+    @endphp
+
     @php
         // If Master : get all data
         $data['data_client'] = Auth::user()->role == 'Master' ? ClientModel::get() : ClientModel::where('reference_code', Auth::user()->reference_code)->get();

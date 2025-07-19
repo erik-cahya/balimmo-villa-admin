@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Events\BookingCreated;
 use App\Http\Controllers\Controller;
 use App\Mail\NotifikasiEmail;
+use App\Models\CustomerDataModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyLeadsModel;
 use App\Models\SubRegionModel;
@@ -16,9 +17,6 @@ use Illuminate\Support\Facades\Mail;
 
 class PropertiesLeadsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
 
@@ -28,20 +26,13 @@ class PropertiesLeadsController extends Controller
 
 
         if (Auth::user()->role == 'Master') {
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', '!=', null)->where('properties_id', '!=', null)->where('prospect_status', 0)
-                ->select(
-                    'property_leads.*',
-                    'properties.id as properties_id',
-                    'properties.property_name',
-                    'properties.property_address',
-                    'properties.region',
-                    'properties.sub_region',
-                    'properties.bedroom',
-                    'properties.bathroom',
-                )
-                ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
-                ->get()->groupBy('cust_email');
+
+            $data['data_leads'] = PropertyLeadsModel::where('customer_data.agent_code', '!=', null)
+                ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
+                ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+                ->get();
         } else {
+
             $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)->where('prospect_status', 0)
                 ->select(
                     'property_leads.*',
@@ -57,9 +48,12 @@ class PropertiesLeadsController extends Controller
                 ->get()->groupBy('cust_email');
         }
 
-        $data['data_leads_matches'] = PropertyLeadsModel::where('agent_code', null)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-            ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+        $data['data_leads_matches'] = PropertyLeadsModel::where('customer_data.agent_code', null)
+            ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
+            // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
             ->get();
+
+        // dd($data['data_leads_matches']);
 
         $leads = $data['data_leads_matches'];
         $data['matchProperties'] = [];
@@ -122,43 +116,30 @@ class PropertiesLeadsController extends Controller
         return view('admin.leads.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) {}
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         // dd($request->all());
 
+        $customerID = $id;
+
+        $fullName = $request->customer_name;
+        $nameParts = explode(' ', $fullName);
+        $firstName = array_shift($nameParts);
+        $lastName = implode(' ', $nameParts);
+
+
+        CustomerDataModel::where('id', $customerID)->update([
+            'first_name' => $firstName,
+            'last_name' => empty($lastName) ? NULL : $lastName,
+            'cust_phone' => $request->customer_phone,
+            'cust_email' => $request->customer_email,
+        ]);
+
+        dd('done update');
+
         $propertiesLeads = PropertyLeadsModel::where('id', $id)->first();
+
         // Jika ada input property specific
         $propertiesData = null;
         if (isset($request->input_specific_properties)) {
@@ -211,140 +192,140 @@ class PropertiesLeadsController extends Controller
         return response()->json($flashData);
     }
 
-    public function booking(Request $request, $slug = null)
-    {
-        // dd($request->all());
+    // public function booking(Request $request, $slug = null)
+    // {
+    //     // dd($request->all());
 
-        // dd($request->all());
-        if ($slug !== null) {
-            $request->validate([
-                'name' => 'required',
-                'phone_number' => 'required',
-                'email' => 'required',
-                // 'budget' => 'required',
-                'timing' => 'required',
-                'bedroom' => 'required',
-            ]);
-        } else {
-            // Form di landing page
-            $request->validate([
-                'name' => 'required',
-                'phone_number' => 'required',
-                'email' => 'required',
-                // 'budget' => 'required',
-                'location' => 'required',
-                'timing' => 'required',
-            ]);
-        }
+    //     // dd($request->all());
+    //     if ($slug !== null) {
+    //         $request->validate([
+    //             'name' => 'required',
+    //             'phone_number' => 'required',
+    //             'email' => 'required',
+    //             // 'budget' => 'required',
+    //             'timing' => 'required',
+    //             'bedroom' => 'required',
+    //         ]);
+    //     } else {
+    //         // Form di landing page
+    //         $request->validate([
+    //             'name' => 'required',
+    //             'phone_number' => 'required',
+    //             'email' => 'required',
+    //             // 'budget' => 'required',
+    //             'location' => 'required',
+    //             'timing' => 'required',
+    //         ]);
+    //     }
 
-        if ($request->budget_currency == 'idr') {
-            $custBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr);
-            $custBudgetUSD = null;
-        } else {
-            $custBudgetIDR = null;
-            $custBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->budget_usd));
-        }
-
-
-        $property = PropertiesModel::where('property_slug', $slug)->first();
-
-        $booking = PropertyLeadsModel::create([
-            'properties_id' => $slug == null ? null : $property->id,
-            'agent_code' => $slug == null ? null : $property->internal_reference,
-            'cust_name' => $request->name,
-            'cust_telp' => $request->phone_number,
-            'cust_email' => $request->email,
-            'cust_budget' => $custBudgetIDR,
-            'cust_budget_usd' => $custBudgetUSD,
-            'require_bedroom' => $slug == null ? null : $request->bedroom,
-            'localization' => $request->location == null ? $property->sub_region : $request->location,
-            'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
-            'message' => $request->message,
-            'prospect_status' => 0
-        ]);
-
-        // Form di landing page
-        if ($slug === null) {
-            // dd($booking->id);
-
-            $data['data_leads_matches'] = PropertyLeadsModel::where('property_leads.id', $booking->id)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-                ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
-                ->get();
-
-            // dd($data['data_leads_matches']);
-
-            $leads = $data['data_leads_matches'];
-            $data['matchProperties'] = collect();
-
-            if ($leads->isNotEmpty()) {
-                // Ambil semua lokasi & budget maksimum
-                $regions = $leads->pluck('localization')->unique()->toArray();
-                $maxBudgetIdr = $leads->max('cust_budget');
-                $maxBudgetUsd = $leads->max('cust_budget_usd');
-
-                // Ambil semua properti yang mungkin cocok
-                $properties = PropertiesModel::whereIn('sub_region', $regions)
-                    ->with(['featuredImage' => function ($query) {
-                        $query->select('image_path', 'property_gallery.id');
-                        $query->where('is_featured', 1);
-                    }])
-                    ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                    ->where(function ($query) use ($maxBudgetIdr, $maxBudgetUsd) {
-                        if (!is_null($maxBudgetIdr)) {
-                            $query->where('selling_price_idr', '<=', $maxBudgetIdr);
-                        }
-
-                        if (!is_null($maxBudgetUsd)) {
-                            // Jika sebelumnya sudah ada kondisi (dari IDR), gunakan orWhere
-                            if (!is_null($maxBudgetIdr)) {
-                                $query->orWhere('selling_price_usd', '<=', $maxBudgetUsd);
-                            } else {
-                                $query->where('selling_price_usd', '<=', $maxBudgetUsd);
-                            }
-                        }
-                    })
-                    ->get();
-
-                // Kelompokkan properti berdasarkan region
-                $groupedProperties = $properties->groupBy('sub_region');
-
-                // Kelompokkan kembali sesuai budget masing-masing lead
-                foreach ($leads as $lead) {
-                    $regionProps = $groupedProperties[$lead->localization] ?? collect();
-
-                    $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
-                        return (
-                            ($property->selling_price_idr !== null && $property->selling_price_idr <= $lead->cust_budget) ||
-                            ($property->selling_price_usd !== null && $property->selling_price_usd <= $lead->cust_budget_usd)
-                        );
-                    })->values(); // reset index
-                }
-
-                $emailTo = $request->email;
-
-                Mail::to($emailTo)->send(new NotifikasiEmail([
-                    'properties' => $data['matchProperties'],
-                ]));
-            } else {
-                // Kosongkan jika tidak ada leads
-                $data['matchProperties'] = collect();
-
-                $emailTo = $request->email;
-
-                Mail::to($emailTo)->send(new NotifikasiEmail([
-                    'properties' => $data['matchProperties'],
-                ]));
-            }
-            // dd($data['matchProperties']);
-
-            return view('error.thankyou-page');
-        }
-
-        // event(new BookingCreated($booking));
+    //     if ($request->budget_currency == 'idr') {
+    //         $custBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr);
+    //         $custBudgetUSD = null;
+    //     } else {
+    //         $custBudgetIDR = null;
+    //         $custBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->budget_usd));
+    //     }
 
 
-        return view('error.thankyou-page');
-    }
+    //     $property = PropertiesModel::where('property_slug', $slug)->first();
+
+    //     $booking = PropertyLeadsModel::create([
+    //         'properties_id' => $slug == null ? null : $property->id,
+    //         'agent_code' => $slug == null ? null : $property->internal_reference,
+    //         'cust_name' => $request->name,
+    //         'cust_telp' => $request->phone_number,
+    //         'cust_email' => $request->email,
+    //         'cust_budget' => $custBudgetIDR,
+    //         'cust_budget_usd' => $custBudgetUSD,
+    //         'require_bedroom' => $slug == null ? null : $request->bedroom,
+    //         'localization' => $request->location == null ? $property->sub_region : $request->location,
+    //         'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+    //         'message' => $request->message,
+    //         'prospect_status' => 0
+    //     ]);
+
+    //     // Form di landing page
+    //     if ($slug === null) {
+    //         // dd($booking->id);
+
+    //         $data['data_leads_matches'] = PropertyLeadsModel::where('property_leads.id', $booking->id)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
+    //             ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+    //             ->get();
+
+    //         // dd($data['data_leads_matches']);
+
+    //         $leads = $data['data_leads_matches'];
+    //         $data['matchProperties'] = collect();
+
+    //         if ($leads->isNotEmpty()) {
+    //             // Ambil semua lokasi & budget maksimum
+    //             $regions = $leads->pluck('localization')->unique()->toArray();
+    //             $maxBudgetIdr = $leads->max('cust_budget');
+    //             $maxBudgetUsd = $leads->max('cust_budget_usd');
+
+    //             // Ambil semua properti yang mungkin cocok
+    //             $properties = PropertiesModel::whereIn('sub_region', $regions)
+    //                 ->with(['featuredImage' => function ($query) {
+    //                     $query->select('image_path', 'property_gallery.id');
+    //                     $query->where('is_featured', 1);
+    //                 }])
+    //                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+    //                 ->where(function ($query) use ($maxBudgetIdr, $maxBudgetUsd) {
+    //                     if (!is_null($maxBudgetIdr)) {
+    //                         $query->where('selling_price_idr', '<=', $maxBudgetIdr);
+    //                     }
+
+    //                     if (!is_null($maxBudgetUsd)) {
+    //                         // Jika sebelumnya sudah ada kondisi (dari IDR), gunakan orWhere
+    //                         if (!is_null($maxBudgetIdr)) {
+    //                             $query->orWhere('selling_price_usd', '<=', $maxBudgetUsd);
+    //                         } else {
+    //                             $query->where('selling_price_usd', '<=', $maxBudgetUsd);
+    //                         }
+    //                     }
+    //                 })
+    //                 ->get();
+
+    //             // Kelompokkan properti berdasarkan region
+    //             $groupedProperties = $properties->groupBy('sub_region');
+
+    //             // Kelompokkan kembali sesuai budget masing-masing lead
+    //             foreach ($leads as $lead) {
+    //                 $regionProps = $groupedProperties[$lead->localization] ?? collect();
+
+    //                 $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
+    //                     return (
+    //                         ($property->selling_price_idr !== null && $property->selling_price_idr <= $lead->cust_budget) ||
+    //                         ($property->selling_price_usd !== null && $property->selling_price_usd <= $lead->cust_budget_usd)
+    //                     );
+    //                 })->values(); // reset index
+    //             }
+
+    //             $emailTo = $request->email;
+
+    //             Mail::to($emailTo)->send(new NotifikasiEmail([
+    //                 'properties' => $data['matchProperties'],
+    //             ]));
+    //         } else {
+    //             // Kosongkan jika tidak ada leads
+    //             $data['matchProperties'] = collect();
+
+    //             $emailTo = $request->email;
+
+    //             Mail::to($emailTo)->send(new NotifikasiEmail([
+    //                 'properties' => $data['matchProperties'],
+    //             ]));
+    //         }
+    //         // dd($data['matchProperties']);
+
+    //         return view('error.thankyou-page');
+    //     }
+
+    //     // event(new BookingCreated($booking));
+
+
+    //     return view('error.thankyou-page');
+    // }
 
     public function sendMail(Request $request)
     {

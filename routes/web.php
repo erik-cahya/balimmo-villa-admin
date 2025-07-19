@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\PropertiesController;
 use App\Http\Controllers\Admin\PropertiesFeatureController;
 use App\Http\Controllers\Admin\PropertiesLeadsController;
 use App\Http\Controllers\Admin\ProspectController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Artisan;
@@ -54,7 +55,11 @@ Route::get('/landing-signup', [LandingPageController::class, 'signup'])->name('l
 Route::get('/booking', function () {
     return redirect()->route('landing-page.index');
 });
-Route::post('/booking', [PropertiesLeadsController::class, 'booking'])->name('booking');
+
+
+Route::post('/booking', [BookingController::class, 'booking'])->name('booking');
+
+// Route::post('/booking', [PropertiesLeadsController::class, 'booking'])->name('booking');
 Route::post('/booking/{slug}', [PropertiesLeadsController::class, 'booking'])->name('booking.slug');
 Route::post('listing/booking/{slug}', [CustomerController::class, 'booking'])->name('customer.booking');
 

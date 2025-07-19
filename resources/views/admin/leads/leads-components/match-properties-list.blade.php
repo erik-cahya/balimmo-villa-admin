@@ -18,7 +18,7 @@
                                 <th scope="col">Budget IDR</th>
                                 <th scope="col">Budget USD</th>
                                 <th scope="col">Localization</th>
-                                <th scope="col">Leads Message</th>
+                                <th scope="col">Type Asset Choice</th>
                                 <th scope="col">Date</th>
 
                                 <th scope="col">Action</th>
@@ -42,24 +42,25 @@
                                             <div class="d-flex align-items-center gap-1">
                                                 <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
                                                 <div class="d-block">
-                                                    <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->cust_name }}</h5>
+                                                    <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->first_name . ' ' . $matchLeads->last_name }}</h5>
                                                     <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</p>
+                                            <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_phone), 4)) }}</p>
                                         </td>
                                         <td>
-                                            <span class="badge bg-primary fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}</span>
+                                            <span class="badge bg-primary fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> IDR {{ number_format($matchLeads->max_budget_idr, 0, ',', '.') }}</span>
                                         </td>
                                         <td>
-                                            <span class="badge bg-warning fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> USD {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}</span>
+                                            <span class="badge bg-warning fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> USD {{ number_format($matchLeads->max_budget_usd, 2, ',', '.') }}</span>
 
                                         </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
 
-                                        <td>{{ $matchLeads->message }}</td>
+                                        <td><span class=" text-capitalize fw-medium badge bg-secondary p-2">{{ $matchLeads->type_asset }}</span></td>
+
                                         <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</td>
 
                                         <td>
@@ -84,7 +85,7 @@
 
                                         </td>
                                     </tr>
-                                    <!-- Modal Properties -->
+                                    <!-- Modal Properties Match -->
                                     <div class="modal modal-xl fade" id="matchProperties-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -177,7 +178,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /* Modal Properties -->
+                                    <!-- /* Modal Properties Match -->
 
                                     {{-- Modal Make Prospect --}}
                                     <div class="modal modal-lg fade" id="makeProspect-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -192,7 +193,7 @@
 
                                                     <div class="modal-body">
                                                         <div class="row">
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $matchLeads->cust_name }}" disabled />
+                                                            <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $matchLeads->first_name }}" disabled />
                                                             <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $matchLeads->cust_email }}" disabled />
                                                             <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $matchLeads->cust_telp }}" disabled />
                                                             <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}" disabled />
@@ -256,39 +257,89 @@
 
                                     {{-- Modal Edit Data Leads --}}
                                     <div class="modal modal-lg fade" id="editLeads-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Data Leads</h5>
+                                                    <h5 class="modal-title text-dark" id="staticBackdropLabel">Please check & update the leads file</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <form action="{{ route('leads.update', $matchLeads->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="modal-body">
-                                                        <div class="row">
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $matchLeads->cust_name }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $matchLeads->cust_email }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $matchLeads->cust_telp }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="{{ $matchLeads->cust_budget }}" />
+                                                        <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
+                                                            <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Customer Data</h5>
+                                                            <hr>
+                                                            <div class="row my-3">
+                                                                <x-form-input className="col-lg-6" type="text" name="customer_name" label="Name" value="{{ $matchLeads->first_name . ' ' . $matchLeads->last_name }}" />
+                                                                <x-form-input className="col-lg-6" type="text" name="customer_email" label="Email" value="{{ $matchLeads->cust_email }}" />
+                                                                <x-form-input className="col-lg-6" type="text" name="customer_phone" label="Phone Number" value="{{ $matchLeads->cust_phone }}" />
 
-                                                            {{-- if master user : can edit/change localization data, but agent, can't --}}
-                                                            @if (Auth::user()->role == 'Master')
-                                                                <div class="col-lg-6 mb-3" id="group_localization">
-                                                                    <label for="localization" class="form-label">Localization</label>
-                                                                    <select id="localization" class="form-select" name="localization">
+                                                                <div class="col-lg-6 mb-3">
+                                                                    <div class="row">
+                                                                        <label class="mb-1 mb-3">Looking For</label>
+                                                                        <div class="col-12">
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="radio" name="type_properties" id="villa" value="Villa" {{ $matchLeads->type_asset == 'villa' ? 'checked' : '' }}>
+                                                                                <label class="form-check-label" for="villa">Villa</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input class="form-check-input" type="radio" name="type_properties" id="land" value="Land" {{ $matchLeads->type_asset == 'land' ? 'checked' : '' }}>
+                                                                                <label class="form-check-label" for="land">Land</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="villa_section" style="display: none;">
+                                                            <h5 class="text-dark fw-semibold"><span class="nav-icon"><iconify-icon icon="ic:baseline-villa" class="fs-16 align-middle"></iconify-icon></span> VILLA</h5>
+                                                            <hr>
+                                                            <div class="row my-3">
+
+                                                                <div class="col-lg-6 mb-3" id="group_villa_localization">
+                                                                    <label for="villa_localization" class="form-label">Localization</label>
+                                                                    <select id="villa_localization" class="form-select" name="villa_localization">
                                                                         <option value="" disabled selected>Select Region</option>
                                                                         @foreach ($data_localization as $localization)
                                                                             <option value="{{ $localization->name }}" {{ $localization->name == $matchLeads->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                            @else
-                                                                <x-form-input className="col-lg-6" type="text" name="localization" label="Localization" value="{{ $matchLeads->localization }}" disabled />
-                                                            @endif
 
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" />
 
+                                                                <x-form-input className="col-lg-3" type="text" name="villa_min_budget" label="Budget Min" value="{{ $matchLeads->min_budget_idr !== null ? $matchLeads->min_budget_idr : $matchLeads->min_budget_usd }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="villa_max_budget" label="Budget Max" value="{{ $matchLeads->max_budget_idr !== null ? $matchLeads->max_budget_idr : $matchLeads->max_budget_usd }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="minimum_bedroom" label="Bedroom Min" value="{{ $matchLeads->min_bedroom }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="maximum_bedroom" label="Bedroom Max" value="{{ $matchLeads->max_bedroom }}" />
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="land_section" style="display: none;">
+                                                            <h5 class="text-dark fw-semibold"><span class="nav-icon"><iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon></span> LAND</h5>
+                                                            <hr>
+                                                            <div class="row my-3">
+                                                                <div class="col-lg-6 mb-3" id="group_land_localization">
+                                                                    <label for="land_localization" class="form-label">Localization</label>
+                                                                    <select id="land_localization" class="form-select" name="land_localization">
+                                                                        <option value="" disabled selected>Select Region</option>
+                                                                        @foreach ($data_localization as $localization)
+                                                                            <option value="{{ $localization->name }}" {{ $localization->name == $matchLeads->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" />
+
+                                                                <x-form-input className="col-lg-3" type="text" name="land_min_budget" label="Budget Min" value="{{ $matchLeads->min_budget_idr !== null ? $matchLeads->min_budget_idr : $matchLeads->min_budget_usd }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="villa_max_budget" label="Budget Max" value="{{ $matchLeads->max_budget_idr !== null ? $matchLeads->max_budget_idr : $matchLeads->max_budget_usd }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="minimum_land_size" label="Size Min" value="{{ $matchLeads->min_land_size }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="maximum_land_size" label="Size Max" value="{{ $matchLeads->max_land_size }}" />
+
+                                                            </div>
                                                         </div>
 
                                                         {{-- If it is a master, you can input it directly to a specific agent so that the selected agent gets the leads. --}}

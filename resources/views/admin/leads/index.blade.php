@@ -41,10 +41,10 @@
         </div>
 
         {{-- Specific Properties --}}
-        @include('admin.leads.section.specific-properties-list')
+        @include('admin.leads.leads-components.specific-properties-list')
 
         {{-- Match Properties --}}
-        @include('admin.leads.section.match-properties-list')
+        @include('admin.leads.leads-components.match-properties-list')
 
     </div>
 @endsection
@@ -197,6 +197,32 @@
                 numeralDecimalMark: ',',
                 delimiter: '.',
                 ...field.options // spread operator untuk custom config
+            });
+        });
+    </script>
+
+    <script>
+        function toggleSections() {
+            const selected = $('input[name="type_properties"]:checked').val();
+
+            if (selected === 'Villa') {
+                $('#villa_section').show();
+                $('#land_section').hide();
+            } else if (selected === 'Land') {
+                $('#villa_section').hide();
+                $('#land_section').show();
+            } else {
+                // jika tidak ada yg dipilih
+                $('#villa_section').hide();
+                $('#land_section').hide();
+            }
+        }
+
+        $(document).ready(function() {
+            toggleSections(); // ✅ untuk handle saat page pertama kali muncul
+
+            $('input[name="type_properties"]').on('change', function() {
+                toggleSections(); // ✅ untuk handle saat user mengganti pilihan
             });
         });
     </script>
