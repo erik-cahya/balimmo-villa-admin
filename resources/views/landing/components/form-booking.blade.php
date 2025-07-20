@@ -41,12 +41,12 @@
                 <ul class="interior__amenities--check d-flex list-unstyled flex-wrap">
                     <li class="interior__amenities--check__list" style="width: 30rem">
                         <label class="interior__amenities--check__label" for="villa">Villa</label>
-                        <input class="interior__amenities--check__input" id="villa" type="checkbox" name="type_asset" value="villa">
+                        <input class="interior__amenities--check__input" id="villa" type="checkbox" name="type_asset_villa" value="villa">
                         <span class="interior__amenities--checkmark"></span>
                     </li>
                     <li class="interior__amenities--check__list" style="width: 30rem">
                         <label class="interior__amenities--check__label" for="villa">Land</label>
-                        <input class="interior__amenities--check__input" id="villa" type="checkbox" name="type_asset" value="land">
+                        <input class="interior__amenities--check__input" id="villa" type="checkbox" name="type_asset_land" value="land">
                         <span class="interior__amenities--checkmark"></span>
                     </li>
                 </ul>
@@ -58,23 +58,7 @@
         @enderror
     </div>
 
-    <div class="contact__property--form__input">
-        <label for="type_asset">Type Asset*</label>
-
-        <div class="advance__search--items">
-            <select class="advance__search--select" id="type_asset" name="type_asset">
-                <option selected disabled>Select Asset</option>
-                <option value="villa">Villa</option>
-                <option value="land">Lands</option>
-            </select>
-        </div>
-
-        @error('type_asset')
-            <p class="text-danger my-2">{{ $message }}</p>
-        @enderror
-    </div>
-
-    <div id="number_bedroom">
+    <div id="number_bedroom" style="padding: 20px; border: 1px solid #063436; margin-bottom: 20px; border-radius: 20px;">
         <div class="contact__property--form__input">
             <label for="bedroom_min">Bedroom Min*</label>
             <input id="bedroom_min" name="bedroom_min" placeholder="Enter Your Minimal Bedroom" type="number">
@@ -91,7 +75,7 @@
         </div>
     </div>
 
-    <div id="number_land_size">
+    <div id="number_land_size" style="padding: 20px; border: 1px solid #063436; margin-bottom: 20px; border-radius: 20px;">
         <div class="contact__property--form__input">
             <label for="land_size_min">Land Size Min*</label>
             <input id="land_size_min" name="land_size_min" placeholder="Enter Your Minimal Land Size (meter)" type="number">
@@ -111,7 +95,7 @@
     <div class="contact__property--form__input">
         <label for="budget_currency">Budget Currency*</label>
 
-        <div class="advance__search--items">
+        <div class="advance__search--items booking-select">
             <select class="advance__search--select" id="budget_currency" name="budget_currency">
                 <option selected disabled>Select Currency</option>
                 <option value="usd">Dollar (USD)</option>
@@ -168,7 +152,7 @@
     <div class="contact__property--form__input">
         <label for="location">Location*</label>
 
-        <div class="advance__search--items">
+        <div class="advance__search--items booking-select">
             <select class="advance__search--select" name="location">
                 <option selected disabled>Property Location</option>
                 @foreach ($sub_regions as $rgn)

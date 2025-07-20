@@ -48,10 +48,15 @@ class PropertiesLeadsController extends Controller
                 ->get()->groupBy('cust_email');
         }
 
+        // $data['data_leads_matches'] = PropertyLeadsModel::where('customer_data.agent_code', null)
+        //     ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
+        //     // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+        //     ->get();
+
         $data['data_leads_matches'] = PropertyLeadsModel::where('customer_data.agent_code', null)
             ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
             // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
-            ->get();
+            ->get()->groupBy('customer_id');
 
         // dd($data['data_leads_matches']);
 
@@ -60,9 +65,9 @@ class PropertiesLeadsController extends Controller
 
         if ($leads->isNotEmpty()) {
             // Ambil semua lokasi & budget maksimum
-            $regions = $leads->pluck('localization')->unique()->toArray();
-            $maxBudgetIdr = $leads->max('cust_budget');
-            $maxBudgetUsd = $leads->max('cust_budget_usd');
+            $regions = $leads->flatten()->pluck('localization')->unique()->toArray(); // gunakan flatten
+            $maxBudgetIdr = $leads->flatten()->max('cust_budget');
+            $maxBudgetUsd = $leads->flatten()->max('cust_budget_usd');
 
             // Ambil semua properti yang mungkin cocok
             $properties = PropertiesModel::whereIn('sub_region', $regions)
@@ -77,7 +82,6 @@ class PropertiesLeadsController extends Controller
                     }
 
                     if (!is_null($maxBudgetUsd)) {
-                        // Jika sebelumnya sudah ada kondisi (dari IDR), gunakan orWhere
                         if (!is_null($maxBudgetIdr)) {
                             $query->orWhere('selling_price_usd', '<=', $maxBudgetUsd);
                         } else {
@@ -90,21 +94,23 @@ class PropertiesLeadsController extends Controller
             // Kelompokkan properti berdasarkan region
             $groupedProperties = $properties->groupBy('sub_region');
 
-            // Kelompokkan kembali sesuai budget masing-masing lead
-            foreach ($leads as $lead) {
-                $regionProps = $groupedProperties[$lead->localization] ?? collect();
+            // Proses tiap lead di setiap group
+            foreach ($leads as $groupedLeads) {
+                foreach ($groupedLeads as $lead) {
+                    $regionProps = $groupedProperties[$lead->localization] ?? collect();
 
-                $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
-                    return (
-                        ($property->selling_price_idr !== null && $property->selling_price_idr <= $lead->cust_budget) ||
-                        ($property->selling_price_usd !== null && $property->selling_price_usd <= $lead->cust_budget_usd)
-                    );
-                })->values(); // reset index
+                    $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
+                        return (
+                            ($property->selling_price_idr !== null && $property->selling_price_idr <= $lead->cust_budget) ||
+                            ($property->selling_price_usd !== null && $property->selling_price_usd <= $lead->cust_budget_usd)
+                        );
+                    })->values();
+                }
             }
         } else {
-            // Kosongkan jika tidak ada leads
             $data['matchProperties'] = [];
         }
+
 
         $data['data_localization'] = SubRegionModel::select('name')->get();
         $data['data_agent'] = User::where('role', 'agent')->get();

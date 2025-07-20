@@ -15,38 +15,24 @@ class BookingController extends Controller
 {
     public function booking(Request $request, $slug = NULL)
     {
-
-        if ($slug !== NULL) {
-            $request->validate([
-                'first_name' => 'required',
-                'phone_number' => 'required',
-                'email' => 'required',
-                'timing' => 'required',
-                'bedroom' => 'required',
-            ]);
-        } else {
-            // Form di landing page
-            $request->validate([
-                'first_name' => 'required',
-                'phone_number' => 'required',
-                'email' => 'required',
-                'location' => 'required',
-                'timing' => 'required',
-            ]);
-        }
-
-        // Villa / Land Asset
-        if ($request->type_asset == 'villa') {
-            $bedroom_min = $request->bedroom_min;
-            $bedroom_max = $request->bedroom_max;
-            $land_size_min = NULL;
-            $land_size_max = NULL;
-        } else {
-            $bedroom_min = NULL;
-            $bedroom_max = NULL;
-            $land_size_min = $request->land_size_min;
-            $land_size_max = $request->land_size_max;
-        }
+        // if ($slug !== NULL) {
+        //     $request->validate([
+        //         'first_name' => 'required',
+        //         'phone_number' => 'required',
+        //         'email' => 'required',
+        //         'timing' => 'required',
+        //         'bedroom' => 'required',
+        //     ]);
+        // } else {
+        //     // Form di landing page
+        //     $request->validate([
+        //         'first_name' => 'required',
+        //         'phone_number' => 'required',
+        //         'email' => 'required',
+        //         'location' => 'required',
+        //         'timing' => 'required',
+        //     ]);
+        // }
 
         // IDR / USD Budget
         if ($request->budget_currency == 'idr') {
@@ -71,26 +57,64 @@ class BookingController extends Controller
             'cust_email' => $request->email
         ]);
 
-        $leadsData = PropertyLeadsModel::create([
-            'properties_id' => $slug == NULL ? NULL : $property->id,
-            'customer_id' => $newCustomerData->id,
-            'type_asset' => $request->type_asset,
 
-            'min_budget_idr' => $minimumBudgetIDR,
-            'max_budget_idr' => $maximumBudgetIDR,
-            'min_budget_usd' => $minimumBudgetUSD,
-            'max_budget_usd' => $maximumBudgetUSD,
+        $bedroom_min = $request->bedroom_min;
+        $bedroom_max = $request->bedroom_max;
+        $land_size_min = $request->land_size_min;
+        $land_size_max = $request->land_size_max;
 
-            'min_bedroom' => $bedroom_min,
-            'max_bedroom' => $bedroom_max,
-            'min_land_size' => $land_size_min,
-            'max_land_size' => $land_size_max,
+        if ($request->type_asset_villa == null) {
+            $bedroom_min = NULL;
+            $bedroom_max = NULL;
+        } elseif ($request->type_asset_land == null) {
+            $land_size_min = NULL;
+            $land_size_max = NULL;
+        }
 
-            'localization' => $request->location == NULL ? $property->sub_region : $request->location,
-            'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
-            'message' => $request->message,
-            'prospect_status' => 0
-        ]);
+        // Jika type asset villa dipilih
+        if ($request->type_asset_villa !== null) {
+            $leadsData = PropertyLeadsModel::create([
+                'properties_id' => $slug == NULL ? NULL : $property->id,
+                'customer_id' => $newCustomerData->id,
+                'type_asset' => $request->type_asset_villa,
+
+                'min_budget_idr' => $minimumBudgetIDR,
+                'max_budget_idr' => $maximumBudgetIDR,
+                'min_budget_usd' => $minimumBudgetUSD,
+                'max_budget_usd' => $maximumBudgetUSD,
+
+                'min_bedroom' => $bedroom_min,
+                'max_bedroom' => $bedroom_max,
+
+                'localization' => $request->location == NULL ? $property->sub_region : $request->location,
+                'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+                'message' => $request->message,
+                'prospect_status' => 0
+            ]);
+        }
+        // Jika type asset land dipilih
+        if ($request->type_asset_land !== null) {
+            $leadsData = PropertyLeadsModel::create([
+                'properties_id' => $slug == NULL ? NULL : $property->id,
+                'customer_id' => $newCustomerData->id,
+                'type_asset' => $request->type_asset_land,
+
+                'min_budget_idr' => $minimumBudgetIDR,
+                'max_budget_idr' => $maximumBudgetIDR,
+                'min_budget_usd' => $minimumBudgetUSD,
+                'max_budget_usd' => $maximumBudgetUSD,
+
+                'min_land_size' => $land_size_min,
+                'max_land_size' => $land_size_max,
+
+                'localization' => $request->location == NULL ? $property->sub_region : $request->location,
+                'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+                'message' => $request->message,
+                'prospect_status' => 0
+            ]);
+        }
+
+        dd('data masuk');
 
         // Form di landing page
         if ($slug === null) {

@@ -26,13 +26,13 @@
                         </thead>
                         <tbody>
 
-                            @foreach ($data_leads_matches as $matchLeads)
+                            @foreach ($data_leads_matches as $leadsData => $LeadsMatch)
                                 @php
+                                    $matchLeads = $LeadsMatch->first(); // ambil lead pertama
                                     $authUser = Auth::user();
                                     $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
                                     // Ambil properti yang sudah difilter
                                     $filteredMatchLeads = $referenceCode ? $matchProperties[$matchLeads->id]->where('internal_reference', $referenceCode) : $matchProperties[$matchLeads->id];
-
                                 @endphp
 
                                 @if (Auth::user()->role == 'Master' || ($filteredMatchLeads->count() > 0 && Auth::user()->role == 'agent'))
@@ -59,7 +59,12 @@
                                         </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
 
-                                        <td><span class="text-capitalize fw-medium badge bg-secondary p-2">{{ $matchLeads->type_asset }}</span></td>
+
+                                        <td>
+                                            @foreach ($LeadsMatch as $leads)
+                                                <span class="text-capitalize fw-medium badge bg-primary p-2">{{ $leads->type_asset }}</span>
+                                            @endforeach
+                                        </td>
 
                                         <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</td>
 
@@ -277,87 +282,93 @@
 
                                                                 <div class="col-lg-6 mb-3">
                                                                     <div class="row">
-                                                                        <label class="mb-1 mb-3">Looking For</label>
-
                                                                         <div class="col-lg-12 d-flex">
-                                                                            <div class="form-check form-check-inline">
-                                                                                <input type="checkbox" class="form-check-input" id="type_properties_villa" name="type_properties_villa">
-                                                                                <label class="form-check-label" for="type_properties_villa">Villa</label>
-                                                                            </div>
-                                                                            <div class="form-check form-check-inline">
-                                                                                <input type="checkbox" class="form-check-input" id="type_properties_land" name="type_properties_land">
-                                                                                <label class="form-check-label" for="type_properties_land">Land</label>
+
+                                                                            @php
+                                                                                $isVillaChecked = collect($LeadsMatch)->contains('type_asset', 'villa');
+                                                                                $isLandChecked = collect($LeadsMatch)->contains('type_asset', 'land');
+                                                                            @endphp
+
+                                                                            <div class="col-lg-6 mb-3">
+                                                                                <div class="row">
+                                                                                    <label class="mb-1 mb-3">Looking For</label>
+
+                                                                                    <div class="col-lg-12 d-flex">
+                                                                                        <div class="form-check form-check-inline">
+                                                                                            <input type="checkbox" class="form-check-input" id="type_properties_villa" name="type_properties_villa" {{ $isVillaChecked ? 'checked' : '' }}>
+                                                                                            <label class="form-check-label text-capitalize" for="type_properties_villa">Villa</label>
+                                                                                        </div>
+
+                                                                                        <div class="form-check form-check-inline">
+                                                                                            <input type="checkbox" class="form-check-input" id="type_properties_land" name="type_properties_land" {{ $isLandChecked ? 'checked' : '' }}>
+                                                                                            <label class="form-check-label text-capitalize" for="type_properties_land">Land</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                {{-- <div class="col-lg-6 mb-3">
-                                                                    <div class="row">
-                                                                        <label class="mb-1 mb-3">Looking For</label>
-                                                                        <div class="col-12">
-                                                                            <div class="form-check form-check-inline">
-                                                                                <input class="form-check-input" type="radio" name="type_properties" id="villa" value="Villa" {{ $matchLeads->type_asset == 'villa' ? 'checked' : '' }}>
-                                                                                <label class="form-check-label" for="villa">Villa</label>
-                                                                            </div>
-                                                                            <div class="form-check form-check-inline">
-                                                                                <input class="form-check-input" type="radio" name="type_properties" id="land" value="Land" {{ $matchLeads->type_asset == 'land' ? 'checked' : '' }}>
-                                                                                <label class="form-check-label" for="land">Land</label>
-                                                                            </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        @foreach ($LeadsMatch as $data)
+                                                            @if ($data->type_asset == 'villa')
+                                                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="villa_section" style="display: none;">
+                                                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><iconify-icon icon="ic:baseline-villa" class="fs-16 align-middle"></iconify-icon></span> VILLA</h5>
+                                                                    <hr>
+                                                                    <div class="row my-3">
+
+                                                                        <div class="col-lg-6 mb-3" id="group_villa_localization">
+                                                                            <label for="villa_localization" class="form-label">Localization</label>
+                                                                            <select id="villa_localization" class="form-select" name="villa_localization">
+                                                                                <option value="" disabled selected>Select Region</option>
+                                                                                @foreach ($data_localization as $localization)
+                                                                                    <option value="{{ $localization->name }}" {{ $localization->name == $data->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
                                                                         </div>
+
+                                                                        <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($data->date)->format('d F, Y') }}" />
+
+                                                                        <x-form-input className="col-lg-3" type="text" name="villa_min_budget" label="Budget Min" value="{{ $data->min_budget_idr !== null ? 'IDR ' . $data->min_budget_idr : 'USD ' . $data->min_budget_usd }}" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="villa_max_budget" label="Budget Max" value="{{ $data->max_budget_idr !== null ? 'IDR ' . $data->max_budget_idr : 'USD ' . $data->max_budget_usd }}" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="minimum_bedroom" label="Bedroom Min" value="{{ $data->min_bedroom }}" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="maximum_bedroom" label="Bedroom Max" value="{{ $data->max_bedroom }}" />
+
                                                                     </div>
-                                                                </div> --}}
-
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="villa_section" style="display: none;">
-                                                            <h5 class="text-dark fw-semibold"><span class="nav-icon"><iconify-icon icon="ic:baseline-villa" class="fs-16 align-middle"></iconify-icon></span> VILLA</h5>
-                                                            <hr>
-                                                            <div class="row my-3">
-
-                                                                <div class="col-lg-6 mb-3" id="group_villa_localization">
-                                                                    <label for="villa_localization" class="form-label">Localization</label>
-                                                                    <select id="villa_localization" class="form-select" name="villa_localization">
-                                                                        <option value="" disabled selected>Select Region</option>
-                                                                        @foreach ($data_localization as $localization)
-                                                                            <option value="{{ $localization->name }}" {{ $localization->name == $matchLeads->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
                                                                 </div>
+                                                            @endif
+                                                            @if ($data->type_asset == 'land')
+                                                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="land_section" style="display: none;">
+                                                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon></span> LAND</h5>
+                                                                    <hr>
+                                                                    <div class="row my-3">
+                                                                        <div class="col-lg-6 mb-3" id="group_land_localization">
+                                                                            <label for="land_localization" class="form-label">Localization</label>
+                                                                            <select id="land_localization" class="form-select" name="land_localization">
+                                                                                <option value="" disabled selected>Select Region</option>
+                                                                                @foreach ($data_localization as $localization)
+                                                                                    <option value="{{ $localization->name }}" {{ $localization->name == $data->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
 
-                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" />
+                                                                        <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($data->date)->format('d F, Y') }}" />
 
-                                                                <x-form-input className="col-lg-3" type="text" name="villa_min_budget" label="Budget Min" value="{{ $matchLeads->min_budget_idr !== null ? $matchLeads->min_budget_idr : $matchLeads->min_budget_usd }}" />
-                                                                <x-form-input className="col-lg-3" type="text" name="villa_max_budget" label="Budget Max" value="{{ $matchLeads->max_budget_idr !== null ? $matchLeads->max_budget_idr : $matchLeads->max_budget_usd }}" />
-                                                                <x-form-input className="col-lg-3" type="text" name="minimum_bedroom" label="Bedroom Min" value="{{ $matchLeads->min_bedroom }}" />
-                                                                <x-form-input className="col-lg-3" type="text" name="maximum_bedroom" label="Bedroom Max" value="{{ $matchLeads->max_bedroom }}" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="land_min_budget" label="Budget Min" value="{{ $data->min_budget_idr !== null ? 'IDR ' . $data->min_budget_idr : 'USD ' . $data->min_budget_usd }}" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="villa_max_budget" label="Budget Max" value="{{ $data->max_budget_idr !== null ? 'IDR ' . $data->max_budget_idr : 'USD ' . $data->max_budget_usd }}" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="minimum_land_size" label="Size Min" value="{{ $data->min_land_size }}" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="maximum_land_size" label="Size Max" value="{{ $data->max_land_size }}" />
 
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="land_section" style="display: none;">
-                                                            <h5 class="text-dark fw-semibold"><span class="nav-icon"><iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon></span> LAND</h5>
-                                                            <hr>
-                                                            <div class="row my-3">
-                                                                <div class="col-lg-6 mb-3" id="group_land_localization">
-                                                                    <label for="land_localization" class="form-label">Localization</label>
-                                                                    <select id="land_localization" class="form-select" name="land_localization">
-                                                                        <option value="" disabled selected>Select Region</option>
-                                                                        @foreach ($data_localization as $localization)
-                                                                            <option value="{{ $localization->name }}" {{ $localization->name == $matchLeads->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                    </div>
                                                                 </div>
+                                                            @endif
+                                                        @endforeach
 
-                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" />
 
-                                                                <x-form-input className="col-lg-3" type="text" name="land_min_budget" label="Budget Min" value="{{ $matchLeads->min_budget_idr !== null ? $matchLeads->min_budget_idr : $matchLeads->min_budget_usd }}" />
-                                                                <x-form-input className="col-lg-3" type="text" name="villa_max_budget" label="Budget Max" value="{{ $matchLeads->max_budget_idr !== null ? $matchLeads->max_budget_idr : $matchLeads->max_budget_usd }}" />
-                                                                <x-form-input className="col-lg-3" type="text" name="minimum_land_size" label="Size Min" value="{{ $matchLeads->min_land_size }}" />
-                                                                <x-form-input className="col-lg-3" type="text" name="maximum_land_size" label="Size Max" value="{{ $matchLeads->max_land_size }}" />
 
-                                                            </div>
-                                                        </div>
 
                                                         {{-- If it is a master, you can input it directly to a specific agent so that the selected agent gets the leads. --}}
                                                         @if (Auth::user()->role == 'Master')
