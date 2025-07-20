@@ -59,7 +59,7 @@
                                         </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
 
-                                        <td><span class=" text-capitalize fw-medium badge bg-secondary p-2">{{ $matchLeads->type_asset }}</span></td>
+                                        <td><span class="text-capitalize fw-medium badge bg-secondary p-2">{{ $matchLeads->type_asset }}</span></td>
 
                                         <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</td>
 
@@ -278,6 +278,22 @@
                                                                 <div class="col-lg-6 mb-3">
                                                                     <div class="row">
                                                                         <label class="mb-1 mb-3">Looking For</label>
+
+                                                                        <div class="col-lg-12 d-flex">
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input type="checkbox" class="form-check-input" id="type_properties_villa" name="type_properties_villa">
+                                                                                <label class="form-check-label" for="type_properties_villa">Villa</label>
+                                                                            </div>
+                                                                            <div class="form-check form-check-inline">
+                                                                                <input type="checkbox" class="form-check-input" id="type_properties_land" name="type_properties_land">
+                                                                                <label class="form-check-label" for="type_properties_land">Land</label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {{-- <div class="col-lg-6 mb-3">
+                                                                    <div class="row">
+                                                                        <label class="mb-1 mb-3">Looking For</label>
                                                                         <div class="col-12">
                                                                             <div class="form-check form-check-inline">
                                                                                 <input class="form-check-input" type="radio" name="type_properties" id="villa" value="Villa" {{ $matchLeads->type_asset == 'villa' ? 'checked' : '' }}>
@@ -289,7 +305,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div> --}}
+
                                                             </div>
                                                         </div>
 

@@ -203,27 +203,32 @@
 
     <script>
         function toggleSections() {
-            const selected = $('input[name="type_properties"]:checked').val();
+            const selected_villa = $('input[name="type_properties_villa"]:checked').val();
+            const selected_land = $('input[name="type_properties_land"]:checked').val();
 
-            if (selected === 'Villa') {
+            // Tampilkan/hide berdasarkan checkbox villa
+            if (selected_villa) {
                 $('#villa_section').show();
-                $('#land_section').hide();
-            } else if (selected === 'Land') {
+            } else {
                 $('#villa_section').hide();
+            }
+
+            // Tampilkan/hide berdasarkan checkbox land
+            if (selected_land) {
                 $('#land_section').show();
             } else {
-                // jika tidak ada yg dipilih
-                $('#villa_section').hide();
                 $('#land_section').hide();
             }
+
         }
 
+        // Jalankan saat dokumen siap
         $(document).ready(function() {
-            toggleSections(); // ✅ untuk handle saat page pertama kali muncul
+            toggleSections(); // ✅ untuk handle saat page load
 
-            $('input[name="type_properties"]').on('change', function() {
-                toggleSections(); // ✅ untuk handle saat user mengganti pilihan
-            });
+            // ✅ Event listener saat checkbox berubah
+            $('input[name="type_properties_villa"]').on('change', toggleSections);
+            $('input[name="type_properties_land"]').on('change', toggleSections);
         });
     </script>
 @endpush
