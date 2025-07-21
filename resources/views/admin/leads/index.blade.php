@@ -44,6 +44,7 @@
         @include('admin.leads.leads-components.specific-properties-list')
 
         {{-- Match Properties --}}
+
         @include('admin.leads.leads-components.match-properties-list')
 
     </div>
@@ -53,6 +54,7 @@
     <script src="{{ asset('admin/assets/js/dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave-phone.us.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -128,8 +130,8 @@
                     e.preventDefault();
 
                     let propertyName = this.getAttribute('data-nama');
-                    let leadsId = this.parentElement.querySelector('.leadsId').value;
-                    console.log(leadsId);
+                    let customerID = this.parentElement.querySelector('.customerID').value;
+                    console.log(propertyName);
 
                     const rowToDelete = this.closest('tr');
 
@@ -144,7 +146,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/leadsSingle/' + leadsId, {
+                            fetch('/leadsSingle/' + customerID, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -163,9 +165,6 @@
                                     if (rowToDelete) {
                                         rowToDelete.remove();
                                     }
-
-                                    // Atau jika menggunakan DataTables, refresh tabel:
-                                    // $('#table-id').DataTable().ajax.reload();
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
@@ -181,26 +180,71 @@
 
     {{-- Currency Format --}}
     <script>
-        const cleaveFields = [{
-            id: '#leads_budget11',
-            options: {
-                prefix: 'IDR '
-            }
-        }];
+        document.addEventListener('DOMContentLoaded', function() {
 
-        cleaveFields.forEach(field => {
-            new Cleave(field.id, {
-                numeral: true,
-                numeralThousandsGroupStyle: 'thousand',
-                prefix: '$ ',
-                noImmediatePrefix: true,
-                numeralDecimalMark: ',',
-                delimiter: '.',
-                ...field.options // spread operator untuk custom config
+            const cleaveFields = [{
+                id: '#villa_min_budget_idr',
+                options: {
+                    prefix: 'IDR '
+                }
+            }, {
+                id: '#villa_max_budget_idr',
+                options: {
+                    prefix: 'IDR '
+                }
+            }, {
+                id: '#land_min_budget_idr',
+                options: {
+                    prefix: 'IDR '
+                }
+            }, {
+                id: '#land_max_budget_idr',
+                options: {
+                    prefix: 'IDR '
+                }
+            }, {
+                id: '#land_min_budget_usd',
+                options: {
+                    numeral: true,
+                    numeralThousandsGroupStyle: 'thousand',
+                    prefix: '$ ',
+                    noImmediatePrefix: true,
+                    numeralDecimalMark: '.',
+                    delimiter: ',',
+                }
+            }, {
+                id: '#land_max_budget_usd',
+                options: {
+                    numeral: true,
+                    numeralThousandsGroupStyle: 'thousand',
+                    prefix: '$ ',
+                    noImmediatePrefix: true,
+                    numeralDecimalMark: '.',
+                    delimiter: ',',
+                }
+            }, ];
+
+            cleaveFields.forEach(field => {
+                const el = document.querySelector(field.id);
+                if (el) {
+                    new Cleave(el, {
+                        numeral: true,
+                        numeralThousandsGroupStyle: 'thousand',
+                        prefix: '$ ',
+                        noImmediatePrefix: true,
+                        numeralDecimalMark: ',',
+                        delimiter: '.',
+                        ...field.options
+                    });
+                } else {
+                    console.warn(`Element not found: ${field.id}`);
+                }
             });
         });
     </script>
+    {{-- /* End Currency Format --}}
 
+    {{-- Toogle Villa/Land Checkbox --}}
     <script>
         function toggleSections() {
             const selected_villa = $('input[name="type_properties_villa"]:checked').val();
@@ -231,4 +275,17 @@
             $('input[name="type_properties_land"]').on('change', toggleSections);
         });
     </script>
+    {{-- /* End Toogle Villa/Land Checkbox --}}
+
+    {{-- Flatpickr --}}
+    <script>
+        $("#ready_buy_villa").flatpickr({
+            dateFormat: "d F, Y"
+        });
+
+        $("#ready_buy_land").flatpickr({
+            dateFormat: "d F, Y"
+        });
+    </script>
+    {{-- /* End Flatpickr --}}
 @endpush

@@ -59,7 +59,6 @@
                                         </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
 
-
                                         <td>
                                             @foreach ($LeadsMatch as $leads)
                                                 <span class="text-capitalize fw-medium badge bg-primary p-2">{{ $leads->type_asset }}</span>
@@ -83,9 +82,10 @@
                                                     Show {{ $filteredMatchLeads->count() }} Properties
                                                 </button>
                                             @endif
+
                                             @if (Auth::user()->role == 'Master')
-                                                <input type="hidden" class="leadsId" value="{{ $matchLeads->id }}">
-                                                <button type="button" class="btn btn-xs btn-danger deleteButtonSingle" data-nama="{{ $matchLeads->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+                                                <input type="hidden" class="customerID" value="{{ $matchLeads->customer_id }}">
+                                                <button type="button" class="btn btn-xs btn-danger deleteButtonSingle" data-nama="{{ $matchLeads->first_name . ' ' . $matchLeads->last_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
                                             @endif
 
                                         </td>
@@ -330,10 +330,17 @@
                                                                             </select>
                                                                         </div>
 
-                                                                        <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($data->date)->format('d F, Y') }}" />
+                                                                        <x-form-input className="col-lg-6" type="text" name="ready_buy_villa" label="Ready to Buy" value="{{ \Carbon\Carbon::parse($data->date)->format('d F, Y') }}" />
 
-                                                                        <x-form-input className="col-lg-3" type="text" name="villa_min_budget" label="Budget Min" value="{{ $data->min_budget_idr !== null ? 'IDR ' . $data->min_budget_idr : 'USD ' . $data->min_budget_usd }}" />
-                                                                        <x-form-input className="col-lg-3" type="text" name="villa_max_budget" label="Budget Max" value="{{ $data->max_budget_idr !== null ? 'IDR ' . $data->max_budget_idr : 'USD ' . $data->max_budget_usd }}" />
+                                                                        {{-- Karena ada 2 tipe : usd dan idr (jika min dan max budget idr tidak null, maka tampilkan budget idr) --}}
+                                                                        @if ($data->min_budget_idr !== null && $data->max_budget_idr !== null)
+                                                                            <x-form-input className="col-lg-3" type="text" name="villa_min_budget_idr" label="Budget Min" value="{{ $data->min_budget_idr }}" />
+                                                                            <x-form-input className="col-lg-3" type="text" name="villa_max_budget_idr" label="Budget Max" value="{{ $data->max_budget_idr }}" />
+                                                                        @elseif ($data->min_budget_usd !== null && $data->max_budget_usd !== null)
+                                                                            <x-form-input className="col-lg-3" type="text" name="villa_min_budget_usd" label="Budget Min" value="{{ $data->min_budget_usd }}" />
+                                                                            <x-form-input className="col-lg-3" type="text" name="villa_max_budget_usd" label="Budget Max" value="{{ $data->max_budget_usd }}" />
+                                                                        @endif
+
                                                                         <x-form-input className="col-lg-3" type="text" name="minimum_bedroom" label="Bedroom Min" value="{{ $data->min_bedroom }}" />
                                                                         <x-form-input className="col-lg-3" type="text" name="maximum_bedroom" label="Bedroom Max" value="{{ $data->max_bedroom }}" />
 
@@ -355,10 +362,17 @@
                                                                             </select>
                                                                         </div>
 
-                                                                        <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($data->date)->format('d F, Y') }}" />
+                                                                        <x-form-input className="col-lg-6" type="text" name="ready_buy_land" label="Ready to Buy" value="{{ \Carbon\Carbon::parse($data->date)->format('d F, Y') }}" />
 
-                                                                        <x-form-input className="col-lg-3" type="text" name="land_min_budget" label="Budget Min" value="{{ $data->min_budget_idr !== null ? 'IDR ' . $data->min_budget_idr : 'USD ' . $data->min_budget_usd }}" />
-                                                                        <x-form-input className="col-lg-3" type="text" name="villa_max_budget" label="Budget Max" value="{{ $data->max_budget_idr !== null ? 'IDR ' . $data->max_budget_idr : 'USD ' . $data->max_budget_usd }}" />
+                                                                        {{-- Karena ada 2 tipe : usd dan idr (jika min dan max budget idr tidak null, maka tampilkan budget idr) --}}
+                                                                        @if ($data->min_budget_idr !== null && $data->max_budget_idr !== null)
+                                                                            <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" value="{{ $data->min_budget_idr }}" />
+                                                                            <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" value="{{ $data->max_budget_idr }}" />
+                                                                        @elseif ($data->min_budget_usd !== null && $data->max_budget_usd !== null)
+                                                                            <x-form-input className="col-lg-3" type="text" name="land_min_budget_usd" label="Budget Min" value="{{ $data->min_budget_usd }}" />
+                                                                            <x-form-input className="col-lg-3" type="text" name="land_max_budget_usd" label="Budget Max" value="{{ $data->max_budget_usd }}" />
+                                                                        @endif
+
                                                                         <x-form-input className="col-lg-3" type="text" name="minimum_land_size" label="Size Min" value="{{ $data->min_land_size }}" />
                                                                         <x-form-input className="col-lg-3" type="text" name="maximum_land_size" label="Size Max" value="{{ $data->max_land_size }}" />
 
@@ -366,9 +380,6 @@
                                                                 </div>
                                                             @endif
                                                         @endforeach
-
-
-
 
                                                         {{-- If it is a master, you can input it directly to a specific agent so that the selected agent gets the leads. --}}
                                                         @if (Auth::user()->role == 'Master')

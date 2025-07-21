@@ -125,7 +125,8 @@ class PropertiesLeadsController extends Controller
 
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
+        // dd($request->type_properties_land);
+        dd($request->all());
 
         $customerID = $id;
 
@@ -142,7 +143,16 @@ class PropertiesLeadsController extends Controller
             'cust_email' => $request->customer_email,
         ]);
 
+        if ($request->type_properties_villa == null) {
+            dd('villa ga dipilih');
+        }
+
+
+
+
         dd('done update');
+
+
 
         $propertiesLeads = PropertyLeadsModel::where('id', $id)->first();
 
@@ -172,7 +182,7 @@ class PropertiesLeadsController extends Controller
      */
     public function deleteSingle(string $id)
     {
-        PropertyLeadsModel::where('id', $id)->delete();
+        PropertyLeadsModel::where('customer_id', $id)->delete();
 
         $flashData = [
             'judul' => 'Delete Success',
