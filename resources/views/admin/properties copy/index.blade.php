@@ -49,7 +49,6 @@
                         <div>
                             <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">{{ $data_property->count() }} </span></h4>
                         </div>
-                        <a href="{{ route('properties.create') }}" class="btn btn-success width-md">Add Villa</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table-hover table-centered fs-13 mb-0 table text-nowrap align-middle" id="tableProperties">
@@ -63,11 +62,11 @@
                                     </th>
                                     <th>Properties Photo & Name</th>
                                     <th>Agent</th>
-                                    <th>Mandates</th>                                    
-                                    <th>Localization</th>
-                                    <th>Bedroom</th>
-                                    <th>Price ($)</th>
-                                    <th>Status</th>
+                                    <th>Mandates</th>
+                                    <th>Bedrooms</th>
+                                    <th>Location</th>
+                                    <th>Type Listing</th>
+                                    <th>Status Listing</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -82,35 +81,51 @@
                                         </td>
 
                                         <td>
-                                            <a href="{{ route('properties.details', $property->property_slug) }}" class="d-flex align-items-center gap-2">
+                                            <div class="d-flex align-items-center gap-2">
                                                 <div>
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <span class="text-dark fw-medium fs-15">{{ $property->property_name }}</span>
-                                                    <span class="text-dark fst-italic">{{ $property->property_code }}</span>
+                                                    <a href="#!" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
+                                                    <span class="fst-italic">{{ $property->property_code }}</span>
                                                 </div>
-                                            </a>
+                                            </div>
                                         </td>
                                         <td>
-                                            <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
-                                        </td>
-                                        @php
-                                            $cleanType = str_replace('Mandate', '', $property->type_mandate);
-                                        @endphp
+                                            <div class="d-flex flex-column">
 
-                                        @if (str_contains($property->type_mandate, 'Booster') || str_contains($property->type_mandate, 'Essentials'))
-                                            <td><span class="badge bg-primary-subtle text-primary fs-12 px-2 py-1">{{ trim($cleanType) }}</span></td>
-                                        @endif
-                                        
-                                        <td class="text-capitalize">
-                                            <span class="text-dark fw-medium fs-15">{{ $property->region }}</span>
+                                                <span class="fst-italic">{{ $property->agentName }}</span>
+                                                <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
+                                            </div>
                                         </td>
+                                        <td><span class="badge bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
                                         <td>
-                                            <span class="text-dark fw-medium fs-15">{{ $property->bedroom }} </span>
-                                        </td>                                   
+                                            <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="solar:bed-broken" class="fs-18 text-primary"></iconify-icon>{{ $property->bedroom }} Bedroom</p>
+                                            <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="cil:bathroom" class="fs-18 text-primary"></iconify-icon>{{ $property->bathroom }} Bathroom</p>
+                                        </td>
+                                        <td class="text-capitalize">
+                                            <div class="d-flex flex-column">
+                                                <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> {{ $property->region . ', ' . $property->sub_region }}</a>
+                                                <span class="fst-italic">{{ Str::limit($property->property_address, 50) }}</span>
+                                            </div>
+
+                                        </td>
+
+                                        @php
+                                            switch ($property->type_properties) {
+                                                case 'Properties':
+                                                    $badgeClass = 'bg-warning';
+                                                    break;
+
+                                                default:
+                                                    $badgeClass = 'bg-primary';
+                                                    break;
+                                            }
+                                        @endphp
                                         <td>
-                                            <span class="text-dark fw-medium fs-15">250 000$</span>
+                                            <span class="badge {{ $badgeClass }} text-light fs-12 text-capitalize px-2 py-1">
+                                                {{ $property->type_properties }}
+                                            </span>
                                         </td>
 
                                         @php
@@ -145,6 +160,7 @@
 
                                         <td>
                                             <div class="d-flex gap-2">
+                                                <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="fs-18 align-middle"></iconify-icon></a>
                                                 <a href="{{ route('properties.edit', $property->property_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a>
 
                                                 {{-- Delete Button --}}

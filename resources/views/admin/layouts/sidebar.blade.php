@@ -33,8 +33,24 @@
             </li>
 
             @role('Master|agent')
-                <li class="menu-title">Management Listing</li>
+                <li class="menu-title">Listing</li>
 
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
+                        <span class="nav-icon">
+                            <i class="ri-community-line"></i>
+                        </span>
+                        <span class="nav-text">Villas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('leads.*') ? 'active' : '' }}" href="{{ route('leads.index') }}">
+                        <span class="nav-icon">
+                            <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
+                        </span>
+                        <span class="nav-text">Lands</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link menu-arrow {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="#sidebarProperty" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProperty">
                         <span class="nav-icon">

@@ -591,17 +591,27 @@
                         @csrf
                         <h3 class="contact__property--form__title">Contact Us</h3>
                         <div class="contact__property--form__inner">
-                            <div class="contact__property--form__input">
-                                <label for="name">Name*</label>
-                                <input id="name" name="name" placeholder="Enter your name" type="text">
-                                @error('name')
-                                    <p class="text-danger my-2">{{ $message }}</p>
-                                @enderror
+                            <div class="d-flex gap-4">
+                                <div class="contact__property--form__input">
+                                    <label for="first_name">First Name*</label>
+                                    <input id="first_name" name="first_name" placeholder="Enter your name" type="text">
+                                    @error('first_name')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="contact__property--form__input">
+                                    <label for="last_name">Last Name*</label>
+                                    <input id="last_name" name="last_name" placeholder="Enter your name" type="text">
+                                    @error('last_name')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="contact__property--form__input">
+                            <div class="contact__property--form__input w-full">
                                 <label for="phone_number">Phone number*</label>
-                                <input id="phone_number" name="phone_number" placeholder="Enter your number" type="tel">
-                                @error('name')
+                                <input id="phone_number" class="w-full" name="phone_number" type="tel" placeholder="+33 44 55 678" required>
+
+                                @error('phone_number')
                                     <p class="text-danger my-2">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -613,53 +623,154 @@
                                     <p class="text-danger my-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="contact__property--form__input">
-                                <label for="budget_currency">Budget Currency*</label>
 
-                                <div class="advance__search--items">
-                                    <select class="advance__search--select" id="budget_currency" name="budget_currency">
-                                        <option selected disabled>Select Currency</option>
-                                        <option value="usd">Dollar (USD)</option>
-                                        <option value="idr">Rupiah (IDR)</option>
-                                    </select>
-                                </div>
+                            <!-- Looking For Field -->
+                            <div class="contact__property--form__input">
+                                <label for="looking_for">Looking For*</label>
+                                <ul class="interior__amenities--check d-flex gap-4" id="looking_for">
+                                    <li class="interior__amenities--check__list mb-0">
+                                        <label class="interior__amenities--check__label mb-0" style="padding-left: 2.5rem;" for="villa">
+                                            <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 0L0 4.125V11H3.72581V8.59381C3.72581 7.64165 4.51713 6.87506 5.5 6.87506C6.48287 6.87506 7.27419 7.64165 7.27419 8.59381V11H11V4.125L5.5 0Z" fill="#063436"></path>
+                                            </svg>
+                                            Villa
+                                        </label>
+                                        <input value="villa" name="looking_for" class="interior__amenities--check__input" id="villa" type="checkbox">
+                                        <span class="interior__amenities--checkmark"></span>
+                                    </li>
+                                    <li class="interior__amenities--check__list mb-0">
+                                        <label class="interior__amenities--check__label mb-0" style="padding-left: 2.5rem;" for="land">
+                                            <svg  xmlns="http://www.w3.org/2000/svg" width="18" height="18"  
+                                            fill="#063436" viewBox="0 0 24 24" >
+                                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M5 19V5h14v14z"></path><path d="M12 9h3v3h2V7h-5zM9 12H7v5h5v-2H9z"></path>
+                                            </svg>    
+                                            Land
+                                        </label>
+                                        <input value="land" name="looking_for" class="interior__amenities--check__input" id="land" type="checkbox">
+                                        <span class="interior__amenities--checkmark"></span>
+                                    </li>                                  
+                                </ul>
+                                @error('email')
+                                    <p class="text-danger my-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div class="contact__property--form__input w-full">
+                                <label for="budget_currency">Select Budget Currency*</label>
+
+                                <select id="budget_currency" name="budget_currency">
+                                    <option selected disabled>Select Currency</option>
+                                    <option value="usd">Dollar (USD)</option>
+                                    <option value="idr">Rupiah (IDR)</option>
+                                </select>
 
                                 @error('budget_currency')
                                     <p class="text-danger my-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="contact__property--form__input" id="group_budget_idr">
-                                <label for="budget_idr">Budget IDR*</label>
-                                <input id="budget_idr" name="budget_idr" placeholder="IDR Enter your budget" type="text">
 
-                                @error('budget_idr')
-                                    <p class="text-danger my-2">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="contact__property--form__input" id="group_budget_usd">
-                                <label for="budget_usd">Budget USD*</label>
-                                <input id="budget_usd" name="budget_usd" placeholder="$ Enter your budget" type="text">
+                            <!-- looking_for_villa -->
+                            <div id="looking_for_villa">
+                                <div class="text-center d-flex justify-items-center justify-content-center">
+                                    <hr class="w-100" />
+                                    <label class="w-100">Looking For Villa</label>
+                                    <hr class="w-100" />
+                                </div>
+                                <div class="contact__property--form__input" id="villa_budget_idr">
+                                    <label for="budget_idr">Budget IDR*</label>
+                                    <div class="widget__price--filtering">
+                                        <div class="price-input">
+                                            <input type="text" class="input-min bg-white" name="budget_idr_min" id="minPriceFilter" placeholder="IDR 100 000 000">
+                                            <div class="separator">-</div>
+                                            <input type="text" class="input-max bg-white" name="budget_idr_max" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
+                                        </div>                               
+                                    </div>
 
-                                @error('budget_usd')
-                                    <p class="text-danger my-2">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="contact__property--form__input">
-                                <label for="location">Location*</label>
+                                    @error('budget_idr')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            
+                                <div class="contact__property--form__input" id="villa_budget_usd">
+                                    <label for="budget_usd">Budget USD*</label>
+                                    <div class="widget__price--filtering">
+                                        <div class="price-input">
+                                            <input type="text" class="input-min bg-white" name="budget_usd_min" id="minPriceFilter" placeholder="$ 1 000">
+                                            <div class="separator">-</div>
+                                            <input type="text" class="input-max bg-white" name="budget_usd_max" id="maxPriceFilter" placeholder="$ 100 000">
+                                        </div>                               
+                                    </div>
 
-                                <div class="advance__search--items">
-                                    <select class="advance__search--select" name="location">
+                                    @error('budget_usd')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="contact__property--form__input" id="villa_location">
+                                    <label for="location">Location*</label>
+                                    <select name="location">
                                         <option selected disabled>Property Location</option>
                                         @foreach ($sub_regions as $rgn)
                                             <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-                                {{-- <input id="location" name="location" placeholder="Location" type="text"> --}}
 
-                                @error('location')
-                                    <p class="text-danger my-2">{{ $message }}</p>
-                                @enderror
+                                    @error('location')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <!-- looking_for_land -->
+                            <div id="looking_for_land">
+                                <div class="text-center d-flex justify-items-center justify-content-center">
+                                    <hr class="w-100" />
+                                    <label class="w-100">Looking For Land</label>
+                                    <hr class="w-100" />
+                                </div>
+                                <div class="contact__property--form__input" id="land_budget_idr">
+                                    <label for="budget_idr">Budget IDR*</label>
+                                    <div class="widget__price--filtering">
+                                        <div class="price-input">
+                                            <input type="text" class="input-min bg-white" name="budget_idr_min" id="minPriceFilter" placeholder="IDR 100 000 000">
+                                            <div class="separator">-</div>
+                                            <input type="text" class="input-max bg-white" name="budget_idr_max" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
+                                        </div>                               
+                                    </div>
+
+                                    @error('budget_idr')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            
+                                <div class="contact__property--form__input" id="land_budget_usd">
+                                    <label for="budget_usd">Budget USD*</label>
+                                    <div class="widget__price--filtering">
+                                        <div class="price-input">
+                                            <input type="text" class="input-min bg-white" name="budget_usd_min" id="minPriceFilter" placeholder="$ 1 000">
+                                            <div class="separator">-</div>
+                                            <input type="text" class="input-max bg-white" name="budget_usd_max" id="maxPriceFilter" placeholder="$ 100 000">
+                                        </div>                               
+                                    </div>
+
+                                    @error('budget_usd')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="contact__property--form__input" id="land_location">
+                                    <label for="location">Location*</label>
+                                    <select name="location">
+                                        <option selected disabled>Property Location</option>
+                                        @foreach ($sub_regions as $rgn)
+                                            <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('location')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="contact__property--form__input">
@@ -670,6 +781,7 @@
                                     <p class="text-danger my-2">{{ $message }}</p>
                                 @enderror
                             </div>
+
                             <div class="contact__property--form__input">
                                 <label for="email">Message</label>
                                 <textarea id="text" name="message" placeholder="Enter your message"></textarea>
@@ -1276,25 +1388,55 @@
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get elements
+        const villaCheckbox = document.getElementById("villa");
+        const landCheckbox = document.getElementById("land");
+        const currencySelect = document.getElementById("budget_currency");
 
-            $('#group_budget_idr').hide();
-            $('#group_budget_usd').hide();
+        const villaSection = document.getElementById("looking_for_villa");
+        const landSection = document.getElementById("looking_for_land");
 
-            // Saat user mengganti pilihan
-            $('#budget_currency').on('change', function() {
-                console.log($('#budget_currency').val());
+        const villaIDR = document.getElementById("villa_budget_idr");
+        const villaUSD = document.getElementById("villa_budget_usd");
+        const villaLOCATION = document.getElementById("villa_location");
+        const landIDR = document.getElementById("land_budget_idr");
+        const landUSD = document.getElementById("land_budget_usd");
+        const landLOCATION = document.getElementById("land_location");
 
-                if ($(this).val() === 'usd') {
-                    $('#group_budget_usd').attr('style', 'display: block !important');
-                    $('#group_budget_idr').attr('style', 'display: none !important');
-                } else {
-                    $('#group_budget_usd').attr('style', 'display: none !important');
-                    $('#group_budget_idr').attr('style', 'display: block !important');
-                }
-            });
-        });
-    </script>
+        // Function to update visibility
+        function updateVisibility() {
+        const currency = currencySelect.value;
+
+        // Villa
+        if (villaCheckbox.checked) {
+            villaSection.style.display = "block";
+            villaIDR.style.display = (currency === "idr") ? "block" : "none";
+            villaUSD.style.display = (currency === "usd") ? "block" : "none";
+        } else {
+            villaSection.style.display = "none";
+        }
+
+        // Land
+        if (landCheckbox.checked) {
+            landSection.style.display = "block";
+            landIDR.style.display = (currency === "idr") ? "block" : "none";
+            landUSD.style.display = (currency === "usd") ? "block" : "none";
+        } else {
+            landSection.style.display = "none";
+        }
+        }
+
+        // Bind change listeners
+        villaCheckbox.addEventListener("change", updateVisibility);
+        landCheckbox.addEventListener("change", updateVisibility);
+        currencySelect.addEventListener("change", updateVisibility);
+
+        // Hide all on load
+        villaSection.style.display = "none";
+        landSection.style.display = "none";
+    });
+    </script>    
 
     <script>
         $("#timing").flatpickr({

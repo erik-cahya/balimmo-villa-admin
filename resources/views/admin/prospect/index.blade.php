@@ -55,16 +55,15 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Customer Name</th>
+                                        <th scope="col">Prospect Name</th>
                                         @role('Master')
-                                            <th scope="col">Leads From</th>
+                                            <th scope="col">Agent</th>
                                         @endrole
                                         <th scope="col">Phone Number</th>
                                         <th scope="col">Localization</th>
-                                        <th scope="col">Property Selected</th>
                                         <th scope="col">Date</th>
+                                        <th scope="col">Property Selected</th>                                        
                                         <th scope="col">Status</th>
-
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -78,12 +77,9 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <div class="d-flex align-items-center gap-1">
-                                                    <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
-                                                    <div class="d-block">
-                                                        <h5 class="text-dark fw-medium mb-0">{{ $customerData->cust_name }}</h5>
-                                                        <p class="fs-13 mb-0">{{ $customer }}</p>
-                                                    </div>
+                                                <div class="d-block">
+                                                    <h5 class="text-dark fw-medium mb-0">{{ $customerData->cust_name }}</h5>
+                                                    <p class="fs-13 mb-0">{{ $customer }}</p>
                                                 </div>
                                             </td>
                                             @role('Master')
@@ -92,12 +88,12 @@
                                                 </td>
                                             @endrole
                                             <td>
-                                                <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</p>
+                                                <p class="mb-0"> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</p>
                                             </td>
-                                            <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $customerData->localization }}</td>
-
-                                            <td><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> {{ $cst->count() }} Properties Selected</td>
-                                            <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
+                                            <td>{{ $customerData->localization }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
+                                            <td>{{ $cst->count() }} Properties Selected</td>
+                                            
                                             @php
                                                 if ($customerData->docs_status == null) {
                                                     $customerData->docs_status = 'New Prospect';
