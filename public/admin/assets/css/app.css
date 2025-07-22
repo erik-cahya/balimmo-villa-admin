@@ -15190,7 +15190,7 @@ html[data-menu-size=hidden] .topbar {
     border-radius: 0;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1560px) {
   .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
     max-width: 96%;
   }

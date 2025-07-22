@@ -29,10 +29,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="fw-semibold mb-0">Create Document Visit</h4>
+                    <!-- <h4 class="fw-semibold mb-0">Create Document Visit</h4> -->
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Docs Visit</a></li>
-                        <li class="breadcrumb-item active">Create Document Visit</li>
+                        <li class="breadcrumb-item"><a href="{{ route('prospects.index') }}">Prospect</a></li>
+                        <li class="breadcrumb-item active">Detail Prospect</li>
                     </ol>
                 </div>
             </div>
@@ -41,41 +41,353 @@
             @csrf
             <div class="row">
                 <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
-                            <div>
-                                <h4 class="card-title">Select Clients</h4>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <h3 class="fw-medium text-capitalize mb-0">Prospect name</h3>                
+                                        <span class="badge bg-success fs-16 text-capitalize px-2 py-1">Status</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Edit Prospect</button>
+                                </div>
+                                <!-- Villa Detail Information -->
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h4 class="fw-medium text-capitalize">Details</h4> 
+                                        <p class="mb-1"><span class="fw-medium text-dark">Email</span><span class="mx-2">:</span>devamahayanatop@gmail.com</p>
+                                        <p class="mb-1"><span class="fw-medium text-dark">Whatsapp</span><span class="mx-2">:</span>+33 34 312 422</p>
+                                        <p class="mb-1"><span class="fw-medium text-dark">Sign up date</span><span class="mx-2">:</span>16 July, 2025</p>
+                                        <p class="mb-1"><span class="fw-medium text-dark">Assigne to</span><span class="mx-2">:</span>Agent name</p>                                                                            
+                                    </div>
+
+                                    <div class="col-6">
+                                        <h4 class="fw-medium text-capitalize">Looking for</h4> 
+                                        <div class="mb-2">
+                                            <span class="badge fs-16 bg-success me-1">Villa</span>
+                                            <p class="mb-1"><span class="fw-medium text-dark">Bedroom</span><span class="mx-2">:</span>2 - 4</p>
+                                            <p class="mb-1"><span class="fw-medium text-dark">Budget</span><span class="mx-2">:</span>IDR 500.000.000 - IDR 2.500.000.000,00</p>
+                                            <p class="mb-1"><span class="fw-medium text-dark">Localisation</span><span class="mx-2">:</span>Canggu</p>
+                                            <p class="mb-1"><span class="fw-medium text-dark">Ready to buy</span><span class="mx-2">:</span>16 July, 2025</p>
+                                        </div>
+                                        
+                                        <div>
+                                            <span class="badge fs-16 bg-warning me-1">Land</span>
+                                            <p class="mb-1"><span class="fw-medium text-dark">Land size</span><span class="mx-2">:</span>200 - 300 m²</p>
+                                            <p class="mb-1"><span class="fw-medium text-dark">Budget</span><span class="mx-2">:</span>IDR 500.000.000 - IDR 2.000.000.000,00</p>
+                                            <p class="mb-1"><span class="fw-medium text-dark">Localisation</span><span class="mx-2">:</span>Canggu</p>
+                                            <p class="mb-1"><span class="fw-medium text-dark">Ready to buy</span><span class="mx-2">:</span>16 July, 2025</p>
+                                        </div>
+                                    </div>                                    
+                                </div>
                             </div>
 
                         </div>
-                        <div class="card-body">
-                            <div class="col-lg-12 mb-3" id="group_dataClients">
-                                <select class="form-control" id="dataClients" name="dataClients" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
-                                    <option value="" selected disabled>Choose Clients</option>
-                                    @foreach ($data_client as $client)
-                                        <option value="{{ $client['email'] }}||{{ $client['first_name'] }}||{{ $client['last_name'] }}||{{ $client['phone_number'] }}||{{ $client['leadsId'] }}">
-                                            {{ $client['first_name'] . ' ' . $client['last_name'] . ' ( ' . $client['email'] . ' )' }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                                @error('dataClient')
-                                    <style>
-                                        .choices__inner {
-                                            border-color: #e96767 !important;
-                                        }
-                                    </style>
-
-                                    <div class="alert alert-danger m-0">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                    </div>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                            
+                                <!-- Villa Detail Information -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4 class="fw-medium text-capitalize">Files</h4> 
+                                        <div class="d-flex flex-wrap gap-2">                     
+                                            <a href="" class="text-dark stretched-link d-flex bg-light-subtle align-items-center position-relative gap-1 rounded border p-2 text-start">
+                                                <iconify-icon icon="ph:file-fill" class="text-danger fs-18"></iconify-icon>
+                                                <h4 class="fs-14" style="margin-bottom: -1px !important">Property Files</h4>
+                                                <i class="ri-download-cloud-line fs-16 text-muted"></i>
+                                            </a>                                    
+                                            <a href="" class="text-dark stretched-link d-flex bg-light-subtle align-items-center position-relative gap-1 rounded border p-2 text-start">
+                                                <iconify-icon icon="ph:file-fill" class="text-danger fs-18"></iconify-icon>
+                                                <h4 class="fs-14" style="margin-bottom: -1px !important">Visit PDF</h4>
+                                                <i class="ri-download-cloud-line fs-16 text-muted"></i>
+                                            </a>                                    
+                                            <a href="" class="text-dark stretched-link d-flex bg-light-subtle align-items-center position-relative gap-1 rounded border p-2 text-start">
+                                                <iconify-icon icon="ph:file-fill" class="text-danger fs-18"></iconify-icon>
+                                                <h4 class="fs-14" style="margin-bottom: -1px !important">Offering Paper </h4>
+                                                <i class="ri-download-cloud-line fs-16 text-muted"></i>
+                                            </a>                                    
+                                        </div>                                                                            
+                                    </div>                                   
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-6">
                     <div class="card">
+                        <div class="accordion" id="accordionExample">
+
+                            <!-- Villa Selected -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="fs-18 accordion-button fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Villa Selected <span class="ms-2 badge bg-success text-capitalize">1</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="table-responsive">
+                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 20px;">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="selectAll1">
+                                                            <label class="form-check-label" for="selectAll1"></label>
+                                                        </div>
+                                                    </th>
+                                                    <th>Properties Name</th>
+                                                    <th>Bedroom</th>
+                                                    <th>Price</th>
+                                                    <th>Localisation</th>                                            
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data_property as $property)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <input type="checkbox" name="propertyId[]" class="form-check-input property-checkbox" id="{{ $property->propertyId }}" value="{{ $property->propertyId }}">
+                                                                <label class="form-check-label" for="{{ $property->propertyId }}">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td class=" d-flex align-items-center">
+                                                            <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" class="avatar-md border-light border-3 rounded border" alt="...">
+                                                            <span class="fst-italic fs-12">{{ $property->property_name }}</span>                                                
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column gap-1">
+                                                                <span class="fst-italic fs-12">{{ $property->bedroom }}</span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td>
+                                                            <div class="d-flex flex-column">
+                                                                <span class="fst-italic fs-12">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
+                                                                <span class="fst-italic fs-12">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column gap-1">
+                                                                <span class="fst-italic fs-12">{{ $property->sub_region }}</span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-flex gap-2 justify-content-end mb-2 me-2">
+                                        <button type="submit" class="btn btn-warning">Create visit docs</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-offer-docs">Create offer docs</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Villa Recommendation -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="fs-18 accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Villa Recommendation
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="table-responsive">
+                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 20px;">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="selectAll1">
+                                                            <label class="form-check-label" for="selectAll1"></label>
+                                                        </div>
+                                                    </th>
+                                                    <th>Properties Name</th>
+                                                    <th>Bedroom</th>
+                                                    <th>Price</th>
+                                                    <th>Localisation</th>                                            
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data_property as $property)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <input type="checkbox" name="propertyId[]" class="form-check-input" id="{{ $property->propertyId }}" value="{{ $property->propertyId }}">
+                                                                <label class="form-check-label" for="{{ $property->propertyId }}">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td class=" d-flex align-items-center">
+                                                            <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" class="avatar-md border-light border-3 rounded border" alt="...">
+                                                            <span class="fst-italic fs-12">{{ $property->property_name }}</span>                                                
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column gap-1">
+                                                                <span class="fst-italic fs-12">{{ $property->bedroom }}</span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td>
+                                                            <div class="d-flex flex-column">
+                                                                <span class="fst-italic fs-12">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
+                                                                <span class="fst-italic fs-12">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column gap-1">
+                                                                <span class="fst-italic fs-12">{{ $property->sub_region }}</span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Land Selected -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="fs-18 accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Land Selected <span class="ms-2 badge bg-warning text-capitalize">1</span>
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <div class="table-responsive">
+                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 20px;">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="selectAll1">
+                                                            <label class="form-check-label" for="selectAll1"></label>
+                                                        </div>
+                                                    </th>
+                                                    <th>Properties Name</th>
+                                                    <th>Land Size</th>
+                                                    <th>Price</th>
+                                                    <th>Localisation</th>                                            
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data_property as $property)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <input type="checkbox" name="propertyId[]" class="form-check-input property-checkbox" id="{{ $property->propertyId }}" value="{{ $property->propertyId }}">
+                                                                <label class="form-check-label" for="{{ $property->propertyId }}">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td class=" d-flex align-items-center">
+                                                            <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" class="avatar-md border-light border-3 rounded border" alt="...">
+                                                            <span class="fst-italic fs-12">{{ $property->property_name }}</span>                                                
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column gap-1">
+                                                                <span class="fst-italic fs-12">{{ $property->bedroom }}</span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td>
+                                                            <div class="d-flex flex-column">
+                                                                <span class="fst-italic fs-12">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
+                                                                <span class="fst-italic fs-12">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column gap-1">
+                                                                <span class="fst-italic fs-12">{{ $property->sub_region }}</span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="d-flex gap-2 justify-content-end mb-2 me-2">
+                                        <button type="submit" class="btn btn-warning">Create visit docs</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-offer-docs">Create offer docs</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Land Recommendation -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="fs-18 accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        Land Recommendation
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                    <div class="table-responsive">
+                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th style="width: 20px;">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="selectAll1">
+                                                            <label class="form-check-label" for="selectAll1"></label>
+                                                        </div>
+                                                    </th>
+                                                    <th>Properties Name</th>
+                                                    <th>Land Size</th>
+                                                    <th>Price</th>
+                                                    <th>Localisation</th>                                            
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data_property as $property)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-check">
+                                                                <input type="checkbox" name="propertyId[]" class="form-check-input" id="{{ $property->propertyId }}" value="{{ $property->propertyId }}">
+                                                                <label class="form-check-label" for="{{ $property->propertyId }}">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td class=" d-flex align-items-center">
+                                                            <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" class="avatar-md border-light border-3 rounded border" alt="...">
+                                                            <span class="fst-italic fs-12">{{ $property->property_name }}</span>                                                
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column gap-1">
+                                                                <span class="fst-italic fs-12">{{ $property->bedroom }}</span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td>
+                                                            <div class="d-flex flex-column">
+                                                                <span class="fst-italic fs-12">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
+                                                                <span class="fst-italic fs-12">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column gap-1">
+                                                                <span class="fst-italic fs-12">{{ $property->sub_region }}</span>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <!-- <div class="card">
                         <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
                             <div>
                                 <h4 class="card-title">Date Visit</h4>
@@ -95,84 +407,9 @@
                                 @enderror
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
-
-                <div class="col-xl-12">
-
-                    <div class="card">
-                        <div class="card-header text-bg-primary d-flex justify-content-between align-items-center border-bottom" style="border-radius: 0px 0px 20px 0px">
-                            <div>
-                                <h4 class="card-title">Select Properties</h4>
-                            </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
-                                    <thead class="bg-light-subtle">
-                                        <tr>
-                                            <th style="width: 20px;">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="selectAll">
-                                                    <label class="form-check-label" fid="selectAll"></label>
-                                                </div>
-                                            </th>
-                                            <th>Properties Name</th>
-                                            <th>Owned By</th>
-                                            <th>Properties Price</th>
-                                            <th>Rooms</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data_property as $property)
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input type="checkbox" name="propertyId[]" class="form-check-input" id="{{ $property->propertyId }}" value="{{ $property->propertyId }}">
-                                                        <label class="form-check-label" for="{{ $property->propertyId }}">&nbsp;</label>
-                                                    </div>
-                                                </td>
-                                                <td class="fw-medium text-dark d-flex">
-                                                    <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" class="avatar-sm rounded-circle me-2" alt="...">
-
-                                                    <div class="d-flex flex-column">
-                                                        {{ $property->property_name }}
-                                                        <div class="d-flex">
-                                                            <span class="fst-italic badge bg-dark text-light fs-11 px-3">{{ $property->property_code }}</span>
-                                                        </div>
-                                                        <span class="fst-italic fs-12">{{ Str::limit($property->property_address, 100) }}</span>
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column">
-                                                        <span class="fst-italic fw-medium text-dark">{{ Str::limit($property->agentName, 100) }}</span>
-                                                        <span class="fst-italic badge bg-dark text-light fs-11 px-3">{{ $property->internal_reference }}</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column gap-1">
-                                                        <span class="fst-italic fs-12">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
-                                                        <span class="fst-italic fs-12">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex flex-column gap-1">
-                                                        <span class="fst-italic fs-12">Bedroom : {{ $property->bedroom }}</span>
-                                                        <span class="fst-italic fs-12">Bathroom : {{ $property->bathroom }}</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- end table-responsive -->
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-outline-primary">Create Document Visit</button>
-                </div>
+              
 
             </div>
         </form>
@@ -287,6 +524,26 @@
             });
         });
     </script>
-
     {{-- /* End Sweet Alert --}}
+
+    {{-- Logic untuk button offer docs disabled --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('.property-checkbox');
+        const offerBtn = document.getElementById('btn-offer-docs');
+
+        function toggleOfferButton() {
+            const checked = document.querySelectorAll('.property-checkbox:checked');
+            offerBtn.disabled = (checked.length !== 1); // Only enable if exactly 1 selected
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', toggleOfferButton);
+        });
+
+        // Initial check in case checkbox already pre-checked
+        toggleOfferButton();
+    });
+    </script>
+
 @endpush

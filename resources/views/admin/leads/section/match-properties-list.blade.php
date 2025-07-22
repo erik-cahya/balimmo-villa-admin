@@ -13,20 +13,20 @@
                         <thead class="table-light">
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Customer Name</th>
+                                <th scope="col">Leads Name</th>
+                                @role('Master')
+                                    <th scope="col">Agent</th>
+                                @endrole
                                 <th scope="col">Phone Number</th>
-                                <th scope="col">Budget IDR</th>
-                                <th scope="col">Budget USD</th>
-                                <th scope="col">Localization</th>
-                                <th scope="col">Leads Message</th>
-                                <th scope="col">Date</th>
-
+                                <th scope="col">Localization</th>                                
+                                <th scope="col">Ready to buy</th>
+                                <th scope="col">Looking for</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach ($data_leads_matches as $matchLeads)
+                            <!-- @foreach ($data_leads_matches as $matchLeads)
                                 @php
                                     $authUser = Auth::user();
                                     $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
@@ -35,20 +35,22 @@
 
                                 @endphp
 
-                                @if (Auth::user()->role == 'Master' || ($filteredMatchLeads->count() > 0 && Auth::user()->role == 'agent'))
+                                @if (Auth::user()->role == 'Master' || ($filteredMatchLeads->count() > 0 && Auth::user()->role == 'agent')) -->
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <div class="d-flex align-items-center gap-1">
-                                                <!-- <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1"> -->
                                                 <div class="d-block">
-                                                    <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->cust_name }}</h5>
-                                                    <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p>
+                                                    <!-- <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->cust_name }}</h5>
+                                                    <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p> -->
+                                                    <h5 class="text-dark fw-medium mb-0">Deva Mahayana</h5>
+                                                    <p class="fs-13 mb-0">devamahayana@gmail.com</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</p>
+                                            <!-- <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</p> -->
+                                            <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> +33 4433-</p>
                                         </td>
                                         <td>
                                             <span class="badge bg-primary fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}</span>
@@ -316,8 +318,8 @@
                                         </div>
                                     </div>
                                     {{-- END Modal Edit Data Leads --}}
-                                @endif
-                            @endforeach
+                                <!-- @endif
+                            @endforeach -->
 
                         </tbody>
                     </table>

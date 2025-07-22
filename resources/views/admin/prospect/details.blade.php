@@ -122,6 +122,7 @@
                                                         <li><a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}"><iconify-icon icon="weui:eyes-on-outlined" class="fs-12 align-middle"></iconify-icon> See Properties</a></li>
                                                         <li><a class="dropdown-item" href="{{ route('visit.create') }}"><iconify-icon icon="material-symbols:docs-sharp" class="fs-12 align-middle"></iconify-icon> Create Visit Docs</a></li>
                                                         <li><a class="dropdown-item" href="{{ route('offer-purchase.create') }}"><iconify-icon icon="streamline-ultimate:paper-write" class="fs-12 align-middle"></iconify-icon> Create Offering Docs</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('prospect.details') }}"><iconify-icon icon="streamline-ultimate:paper-write" class="fs-12 align-middle"></iconify-icon> Prospect</a></li>
 
                                                     </ul>
                                                 </div>

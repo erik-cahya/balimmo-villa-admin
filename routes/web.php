@@ -107,7 +107,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('prospects/make-prospect/{id}', [ProspectController::class, 'leadsToProspect'])->name('leadsToProspect'); // Make data leads to prospects
     Route::resource('prospects', ProspectController::class);
-
+    
     Route::resource('/notary', NotaryController::class);
 
 
