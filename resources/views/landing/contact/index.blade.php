@@ -278,13 +278,13 @@
                             </div>
 
                             <!-- looking_for_villa -->
-                            <div id="looking_for_villa">
+                            <div id="looking_for_villa" style="display: none;">
                                 <div class="text-center d-flex justify-items-center justify-content-center">
                                     <hr class="w-100" />
                                     <label class="w-100">Looking For Villa</label>
                                     <hr class="w-100" />
                                 </div>
-                                <div class="contact__property--form__input" id="villa_budget_idr">
+                                <div class="contact__property--form__input" id="villa_budget_idr" style="display: none;">
                                     <label for="budget_idr">Budget IDR*</label>
                                     <div class="widget__price--filtering">
                                         <div class="price-input">
@@ -297,9 +297,9 @@
                                     @error('budget_idr')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
-                                </div>
-                            
-                                <div class="contact__property--form__input" id="villa_budget_usd">
+                                </div>     
+                                
+                                <div class="contact__property--form__input" id="villa_budget_usd" style="display: none;">
                                     <label for="budget_usd">Budget USD*</label>
                                     <div class="widget__price--filtering">
                                         <div class="price-input">
@@ -326,7 +326,7 @@
                                     @error('location')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
-                                </div>
+                                </div>                           
 
                                 <div class="contact__property--form__input" id="villa_bedroom">
                                     <label for="villa_bedroom">Bedroom*</label>
@@ -345,13 +345,13 @@
                             </div>
 
                             <!-- looking_for_land -->
-                            <div id="looking_for_land">
+                            <div id="looking_for_land" style="display: none;">
                                 <div class="text-center d-flex justify-items-center justify-content-center">
                                     <hr class="w-100" />
                                     <label class="w-100">Looking For Land</label>
                                     <hr class="w-100" />
                                 </div>
-                                <div class="contact__property--form__input" id="land_budget_idr">
+                                <div class="contact__property--form__input" id="land_budget_idr" style="display: none;">
                                     <label for="budget_idr">Budget IDR*</label>
                                     <div class="widget__price--filtering">
                                         <div class="price-input">
@@ -366,7 +366,7 @@
                                     @enderror
                                 </div>
                             
-                                <div class="contact__property--form__input" id="land_budget_usd">
+                                <div class="contact__property--form__input" id="land_budget_usd" style="display: none;">
                                     <label for="budget_usd">Budget USD*</label>
                                     <div class="widget__price--filtering">
                                         <div class="price-input">

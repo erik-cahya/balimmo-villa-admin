@@ -670,13 +670,13 @@
                             </div>
 
                             <!-- looking_for_villa -->
-                            <div id="looking_for_villa">
+                            <div id="looking_for_villa" style="display: none;">
                                 <div class="text-center d-flex justify-items-center justify-content-center">
                                     <hr class="w-100" />
                                     <label class="w-100">Looking For Villa</label>
                                     <hr class="w-100" />
                                 </div>
-                                <div class="contact__property--form__input" id="villa_budget_idr">
+                                <div class="contact__property--form__input" id="villa_budget_idr" style="display: none;">
                                     <label for="budget_idr">Budget IDR*</label>
                                     <div class="widget__price--filtering">
                                         <div class="price-input">
@@ -689,7 +689,22 @@
                                     @error('budget_idr')
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
-                                </div>                                                        
+                                </div>     
+                                
+                                <div class="contact__property--form__input" id="villa_budget_usd" style="display: none;">
+                                    <label for="budget_usd">Budget USD*</label>
+                                    <div class="widget__price--filtering">
+                                        <div class="price-input">
+                                            <input type="text" class="input-min bg-white" name="budget_usd_min" id="minPriceFilter" placeholder="$ 1 000">
+                                            <div class="separator">-</div>
+                                            <input type="text" class="input-max bg-white" name="budget_usd_max" id="maxPriceFilter" placeholder="$ 100 000">
+                                        </div>                               
+                                    </div>
+
+                                    @error('budget_usd')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
 
                                 <div class="contact__property--form__input" id="villa_location">
                                     <label for="location">Location*</label>
@@ -722,13 +737,13 @@
                             </div>
 
                             <!-- looking_for_land -->
-                            <div id="looking_for_land">
+                            <div id="looking_for_land" style="display: none;">
                                 <div class="text-center d-flex justify-items-center justify-content-center">
                                     <hr class="w-100" />
                                     <label class="w-100">Looking For Land</label>
                                     <hr class="w-100" />
                                 </div>
-                                <div class="contact__property--form__input" id="land_budget_idr">
+                                <div class="contact__property--form__input" id="land_budget_idr" style="display: none;">
                                     <label for="budget_idr">Budget IDR*</label>
                                     <div class="widget__price--filtering">
                                         <div class="price-input">
@@ -743,7 +758,7 @@
                                     @enderror
                                 </div>
                             
-                                <div class="contact__property--form__input" id="land_budget_usd">
+                                <div class="contact__property--form__input" id="land_budget_usd" style="display: none;">
                                     <label for="budget_usd">Budget USD*</label>
                                     <div class="widget__price--filtering">
                                         <div class="price-input">
@@ -1403,54 +1418,59 @@
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get elements
-        const villaCheckbox = document.getElementById("villa");
-        const landCheckbox = document.getElementById("land");
-        const currencySelect = document.getElementById("budget_currency");
+        function toggleSections(){
+            const selected_villa = $()
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get elements
+            const villaCheckbox = document.getElementById("villa");
+            const landCheckbox = document.getElementById("land");
+            const currencySelect = document.getElementById("budget_currency");
 
-        const villaSection = document.getElementById("looking_for_villa");
-        const landSection = document.getElementById("looking_for_land");
+            const villaSection = document.getElementById("looking_for_villa");
+            const landSection = document.getElementById("looking_for_land");
 
-        const villaIDR = document.getElementById("villa_budget_idr");
-        const villaUSD = document.getElementById("villa_budget_usd");
-        const villaLOCATION = document.getElementById("villa_location");
-        const landIDR = document.getElementById("land_budget_idr");
-        const landUSD = document.getElementById("land_budget_usd");
-        const landLOCATION = document.getElementById("land_location");
+            const villaIDR = document.getElementById("villa_budget_idr");
+            const villaUSD = document.getElementById("villa_budget_usd");
+            const villaLOCATION = document.getElementById("villa_location");
+            const landIDR = document.getElementById("land_budget_idr");
+            const landUSD = document.getElementById("land_budget_usd");
+            const landLOCATION = document.getElementById("land_location");
 
-        // Function to update visibility
-        function updateVisibility() {
-        const currency = currencySelect.value;
+            // Function to update visibility
+            function updateVisibility() {
+            const currency = currencySelect.value;
 
-        // Villa
-        if (villaCheckbox.checked) {
-            villaSection.style.display = "block";
-            villaIDR.style.display = (currency === "idr") ? "block" : "none";
-            villaUSD.style.display = (currency === "usd") ? "block" : "none";
-        } else {
+            // Villa
+            if (villaCheckbox.checked) {
+                villaSection.style.display = "block";
+                villaIDR.style.display = (currency === "idr") ? "block" : "none";
+                villaUSD.style.display = (currency === "usd") ? "block" : "none";
+            } else {
+                villaSection.style.display = "none";
+            }
+
+            // Land
+            if (landCheckbox.checked) {
+                landSection.style.display = "block";
+                landIDR.style.display = (currency === "idr") ? "block" : "none";
+                landUSD.style.display = (currency === "usd") ? "block" : "none";
+            } else {
+                landSection.style.display = "none";
+            }
+            }
+
+            // Bind change listeners
+            villaCheckbox.addEventListener("change", updateVisibility);
+            landCheckbox.addEventListener("change", updateVisibility);
+            currencySelect.addEventListener("change", updateVisibility);
+
+            // Hide all on load
             villaSection.style.display = "none";
-        }
-
-        // Land
-        if (landCheckbox.checked) {
-            landSection.style.display = "block";
-            landIDR.style.display = (currency === "idr") ? "block" : "none";
-            landUSD.style.display = (currency === "usd") ? "block" : "none";
-        } else {
             landSection.style.display = "none";
-        }
-        }
-
-        // Bind change listeners
-        villaCheckbox.addEventListener("change", updateVisibility);
-        landCheckbox.addEventListener("change", updateVisibility);
-        currencySelect.addEventListener("change", updateVisibility);
-
-        // Hide all on load
-        villaSection.style.display = "none";
-        landSection.style.display = "none";
-    });
+        });
     </script>    
 
     <script>
