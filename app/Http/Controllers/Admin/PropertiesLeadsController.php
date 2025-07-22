@@ -48,32 +48,43 @@ class PropertiesLeadsController extends Controller
                 ->get()->groupBy('cust_email');
         }
 
+
+        $data['data_localization'] = SubRegionModel::select('name')->get();
+        $data['data_agent'] = User::where('role', 'agent')->get();
+
+        $data['data_properties'] = PropertiesModel::where('type_acceptance', 'accept')->get();
+
         // $data['data_leads_matches'] = PropertyLeadsModel::where('customer_data.agent_code', null)
         //     ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
         //     // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
         //     ->get();
 
+
+        // Data Tabel Leads Match
         $data['data_leads_matches'] = PropertyLeadsModel::where('customer_data.agent_code', null)
             ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
             // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
             ->get()->groupBy('customer_id');
 
-        // dd($data['data_leads_matches']);
-
         $leads = $data['data_leads_matches'];
         $data['matchProperties'] = [];
 
         if ($leads->isNotEmpty()) {
-            // Ambil semua lokasi & budget maksimum
-            $regions = $leads->flatten()->pluck('localization')->unique()->toArray(); // gunakan flatten
-            $maxBudgetIdr = $leads->flatten()->max('cust_budget');
-            $maxBudgetUsd = $leads->flatten()->max('cust_budget_usd');
+            $regions = $leads->flatMap(function ($group) {
+                return $group->pluck('localization');
+            })->unique()->toArray();
 
-            // Ambil semua properti yang mungkin cocok
+            $maxBudgetIdr = $leads->flatMap(function ($group) {
+                return $group->pluck('max_budget_idr');
+            })->max();
+
+            $maxBudgetUsd = $leads->flatMap(function ($group) {
+                return $group->pluck('max_budget_usd');
+            })->max();
+
             $properties = PropertiesModel::whereIn('sub_region', $regions)
                 ->with(['featuredImage' => function ($query) {
-                    $query->select('image_path', 'property_gallery.id');
-                    $query->where('is_featured', 1);
+                    $query->select('image_path', 'property_gallery.id')->where('is_featured', 1);
                 }])
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
                 ->where(function ($query) use ($maxBudgetIdr, $maxBudgetUsd) {
@@ -82,44 +93,52 @@ class PropertiesLeadsController extends Controller
                     }
 
                     if (!is_null($maxBudgetUsd)) {
-                        if (!is_null($maxBudgetIdr)) {
-                            $query->orWhere('selling_price_usd', '<=', $maxBudgetUsd);
-                        } else {
-                            $query->where('selling_price_usd', '<=', $maxBudgetUsd);
-                        }
+                        $query->orWhere('selling_price_usd', '<=', $maxBudgetUsd);
                     }
                 })
                 ->get();
 
-            // Kelompokkan properti berdasarkan region
             $groupedProperties = $properties->groupBy('sub_region');
 
-            // Proses tiap lead di setiap group
-            foreach ($leads as $groupedLeads) {
-                foreach ($groupedLeads as $lead) {
-                    $regionProps = $groupedProperties[$lead->localization] ?? collect();
+            $data['matchProperties'] = [];
 
-                    $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
-                        return (
-                            ($property->selling_price_idr !== null && $property->selling_price_idr <= $lead->cust_budget) ||
-                            ($property->selling_price_usd !== null && $property->selling_price_usd <= $lead->cust_budget_usd)
-                        );
-                    })->values();
-                }
+            foreach ($leads as $group) {
+                $leadItem = $group->first(); // ambil satu lead per group
+
+                $regionProps = $groupedProperties[$leadItem->localization] ?? collect();
+
+                $matched = $regionProps->filter(function ($property) use ($leadItem) {
+                    return (
+                        (!is_null($property->selling_price_idr) && $property->selling_price_idr <= $leadItem->max_budget_idr) ||
+                        (!is_null($property->selling_price_usd) && $property->selling_price_usd <= $leadItem->max_budget_usd)
+                    );
+                })->values();
+
+                $data['matchProperties'][$leadItem->id] = $matched;
             }
+
+            // dd($data['matchProperties']);
         } else {
             $data['matchProperties'] = [];
         }
 
 
-        $data['data_localization'] = SubRegionModel::select('name')->get();
-        $data['data_agent'] = User::where('role', 'agent')->get();
+        // dd($data['matchProperties']);
 
-        $data['data_properties'] = PropertiesModel::where('type_acceptance', 'accept')->get();
+
+        return view('admin.leads.index', $data);
+
+
+
+
+
+        // dd([
+        //     'lead' => $lead->only(['localization', 'min_budget_idr', 'max_budget_idr']),
+        //     'matchProperties' => $data['matchProperties'][$lead->id],
+        // ]);
 
         // dd($data['matchProperties']);
 
-        return view('admin.leads.index', $data);
     }
 
 

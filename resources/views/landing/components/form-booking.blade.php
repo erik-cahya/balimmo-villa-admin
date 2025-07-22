@@ -32,7 +32,7 @@
         @enderror
     </div>
 
-    <!-- Looking For Field -->
+    <!-- Looking For Field (Checkbox) -->
     <div class="contact__property--form__input">
         <label for="looking_for">Looking For*</label>
         <ul class="interior__amenities--check d-flex gap-4" id="looking_for">
@@ -43,7 +43,7 @@
                     </svg>
                     Villa
                 </label>
-                <input value="villa" name="looking_for" class="interior__amenities--check__input" id="villa" type="checkbox">
+                <input value="villa" name="type_asset_villa" class="interior__amenities--check__input" id="villa" type="checkbox">
                 <span class="interior__amenities--checkmark"></span>
             </li>
             <li class="interior__amenities--check__list mb-0">
@@ -55,7 +55,7 @@
                     </svg>
                     Land
                 </label>
-                <input value="land" name="looking_for" class="interior__amenities--check__input" id="land" type="checkbox">
+                <input value="land" name="type_asset_land" class="interior__amenities--check__input" id="land" type="checkbox">
                 <span class="interior__amenities--checkmark"></span>
             </li>
         </ul>
@@ -79,19 +79,19 @@
     </div>
 
     <!-- looking_for_villa -->
-    <div id="looking_for_villa">
+    <div id="looking_for_villa" style="display: none;">
         <div class="d-flex justify-content-center justify-items-center text-center">
             <hr class="w-100" />
             <label class="w-100">Looking For Villa</label>
             <hr class="w-100" />
         </div>
-        <div class="contact__property--form__input" id="villa_budget_idr">
+        <div class="contact__property--form__input" id="villa_budget_idr" style="display: none;">
             <label for="budget_idr">Budget IDR*</label>
             <div class="widget__price--filtering">
                 <div class="price-input">
-                    <input type="text" class="input-min bg-white" name="budget_idr_min_villa" id="minPriceFilter" placeholder="IDR 100 000 000">
+                    <input type="text" class="input-min bg-white" name="budget_idr_min_villa" id="budget_idr_min_villa" placeholder="IDR 100 000 000">
                     <div class="separator">-</div>
-                    <input type="text" class="input-max bg-white" name="budget_idr_max_villa" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
+                    <input type="text" class="input-max bg-white" name="budget_idr_max_villa" id="budget_idr_max_villa" placeholder="IDR 50 000 000 000">
                 </div>
             </div>
 
@@ -100,16 +100,31 @@
             @enderror
         </div>
 
+        <div class="contact__property--form__input" id="villa_budget_usd" style="display: none;">
+            <label for="budget_usd">Budget USD*</label>
+            <div class="widget__price--filtering">
+                <div class="price-input">
+                    <input type="text" class="input-min bg-white" name="budget_usd_min_villa" id="budget_usd_min_villa" placeholder="$ 1 000">
+                    <div class="separator">-</div>
+                    <input type="text" class="input-max bg-white" name="budget_usd_max_villa" id="budget_usd_max_villa" placeholder="$ 100 000">
+                </div>
+            </div>
+
+            @error('budget_usd')
+                <p class="text-danger my-2">{{ $message }}</p>
+            @enderror
+        </div>
+
         <div class="contact__property--form__input" id="villa_location">
-            <label for="villa_location">Location*</label>
-            <select name="villa_location">
+            <label for="location">Location*</label>
+            <select name="location">
                 <option selected disabled>Property Location</option>
                 @foreach ($sub_regions as $rgn)
                     <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
                 @endforeach
             </select>
 
-            @error('villa_location')
+            @error('location')
                 <p class="text-danger my-2">{{ $message }}</p>
             @enderror
         </div>
@@ -131,19 +146,19 @@
     </div>
 
     <!-- looking_for_land -->
-    <div id="looking_for_land">
+    <div id="looking_for_land" style="display: none;">
         <div class="d-flex justify-content-center justify-items-center text-center">
             <hr class="w-100" />
             <label class="w-100">Looking For Land</label>
             <hr class="w-100" />
         </div>
-        <div class="contact__property--form__input" id="land_budget_idr">
+        <div class="contact__property--form__input" id="land_budget_idr" style="display: none;">
             <label for="budget_idr">Budget IDR*</label>
             <div class="widget__price--filtering">
                 <div class="price-input">
-                    <input type="text" class="input-min bg-white" name="budget_idr_min_land" id="minPriceFilter" placeholder="IDR 100 000 000">
+                    <input type="text" class="input-min bg-white" name="budget_idr_min_land" id="budget_idr_min_land" placeholder="IDR 100 000 000">
                     <div class="separator">-</div>
-                    <input type="text" class="input-max bg-white" name="budget_idr_max_land" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
+                    <input type="text" class="input-max bg-white" name="budget_idr_max_land" id="budget_idr_max_land" placeholder="IDR 50 000 000 000">
                 </div>
             </div>
 
@@ -152,13 +167,13 @@
             @enderror
         </div>
 
-        <div class="contact__property--form__input" id="land_budget_usd">
+        <div class="contact__property--form__input" id="land_budget_usd" style="display: none;">
             <label for="budget_usd">Budget USD*</label>
             <div class="widget__price--filtering">
                 <div class="price-input">
-                    <input type="text" class="input-min bg-white" name="budget_usd_min" id="minPriceFilter" placeholder="$ 1 000">
+                    <input type="text" class="input-min bg-white" name="budget_usd_min_land" id="budget_usd_min_land" placeholder="$ 1 000">
                     <div class="separator">-</div>
-                    <input type="text" class="input-max bg-white" name="budget_usd_max" id="maxPriceFilter" placeholder="$ 100 000">
+                    <input type="text" class="input-max bg-white" name="budget_usd_max_land" id="budget_usd_max_land" placeholder="$ 100 000">
                 </div>
             </div>
 
@@ -168,15 +183,15 @@
         </div>
 
         <div class="contact__property--form__input" id="land_location">
-            <label for="land_location">Location*</label>
-            <select name="land_location">
+            <label for="location">Location*</label>
+            <select name="location">
                 <option selected disabled>Property Location</option>
                 @foreach ($sub_regions as $rgn)
                     <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
                 @endforeach
             </select>
 
-            @error('land_location')
+            @error('location')
                 <p class="text-danger my-2">{{ $message }}</p>
             @enderror
         </div>

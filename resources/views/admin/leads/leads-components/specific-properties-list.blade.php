@@ -87,7 +87,7 @@
                                                             <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-10 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</span>
                                                         </div>
                                                         <div class="table-responsive">
-                                                            <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
+                                                            <table class="table-hover table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
                                                                 <thead class="table-light">
                                                                     <tr>
                                                                         <th scope="col">No</th>

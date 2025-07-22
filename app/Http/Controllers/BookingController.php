@@ -15,7 +15,7 @@ class BookingController extends Controller
 {
     public function booking(Request $request, $slug = NULL)
     {
-        dd($request->all());
+
         // if ($slug !== NULL) {
         //     $request->validate([
         //         'first_name' => 'required',
@@ -35,18 +35,7 @@ class BookingController extends Controller
         //     ]);
         // }
 
-        // IDR / USD Budget
-        if ($request->budget_currency == 'idr') {
-            $minimumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->minimum_budget_idr);
-            $maximumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->maximum_budget_idr);
-            $minimumBudgetUSD = NULL;
-            $maximumBudgetUSD = NULL;
-        } else {
-            $minimumBudgetIDR = NULL;
-            $maximumBudgetIDR = NULL;
-            $minimumBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->minimum_budget_usd));
-            $maximumBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->maximum_budget_usd));
-        }
+        // dd($request->all());
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
 
@@ -58,6 +47,30 @@ class BookingController extends Controller
             'cust_email' => $request->email
         ]);
 
+        // IDR / USD Budget
+        if ($request->budget_currency == 'idr') {
+
+            $villa_MinimumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr_min_villa);
+            $villa_MaximumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr_max_villa);
+            $land_MinimumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr_min_land);
+            $land_MaximumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr_max_land);
+
+            $villa_MinimumBudgetUSD = NULL;
+            $villa_MaximumBudgetUSD = NULL;
+            $land_MinimumBudgetUSD = NULL;
+            $land_MaximumBudgetUSD = NULL;
+        } else {
+
+            $villa_MinimumBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->budget_usd_min_villa));
+            $villa_MaximumBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->budget_usd_max_villa));
+            $land_MinimumBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->budget_usd_min_land));
+            $land_MaximumBudgetUSD = floatval(preg_replace('/[^\d.]/', '', $request->budget_usd_max_land));
+
+            $villa_MinimumBudgetIDR = NULL;
+            $villa_MaximumBudgetIDR = NULL;
+            $land_MinimumBudgetIDR = NULL;
+            $land_MaximumBudgetIDR = NULL;
+        }
 
         $bedroom_min = $request->bedroom_min;
         $bedroom_max = $request->bedroom_max;
@@ -79,10 +92,10 @@ class BookingController extends Controller
                 'customer_id' => $newCustomerData->id,
                 'type_asset' => $request->type_asset_villa,
 
-                'min_budget_idr' => $minimumBudgetIDR,
-                'max_budget_idr' => $maximumBudgetIDR,
-                'min_budget_usd' => $minimumBudgetUSD,
-                'max_budget_usd' => $maximumBudgetUSD,
+                'min_budget_idr' => $villa_MinimumBudgetIDR,
+                'max_budget_idr' => $villa_MaximumBudgetIDR,
+                'min_budget_usd' => $villa_MinimumBudgetUSD,
+                'max_budget_usd' => $villa_MaximumBudgetUSD,
 
                 'min_bedroom' => $bedroom_min,
                 'max_bedroom' => $bedroom_max,
@@ -100,10 +113,10 @@ class BookingController extends Controller
                 'customer_id' => $newCustomerData->id,
                 'type_asset' => $request->type_asset_land,
 
-                'min_budget_idr' => $minimumBudgetIDR,
-                'max_budget_idr' => $maximumBudgetIDR,
-                'min_budget_usd' => $minimumBudgetUSD,
-                'max_budget_usd' => $maximumBudgetUSD,
+                'min_budget_idr' => $land_MinimumBudgetIDR,
+                'max_budget_idr' => $land_MaximumBudgetIDR,
+                'min_budget_usd' => $land_MinimumBudgetUSD,
+                'max_budget_usd' => $land_MaximumBudgetUSD,
 
                 'min_land_size' => $land_size_min,
                 'max_land_size' => $land_size_max,

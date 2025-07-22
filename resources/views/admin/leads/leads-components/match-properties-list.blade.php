@@ -28,6 +28,7 @@
 
                             @foreach ($data_leads_matches as $leadsData => $LeadsMatch)
                                 @php
+                                    // dd($matchProperties);
                                     $matchLeads = $LeadsMatch->first(); // ambil lead pertama
                                     $authUser = Auth::user();
                                     $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
