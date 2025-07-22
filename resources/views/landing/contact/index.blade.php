@@ -327,6 +327,21 @@
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
+
+                                <div class="contact__property--form__input" id="villa_bedroom">
+                                    <label for="villa_bedroom">Bedroom*</label>
+                                    <div class="widget__price--filtering">
+                                        <div class="price-input">
+                                            <input type="number" class="input-min bg-white" name="bedroom_min" id="bedroom_min" placeholder="Bedroom min">
+                                            <div class="separator">-</div>
+                                            <input type="number" class="input-max bg-white" name="bedroom_max" id="bedroom_max" placeholder="Bedroom max">
+                                        </div>                               
+                                    </div>
+
+                                    @error('villa_bedroom')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
 
                             <!-- looking_for_land -->
@@ -379,10 +394,25 @@
                                         <p class="text-danger my-2">{{ $message }}</p>
                                     @enderror
                                 </div>
+
+                                <div class="contact__property--form__input" id="land_size">
+                                    <label for="land_size">Land size*</label>
+                                    <div class="widget__price--filtering">
+                                        <div class="price-input">
+                                            <input type="number" class="input-min bg-white" name="land_size_min" id="land_size_min" placeholder="Land size min">
+                                            <div class="separator">-</div>
+                                            <input type="number" class="input-max bg-white" name="land_size_max" id="land_size_max" placeholder="Land size max">
+                                        </div>                               
+                                    </div>
+
+                                    @error('land_size')
+                                        <p class="text-danger my-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
 
                             <div class="contact__property--form__input">
-                                <label for="timing">Timing*</label>
+                                <label for="timing">Ready to buy*</label>
                                 <input id="timing" name="timing" placeholder="Timing" type="text">
 
                                 @error('timing')
