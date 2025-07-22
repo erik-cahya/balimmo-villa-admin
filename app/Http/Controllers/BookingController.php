@@ -15,6 +15,7 @@ class BookingController extends Controller
 {
     public function booking(Request $request, $slug = NULL)
     {
+        dd($request->all());
         // if ($slug !== NULL) {
         //     $request->validate([
         //         'first_name' => 'required',

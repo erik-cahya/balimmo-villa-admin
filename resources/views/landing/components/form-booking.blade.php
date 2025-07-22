@@ -89,9 +89,9 @@
             <label for="budget_idr">Budget IDR*</label>
             <div class="widget__price--filtering">
                 <div class="price-input">
-                    <input type="text" class="input-min bg-white" name="budget_idr_min" id="minPriceFilter" placeholder="IDR 100 000 000">
+                    <input type="text" class="input-min bg-white" name="budget_idr_min_villa" id="minPriceFilter" placeholder="IDR 100 000 000">
                     <div class="separator">-</div>
-                    <input type="text" class="input-max bg-white" name="budget_idr_max" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
+                    <input type="text" class="input-max bg-white" name="budget_idr_max_villa" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
                 </div>
             </div>
 
@@ -101,15 +101,15 @@
         </div>
 
         <div class="contact__property--form__input" id="villa_location">
-            <label for="location">Location*</label>
-            <select name="location">
+            <label for="villa_location">Location*</label>
+            <select name="villa_location">
                 <option selected disabled>Property Location</option>
                 @foreach ($sub_regions as $rgn)
                     <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
                 @endforeach
             </select>
 
-            @error('location')
+            @error('villa_location')
                 <p class="text-danger my-2">{{ $message }}</p>
             @enderror
         </div>
@@ -141,9 +141,9 @@
             <label for="budget_idr">Budget IDR*</label>
             <div class="widget__price--filtering">
                 <div class="price-input">
-                    <input type="text" class="input-min bg-white" name="budget_idr_min" id="minPriceFilter" placeholder="IDR 100 000 000">
+                    <input type="text" class="input-min bg-white" name="budget_idr_min_land" id="minPriceFilter" placeholder="IDR 100 000 000">
                     <div class="separator">-</div>
-                    <input type="text" class="input-max bg-white" name="budget_idr_max" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
+                    <input type="text" class="input-max bg-white" name="budget_idr_max_land" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
                 </div>
             </div>
 
@@ -168,15 +168,15 @@
         </div>
 
         <div class="contact__property--form__input" id="land_location">
-            <label for="location">Location*</label>
-            <select name="location">
+            <label for="land_location">Location*</label>
+            <select name="land_location">
                 <option selected disabled>Property Location</option>
                 @foreach ($sub_regions as $rgn)
                     <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
                 @endforeach
             </select>
 
-            @error('location')
+            @error('land_location')
                 <p class="text-danger my-2">{{ $message }}</p>
             @enderror
         </div>
