@@ -93,16 +93,9 @@
                                                 </button>
                                             @endif --}}
 
-                                            @if (isset($allMatchProperties[$matchLeads->id]))
-                                                <button class="btn btn-xs btn-secondary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#makeProspect-{{ $matchLeads->id }}">
-                                                    Make to Prospect
-                                                </button>
-                                                <button class="btn btn-xs btn-primary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#matchProperties-{{ $matchLeads->id }}">
-                                                    Show {{ count($allMatchProperties[$matchLeads->id]) }} Properties
-                                                </button>
-                                            @else
-                                                <span class="btn btn-xs btn-primary">No Match Properties</span>
-                                            @endif
+                                            <button class="btn btn-xs btn-primary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#matchProperties-{{ $matchLeads->id }}">
+                                                Show Match Properties
+                                            </button>
 
                                             {{-- Delete Button --}}
                                             @if (Auth::user()->role == 'Master')
@@ -133,60 +126,58 @@
                                                     <hr>
                                                     <div class="row">
 
-                                                        @foreach ($allMatchProperties[$matchLeads->id] as $match)
-                                                            <div class="col-md-6 col-xl-6">
-                                                                <div class="card bg-primary bg-gradient">
-                                                                    <div class="card-body">
-                                                                        <div class="row align-items-center justify-content-between">
-                                                                            <div class="col-xl-7 col-lg-6 col-md-6">
-                                                                                <h3 class="fw-bold fs-18 text-white">{{ $match->property_name }}</h3>
-                                                                                <hr>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                        <div class="d-flex gap-2">
-                                                                                            <div class="avatar-sm flex-shrink-0">
-                                                                                                <span class="avatar-title bg-success rounded bg-opacity-50 text-white">
-                                                                                                    <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="d-block">
-                                                                                                <h5 class="fw-medium mb-0 text-white">20</h5>
-                                                                                                <p class="text-white-50 mb-0">Bedroom</p>
-                                                                                            </div>
+                                                        <div class="col-md-6 col-xl-6">
+                                                            <div class="card bg-primary bg-gradient">
+                                                                <div class="card-body">
+                                                                    <div class="row align-items-center justify-content-between">
+                                                                        <div class="col-xl-7 col-lg-6 col-md-6">
+                                                                            <h3 class="fw-bold fs-18 text-white">Villa</h3>
+                                                                            <hr>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6 col-lg-6 col-md-6 col-6">
+                                                                                    <div class="d-flex gap-2">
+                                                                                        <div class="avatar-sm flex-shrink-0">
+                                                                                            <span class="avatar-title bg-success rounded bg-opacity-50 text-white">
+                                                                                                <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
+                                                                                            </span>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                        <div class="d-flex gap-2">
-                                                                                            <div class="avatar-sm flex-shrink-0">
-                                                                                                <span class="avatar-title bg-danger rounded bg-opacity-50 text-white">
-                                                                                                    <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="d-block">
-                                                                                                <h5 class="fw-medium mb-0 text-white">20</h5>
-                                                                                                <p class="text-white-50 mb-0">Bathrom</p>
-                                                                                            </div>
+                                                                                        <div class="d-block">
+                                                                                            <h5 class="fw-medium mb-0 text-white">20</h5>
+                                                                                            <p class="text-white-50 mb-0">Bedroom</p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <hr>
-                                                                                <div class="d-flex fs-10 gap-3">
-                                                                                    <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">IDR 300.000</h4>
-                                                                                    <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">USD 200.00</h4>
+                                                                                <div class="col-lg-6 col-lg-6 col-md-6 col-6">
+                                                                                    <div class="d-flex gap-2">
+                                                                                        <div class="avatar-sm flex-shrink-0">
+                                                                                            <span class="avatar-title bg-danger rounded bg-opacity-50 text-white">
+                                                                                                <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <div class="d-block">
+                                                                                            <h5 class="fw-medium mb-0 text-white">20</h5>
+                                                                                            <p class="text-white-50 mb-0">Bathrom</p>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <hr>
-                                                                                <h3 class="fw-normal fs-16 fst-italic text-white">Seminyak - Canggu</h3>
-                                                                                <h3 class="fw-normal fs-11 fst-italic text-white">BLM-2000</h3>
+                                                                            </div>
+                                                                            <hr>
+                                                                            <div class="d-flex fs-10 gap-3">
+                                                                                <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">IDR 300.000</h4>
+                                                                                <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">USD 200.00</h4>
+                                                                            </div>
+                                                                            <hr>
+                                                                            <h3 class="fw-normal fs-16 fst-italic text-white">Seminyak - Canggu</h3>
+                                                                            <h3 class="fw-normal fs-11 fst-italic text-white">BLM-2000</h3>
 
-                                                                            </div>
-                                                                            <div class="col-xl-5 col-lg-4 col-md-4">
-                                                                                <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
-                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xl-5 col-lg-4 col-md-4">
+                                                                            <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        @endforeach
+                                                        </div>
 
                                                     </div>
                                                 </div>

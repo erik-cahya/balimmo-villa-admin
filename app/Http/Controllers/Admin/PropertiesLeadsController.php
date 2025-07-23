@@ -61,40 +61,41 @@ class PropertiesLeadsController extends Controller
             // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
             ->get()->groupBy('customer_id');
 
-        $dataLeads = CustomerDataModel::where('customer_data.agent_code', NULL)
-            ->join('property_leads', 'property_leads.customer_id', '=', 'customer_data.id')
-            ->get();
-
-        // $allLeadIds = collect($data['data_leads_matches'])->flatten()->pluck('id')->unique();
-        $allLeadIds = collect($dataLeads)->flatten()->pluck('id')->unique();
-        // dd($allLeadIds);
-
-        $allProperties = [];
-
-        foreach ($allLeadIds as $leadId) {
-            $lead = PropertyLeadsModel::find($leadId);
-
-            if ($lead) {
-                $properties = PropertiesModel::where('bedroom', '>=', $lead->min_bedroom ?? 0)
-                    ->when($lead->max_bedroom, function ($query) use ($lead) {
-                        return $query->where('bedroom', '<=', $lead->max_bedroom);
-                    })
-                    ->where('selling_price_idr', '>=', $lead->min_budget_idr ?? 0)
-                    ->when($lead->max_budget_idr, function ($query) use ($lead) {
-                        return $query->where('selling_price_idr', '<=', $lead->max_budget_idr);
-                    })
-                    ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                    ->get();
-
-                $allProperties[$leadId] = $properties;
-            }
-        }
-
-        $data['allMatchProperties'] = $allProperties;
-
-        // dd($data['allMatchProperties']);
 
         return view('admin.leads.index', $data);
+
+
+        // $dataLeads = CustomerDataModel::where('customer_data.agent_code', NULL)
+        //     ->join('property_leads', 'property_leads.customer_id', '=', 'customer_data.id')
+        //     ->get();
+
+        // // $allLeadIds = collect($data['data_leads_matches'])->flatten()->pluck('id')->unique();
+        // $allLeadIds = collect($dataLeads)->flatten()->pluck('id')->unique();
+        // // dd($allLeadIds);
+
+        // $allProperties = [];
+
+        // foreach ($allLeadIds as $leadId) {
+        //     $lead = PropertyLeadsModel::find($leadId);
+
+        //     if ($lead) {
+        //         $properties = PropertiesModel::where('bedroom', '>=', $lead->min_bedroom ?? 0)
+        //             ->when($lead->max_bedroom, function ($query) use ($lead) {
+        //                 return $query->where('bedroom', '<=', $lead->max_bedroom);
+        //             })
+        //             ->where('selling_price_idr', '>=', $lead->min_budget_idr ?? 0)
+        //             ->when($lead->max_budget_idr, function ($query) use ($lead) {
+        //                 return $query->where('selling_price_idr', '<=', $lead->max_budget_idr);
+        //             })
+        //             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+        //             ->get();
+
+        //         $allProperties[$leadId] = $properties;
+        //     }
+        // }
+
+        // $data['allMatchProperties'] = $allProperties;
+
 
 
         $lead = PropertyLeadsModel::findOrFail(4);
