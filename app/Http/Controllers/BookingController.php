@@ -131,7 +131,9 @@ class BookingController extends Controller
             ]);
         }
 
-        dd('data masuk');
+        // dd('data masuk');
+        return view('error.thankyou-page');
+
 
         // Form di landing page
         if ($slug === null) {
