@@ -103,7 +103,8 @@ class BookingController extends Controller
                 'localization' => $request->location == NULL ? $property->sub_region : $request->location,
                 'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
                 'message' => $request->message,
-                'prospect_status' => 0
+                'prospect_status' => 0,
+                'visibility' => 1,
             ]);
         }
         // Jika type asset land dipilih
@@ -124,7 +125,9 @@ class BookingController extends Controller
                 'localization' => $request->location == NULL ? $property->sub_region : $request->location,
                 'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
                 'message' => $request->message,
-                'prospect_status' => 0
+                'prospect_status' => 0,
+                'visibility' => 1,
+
             ]);
         }
 

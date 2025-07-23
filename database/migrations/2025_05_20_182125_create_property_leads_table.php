@@ -60,6 +60,8 @@ return new class extends Migration
 
             $table->boolean('prospect_status')->comment('1 : True/Prospect | 0 : False');
             $table->tinyInteger('docs_status')->comment('0 : Decline | 1 : Visit | 2 : Offering | 3 : Done Client')->nullable();
+
+            $table->boolean('visibility')->comment('1 : True | 0 : False');
             $table->timestamps();
 
             // Foreign Key Constraint with ON DELETE CASCADE

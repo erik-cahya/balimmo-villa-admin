@@ -244,26 +244,28 @@
     </script>
     {{-- /* End Currency Format --}}
 
-    {{-- Toogle Villa/Land Checkbox --}}
+    {{-- Toggle Villa/Land Checkbox --}}
     <script>
         function toggleSections() {
-            const selected_villa = $('input[name="type_properties_villa"]:checked').val();
-            const selected_land = $('input[name="type_properties_land"]:checked').val();
+            // Ambil semua checkbox villa dan land yang tercentang
+            const selected_villas = $('input[name="type_properties_villa"]:checked');
+            const selected_lands = $('input[name="type_properties_land"]:checked');
 
-            // Tampilkan/hide berdasarkan checkbox villa
-            if (selected_villa) {
-                $('#villa_section').show();
-            } else {
-                $('#villa_section').hide();
-            }
+            // Sembunyikan semua section terlebih dahulu
+            $('.villa-section').hide();
+            $('.land-section').hide();
 
-            // Tampilkan/hide berdasarkan checkbox land
-            if (selected_land) {
-                $('#land_section').show();
-            } else {
-                $('#land_section').hide();
-            }
+            // Tampilkan section villa yang sesuai dengan checkbox tercentang
+            selected_villas.each(function() {
+                const index = $(this).data('index'); // Asumsikan ada data-index
+                $(`.villa-section[data-index="${index}"]`).show();
+            });
 
+            // Tampilkan section land yang sesuai dengan checkbox tercentang
+            selected_lands.each(function() {
+                const index = $(this).data('index'); // Asumsikan ada data-index
+                $(`.land-section[data-index="${index}"]`).show();
+            });
         }
 
         // Jalankan saat dokumen siap
@@ -275,7 +277,6 @@
             $('input[name="type_properties_land"]').on('change', toggleSections);
         });
     </script>
-    {{-- /* End Toogle Villa/Land Checkbox --}}
 
     {{-- Flatpickr --}}
     <script>
