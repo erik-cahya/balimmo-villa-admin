@@ -1,15 +1,15 @@
-<div class="row">
+<div class="row mt-4">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                 <div>
-                    <h4 class="card-title">Property Matches</h4>
+                    <h4 class="card-title">Specific Property List</h4>
                 </div>
 
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table-hover table-centered table text-nowrap" id="specificPropertyTable">
+                    <table class="table-hover table-centered table text-nowrap" id="myTable2">
                         <thead class="table-light">
                             <tr>
                                 <th scope="col">No</th>
@@ -26,300 +26,384 @@
                         </thead>
                         <tbody>
 
-                            <!-- @foreach ($data_leads_matches as $matchLeads)
+                            @foreach ($data_leads as $customer => $cst)
                                 @php
-                                    $authUser = Auth::user();
-                                    $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
-                                    // Ambil properti yang sudah difilter
-                                    $filteredMatchLeads = $referenceCode ? $matchProperties[$matchLeads->id]->where('internal_reference', $referenceCode) : $matchProperties[$matchLeads->id];
-
+                                    $customerData = $cst->first();
                                 @endphp
 
-                                @if (Auth::user()->role == 'Master' || ($filteredMatchLeads->count() > 0 && Auth::user()->role == 'agent')) -->
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center gap-1">
-                                                <div class="d-block">
-                                                    <!-- <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->cust_name }}</h5>
-                                                    <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p> -->
-                                                    <h5 class="text-dark fw-medium mb-0">Deva Mahayana</h5>
-                                                    <p class="fs-13 mb-0">devamahayana@gmail.com</p>
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer">
+                                        <div class="d-flex align-items-center gap-1">
+                                            <div class="d-block">
+                                                <h5 class="text-dark fw-medium mb-0">
+                                                    {{ $customerData->cust_name }}
+                                                </h5>
+                                                <p class="fs-13 mb-0">{{ $customer }}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    @role('Master')
+                                        <td class="d-flex flex-column gap-1 align-items-start">
+                                            <span class="badge bg-primary text-light"> {{ $customerData->agent_code }} </span>
+                                            <span class="badge bg-primary text-light"> BPA-DEVA-5454 </span>
+                                            <span class="badge bg-primary text-light"> BPA-ROCKY-2121 </span>
+                                        </td>
+                                    @endrole
+                                    <td>
+                                        <p class="mb-0">{{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</p>
+                                    </td>
+                                    <td>{{ $customerData->localization }}</td>
+                                    <td> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer">
+                                        <!-- {{ $cst->count() }} Properties  -->
+                                        <span class="badge bg-success me-1">Villa</span>
+                                        <!-- <span class="badge bg-warning me-1">Land</span> -->
+                                    </td>
+                                    <td>                    
+                                        <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}">
+                                            Make to Prospect
+                                        </button>
+                                        <input type="hidden" class="propertyId" value="{{ $customer }}">
+                                        <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
+
+                                        <!-- Modal -->
+                                        <div class="modal modal-xl fade" id="seeProperties-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Properties Selected </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!-- Information Leads Villa -->
+                                                            <div class="d-flex gap-2 align-items-center">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5> <span class="badge bg-success me-1">Villa</span>
+                                                            </div>
+                                                            <div class="d-flex gap-2 my-2">
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $customerData->cust_name }}</span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $customerData->cust_email }}</span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</span>                                                            
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                                    IDR {{ number_format($customerData->cust_budget, 0, ',', '.') }}
+                                                                    -
+                                                                    IDR {{ number_format($customerData->cust_budget, 0, ',', '.') }}                                                                                                                                        
+                                                                </span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                                    USD {{ number_format($customerData->cust_budget_usd, 2, ',', '.') }}
+                                                                    -
+                                                                    USD {{ number_format($customerData->cust_budget_usd, 2, ',', '.') }}                                                                                                                                        
+                                                                </span>                                                                
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> 2 - 4 </span>
+                                                            </div>
+                                                            <div class="table-responsive">
+                                                                <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
+                                                                    <thead class="table-light">
+                                                                        <tr>
+                                                                            <th scope="col">No</th>
+                                                                            <th scope="col">Property Name</th>
+                                                                            <th scope="col">Agent</th>                                                                            
+                                                                            <th scope="col">Bedroom</th> 
+                                                                            <th scope="col">Price</th>                                                                                                                                                      
+                                                                            <th scope="col">Property Address</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($cst as $property)
+                                                                            <tr>
+                                                                                <td>{{ $loop->iteration }}</td>
+                                                                                <td>{{ $property->property_name }}</td>
+                                                                                <td>{{ $property->agent_code }} BP-3242</td>                                                                                
+                                                                                <td>{{ $property->bedroom }}</td>
+                                                                                <td>
+                                                                                    <div class="d-block">
+                                                                                        <h5 class="text-dark fw-medium mb-0" 
+                                                                                        data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}" >
+                                                                                            IDR 4.000.000.000
+                                                                                        </h5>
+                                                                                        <p class="fs-13 mb-0">USD 400.000</p>
+                                                                                    </div>
+                                                                                </td>  
+                                                                                <td>{{ $property->property_address . ' ' . $property->sub_region . ', ' . $property->region }}</td>                                                                            
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                                                                             
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    $('#seePropertiesDetailTable-{{ $customerData->id }}').DataTable();
+                                                                });
+                                                            </script>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <!-- Information Leads Villa -->
+                                                            <div class="d-flex gap-2 align-items-center">
+                                                                <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5><span class="badge bg-warning me-1">Land</span>
+                                                            </div>
+                                                            <div class="d-flex gap-2 my-2">
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $customerData->cust_name }}</span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $customerData->cust_email }}</span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</span>                                                            
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                                    IDR {{ number_format($customerData->cust_budget, 0, ',', '.') }}
+                                                                    -
+                                                                    IDR {{ number_format($customerData->cust_budget, 0, ',', '.') }}                                                                                                                                        
+                                                                </span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                                    USD {{ number_format($customerData->cust_budget_usd, 2, ',', '.') }}
+                                                                    -
+                                                                    USD {{ number_format($customerData->cust_budget_usd, 2, ',', '.') }}                                                                                                                                        
+                                                                </span>
+                                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:fullscreen" class="fs-16 align-middle"></iconify-icon> 200 - 400 m² </span>
+                                                            </div>
+                                                            <div class="table-responsive">
+                                                                <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
+                                                                    <thead class="table-light">
+                                                                        <tr>
+                                                                            <th scope="col">No</th>
+                                                                            <th scope="col">Property Name</th>
+                                                                            <th scope="col">Agent</th>
+                                                                            <th scope="col">Size</th>                                                                            
+                                                                            <th scope="col">Price</th>
+                                                                            <th scope="col">Property Address</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($cst as $property)
+                                                                            <tr>
+                                                                                <td>{{ $loop->iteration }}</td>
+                                                                                <td>{{ $property->property_name }}</td>
+                                                                                <td>{{ $property->agent_code }}</td>
+                                                                                <td>200 m²</td>                                                                                
+                                                                                <td>
+                                                                                    <div class="d-block">
+                                                                                        <h5 class="text-dark fw-medium mb-0" 
+                                                                                        data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}" >
+                                                                                            IDR 4.000.000.000
+                                                                                        </h5>
+                                                                                        <p class="fs-13 mb-0">USD 400.000</p>
+                                                                                    </div>
+                                                                                </td> 
+                                                                                <td>{{ $property->property_address . ' ' . $property->sub_region . ', ' . $property->region }}</td>                                                                              
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                                                                             
+                                                            <script>
+                                                                $(document).ready(function() {
+                                                                    $('#seePropertiesDetailTable-{{ $customerData->id }}').DataTable();
+                                                                });
+                                                            </script>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save to Prospect</button>                                                        
+                                                    </div>
+
+                                                    @if ($errors->any())
+                                                        <div class="alert alert-danger">
+                                                            <ul class="mb-0">
+                                                                @foreach ($errors->all() as $message)
+                                                                    <li>{{ $message }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td>
-                                            <!-- <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</p> -->
-                                            <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> +33 4433-</p>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-primary fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-warning fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> USD {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}</span>
+                                        </div>
+                                        <!-- /* Modal -->
 
-                                        </td>
-                                        <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
-
-                                        <td>{{ $matchLeads->message }}</td>
-                                        <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</td>
-
-                                        <td>
-                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $matchLeads->id }}">
-                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                            </button>
-
-                                            @if ($filteredMatchLeads->count() == 0)
-                                                <span class="btn btn-xs btn-primary">No Match Properties</span>
-                                            @else
-                                                <button class="btn btn-xs btn-secondary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#makeProspect-{{ $matchLeads->id }}">
-                                                    Make to Prospect
-                                                </button>
-                                                <button class="btn btn-xs btn-primary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#matchProperties-{{ $matchLeads->id }}">
-                                                    Show {{ $filteredMatchLeads->count() }} Properties
-                                                </button>
-                                            @endif
-                                            @if (Auth::user()->role == 'Master')
-                                                <input type="hidden" class="leadsId" value="{{ $matchLeads->id }}">
-                                                <button type="button" class="btn btn-xs btn-danger deleteButtonSingle" data-nama="{{ $matchLeads->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
-                                            @endif
-
-                                        </td>
-                                    </tr>
-                                    <!-- Modal Properties -->
-                                    <div class="modal modal-xl fade" id="matchProperties-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Recomendation Properties</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <span class="fst-italic fw-medium text-dark">Data Leads</span>
-                                                    <div class="d-flex mb-3 mt-2 gap-1">
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="solar:user-bold" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->cust_name }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="solar:user-bold" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->cust_email }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="mdi:phone" class="fs-10 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="flowbite:map-pin-solid" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->localization }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="tdesign:money-filled" class="fs-10 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}</span>
+                                        {{-- Modal Make Prospect --}}
+                                        <div class="modal modal-lg fade" id="editMatchProperties-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Please check and update the prospect file : </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        @foreach ($filteredMatchLeads as $properties)
-                                                            <div class="col-md-6 col-xl-6">
-                                                                <div class="card bg-primary bg-gradient">
-                                                                    <div class="card-body">
-                                                                        <div class="row align-items-center justify-content-between">
-                                                                            <div class="col-xl-7 col-lg-6 col-md-6">
-                                                                                <h3 class="fw-bold fs-18 text-white">{{ $properties->property_name }}</h3>
-                                                                                <hr>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                        <div class="d-flex gap-2">
-                                                                                            <div class="avatar-sm flex-shrink-0">
-                                                                                                <span class="avatar-title bg-success rounded bg-opacity-50 text-white">
-                                                                                                    <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="d-block">
-                                                                                                <h5 class="fw-medium mb-0 text-white">{{ $properties->bedroom }}</h5>
-                                                                                                <p class="text-white-50 mb-0">Bedroom</p>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                        <div class="d-flex gap-2">
-                                                                                            <div class="avatar-sm flex-shrink-0">
-                                                                                                <span class="avatar-title bg-danger rounded bg-opacity-50 text-white">
-                                                                                                    <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="d-block">
-                                                                                                <h5 class="fw-medium mb-0 text-white">{{ $properties->bathroom }}</h5>
-                                                                                                <p class="text-white-50 mb-0">Bathrom</p>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <div class="d-flex fs-10 gap-3">
-                                                                                    <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">IDR {{ number_format($properties->selling_price_idr, 2, ',', '.') }}</h4>
-                                                                                    <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">USD {{ number_format($properties->selling_price_usd, 2, ',', '.') }}</h4>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <h3 class="fw-normal fs-16 fst-italic text-white">{{ $properties->region }} - {{ $properties->sub_region }}</h3>
-                                                                                <h3 class="fw-normal fs-11 fst-italic text-white">{{ $properties->internal_reference }}</h3>
+                                                    <form action="{{ route('leadsToProspect', $customerData->id) }}" method="POST">
+                                                        @csrf
 
-                                                                            </div>
-                                                                            <div class="col-xl-5 col-lg-4 col-md-4">
-                                                                                <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
-                                                                            </div>
-                                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <x-form-input className="col-lg-3" type="text" name="leads_name" label="First Name" value="{{ $customerData->cust_name }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="leads_name" label="Last Name" value="{{ $customerData->cust_name }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="leads_email" label="Email" value="{{ $customerData->cust_email }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="leads_telp" label="Phone" value="{{ $customerData->cust_telp }}" />
+                                                                <div class="col-lg-6 mb-3">
+                                                                    <label for="leads_looking_for" class="form-label text-muted">Looking For</label>
+                                                                    <div class="form-check">
+                                                                        <input type="checkbox" class="form-check-input" id="customCheck3">
+                                                                        <label class="form-check-label" for="customCheck3">
+                                                                            <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path d="M5.5 0L0 4.125V11H3.72581V8.59381C3.72581 7.64165 4.51713 6.87506 5.5 6.87506C6.48287 6.87506 7.27419 7.64165 7.27419 8.59381V11H11V4.125L5.5 0Z" fill="#063436"></path>
+                                                                            </svg>
+                                                                            Villa
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input type="checkbox" class="form-check-input" id="customCheck4">
+                                                                        <label class="form-check-label" for="customCheck4">
+                                                                            <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16"  
+                                                                            fill="#063436" viewBox="0 0 24 24" >
+                                                                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M5 19V5h14v14z"></path><path d="M12 9h3v3h2V7h-5zM9 12H7v5h5v-2H9z"></path>
+                                                                            </svg>  
+                                                                            Land
+                                                                        </label>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    {{-- <button type="submit" class="btn btn-primary">Change Password</button> --}}
-                                                </div>
-
-                                                @if ($errors->any())
-                                                    <div class="alert alert-danger">
-                                                        <ul class="mb-0">
-                                                            @foreach ($errors->all() as $message)
-                                                                <li>{{ $message }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                @endif
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /* Modal Properties -->
-
-                                    {{-- Modal Make Prospect --}}
-                                    <div class="modal modal-lg fade" id="makeProspect-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Make to Prospect</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <form action="{{ route('leadsToProspect', $matchLeads->id) }}" method="POST">
-                                                    @csrf
-
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $matchLeads->cust_name }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $matchLeads->cust_email }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $matchLeads->cust_telp }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_localization" label="Localization" value="{{ $matchLeads->localization }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" disabled />
-
-                                                            <div class="col-lg-6 text-capitalize mb-3" id="group_status_prospect">
-                                                                <label for="status_prospect" class="form-label">Make It Prospect</label>
-                                                                <select class="form-control" id="status_prospect" name="status_prospect">
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No" selected>No</option>
-                                                                </select>
-
-                                                                @error('status_prospect')
-                                                                    <style>
-                                                                        .choices__inner {
-                                                                            border-color: #e96767 !important;
-                                                                        }
-                                                                    </style>
-
-                                                                    <div class="alert alert-danger m-0">
-                                                                        {{ $message }}
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Ready to buy*" value="{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}" />
+                                                                <!-- Field Looking Villa -->
+                                                                <div class="row">
+                                                                    <div class="text-center d-flex justify-items-center justify-content-center">
+                                                                        <hr class="w-100" />
+                                                                        <label class="w-100 text-success">
+                                                                            <span class="nav-icon">
+                                                                                <i class="ri-community-line"></i>
+                                                                            </span>
+                                                                            Looking For Villa
+                                                                        </label>
+                                                                        <hr class="w-100" />
                                                                     </div>
-                                                                @enderror
-                                                            </div>
-
-                                                            <div class="col-lg-6 text-capitalize mb-3" id="group_selected_properties_id">
-                                                                <label for="selected_properties_id" class="form-label">Select Properties</label>
-                                                                <select class="form-control" id="selected_properties_id" name="selected_properties_id">
-                                                                    <option value="" disabled selected>Choose Properties</option>
-                                                                    @foreach ($filteredMatchLeads as $properties)
-                                                                        <option value="{{ $properties->id }}">{{ $properties->property_name . ' | ' . $properties->internal_reference }}</option>
-                                                                    @endforeach
-                                                                </select>
-
-                                                                @error('selected_properties_id')
-                                                                    <style>
-                                                                        .choices__inner {
-                                                                            border-color: #e96767 !important;
-                                                                        }
-                                                                    </style>
-
-                                                                    <div class="alert alert-danger m-0">
-                                                                        {{ $message }}
+                                                                    <x-form-input className="col-lg-12" type="text" name="leads_localization" label="Localisation*" value="{{ $customerData->localization }}" />
+                                                                    <div class="row">
+                                                                        <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget min*" value="" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget max*" value="" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Bedroom min*" value="" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Bedroom max*" value="" />
                                                                     </div>
-                                                                @enderror
+                                                                </div>
+                                                                <!-- Field Looking Land -->
+                                                                <div class="row">
+                                                                    <div class="text-center d-flex justify-items-center justify-content-center">
+                                                                        <hr class="w-100" />
+                                                                        <label class="w-100 text-warning">
+                                                                            <span class="nav-icon">
+                                                                                <iconify-icon icon="icon-park-solid:local-pin" class="fs-14 align-middle"></iconify-icon>
+                                                                            </span>
+                                                                            Looking For Land
+                                                                        </label>
+                                                                        <hr class="w-100" />
+                                                                    </div>
+                                                                    <x-form-input className="col-lg-12" type="text" name="localisation_villa" label="Localisation*" value="{{ $customerData->localization }}" />
+                                                                    <div class="row">
+                                                                        <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget min*" value="" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget max*" value="" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Size (m²) min*" value="" />
+                                                                        <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Size (m²) max*" value="" />
+                                                                    </div>                                                                 
+                                                                </div>
+                                                                <!-- <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="IDR {{ number_format($customerData->cust_budget, 2, ',', '.') }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_localization" label="Localization" value="{{ $customerData->localization }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}" disabled /> -->
+
+                                                                <!-- <div class="col-lg-6 text-capitalize mb-3" id="group_status_prospect">
+                                                                    <label for="status_prospect" class="form-label">Make It Prospect</label>
+                                                                    <select class="form-control" id="status_prospect" name="status_prospect">
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No" selected>No</option>
+                                                                    </select>
+
+                                                                    @error('status_prospect')
+                                                                        <style>
+                                                                            .choices__inner {
+                                                                                border-color: #e96767 !important;
+                                                                            }
+                                                                        </style>
+
+                                                                        <div class="alert alert-danger m-0">
+                                                                            {{ $message }}
+                                                                        </div>
+                                                                    @enderror
+                                                                </div> -->
+
                                                             </div>
+
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save and Make Prospect</button>
+                                                        </div>
+                                                    </form>
 
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save to Prospect</button>
-                                                    </div>
-                                                </form>
-
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- END Modal Make Prospect --}}
+                                        {{-- Modal Make Prospect --}}
 
-                                    {{-- Modal Edit Data Leads --}}
-                                    <div class="modal modal-lg fade" id="editLeads-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Data Leads</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <form action="{{ route('leads.update', $matchLeads->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $matchLeads->cust_name }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $matchLeads->cust_email }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $matchLeads->cust_telp }}" disabled />
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="{{ $matchLeads->cust_budget }}" />
+                                        {{-- Modal Edit Data Leads --}}
+                                        <div class="modal modal-lg fade" id="editLeads-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Edit Data Leads</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="{{ route('leads.update', $customerData->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_name" label="Name" value="{{ $customerData->cust_name }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_email" label="Email" value="{{ $customerData->cust_email }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_telp" label="Phone Number" value="{{ $customerData->cust_telp }}" disabled />
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="{{ $customerData->cust_budget }}" />
 
-                                                            {{-- if master user : can edit/change localization data, but agent, can't --}}
-                                                            @if (Auth::user()->role == 'Master')
+                                                                {{-- if master user : can edit/change localization data, but agent, can't --}}
+
                                                                 <div class="col-lg-6 mb-3" id="group_localization">
                                                                     <label for="localization" class="form-label">Localization</label>
                                                                     <select id="localization" class="form-select" name="localization">
                                                                         <option value="" disabled selected>Select Region</option>
                                                                         @foreach ($data_localization as $localization)
-                                                                            <option value="{{ $localization->name }}" {{ $localization->name == $matchLeads->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
+                                                                            <option value="{{ $localization->name }}" {{ $localization->name == $customerData->localization ? 'selected' : '' }}>{{ $localization->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                            @else
-                                                                <x-form-input className="col-lg-6" type="text" name="localization" label="Localization" value="{{ $matchLeads->localization }}" disabled />
+
+                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}" disabled />
+
+                                                            </div>
+
+                                                            {{-- If it is a master, you can input it directly to a specific agent so that the selected agent gets the leads. --}}
+                                                            @if (Auth::user()->role == 'Master')
+                                                                <hr>
+                                                                <div class="col-lg-6 mb-3" id="group_input_specific_properties">
+                                                                    <label for="input_specific_properties" class="form-label">Input to Specific Leads</label>
+                                                                    <select id="input_specific_properties" class="form-select" name="input_specific_properties">
+                                                                        <option value="" disabled selected>Select Properties</option>
+                                                                        @foreach ($data_properties as $properties)
+                                                                            <option value="{{ $properties->property_slug }}">{{ $properties->property_name . ' | ' . $properties->internal_reference }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
                                                             @endif
 
-                                                            <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" disabled />
-
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-xs btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-xs btn-primary">Edit Leads Data</button>
+                                                        </div>
+                                                    </form>
 
-                                                        {{-- If it is a master, you can input it directly to a specific agent so that the selected agent gets the leads. --}}
-                                                        @if (Auth::user()->role == 'Master')
-                                                            <hr>
-                                                            <div class="col-lg-6 mb-3" id="group_input_specific_properties">
-                                                                <label for="input_specific_properties" class="form-label">Input to Specific Leads</label>
-                                                                <select id="input_specific_properties" class="form-select" name="input_specific_properties">
-                                                                    <option value="" disabled selected>Select Properties</option>
-                                                                    @foreach ($data_properties as $properties)
-                                                                        <option value="{{ $properties->property_slug }}">{{ $properties->property_name . ' | ' . $properties->internal_reference }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        @endif
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-xs btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-xs btn-primary">Edit Leads Data</button>
-                                                    </div>
-                                                </form>
-
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- END Modal Edit Data Leads --}}
-                                <!-- @endif
-                            @endforeach -->
+                                        {{-- END Modal Edit Data Leads --}}
+
+                                    </td>
+
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>

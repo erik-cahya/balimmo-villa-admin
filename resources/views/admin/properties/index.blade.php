@@ -66,7 +66,7 @@
                                     <th>Mandates</th>                                    
                                     <th>Localization</th>
                                     <th>Bedroom</th>
-                                    <th>Price ($)</th>
+                                    <th>Price</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -88,7 +88,7 @@
                                                 </div>
                                                 <div class="d-flex flex-column">
                                                     <span class="text-dark fw-medium fs-15">{{ $property->property_name }}</span>
-                                                    <span class="text-dark fst-italic">{{ $property->property_code }}</span>
+                                                    <span class="text-gray-400 fst-italic">{{ $property->property_code }}</span>
                                                 </div>
                                             </a>
                                         </td>
@@ -110,7 +110,10 @@
                                             <span class="text-dark fw-medium fs-15">{{ $property->bedroom }} </span>
                                         </td>                                   
                                         <td>
-                                            <span class="text-dark fw-medium fs-15">250 000$</span>
+                                            <div class="d-flex flex-column">
+                                                <span class="text-dark fw-medium fs-15">IDR 2 500 000 000 </span>
+                                                <span class="text-gray-400 fst-italic">USD 239 000</span>
+                                            </div>
                                         </td>
 
                                         @php

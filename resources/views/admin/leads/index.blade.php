@@ -57,6 +57,7 @@
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
+            $('#myTable2').DataTable();
             $('#specificPropertyTable').DataTable();
             $('#seePropertiesTable-' + this.getAttribute('data-nama')).DataTable();
         });
