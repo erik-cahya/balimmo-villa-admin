@@ -204,7 +204,6 @@
                                                     <div class="modal-footer">
                                                         
                                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                        <!-- <button type="submit" class="btn btn-primary">Save Lead</button>                                                         -->
                                                     </div>
 
                                                     @if ($errors->any())
@@ -275,7 +274,15 @@
                                                                         </label>
                                                                         <hr class="w-100" />
                                                                     </div>
-                                                                    <x-form-input className="col-lg-12" type="text" name="leads_localization" label="Localisation*" value="{{ $customerData->localization }}" />
+                                                                    <div class="mb-4">
+                                                                        <label for="">Localisation*</label>
+                                                                        <select class="form-control" data-choices name="choices-single-default" id="choices-single-default">
+                                                                            <option value="{{ $customerData->localization }}">{{ $customerData->localization }}</option>
+                                                                            <option value="Choice 1">Mengwi</option>
+                                                                            <option value="Choice 2">Nyanyi</option>
+                                                                            <option value="Choice 3">Kuta</option>
+                                                                        </select>
+                                                                    </div>
                                                                     <div class="row">
                                                                         <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget min*" value="" />
                                                                         <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget max*" value="" />
@@ -295,7 +302,15 @@
                                                                         </label>
                                                                         <hr class="w-100" />
                                                                     </div>
-                                                                    <x-form-input className="col-lg-12" type="text" name="localisation_villa" label="Localisation*" value="{{ $customerData->localization }}" />
+                                                                    <div class="mb-4">
+                                                                        <label for="">Localisation*</label>
+                                                                        <select class="form-control" data-choices name="choices-single-default" id="choices-single-default">
+                                                                            <option value="{{ $customerData->localization }}">{{ $customerData->localization }}</option>
+                                                                            <option value="Choice 1">Mengwi</option>
+                                                                            <option value="Choice 2">Nyanyi</option>
+                                                                            <option value="Choice 3">Kuta</option>
+                                                                        </select>
+                                                                    </div>
                                                                     <div class="row">
                                                                         <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget min*" value="" />
                                                                         <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget max*" value="" />
