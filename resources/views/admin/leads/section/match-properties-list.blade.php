@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                 <div>
-                    <h4 class="card-title">Specific Property List</h4>
+                    <h4 class="card-title">Match Property List</h4>
                 </div>
 
             </div>
@@ -58,7 +58,7 @@
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer">
                                         <!-- {{ $cst->count() }} Properties  -->
                                         <span class="badge bg-success me-1">Villa</span>
-                                        <!-- <span class="badge bg-warning me-1">Land</span> -->
+                                        <span class="badge bg-warning me-1">Land</span>
                                     </td>
                                     <td>                    
                                         <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}">
@@ -140,7 +140,7 @@
                                                     </div>
 
                                                     <div class="modal-body">
-                                                        <!-- Information Leads Villa -->
+                                                        <!-- Information Leads Lands -->
                                                             <div class="d-flex gap-2 align-items-center">
                                                                 <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5><span class="badge bg-warning me-1">Land</span>
                                                             </div>
@@ -184,7 +184,7 @@
                                                                                     <div class="d-block">
                                                                                         <h5 class="text-dark fw-medium mb-0" 
                                                                                         data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}" >
-                                                                                            IDR 4.000.000.000
+                                                                                            IDR 4.000.000.00000
                                                                                         </h5>
                                                                                         <p class="fs-13 mb-0">USD 400.000</p>
                                                                                     </div>
@@ -204,8 +204,17 @@
                                                     </div>
 
                                                     <div class="modal-footer">
+                                                        <!-- Choose Agent -->
+                                                        <div class="row">
+                                                            <select class="form-control"  data-choices name="choices-single-default" id="choices-single-default">
+                                                                <option  value="">Choose agent</option>
+                                                                <option value="Choice 1">Budi Otomo</option>
+                                                                <option value="Choice 2">Cakra Wira</option>
+                                                                <option value="Choice 3">Coki Ciu</option>
+                                                            </select>
+                                                        </div>
                                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save to Prospect</button>                                                        
+                                                        <button type="submit" class="btn btn-primary">Save Lead</button>                                                        
                                                     </div>
 
                                                     @if ($errors->any())
@@ -399,6 +408,45 @@
                                             </div>
                                         </div>
                                         {{-- END Modal Edit Data Leads --}}
+
+                                    </td>
+
+                                </tr>
+
+                                {{-- Contoh Data untuk yang tidak match (Bisa didelete after) --}}
+                                <tr>
+                                    <td>2</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer">
+                                        <div class="d-flex align-items-center gap-1">
+                                            <div class="d-block">
+                                                <h5 class="text-dark fw-medium mb-0">
+                                                    Deva Mahayana
+                                                </h5>
+                                                <p class="fs-13 mb-0">deva@gmail.com</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    @role('Master')
+                                        <td class="d-flex flex-column gap-1 align-items-start">
+                                            <span class="badge bg-primary text-light"> No Match Agent </span>                                            
+                                        </td>
+                                    @endrole
+                                    <td>
+                                        <p class="mb-0">{{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</p>
+                                    </td>
+                                    <td>{{ $customerData->localization }}</td>
+                                    <td> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer">
+                                        <!-- {{ $cst->count() }} Properties  -->
+                                        <span class="badge bg-success me-1">Villa</span>
+                                        <!-- <span class="badge bg-warning me-1">Land</span> -->
+                                    </td>
+                                    <td>                    
+                                        <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}">
+                                            Make to Prospect
+                                        </button>
+                                        <input type="hidden" class="propertyId" value="{{ $customer }}">
+                                        <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
 
                                     </td>
 

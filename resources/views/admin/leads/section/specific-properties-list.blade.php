@@ -202,8 +202,9 @@
                                                     </div>
 
                                                     <div class="modal-footer">
+                                                        
                                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save to Prospect</button>                                                        
+                                                        <!-- <button type="submit" class="btn btn-primary">Save Lead</button>                                                         -->
                                                     </div>
 
                                                     @if ($errors->any())
@@ -237,7 +238,7 @@
                                                                 <x-form-input className="col-lg-3" type="text" name="leads_name" label="Last Name" value="{{ $customerData->cust_name }}" />
                                                                 <x-form-input className="col-lg-3" type="text" name="leads_email" label="Email" value="{{ $customerData->cust_email }}" />
                                                                 <x-form-input className="col-lg-3" type="text" name="leads_telp" label="Phone" value="{{ $customerData->cust_telp }}" />
-                                                                <div class="col-lg-6 mb-3">
+                                                                <div class="col-lg-3 mb-3">
                                                                     <label for="leads_looking_for" class="form-label text-muted">Looking For</label>
                                                                     <div class="form-check">
                                                                         <input type="checkbox" class="form-check-input" id="customCheck3">
@@ -259,7 +260,9 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
-                                                                <x-form-input className="col-lg-6" type="text" name="leads_date" label="Ready to buy*" value="{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="leads_date" label="Ready to buy*" value="{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="leads_nationality" label="Nationality" value="" placeholder="Nationality" />
+                                                                <x-form-input className="col-lg-3" type="text" name="leads_passport" label="Passport" value="" placeholder="Passport Number" />
                                                                 <!-- Field Looking Villa -->
                                                                 <div class="row">
                                                                     <div class="text-center d-flex justify-items-center justify-content-center">
@@ -298,7 +301,8 @@
                                                                         <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Budget max*" value="" />
                                                                         <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Size (m²) min*" value="" />
                                                                         <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Size (m²) max*" value="" />
-                                                                    </div>                                                                 
+                                                                    </div>  
+                                                                                                                                        
                                                                 </div>
                                                                 <!-- <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="IDR {{ number_format($customerData->cust_budget, 2, ',', '.') }}" disabled />
                                                                 <x-form-input className="col-lg-6" type="text" name="leads_localization" label="Localization" value="{{ $customerData->localization }}" disabled />
