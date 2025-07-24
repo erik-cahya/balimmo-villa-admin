@@ -17,7 +17,7 @@
                                 @role('Master')
                                     <th scope="col">Agent Name</th>
                                 @endrole
-                                <th scope="col">Property Selected</th>
+                                <th scope="col">Property Name</th>
                                 <th scope="col">Property Address</th>
                                 <th scope="col">Price</th>
                                 <th scope="col">Date</th>
@@ -43,18 +43,16 @@
                                     </div>
                                 </td>
                                 @endrole
-                                <td><iconify-icon icon="material-symbols:house-outline" class="fs-16 align-middle"></iconify-icon> Villa Teratai Biru</td>
-                                <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> Jl Raya Canggu No 66</td>
+                                <td>Villa Teratai Biru</td>
+                                <td>Jl Raya Canggu No 66</td>
                                 <td>
                                     <div class="d-block">
                                         <h5 class="text-dark fw-medium mb-0">IDR 4.000.000.000</h5>
                                         <p class="fs-13 mb-0">USD 245.324</p>
                                     </div>
                                 </td>
-                                
-
-                                
-                                <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse('2025-7-3')->format('d F, Y') }}</td>
+                                                                
+                                <td> {{ \Carbon\Carbon::parse('2025-7-3')->format('d F, Y') }}</td>
                                 <td>
                                     <!-- <button type="button" class="btn btn-xs btn-light" data-bs-toggle="modal" data-bs-target="#seeProperties-1">MOU/LOI Signed</button> -->
 
