@@ -66,7 +66,7 @@
                             </div>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
-                                    <table class="table-hover table-centered table text-nowrap" id="myTable">
+                                    <table class="table-hover table-centered table text-nowrap" id="villaProspect">
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col">No</th>
@@ -232,7 +232,7 @@
                             </div>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
-                                    <table class="table-hover table-centered table text-nowrap" id="myTable">
+                                    <table class="table-hover table-centered table text-nowrap" id="landProspect">
                                         <thead class="table-light">
                                             <tr>
                                                 <th scope="col">No</th>
@@ -395,6 +395,8 @@
 
     <script>
         $(document).ready(function() {
+            $('#villaProspect').DataTable();
+            $('#landProspect').DataTable();
             $('#myTable').DataTable();
             $('#specificPropertyTable').DataTable();
             $('#seePropertiesTable-' + this.getAttribute('data-nama')).DataTable();

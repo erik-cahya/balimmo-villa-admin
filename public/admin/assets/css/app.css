@@ -20600,8 +20600,7 @@ pre[class*=language-] {
 }
 
 body.authentication-bg {
-  background: -webkit-gradient(linear, left top, right top, from(hsl(205deg, 46%, 30%)), to(hsl(260deg, 29%, 36%)));
-  background: linear-gradient(90deg, hsl(205deg, 46%, 30%) 0%, hsl(260deg, 29%, 36%) 100%);
+  background: ##063436;
 }
 body.authentication-bg .account-pages {
   -webkit-box-align: center;

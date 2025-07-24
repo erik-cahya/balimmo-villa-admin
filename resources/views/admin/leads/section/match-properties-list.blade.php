@@ -33,7 +33,7 @@
 
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer">
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">
                                         <div class="d-flex align-items-center gap-1">
                                             <div class="d-block">
                                                 <h5 class="text-dark fw-medium mb-0">
@@ -55,7 +55,7 @@
                                     </td>
                                     <td>{{ $customerData->localization }}</td>
                                     <td> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
-                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer">
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">
                                         <!-- {{ $cst->count() }} Properties  -->
                                         <span class="badge bg-success me-1">Villa</span>
                                         <span class="badge bg-warning me-1">Land</span>
@@ -68,7 +68,7 @@
                                         <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="{{ $customerData->cust_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
 
                                         <!-- Modal -->
-                                        <div class="modal modal-xl fade" id="seeProperties-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal modal-xl fade" id="seeProperties1-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -98,7 +98,7 @@
                                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> 2 - 4 </span>
                                                             </div>
                                                             <div class="table-responsive">
-                                                                <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
+                                                                <table class="table-hover  table-centered table text-nowrap" id="seePropertiesVillaMatchDetailTable-{{ $customerData->id }}">
                                                                     <thead class="table-light">
                                                                         <tr>
                                                                             <th scope="col">No</th>
@@ -114,7 +114,7 @@
                                                                             <tr>
                                                                                 <td>{{ $loop->iteration }}</td>
                                                                                 <td>{{ $property->property_name }}</td>
-                                                                                <td>{{ $property->agent_code }} BP-3242</td>                                                                                
+                                                                                <td>{{ $property->agent_code }}</td>                                                                                
                                                                                 <td>{{ $property->bedroom }}</td>
                                                                                 <td>
                                                                                     <div class="d-block">
@@ -134,7 +134,7 @@
                                                                                                              
                                                             <script>
                                                                 $(document).ready(function() {
-                                                                    $('#seePropertiesDetailTable-{{ $customerData->id }}').DataTable();
+                                                                    $('#seePropertiesVillaMatchDetailTable-{{ $customerData->id }}').DataTable();
                                                                 });
                                                             </script>
                                                     </div>
@@ -166,7 +166,7 @@
                                                                     <thead class="table-light">
                                                                         <tr>
                                                                             <th scope="col">No</th>
-                                                                            <th scope="col">Property Name</th>
+                                                                            <th scope="col">Property Names</th>
                                                                             <th scope="col">Agent</th>
                                                                             <th scope="col">Size</th>                                                                            
                                                                             <th scope="col">Price</th>
@@ -205,7 +205,8 @@
 
                                                     <div class="modal-footer">
                                                         <!-- Choose Agent -->
-                                                        <div class="row">
+                                                        @role('Master')                                                                           
+                                                        <div class="row" style="min-width: 200px">
                                                             <select class="form-control"  data-choices name="choices-single-default" id="choices-single-default">
                                                                 <option  value="">Choose agent</option>
                                                                 <option value="Choice 1">Budi Otomo</option>
@@ -213,8 +214,13 @@
                                                                 <option value="Choice 3">Coki Ciu</option>
                                                             </select>
                                                         </div>
+                                                        @endrole
+
                                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save Lead</button>                                                        
+                                                        
+                                                        @role('Master')  
+                                                        <button type="submit" class="btn btn-primary">Save Lead</button>
+                                                        @endrole                                                        
                                                     </div>
 
                                                     @if ($errors->any())

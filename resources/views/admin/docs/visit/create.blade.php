@@ -46,7 +46,7 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between mb-3">
                                     <div class="d-flex align-items-center gap-2">
-                                        <h3 class="fw-medium text-capitalize mb-0">Prospect name</h3>                
+                                        <h3 class="fw-medium text-capitalize mb-0">Deva Mahayana</h3>                
                                         <span class="badge bg-success fs-16 text-capitalize px-2 py-1">Status</span>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Edit Prospect</button>
@@ -58,6 +58,8 @@
                                         <p class="mb-1"><span class="fw-medium text-dark">Email</span><span class="mx-2">:</span>devamahayanatop@gmail.com</p>
                                         <p class="mb-1"><span class="fw-medium text-dark">Whatsapp</span><span class="mx-2">:</span>+33 34 312 422</p>
                                         <p class="mb-1"><span class="fw-medium text-dark">Sign up date</span><span class="mx-2">:</span>16 July, 2025</p>
+                                        <p class="mb-1"><span class="fw-medium text-dark">Passport</span><span class="mx-2">:</span>ZERTY65432</p>                                                                            
+                                        <p class="mb-1"><span class="fw-medium text-dark">Nationality</span><span class="mx-2">:</span>China</p>                                                                            
                                         <p class="mb-1"><span class="fw-medium text-dark">Assigne to</span><span class="mx-2">:</span>Agent name</p>                                                                            
                                     </div>
 
@@ -92,8 +94,32 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h4 class="fw-medium text-capitalize">Files</h4> 
-                                        <div class="d-flex flex-wrap gap-2">                     
-                                            <a href="" class="text-dark stretched-link d-flex bg-light-subtle align-items-center position-relative gap-1 rounded border p-2 text-start">
+                                        <div class="d-flex flex-wrap gap-2">   
+                                            <!-- Button Visit Dropdown -->
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <!-- <i class="ri-download-cloud-line fs-16 text-muted"></i>     -->
+                                                    <iconify-icon icon="ph:file-fill" style="margin-bottom: -5px !important" class="text-white fs-18"></iconify-icon>
+                                                    Visit Docs
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <a class="dropdown-item" href="#">English</a>
+                                                    <a class="dropdown-item" href="#">Indonesia</a>
+                                                </div>
+                                            </div>                  
+                                            <!-- Offering Dropdown -->
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <!-- <i class="ri-download-cloud-line fs-16 text-muted"></i>     -->
+                                                    <iconify-icon icon="ph:file-fill" style="margin-bottom: -5px !important" class="text-white fs-18"></iconify-icon>
+                                                    Offering Docs
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <a class="dropdown-item" href="#">English</a>
+                                                    <a class="dropdown-item" href="#">Indonesia</a>
+                                                </div>
+                                            </div>                  
+                                            <!-- <a href="" class="text-dark stretched-link d-flex bg-light-subtle align-items-center position-relative gap-1 rounded border p-2 text-start">
                                                 <iconify-icon icon="ph:file-fill" class="text-danger fs-18"></iconify-icon>
                                                 <h4 class="fs-14" style="margin-bottom: -1px !important">Property Files</h4>
                                                 <i class="ri-download-cloud-line fs-16 text-muted"></i>
@@ -107,7 +133,7 @@
                                                 <iconify-icon icon="ph:file-fill" class="text-danger fs-18"></iconify-icon>
                                                 <h4 class="fs-14" style="margin-bottom: -1px !important">Offering Paper </h4>
                                                 <i class="ri-download-cloud-line fs-16 text-muted"></i>
-                                            </a>                                    
+                                            </a>                                     -->
                                         </div>                                                                            
                                     </div>                                   
                                 </div>
@@ -129,7 +155,7 @@
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="table-responsive">
-                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="villaSelectedTable">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="width: 20px;">
@@ -227,7 +253,7 @@
                                                     <div class="modal-body">
                                                         <div class="col-lg-12">
                                                             <div class="table-responsive">
-                                                                <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTablee">
+                                                                <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="villaSelectedTablePopUp">
                                                                     <thead class="table-light">
                                                                         <tr>                                                                         
                                                                             <th>Properties Name</th>
@@ -268,7 +294,7 @@
                                                                 </table>
                                                             </div>
                                                         </div>                                       
-                                                        <div class="col-lg-12 mb-3" id="group_date_visit">
+                                                        <div class="col-lg-4 mb-3" id="group_date_visit">
                                                             <label>Input Date</label>
                                                             <input type="text" id="date_visit" name="date_visit" class="form-control @error('date_visit') validation-form @enderror" placeholder="Input Visit Date">
 
@@ -284,7 +310,6 @@
                                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                                         <button type="submit" class="btn btn-primary">Create visit docs</button>                                                        
                                                     </div>
-
                                                    
                                                 </div>
                                             </div>
@@ -303,7 +328,7 @@
                                 </h2>
                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                     <div class="table-responsive">
-                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="villaRecommendationTable">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="width: 20px;">
@@ -356,7 +381,7 @@
                                         </table>
                                     </div>
                                     <div class="d-flex gap-2 justify-content-end mb-2 me-2">
-                                        <button type="submit" class="btn btn-primary">Add to selected</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-selected">Add to selected</button>
                                     </div>
                                 </div>
                                 
@@ -371,7 +396,7 @@
                                 </h2>
                                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                     <div class="table-responsive">
-                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="landSelectedTable">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="width: 20px;">
@@ -439,7 +464,7 @@
                                 </h2>
                                 <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                                     <div class="table-responsive">
-                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="propertiesTable">
+                                        <table class="table-hover table-centered mb-0 table text-nowrap align-middle" id="landRecommendationTable">
                                             <thead class="table-light">
                                                 <tr>
                                                     <th style="width: 20px;">
@@ -547,6 +572,11 @@
     {{-- Data Table --}}
     <script>
         $(document).ready(function() {
+            $('#villaSelectedTable').DataTable();
+            $('#villaRecommendationTable').DataTable();
+            $('#landSelectedTable').DataTable();
+            $('#landRecommendationTable').DataTable();
+            $('#villaSelectedTablePopUp').DataTable();
             $('#propertiesTable').DataTable();
             $('#clientTable').DataTable();
         });
@@ -623,11 +653,13 @@
         const checkboxes = document.querySelectorAll('.property-checkbox');
         const offerBtn = document.getElementById('btn-offer-docs');
         const visitBtn = document.getElementById('btn-visit-docs');
+        const selectedBtn = document.getElementById('btn-selected');
 
         function toggleOfferButton() {
             const checked = document.querySelectorAll('.property-checkbox:checked');
             offerBtn.disabled = (checked.length !== 1); // Only enable if exactly 1 selected
-            visitBtn.disabled = (checked.length == 0); // Only enable if exactly 1 selected
+            visitBtn.disabled = (checked.length == 0); // Only enable if 1 or more selected
+            selectedBtn.disabled = (checked.length == 0); // Only enable if 1 or more selected
         }
 
         checkboxes.forEach(cb => {

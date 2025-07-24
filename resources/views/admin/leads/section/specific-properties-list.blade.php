@@ -96,7 +96,7 @@
                                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> 2 - 4 </span>
                                                             </div>
                                                             <div class="table-responsive">
-                                                                <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
+                                                                <table class="table-hover table-centered table text-nowrap" id="seePropertiesVillaDetailTable-{{ $customerData->id }}">
                                                                     <thead class="table-light">
                                                                         <tr>
                                                                             <th scope="col">No</th>
@@ -132,7 +132,7 @@
                                                                                                              
                                                             <script>
                                                                 $(document).ready(function() {
-                                                                    $('#seePropertiesDetailTable-{{ $customerData->id }}').DataTable();
+                                                                    $('#seePropertiesVillaDetailTable-{{ $customerData->id }}').DataTable();
                                                                 });
                                                             </script>
                                                     </div>
@@ -160,7 +160,7 @@
                                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:fullscreen" class="fs-16 align-middle"></iconify-icon> 200 - 400 m² </span>
                                                             </div>
                                                             <div class="table-responsive">
-                                                                <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-{{ $customerData->id }}">
+                                                                <table class="table-hover  table-centered table text-nowrap" id="seePropertiesLandDetailTable-{{ $customerData->id }}">
                                                                     <thead class="table-light">
                                                                         <tr>
                                                                             <th scope="col">No</th>
@@ -196,7 +196,7 @@
                                                                                                              
                                                             <script>
                                                                 $(document).ready(function() {
-                                                                    $('#seePropertiesDetailTable-{{ $customerData->id }}').DataTable();
+                                                                    $('#seePropertiesLandDetailTable-{{ $customerData->id }}').DataTable();
                                                                 });
                                                             </script>
                                                     </div>

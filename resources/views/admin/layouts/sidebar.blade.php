@@ -100,7 +100,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('clients.*') ? 'active' : '' }}" href="{{ route('clients.index') }}">
                         <span class="nav-icon">
-                            <iconify-icon icon="la:user-tie" class="fs-18 align-middle"></iconify-icon>
+                            <iconify-icon icon="la:user-check" class="fs-18 align-middle"></iconify-icon>
                         </span>
                         <span class="nav-text">Clients</span>
                     </a>
