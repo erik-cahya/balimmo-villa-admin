@@ -27,7 +27,6 @@
                         </thead>
                         <tbody>
 
-
                             <tr>
                                 <td>1</td>
                                 <td>
@@ -61,12 +60,11 @@
 
                                     <button type="button" class="btn btn-xs btn-light" data-bs-toggle="offcanvas" data-bs-target="#rightOffcanvas" aria-controls="rightOffcanvas">MOU/LOI Signed</button>
 
-                                    <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-1">
+                                    <!-- <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-1">
                                         <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
-                                    </button>                                    
+                                    </button>                                     -->
 
                                     <input type="hidden" class="propertyId" value="1">
-
                                     <button type="button" class="btn btn-xs btn-danger deleteButton" data-nama="Erik Cahya Pradana"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
                                     
                                     <!-- right offcanvas -->
@@ -401,9 +399,9 @@
                                                 <div class="modal-body">
                                                     <div class="d-flex gap-2">
                                                         <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-10 align-middle"></iconify-icon> Erik Cahya Pradana</span>
-                                                        <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-10 align-middle"></iconify-icon> erikcp38@gmail.com</span>
-                                                        <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-10 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse('2025-07-08')->format('d F, Y') }}</span>
+                                                        <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-10 align-middle"></iconify-icon> erikcp38@gmail.com</span>                                                        
                                                         <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-10 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', '08901903123'), 4)) }}</span>
+                                                        <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-10 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse('2025-07-03')->format('d F, Y') }}</span>
                                                     </div>
                                                     <div class="table-responsive">
                                                         <table class="table-hover  table-centered table text-nowrap" id="seePropertiesDetailTable-1">
@@ -411,23 +409,29 @@
                                                                 <tr>
                                                                     <th scope="col">No</th>
                                                                     <th scope="col">Property Name</th>
+                                                                    <th scope="col">Agent</th>
+                                                                    <th scope="col">Bedroom</th>
+                                                                    <th scope="col">Price</th>
                                                                     <th scope="col">Property Address</th>
-                                                                    <th scope="col">Require Customer Bedroom</th>
-                                                                    <th scope="col">Customer Budget</th>
-                                                                    <th scope="col">Customer USD</th>
-                                                                    <th scope="col">Customer Message</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
 
                                                                 <tr>
                                                                     <td>1</td>
-                                                                    <td>Grand Villa Ubud</td>
-                                                                    <td>Jln. Gilimanuk Tabanan, Tabanan, Bali</td>
-                                                                    <td>20</td>
-                                                                    <td>IDR {{ number_format(200000000, 0, ',', '.') }}</td>
-                                                                    <td>USD {{ number_format(200.0, 2, ',', '.') }}</td>
-                                                                    <td>Hello im Erik</td>
+                                                                    <td class=" d-flex align-items-center">
+                                                                        <img src="http://localhost:8000/admin/gallery/villa-teratai-biru/d60e0975-88b7-4c00-a574-5635850db77d.webp" class="avatar-md border-light border-3 rounded border" alt="...">
+                                                                        <span class="fst-italic fs-12">Villa Teratai Biru</span>                                                
+                                                                    </td>
+                                                                    <td>Rumi Utomo</td>
+                                                                    <td>2</td>
+                                                                    <td>
+                                                                        <div class="d-flex flex-column">
+                                                                            <span class="fst-italic fs-12">IDR 2.500.000.000</span>
+                                                                            <span class="fst-italic fs-12">USD 24.400</span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>Jl Raya Canggu No 66</td>
                                                                 </tr>
 
                                                             </tbody>
