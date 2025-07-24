@@ -83,39 +83,39 @@
                         <div class="card-body">
                             <div>
                                 <!-- Villa Name -->
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <h3 class="fw-medium text-capitalize mb-0">{{ $data_properties->property_name }}</h3>
-                                    <div>
-                                        @php
-                                            if ($data_properties->type_acceptance == 'pending') {
-                                                $className = 'bg-warning';
-                                            } elseif ($data_properties->type_acceptance == 'accept') {
-                                                $className = 'bg-success';
-                                            } else {
-                                                $className = 'bg-danger';
-                                            }
-                                        @endphp
-                                        <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_acceptance }}</span>
+                                <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+                                    <div class="d-flex align-items-center gap-2 col-8">
+                                        <h3 class="fw-medium text-capitalize mb-0">{{ $data_properties->property_name }}</h3>
+                                        <div>
+                                            @php
+                                                if ($data_properties->type_acceptance == 'pending') {
+                                                    $className = 'bg-warning';
+                                                } elseif ($data_properties->type_acceptance == 'accept') {
+                                                    $className = 'bg-success';
+                                                } else {
+                                                    $className = 'bg-danger';
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_acceptance }}</span>
+                                        </div>
+                                        <div>
+                                            @php
+                                                if ($data_properties->type_mandate == 'Essentials Mandate') {
+                                                    $className = 'bg-warning';                                           
+                                                } else {
+                                                    $className = 'bg-secondary';
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_mandate }}</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        @php
-                                            if ($data_properties->type_mandate == 'Essentials Mandate') {
-                                                $className = 'bg-warning';                                           
-                                            } else {
-                                                $className = 'bg-secondary';
-                                            }
-                                        @endphp
-                                        <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_mandate }}</span>
-                                    </div>
-                                    <!-- <div class="">
-                                        @if (Auth::user()->role === 'Master')                                    
-                                            <form method="POST" action="{{ route('properties.changeAcceptance', $data_properties->property_slug) }}" class="d-flex w-100 align-items-center flex-wrap gap-2">
-                                                @csrf
-                                                <x-form-select className="w-100" name="type_acceptance" label="" :options="['pending', 'accept', 'decline']" :selected="old('type_acceptance', $data_properties->type_acceptance ?? '')" />
-                                                <button type="submit" class="btn btn-primary">Change</button>
-                                            </form>                                            
-                                        @endif                                        
-                                    </div> -->
+                                    @if (Auth::user()->role === 'Master')                                    
+                                        <form method="POST" action="{{ route('properties.changeAcceptance', $data_properties->property_slug) }}" class="d-flex gap-2 align-items-center col-4">
+                                            @csrf
+                                            <x-form-select className="w-100" name="type_acceptance" label="" :options="['pending', 'accept', 'decline']" :selected="old('type_acceptance', $data_properties->type_acceptance ?? '')" />
+                                            <button type="submit" class="btn btn-primary">Change</button>
+                                        </form>                                            
+                                    @endif                                        
                                     
                                 </div>
                                 <!-- Villa Detail Information -->
