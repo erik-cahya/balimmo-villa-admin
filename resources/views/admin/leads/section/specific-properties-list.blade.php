@@ -56,7 +56,7 @@
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->id }}" class="cursor-pointer">
                                         <!-- {{ $cst->count() }} Properties  -->
                                         <span class="badge bg-success me-1">Villa</span>
-                                        <span class="badge bg-warning me-1">Land</span>
+                                        <!-- <span class="badge bg-warning me-1">Land</span> -->
                                     </td>
                                     <td>                    
                                         <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $customerData->id }}">
@@ -137,8 +137,9 @@
                                                             </script>
                                                     </div>
 
-                                                    <div class="modal-body">
-                                                        <!-- Information Leads Villa -->
+                                                    <!-- Information Leads Land -->
+                                                    <!-- <div class="modal-body">
+                                                        
                                                             <div class="d-flex gap-2 align-items-center">
                                                                 <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5><span class="badge bg-warning me-1">Land</span>
                                                             </div>
@@ -199,7 +200,7 @@
                                                                     $('#seePropertiesLandDetailTable-{{ $customerData->id }}').DataTable();
                                                                 });
                                                             </script>
-                                                    </div>
+                                                    </div> -->
 
                                                     <div class="modal-footer">
                                                         
@@ -291,7 +292,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <!-- Field Looking Land -->
-                                                                <div class="row">
+                                                                <!-- <div class="row">
                                                                     <div class="text-center d-flex justify-items-center justify-content-center">
                                                                         <hr class="w-100" />
                                                                         <label class="w-100 text-warning">
@@ -318,7 +319,7 @@
                                                                         <x-form-input className="col-lg-3" type="text" name="localisation_villa" label="Size (m²) max*" value="" />
                                                                     </div>  
                                                                                                                                         
-                                                                </div>
+                                                                </div> -->
                                                                 <!-- <x-form-input className="col-lg-6" type="text" name="leads_budget" label="Budget" value="IDR {{ number_format($customerData->cust_budget, 2, ',', '.') }}" disabled />
                                                                 <x-form-input className="col-lg-6" type="text" name="leads_localization" label="Localization" value="{{ $customerData->localization }}" disabled />
                                                                 <x-form-input className="col-lg-6" type="text" name="leads_date" label="Date Submit" value="{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}" disabled /> -->
