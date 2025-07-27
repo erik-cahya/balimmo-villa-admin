@@ -27,8 +27,8 @@
                         <tbody>
 
                             @foreach ($data_leads_matches as $leadsData => $LeadsMatch)
+                                {{-- {{ dd($leadsData) }} --}}
                                 @php
-                                    // dd($matchProperties);
                                     $matchLeads = $LeadsMatch->first(); // ambil lead pertama
                                     $authUser = Auth::user();
                                     $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
@@ -56,7 +56,6 @@
                                         </td>
                                         <td>
                                             <span class="badge bg-warning fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> USD {{ number_format($matchLeads->max_budget_usd, 2, ',', '.') }}</span>
-
                                         </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
 
@@ -75,26 +74,23 @@
                                             @endforeach
                                         </td>
 
-                                        <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</td>
+                                        <td>
+                                            <iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}
+
+                                        </td>
 
                                         <td>
                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $matchLeads->id }}">
                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
                                             </button>
 
-                                            {{-- @if ($filteredMatchLeads->count() == 0)
-                                                <span class="btn btn-xs btn-primary">No Match Properties</span>
-                                            @else
-                                                <button class="btn btn-xs btn-secondary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#makeProspect-{{ $matchLeads->id }}">
-                                                    Make to Prospect
-                                                </button>
-                                                <button class="btn btn-xs btn-primary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#matchProperties-{{ $matchLeads->id }}">
-                                                    Show {{ $filteredMatchLeads->count() }} Properties
-                                                </button>
-                                            @endif --}}
+                                            <button
+                                                class="btn btn-xs btn-primary show-matching"
+                                                data-lead-id="{{ $matchLeads->id }}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#matchingPropertiesModal">
 
-                                            <button class="btn btn-xs btn-primary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#matchProperties-{{ $matchLeads->id }}">
-                                                Show Match Properties
+                                                Show Match Properties - {{ $matchLeads->id }}
                                             </button>
 
                                             {{-- Delete Button --}}
@@ -106,100 +102,6 @@
 
                                         </td>
                                     </tr>
-                                    <!-- Modal Properties Match -->
-                                    <div class="modal modal-xl fade" id="matchProperties-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Recomendation Properties</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <span class="fst-italic fw-medium text-dark">Data Leads | ID : {{ $matchLeads->id }}</span>
-                                                    <div class="d-flex mb-3 mt-2 gap-1">
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="solar:user-bold" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->first_name }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="solar:user-bold" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->cust_email }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="mdi:phone" class="fs-10 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="flowbite:map-pin-solid" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->localization }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="tdesign:money-filled" class="fs-10 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}</span>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-
-                                                        <div class="col-md-6 col-xl-6">
-                                                            <div class="card bg-primary bg-gradient">
-                                                                <div class="card-body">
-                                                                    <div class="row align-items-center justify-content-between">
-                                                                        <div class="col-xl-7 col-lg-6 col-md-6">
-                                                                            <h3 class="fw-bold fs-18 text-white">Villa</h3>
-                                                                            <hr>
-                                                                            <div class="row">
-                                                                                <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                    <div class="d-flex gap-2">
-                                                                                        <div class="avatar-sm flex-shrink-0">
-                                                                                            <span class="avatar-title bg-success rounded bg-opacity-50 text-white">
-                                                                                                <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div class="d-block">
-                                                                                            <h5 class="fw-medium mb-0 text-white">20</h5>
-                                                                                            <p class="text-white-50 mb-0">Bedroom</p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                    <div class="d-flex gap-2">
-                                                                                        <div class="avatar-sm flex-shrink-0">
-                                                                                            <span class="avatar-title bg-danger rounded bg-opacity-50 text-white">
-                                                                                                <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div class="d-block">
-                                                                                            <h5 class="fw-medium mb-0 text-white">20</h5>
-                                                                                            <p class="text-white-50 mb-0">Bathrom</p>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <hr>
-                                                                            <div class="d-flex fs-10 gap-3">
-                                                                                <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">IDR 300.000</h4>
-                                                                                <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">USD 200.00</h4>
-                                                                            </div>
-                                                                            <hr>
-                                                                            <h3 class="fw-normal fs-16 fst-italic text-white">Seminyak - Canggu</h3>
-                                                                            <h3 class="fw-normal fs-11 fst-italic text-white">BLM-2000</h3>
-
-                                                                        </div>
-                                                                        <div class="col-xl-5 col-lg-4 col-md-4">
-                                                                            <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    {{-- <button type="submit" class="btn btn-primary">Change Password</button> --}}
-                                                </div>
-
-                                                @if ($errors->any())
-                                                    <div class="alert alert-danger">
-                                                        <ul class="mb-0">
-                                                            @foreach ($errors->all() as $message)
-                                                                <li>{{ $message }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                @endif
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /* Modal Properties Match -->
 
                                     {{-- Modal Make Prospect --}}
                                     <div class="modal modal-lg fade" id="makeProspect-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -440,6 +342,78 @@
                                     {{-- END Modal Edit Data Leads --}}
                                 @endif
                             @endforeach
+
+                            <!-- Modal Properties Match -->
+                            <div class="modal modal-lg fade" id="matchingPropertiesModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="matchingPropertiesModalLabel">Matching Properties - {{ $matchLeads->id }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div id="modalLoading" class="text-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+
+                                            <div id="criteriaInfo" class="row"></div>
+
+                                            <div class="row" id="propertiesData">
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /* Modal Properties Match -->
+
+                            {{-- <!-- Modal -->
+                            <div class="modal fade" id="matchingPropertiesModal-{{ $matchLeads->id }}" tabindex="-1" role="dialog" aria-labelledby="matchingPropertiesModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="matchingPropertiesModalLabel">Matching Properties</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="modalLoading" class="text-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+
+                                            <div id="criteriaInfo"></div>
+
+                                            <table class="table" id="propertiesTable" style="display: none;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Selling Price</th>
+                                                        <th>Bedrooms</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="propertiesTableBody">
+                                                </tbody>
+                                            </table>
+
+                                            <div id="noProperties" class="alert alert-warning" style="display: none;">
+                                                No matching properties found.
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
 
                         </tbody>
                     </table>

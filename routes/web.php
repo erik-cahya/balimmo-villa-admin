@@ -66,6 +66,10 @@ Route::post('listing/booking/{slug}', [CustomerController::class, 'booking'])->n
 
 Route::middleware('auth')->group(function () {
 
+    // Route::get('/leadsUpdate', [PropertiesLeadsController::class, 'leadsUpdate']);
+    Route::get('/leads/{lead}/matching-properties', [PropertiesLeadsController::class, 'leadsUpdate']);
+
+
     // ############################################################### Admin Panel Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/properties/change_acceptance/{slug}', [PropertiesController::class, 'changeAcceptance'])->name('properties.changeAcceptance'); // Accept Listing Properties
@@ -81,6 +85,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');
     Route::delete('/leadsSingle/{id}', [PropertiesLeadsController::class, 'deleteSingle']);
+
     Route::resource('/leads', PropertiesLeadsController::class);
 
     // Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');

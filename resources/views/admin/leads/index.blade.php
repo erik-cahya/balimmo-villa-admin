@@ -56,6 +56,69 @@
     <script src="{{ asset('admin/assets/js/cleave-phone.us.js') }}"></script>
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
 
+    {{-- Modal Match Properties --}}
+    <script>
+        $(document).ready(function() {
+            $('.show-matching').on('click', function() {
+                var leadId = $(this).data('lead-id');
+
+                // Reset modal
+                $('#criteriaInfo').empty();
+                $('#propertiesData').empty();
+                $('#modalLoading').show();
+                $('#noProperties').hide();
+
+                // AJAX
+                $.get('/leads/' + leadId + '/matching-properties', function(response) {
+                    $('#matchingPropertiesModalLabel').text('Matching Properties for Lead #' + leadId);
+
+                    // Lead data
+                    if (response.lead.length > 0) {
+                        var criteriaHtml = '';
+                        $.each(response.lead, function(index, lead) {
+                            criteriaHtml += `
+                        <div class="col-lg-6">
+                            <div class="alert alert-info mb-3">
+                                <strong>Criteria:</strong><br>
+                                Budget: ${formatCurrency(lead.min_budget)} - ${formatCurrency(lead.max_budget)}<br>
+                                Type Asset: ${lead.type_asset}<br>
+                                Bedrooms: ${lead.min_bedroom} - ${lead.max_bedroom}
+                            </div>
+                        </div>
+                    `;
+                        });
+                        $('#criteriaInfo').html(criteriaHtml);
+                    }
+
+                    // Properties data
+                    if (response.properties.villa.length > 0) {
+                        var propertiesHTML = '';
+                        $.each(response.properties.villa, function(index, property) {
+                            propertiesHTML += `
+                        <div class="col-lg-6">
+                            <div class="alert alert-info mb-3">
+                                <strong>Properties Name:</strong> ${property.property_name}
+                            </div>
+                        </div>
+                    `;
+                        });
+                        $('#propertiesData').html(propertiesHTML);
+                    } else {
+                        $('#noProperties').show();
+                    }
+
+                    $('#modalLoading').hide();
+                });
+            });
+
+            function formatCurrency(amount) {
+                if (!amount) return '-';
+                return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        });
+    </script>
+    {{-- End Modal Match Properties --}}
+
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();

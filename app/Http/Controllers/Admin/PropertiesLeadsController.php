@@ -17,13 +17,70 @@ use Illuminate\Support\Facades\Mail;
 
 class PropertiesLeadsController extends Controller
 {
+
+    public function leadsUpdate(Request $request, $leadId)
+    {
+        $lead = PropertyLeadsModel::findOrFail($leadId);
+
+
+
+
+        // $properties = PropertiesModel::join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+        //     ->where('type_properties', 'Land')
+        //     ->where('total_land_area', '>=', $lead->min_land_size)
+        //     ->when($lead->max_land_size, function ($query) use ($lead) {
+        //         return $query->where('total_land_area', '<=', $lead->max_land_size);
+        //     })
+        //     ->get();
+
+        // $properties = PropertiesModel::join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+        //     ->where('type_properties', 'Properties')
+        //     ->where('bedroom', '>=', $lead->min_bedroom)
+        //     ->when($lead->max_bedroom, function ($query) use ($lead) {
+        //         return $query->where('bedroom', '<=', $lead->max_bedroom);
+        //     })
+        //     ->get();
+
+
+        $customerLeads = PropertyLeadsModel::where('customer_id', $lead->customer_id)->get();
+
+        $results = [];
+
+        foreach ($customerLeads as $customerLead) {
+            $query = PropertiesModel::join('property_financial', 'property_financial.properties_id', '=', 'properties.id');
+
+            if ($customerLead->type_asset == 'villa') {
+                $query->where('type_properties', 'Properties')
+                    ->where('bedroom', '>=', $customerLead->min_bedroom ?? 0)
+                    ->when($customerLead->max_bedroom, fn($q) => $q->where('bedroom', '<=', $customerLead->max_bedroom));
+            } elseif ($customerLead->type_asset == 'land') {
+                $query->where('type_properties', 'Land')
+                    ->where('total_land_area', '>=', $customerLead->min_land_size ?? 0)
+                    ->when($customerLead->max_land_size, fn($q) => $q->where('total_land_area', '<=', $customerLead->max_land_size));
+            }
+
+            $results[$customerLead->type_asset] = $query->get();
+        }
+
+        $properties = $results;
+        // $results akan berisi:
+        // [
+        //     'villa' => [collection of villa properties],
+        //     'land' => [collection of land properties]
+        // ]
+
+        return response()->json([
+            'lead' => $customerLeads,
+            'properties' => $properties
+        ]);
+    }
+
     public function index()
     {
 
         if (!Auth::check()) {
             return redirect()->route('login');
         }
-
 
         if (Auth::user()->role == 'Master') {
 
@@ -56,49 +113,22 @@ class PropertiesLeadsController extends Controller
 
 
         // Data Tabel Leads Match
-        $data['data_leads_matches'] = PropertyLeadsModel::where('customer_data.agent_code', null)
-            ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
-            // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+        // $data['data_leads_matches'] = PropertyLeadsModel::where('customer_data.agent_code', null)
+
+        //     ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
+        //     // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+        //     ->get()->groupBy('customer_id');
+
+        $data['data_leads_matches'] = CustomerDataModel::where('customer_data.agent_code', null)
+            ->join('property_leads', 'property_leads.customer_id', '=', 'customer_data.id')
             ->get()->groupBy('customer_id');
+
+        // dd($data['data_leads_matches']);
 
 
         return view('admin.leads.index', $data);
 
 
-        // $dataLeads = CustomerDataModel::where('customer_data.agent_code', NULL)
-        //     ->join('property_leads', 'property_leads.customer_id', '=', 'customer_data.id')
-        //     ->get();
-
-        // // $allLeadIds = collect($data['data_leads_matches'])->flatten()->pluck('id')->unique();
-        // $allLeadIds = collect($dataLeads)->flatten()->pluck('id')->unique();
-        // // dd($allLeadIds);
-
-        // $allProperties = [];
-
-        // foreach ($allLeadIds as $leadId) {
-        //     $lead = PropertyLeadsModel::find($leadId);
-
-        //     if ($lead) {
-        //         $properties = PropertiesModel::where('bedroom', '>=', $lead->min_bedroom ?? 0)
-        //             ->when($lead->max_bedroom, function ($query) use ($lead) {
-        //                 return $query->where('bedroom', '<=', $lead->max_bedroom);
-        //             })
-        //             ->where('selling_price_idr', '>=', $lead->min_budget_idr ?? 0)
-        //             ->when($lead->max_budget_idr, function ($query) use ($lead) {
-        //                 return $query->where('selling_price_idr', '<=', $lead->max_budget_idr);
-        //             })
-        //             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-        //             ->get();
-
-        //         $allProperties[$leadId] = $properties;
-        //     }
-        // }
-
-        // $data['allMatchProperties'] = $allProperties;
-
-
-
-        $lead = PropertyLeadsModel::findOrFail(4);
 
         // dd([
         //     'min_bedroom' => $lead->min_bedroom,
@@ -127,6 +157,25 @@ class PropertiesLeadsController extends Controller
         // return view('admin.leads.index', $data);
     }
 
+    public function getMatchingProperties(Request $request, $leadId)
+    {
+        $lead = PropertyLeadsModel::findOrFail($leadId);
+
+        $properties = PropertiesModel::where('bedroom', '>=', $lead->min_bedroom)
+            ->when($lead->max_bedroom, function ($query) use ($lead) {
+                return $query->where('bedroom', '<=', $lead->max_bedroom);
+            })
+            ->where('selling_price', '>=', $lead->min_budget)
+            ->when($lead->max_budget, function ($query) use ($lead) {
+                return $query->where('selling_price', '<=', $lead->max_budget);
+            })
+            ->get();
+
+        return response()->json([
+            'lead' => $lead,
+            'properties' => $properties
+        ]);
+    }
 
     public function update(Request $request, string $id)
     {
