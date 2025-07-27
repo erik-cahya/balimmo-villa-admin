@@ -47,9 +47,6 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        {{-- <td>
-                                            <span class="badge bg-primary fst-italic"><iconify-icon icon="material-symbols:real-estate-agent-sharp" class="align-middle"></iconify-icon> BPA-ERIK-2032 - Properties</span>
-                                        </td> --}}
 
                                         <td>
                                             <div class="matching-container" data-lead-id="{{ $matchLeads->id }}">
@@ -86,18 +83,9 @@
                                         </td>
 
                                         <td>
-                                            <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $matchLeads->id }}">
-                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
+                                            <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $matchLeads->id }}">
+                                                <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon> Make to Prospect
                                             </button>
-
-                                            {{-- <button
-                                                class="btn btn-xs btn-primary show-matching"
-                                                data-lead-id="{{ $matchLeads->id }}"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#matchingPropertiesModal">
-
-                                                Show Match Properties - {{ $matchLeads->id }}
-                                            </button> --}}
 
                                             {{-- Delete Button --}}
                                             @if (Auth::user()->role == 'Master')
@@ -196,69 +184,70 @@
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="modal-body">
-                                                        <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                                            <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Customer Data</h5>
-                                                            <hr>
-                                                            <div class="row my-3">
-                                                                <x-form-input className="col-lg-4" type="text" name="customer_first_name" label="First Name" value="{{ $matchLeads->first_name }}" />
-                                                                <x-form-input className="col-lg-4" type="text" name="customer_last_name" label="Last Name" value="{{ $matchLeads->last_name }}" />
-                                                                <x-form-input className="col-lg-4" type="text" name="customer_email" label="Email" value="{{ $matchLeads->cust_email }}" />
-                                                                <x-form-input className="col-lg-4" type="text" name="customer_phone" label="Phone Number" value="{{ $matchLeads->cust_phone }}" />
 
-                                                                <x-form-input className="col-lg-4" type="text" name="ready_buy_villa" label="Ready to Buy" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" />
+                                                        <div class="row">
+                                                            <x-form-input className="col-lg-3" type="text" name="customer_first_name" label="First Name" value="{{ $matchLeads->first_name }}" />
+                                                            <x-form-input className="col-lg-3" type="text" name="customer_last_name" label="Last Name" value="{{ $matchLeads->last_name }}" />
+                                                            <x-form-input className="col-lg-3" type="text" name="customer_email" label="Email" value="{{ $matchLeads->cust_email }}" />
+                                                            <x-form-input className="col-lg-3" type="text" name="customer_phone" label="Phone" value="{{ $matchLeads->cust_phone }}" />
 
-                                                                <div class="col-lg-4 mb-3">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12 d-flex">
+                                                            @php
+                                                                $isVillaChecked = collect($LeadsMatch)->contains(function ($item) {
+                                                                    return $item->type_asset === 'villa' && $item->visibility == 1;
+                                                                });
+                                                                $isLandChecked = collect($LeadsMatch)->contains(function ($item) {
+                                                                    return $item->type_asset === 'land' && $item->visibility == 1;
+                                                                });
+                                                            @endphp
 
-                                                                            @php
-                                                                                // $isVillaChecked = collect($LeadsMatch)->contains('type_asset', 'villa');
-                                                                                $isVillaChecked = collect($LeadsMatch)->contains(function ($item) {
-                                                                                    return $item->type_asset === 'villa' && $item->visibility == 1;
-                                                                                });
-
-                                                                                $isLandChecked = collect($LeadsMatch)->contains(function ($item) {
-                                                                                    return $item->type_asset === 'land' && $item->visibility == 1;
-                                                                                });
-                                                                            @endphp
-
-                                                                            <div class="col-lg-6 mb-3">
-                                                                                <div class="row">
-                                                                                    <label class="mb-1 mb-3">Looking For</label>
-
-                                                                                    <div class="col-lg-12 d-flex">
-                                                                                        <div class="form-check form-check-inline">
-                                                                                            <input type="checkbox" class="form-check-input" id="type_properties_villa" data-index="{{ $matchLeads->id }}" name="type_properties_villa" {{ $isVillaChecked ? 'checked' : '' }}>
-                                                                                            <label class="form-check-label text-capitalize" for="type_properties_villa">Villa</label>
-                                                                                        </div>
-
-                                                                                        <div class="form-check form-check-inline">
-                                                                                            <input type="checkbox" class="form-check-input" id="type_properties_land" data-index="{{ $matchLeads->id }}" name="type_properties_land" {{ $isLandChecked ? 'checked' : '' }}>
-                                                                                            <label class="form-check-label text-capitalize" for="type_properties_land">Land</label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                            {{-- Looking For --}}
+                                                            <div class="col-lg-3 mb-3">
+                                                                <label for="leads_looking_for" class="form-label text-muted">Looking For</label>
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" class="form-check-input" id="type_properties_villa_{{ $matchLeads->id }}" data-index="{{ $matchLeads->id }}" name="type_properties_villa" {{ $isVillaChecked ? 'checked' : '' }}>
+                                                                    <label class="form-check-label" for="type_properties_villa_{{ $matchLeads->id }}">
+                                                                        <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M5.5 0L0 4.125V11H3.72581V8.59381C3.72581 7.64165 4.51713 6.87506 5.5 6.87506C6.48287 6.87506 7.27419 7.64165 7.27419 8.59381V11H11V4.125L5.5 0Z" fill="#063436"></path>
+                                                                        </svg>
+                                                                        Villa
+                                                                    </label>
                                                                 </div>
-
+                                                                <div class="form-check form-check-inline">
+                                                                    <input type="checkbox" class="form-check-input" id="type_properties_land_{{ $matchLeads->id }}" data-index="{{ $matchLeads->id }}" name="type_properties_land" {{ $isLandChecked ? 'checked' : '' }}>
+                                                                    <label class="form-check-label" for="type_properties_land_{{ $matchLeads->id }}">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                                            fill="#063436" viewBox="0 0 24 24">
+                                                                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M5 19V5h14v14z"></path>
+                                                                            <path d="M12 9h3v3h2V7h-5zM9 12H7v5h5v-2H9z"></path>
+                                                                        </svg>
+                                                                        Land
+                                                                    </label>
+                                                                </div>
                                                             </div>
+
+                                                            <x-form-input className="col-lg-3" type="text" name="ready_buy_villa" label="Ready to Buy*" value="{{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}" />
+                                                            <x-form-input className="col-lg-3" type="text" name="customer_phone" label="Nationality" value="" />
+                                                            <x-form-input className="col-lg-3" type="text" name="customer_phone" label="Passport Number" value="" />
+
                                                         </div>
 
                                                         @php
-
                                                             $villaData = collect($LeadsMatch)->firstWhere('type_asset', 'villa');
                                                             $landData = collect($LeadsMatch)->firstWhere('type_asset', 'land');
                                                         @endphp
                                                         {{-- VILLA --}}
-                                                        <div class="bg-light-subtle border-dark villa-section mb-4 rounded border px-3 pt-4" data-index="{{ $matchLeads->id }}" id="villa_section" style="display: none;">
-                                                            <h5 class="text-dark fw-semibold">
-                                                                <span class="nav-icon">
-                                                                    <iconify-icon icon="ic:baseline-villa" class="fs-16 align-middle"></iconify-icon>
-                                                                </span> VILLA
-                                                            </h5>
-                                                            <hr>
+                                                        <div class="villa-section" data-index="{{ $matchLeads->id }}" id="villa_section" style="display: none;">
+                                                            <div class="d-flex justify-content-center justify-items-center text-center" bis_skin_checked="1">
+                                                                <hr class="w-100">
+                                                                <label class="w-100 text-success">
+                                                                    <span class="nav-icon">
+                                                                        <i class="ri-community-line"></i>
+                                                                    </span>
+                                                                    Looking For Villa
+                                                                </label>
+                                                                <hr class="w-100">
+                                                            </div>
+
                                                             <div class="row my-3">
                                                                 <div class="col-lg-12 mb-3" id="group_villa_localization">
                                                                     <label for="villa_localization" class="form-label">Localization</label>
@@ -287,13 +276,19 @@
                                                         </div>
 
                                                         {{-- LAND --}}
-                                                        <div class="bg-light-subtle border-dark land-section mb-4 rounded border px-3 pt-4" data-index="{{ $matchLeads->id }}" id="land_section" style="display: none;">
-                                                            <h5 class="text-dark fw-semibold">
-                                                                <span class="nav-icon">
-                                                                    <iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon>
-                                                                </span> LAND
-                                                            </h5>
-                                                            <hr>
+                                                        <div class="land-section" data-index="{{ $matchLeads->id }}" id="land_section" style="display: none;">
+
+                                                            <div class="d-flex justify-content-center justify-items-center text-center" bis_skin_checked="1">
+                                                                <hr class="w-100">
+                                                                <label class="w-100 text-warning">
+                                                                    <span class="nav-icon">
+                                                                        <iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon>
+                                                                    </span>
+                                                                    Looking For Land
+                                                                </label>
+                                                                <hr class="w-100">
+                                                            </div>
+
                                                             <div class="row my-3">
                                                                 <div class="col-lg-12 mb-3" id="group_land_localization">
                                                                     <label for="land_localization" class="form-label">Localization</label>
@@ -321,24 +316,10 @@
                                                             </div>
                                                         </div>
 
-                                                        {{-- If it is a master, you can input it directly to a specific agent so that the selected agent gets the leads. --}}
-                                                        @if (Auth::user()->role == 'Master')
-                                                            <hr>
-                                                            <div class="col-lg-6 mb-3" id="group_input_specific_properties">
-                                                                <label for="input_specific_properties" class="form-label">Input to Specific Leads</label>
-                                                                <select id="input_specific_properties" class="form-select" name="input_specific_properties">
-                                                                    <option value="" disabled selected>Select Properties</option>
-                                                                    @foreach ($data_properties as $properties)
-                                                                        <option value="{{ $properties->property_slug }}">{{ $properties->property_name . ' | ' . $properties->internal_reference }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        @endif
-
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-xs btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-xs btn-primary">Edit Leads Data</button>
+                                                    <div class="modal-footer" bis_skin_checked="1">
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save and Make Prospect</button>
                                                     </div>
                                                 </form>
 
@@ -348,36 +329,6 @@
                                     {{-- END Modal Edit Data Leads --}}
                                 @endif
                             @endforeach
-
-                            <!-- Modal Properties Match -->
-                            {{-- <div class="modal modal-lg fade" id="matchingPropertiesModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="matchingPropertiesModalLabel">Matching Properties - {{ $matchLeads->id }}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <div id="modalLoading" class="text-center">
-                                                <div class="spinner-border text-primary" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                            </div>
-
-                                            <div id="criteriaInfo" class="row"></div>
-
-                                            <div class="row" id="propertiesData">
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <!-- /* Modal Properties Match -->
 
                         </tbody>
                     </table>
