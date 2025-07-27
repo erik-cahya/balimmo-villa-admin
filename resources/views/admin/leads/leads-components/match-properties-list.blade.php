@@ -13,13 +13,12 @@
                         <thead class="table-light">
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Customer Name</th>
+                                <th scope="col">Leads Name</th>
+                                <th scope="col">Agent</th>
                                 <th scope="col">Phone Number</th>
-                                <th scope="col">Budget IDR</th>
-                                <th scope="col">Budget USD</th>
                                 <th scope="col">Localization</th>
-                                <th scope="col">Type Asset Choice</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Ready To Buy</th>
+                                <th scope="col">Looking For</th>
 
                                 <th scope="col">Action</th>
                             </tr>
@@ -48,17 +47,29 @@
                                                 </div>
                                             </div>
                                         </td>
+                                        {{-- <td>
+                                            <span class="badge bg-primary fst-italic"><iconify-icon icon="material-symbols:real-estate-agent-sharp" class="align-middle"></iconify-icon> BPA-ERIK-2032 - Properties</span>
+                                        </td> --}}
+
+                                        <td>
+                                            <div class="matching-container" data-lead-id="{{ $matchLeads->id }}">
+
+                                                <div class="propertiesData d-flex flex-column gap-1"></div>
+
+                                                <div class="noProperties" style="display: none;">
+                                                    <span class="badge bg-primary text-light"> No Match Agent</span>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_phone), 4)) }}</p>
                                         </td>
-                                        <td>
-                                            <span class="badge bg-primary fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> IDR {{ number_format($matchLeads->max_budget_idr, 0, ',', '.') }}</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-warning fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> USD {{ number_format($matchLeads->max_budget_usd, 2, ',', '.') }}</span>
-                                        </td>
-                                        <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
 
+                                        <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
+                                        <td>
+                                            <iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}
+
+                                        </td>
                                         <td>
                                             @foreach ($LeadsMatch as $leads)
                                                 @php
@@ -75,23 +86,18 @@
                                         </td>
 
                                         <td>
-                                            <iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}
-
-                                        </td>
-
-                                        <td>
                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $matchLeads->id }}">
                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
                                             </button>
 
-                                            <button
+                                            {{-- <button
                                                 class="btn btn-xs btn-primary show-matching"
                                                 data-lead-id="{{ $matchLeads->id }}"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#matchingPropertiesModal">
 
                                                 Show Match Properties - {{ $matchLeads->id }}
-                                            </button>
+                                            </button> --}}
 
                                             {{-- Delete Button --}}
                                             @if (Auth::user()->role == 'Master')
@@ -344,7 +350,7 @@
                             @endforeach
 
                             <!-- Modal Properties Match -->
-                            <div class="modal modal-lg fade" id="matchingPropertiesModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            {{-- <div class="modal modal-lg fade" id="matchingPropertiesModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -370,50 +376,8 @@
 
                                     </div>
                                 </div>
-                            </div>
-                            <!-- /* Modal Properties Match -->
-
-                            {{-- <!-- Modal -->
-                            <div class="modal fade" id="matchingPropertiesModal-{{ $matchLeads->id }}" tabindex="-1" role="dialog" aria-labelledby="matchingPropertiesModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="matchingPropertiesModalLabel">Matching Properties</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div id="modalLoading" class="text-center">
-                                                <div class="spinner-border text-primary" role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                            </div>
-
-                                            <div id="criteriaInfo"></div>
-
-                                            <table class="table" id="propertiesTable" style="display: none;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Selling Price</th>
-                                                        <th>Bedrooms</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="propertiesTableBody">
-                                                </tbody>
-                                            </table>
-
-                                            <div id="noProperties" class="alert alert-warning" style="display: none;">
-                                                No matching properties found.
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div> --}}
+                            <!-- /* Modal Properties Match -->
 
                         </tbody>
                     </table>

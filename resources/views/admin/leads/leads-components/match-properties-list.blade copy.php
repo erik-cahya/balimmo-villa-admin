@@ -13,13 +13,12 @@
                         <thead class="table-light">
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Customer Name</th>
+                                <th scope="col">Leads Name</th>
+                                <th scope="col">Agent</th>
                                 <th scope="col">Phone Number</th>
-                                <th scope="col">Budget IDR</th>
-                                <th scope="col">Budget USD</th>
                                 <th scope="col">Localization</th>
-                                <th scope="col">Type Asset Choice</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Ready To Buy</th>
+                                <th scope="col">Looking For</th>
 
                                 <th scope="col">Action</th>
                             </tr>
@@ -27,13 +26,13 @@
                         <tbody>
 
                             @foreach ($data_leads_matches as $leadsData => $LeadsMatch)
+                                {{-- {{ dd($leadsData) }} --}}
                                 @php
-                                    // dd($matchProperties);
                                     $matchLeads = $LeadsMatch->first(); // ambil lead pertama
                                     $authUser = Auth::user();
                                     $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
                                     // Ambil properti yang sudah difilter
-                                    $filteredMatchLeads = $referenceCode ? $matchProperties[$matchLeads->id]->where('internal_reference', $referenceCode) : $matchProperties[$matchLeads->id];
+                                    // $filteredMatchLeads = $referenceCode ? $matchProperties[$matchLeads->id]->where('internal_reference', $referenceCode) : $matchProperties[$matchLeads->id];
                                 @endphp
 
                                 @if (Auth::user()->role == 'Master' || ($filteredMatchLeads->count() > 0 && Auth::user()->role == 'agent'))
@@ -49,149 +48,55 @@
                                             </div>
                                         </td>
                                         <td>
+                                            <span class="badge bg-primary fst-italic"><iconify-icon icon="material-symbols:real-estate-agent-sharp" class="align-middle"></iconify-icon> BPA-ERIK-2032</span>
+                                        </td>
+                                        <td>
                                             <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_phone), 4)) }}</p>
                                         </td>
-                                        <td>
-                                            <span class="badge bg-primary fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> IDR {{ number_format($matchLeads->max_budget_idr, 0, ',', '.') }}</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-warning fst-italic p-2"><iconify-icon icon="tdesign:money-filled" class="align-middle"></iconify-icon> USD {{ number_format($matchLeads->max_budget_usd, 2, ',', '.') }}</span>
 
-                                        </td>
                                         <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
+                                        <td>
+                                            <iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}
 
+                                        </td>
                                         <td>
                                             @foreach ($LeadsMatch as $leads)
                                                 @php
-                                                    if ($leads->type_asset == 'villa') {
+                                                    if ($leads->type_asset == 'villa' && $leads->visibility == 1) {
                                                         $className = 'bg-success';
+                                                    } elseif ($leads->type_asset == 'land' && $leads->visibility == 1) {
+                                                        $className = 'bg-danger';
                                                     } else {
-                                                        $className = 'bg-warning';
+                                                        $className = 'd-none';
                                                     }
                                                 @endphp
                                                 <span class="text-capitalize fw-medium badge {{ $className }}">{{ $leads->type_asset }}</span>
                                             @endforeach
                                         </td>
 
-                                        <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</td>
-
                                         <td>
                                             <button type="button" class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $matchLeads->id }}">
                                                 <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon>
                                             </button>
 
-                                            @if ($filteredMatchLeads->count() == 0)
-                                                <span class="btn btn-xs btn-primary">No Match Properties</span>
-                                            @else
-                                                <button class="btn btn-xs btn-secondary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#makeProspect-{{ $matchLeads->id }}">
-                                                    Make to Prospect
-                                                </button>
-                                                <button class="btn btn-xs btn-primary toggle-villas" type="button" data-bs-toggle="modal" data-bs-target="#matchProperties-{{ $matchLeads->id }}">
-                                                    Show {{ $filteredMatchLeads->count() }} Properties
-                                                </button>
-                                            @endif
+                                            <button
+                                                class="btn btn-xs btn-primary show-matching"
+                                                data-lead-id="{{ $matchLeads->id }}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#matchingPropertiesModal">
 
+                                                Show Match Properties - {{ $matchLeads->id }}
+                                            </button>
+
+                                            {{-- Delete Button --}}
                                             @if (Auth::user()->role == 'Master')
                                                 <input type="hidden" class="customerID" value="{{ $matchLeads->customer_id }}">
                                                 <button type="button" class="btn btn-xs btn-danger deleteButtonSingle" data-nama="{{ $matchLeads->first_name . ' ' . $matchLeads->last_name }}"><iconify-icon icon="pepicons-pop:trash" class="fs-12 align-middle"></iconify-icon></button>
                                             @endif
+                                            {{-- /* Delete Button --}}
 
                                         </td>
                                     </tr>
-                                    <!-- Modal Properties Match -->
-                                    <div class="modal modal-xl fade" id="matchProperties-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Recomendation Properties</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <span class="fst-italic fw-medium text-dark">Data Leads</span>
-                                                    <div class="d-flex mb-3 mt-2 gap-1">
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="solar:user-bold" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->cust_name }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="solar:user-bold" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->cust_email }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="mdi:phone" class="fs-10 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="flowbite:map-pin-solid" class="fs-10 align-middle"></iconify-icon> {{ $matchLeads->localization }}</span>
-                                                        <span class="badge bg-dark p-1" style="font-size: 12px; font-weight: 200"><iconify-icon icon="tdesign:money-filled" class="fs-10 align-middle"></iconify-icon> IDR {{ number_format($matchLeads->cust_budget, 2, ',', '.') }}</span>
-                                                    </div>
-                                                    <hr>
-                                                    <div class="row">
-                                                        @foreach ($filteredMatchLeads as $properties)
-                                                            <div class="col-md-6 col-xl-6">
-                                                                <div class="card bg-primary bg-gradient">
-                                                                    <div class="card-body">
-                                                                        <div class="row align-items-center justify-content-between">
-                                                                            <div class="col-xl-7 col-lg-6 col-md-6">
-                                                                                <h3 class="fw-bold fs-18 text-white">{{ $properties->property_name }}</h3>
-                                                                                <hr>
-                                                                                <div class="row">
-                                                                                    <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                        <div class="d-flex gap-2">
-                                                                                            <div class="avatar-sm flex-shrink-0">
-                                                                                                <span class="avatar-title bg-success rounded bg-opacity-50 text-white">
-                                                                                                    <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="d-block">
-                                                                                                <h5 class="fw-medium mb-0 text-white">{{ $properties->bedroom }}</h5>
-                                                                                                <p class="text-white-50 mb-0">Bedroom</p>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 col-lg-6 col-md-6 col-6">
-                                                                                        <div class="d-flex gap-2">
-                                                                                            <div class="avatar-sm flex-shrink-0">
-                                                                                                <span class="avatar-title bg-danger rounded bg-opacity-50 text-white">
-                                                                                                    <iconify-icon icon="solar:bed-broken" class="fs-16 align-middle"></iconify-icon>
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="d-block">
-                                                                                                <h5 class="fw-medium mb-0 text-white">{{ $properties->bathroom }}</h5>
-                                                                                                <p class="text-white-50 mb-0">Bathrom</p>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <div class="d-flex fs-10 gap-3">
-                                                                                    <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">IDR {{ number_format($properties->selling_price_idr, 2, ',', '.') }}</h4>
-                                                                                    <h4 class="fw-normal fst-italic text-white" style="font-size: 16px!important">USD {{ number_format($properties->selling_price_usd, 2, ',', '.') }}</h4>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <h3 class="fw-normal fs-16 fst-italic text-white">{{ $properties->region }} - {{ $properties->sub_region }}</h3>
-                                                                                <h3 class="fw-normal fs-11 fst-italic text-white">{{ $properties->internal_reference }}</h3>
-
-                                                                            </div>
-                                                                            <div class="col-xl-5 col-lg-4 col-md-4">
-                                                                                <img src="{{ asset('admin') }}/assets/images/home.png" alt="" class="img-fluid">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    {{-- <button type="submit" class="btn btn-primary">Change Password</button> --}}
-                                                </div>
-
-                                                @if ($errors->any())
-                                                    <div class="alert alert-danger">
-                                                        <ul class="mb-0">
-                                                            @foreach ($errors->all() as $message)
-                                                                <li>{{ $message }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                @endif
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- /* Modal Properties Match -->
 
                                     {{-- Modal Make Prospect --}}
                                     <div class="modal modal-lg fade" id="makeProspect-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -233,7 +138,7 @@
                                                                 @enderror
                                                             </div>
 
-                                                            <div class="col-lg-6 text-capitalize mb-3" id="group_selected_properties_id">
+                                                            {{-- <div class="col-lg-6 text-capitalize mb-3" id="group_selected_properties_id">
                                                                 <label for="selected_properties_id" class="form-label">Select Properties</label>
                                                                 <select class="form-control" id="selected_properties_id" name="selected_properties_id">
                                                                     <option value="" disabled selected>Choose Properties</option>
@@ -253,7 +158,7 @@
                                                                         {{ $message }}
                                                                     </div>
                                                                 @enderror
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
 
                                                     </div>
@@ -296,8 +201,14 @@
                                                                         <div class="col-lg-12 d-flex">
 
                                                                             @php
-                                                                                $isVillaChecked = collect($LeadsMatch)->contains('type_asset', 'villa');
-                                                                                $isLandChecked = collect($LeadsMatch)->contains('type_asset', 'land');
+                                                                                // $isVillaChecked = collect($LeadsMatch)->contains('type_asset', 'villa');
+                                                                                $isVillaChecked = collect($LeadsMatch)->contains(function ($item) {
+                                                                                    return $item->type_asset === 'villa' && $item->visibility == 1;
+                                                                                });
+
+                                                                                $isLandChecked = collect($LeadsMatch)->contains(function ($item) {
+                                                                                    return $item->type_asset === 'land' && $item->visibility == 1;
+                                                                                });
                                                                             @endphp
 
                                                                             <div class="col-lg-6 mb-3">
@@ -306,12 +217,12 @@
 
                                                                                     <div class="col-lg-12 d-flex">
                                                                                         <div class="form-check form-check-inline">
-                                                                                            <input type="checkbox" class="form-check-input" id="type_properties_villa" name="type_properties_villa" {{ $isVillaChecked ? 'checked' : '' }}>
+                                                                                            <input type="checkbox" class="form-check-input" id="type_properties_villa" data-index="{{ $matchLeads->id }}" name="type_properties_villa" {{ $isVillaChecked ? 'checked' : '' }}>
                                                                                             <label class="form-check-label text-capitalize" for="type_properties_villa">Villa</label>
                                                                                         </div>
 
                                                                                         <div class="form-check form-check-inline">
-                                                                                            <input type="checkbox" class="form-check-input" id="type_properties_land" name="type_properties_land" {{ $isLandChecked ? 'checked' : '' }}>
+                                                                                            <input type="checkbox" class="form-check-input" id="type_properties_land" data-index="{{ $matchLeads->id }}" name="type_properties_land" {{ $isLandChecked ? 'checked' : '' }}>
                                                                                             <label class="form-check-label text-capitalize" for="type_properties_land">Land</label>
                                                                                         </div>
                                                                                     </div>
@@ -324,100 +235,80 @@
                                                             </div>
                                                         </div>
 
-                                                        @foreach ($LeadsMatch as $data)
-                                                            {{-- VILLA  --}}
+                                                        @php
 
-                                                            @php
-                                                                $villaMinimumBedroom = null;
-                                                                $villaMaximumBedroom = null;
-                                                                $villaLocalisation = null;
-                                                                $villaMinBudgetIDR = null;
-                                                                $villaMinBudgetUSD = null;
-                                                                $villaMaxBudgetIDR = null;
-                                                                $villaMaxBudgetUSD = null;
-                                                                if ($data->type_asset == 'villa') {
-                                                                    $villaMinimumBedroom = $data->min_bedroom;
-                                                                    $villaMaximumBedroom = $data->max_bedroom;
-
-                                                                    $villaLocalisation = $data->localization;
-
-                                                                    $villaMinBudgetIDR = $data->min_budget_idr;
-                                                                    $villaMinBudgetUSD = $data->min_budget_usd;
-                                                                    $villaMaxBudgetIDR = $data->max_budget_idr;
-                                                                    $villaMaxBudgetUSD = $data->max_budget_usd;
-                                                                }
-                                                            @endphp
-
-                                                            <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="villa_section" style="display: none;">
-                                                                <h5 class="text-dark fw-semibold"><span class="nav-icon"><iconify-icon icon="ic:baseline-villa" class="fs-16 align-middle"></iconify-icon></span> VILLA</h5>
-                                                                <hr>
-                                                                <div class="row my-3">
-
-                                                                    <div class="col-lg-12 mb-3" id="group_villa_localization">
-                                                                        <label for="villa_localization" class="form-label">Localization</label>
-                                                                        <select id="villa_localization" class="form-select" name="villa_localization">
-                                                                            <option value="" disabled selected>Select Region</option>
-                                                                            @foreach ($data_localization as $localization)
-                                                                                <option value="{{ $localization->name }}" {{ $localization->name == $villaLocalisation ? 'selected' : '' }}>{{ $localization->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-
-                                                                    {{-- Karena ada 2 tipe : usd dan idr (jika min dan max budget idr tidak null, maka tampilkan budget idr) --}}
-                                                                    @if ($data->min_budget_idr !== null && $data->max_budget_idr !== null)
-                                                                        <x-form-input className="col-lg-3" type="text" name="villa_min_budget_idr" label="Budget Min" value="{{ $data->min_budget_idr }}" />
-                                                                        <x-form-input className="col-lg-3" type="text" name="villa_max_budget_idr" label="Budget Max" value="{{ $data->max_budget_idr }}" />
-                                                                    @elseif ($data->min_budget_usd !== null && $data->max_budget_usd !== null)
-                                                                        <x-form-input className="col-lg-3" type="text" name="villa_min_budget_usd" label="Budget Min" value="{{ $data->min_budget_usd }}" />
-                                                                        <x-form-input className="col-lg-3" type="text" name="villa_max_budget_usd" label="Budget Max" value="{{ $data->max_budget_usd }}" />
-                                                                    @endif
-
-                                                                    <x-form-input className="col-lg-3" type="text" name="minimum_bedroom" label="Bedroom Min" value="{{ $villaMinimumBedroom }}" />
-                                                                    <x-form-input className="col-lg-3" type="text" name="maximum_bedroom" label="Bedroom Max" value="{{ $villaMaximumBedroom }}" />
-
+                                                            $villaData = collect($LeadsMatch)->firstWhere('type_asset', 'villa');
+                                                            $landData = collect($LeadsMatch)->firstWhere('type_asset', 'land');
+                                                        @endphp
+                                                        {{-- VILLA --}}
+                                                        <div class="bg-light-subtle border-dark villa-section mb-4 rounded border px-3 pt-4" data-index="{{ $matchLeads->id }}" id="villa_section" style="display: none;">
+                                                            <h5 class="text-dark fw-semibold">
+                                                                <span class="nav-icon">
+                                                                    <iconify-icon icon="ic:baseline-villa" class="fs-16 align-middle"></iconify-icon>
+                                                                </span> VILLA
+                                                            </h5>
+                                                            <hr>
+                                                            <div class="row my-3">
+                                                                <div class="col-lg-12 mb-3" id="group_villa_localization">
+                                                                    <label for="villa_localization" class="form-label">Localization</label>
+                                                                    <select id="villa_localization" class="form-select" name="villa_localization">
+                                                                        <option value="" disabled selected>Select Region</option>
+                                                                        @foreach ($data_localization as $localization)
+                                                                            <option value="{{ $localization->name }}"
+                                                                                {{ $villaData && $localization->name == $villaData->localization ? 'selected' : '' }}>
+                                                                                {{ $localization->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
+
+                                                                @if ($villaData && $villaData->min_budget_idr !== null && $villaData->max_budget_idr !== null)
+                                                                    <x-form-input className="col-lg-3" type="text" name="villa_min_budget_idr" label="Budget Min" value="{{ $villaData->min_budget_idr }}" />
+                                                                    <x-form-input className="col-lg-3" type="text" name="villa_max_budget_idr" label="Budget Max" value="{{ $villaData->max_budget_idr }}" />
+                                                                @elseif ($villaData && $villaData->min_budget_usd !== null && $villaData->max_budget_usd !== null)
+                                                                    <x-form-input className="col-lg-3" type="text" name="villa_min_budget_usd" label="Budget Min" value="{{ $villaData->min_budget_usd }}" />
+                                                                    <x-form-input className="col-lg-3" type="text" name="villa_max_budget_usd" label="Budget Max" value="{{ $villaData->max_budget_usd }}" />
+                                                                @endif
+
+                                                                <x-form-input className="col-lg-3" type="text" name="min_bedroom" label="Bedroom Min" value="{{ $villaData->min_bedroom ?? '' }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="max_bedroom" label="Bedroom Max" value="{{ $villaData->max_bedroom ?? '' }}" />
                                                             </div>
+                                                        </div>
 
-                                                            {{-- LANDS  --}}
-                                                            @php
-                                                                $isLand = $data->type_asset === 'land';
-                                                            @endphp
-
-                                                            <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="land_section" style="display: none;">
-                                                                <h5 class="text-dark fw-semibold">
-                                                                    <span class="nav-icon">
-                                                                        <iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon>
-                                                                    </span> LAND
-                                                                </h5>
-                                                                <hr>
-                                                                <div class="row my-3">
-                                                                    <div class="col-lg-12 mb-3" id="group_land_localization">
-                                                                        <label for="land_localization" class="form-label">Localization</label>
-                                                                        <select id="land_localization" class="form-select" name="land_localization">
-                                                                            <option value="" disabled selected>Select Region</option>
-                                                                            @foreach ($data_localization as $localization)
-                                                                                <option value="{{ $localization->name }}" {{ $localization->name == $data->localization ? 'selected' : '' }}>
-                                                                                    {{ $localization->name }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-
-                                                                    {{-- Budget --}}
-                                                                    @if ($data->min_budget_idr !== null && $data->max_budget_idr !== null)
-                                                                        <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" value="{{ $isLand ? $data->min_budget_idr : '' }}" />
-                                                                        <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" value="{{ $isLand ? $data->max_budget_idr : '' }}" />
-                                                                    @elseif ($data->min_budget_usd !== null && $data->max_budget_usd !== null)
-                                                                        <x-form-input className="col-lg-3" type="text" name="land_min_budget_usd" label="Budget Min" value="{{ $isLand ? $data->min_budget_usd : '' }}" />
-                                                                        <x-form-input className="col-lg-3" type="text" name="land_max_budget_usd" label="Budget Max" value="{{ $isLand ? $data->max_budget_usd : '' }}" />
-                                                                    @endif
-
-                                                                    {{-- Land Size --}}
-                                                                    <x-form-input className="col-lg-3" type="text" name="minimum_land_size" label="Size Min" value="{{ $isLand ? $data->min_land_size : '' }}" />
-                                                                    <x-form-input className="col-lg-3" type="text" name="maximum_land_size" label="Size Max" value="{{ $isLand ? $data->max_land_size : '' }}" />
+                                                        {{-- LAND --}}
+                                                        <div class="bg-light-subtle border-dark land-section mb-4 rounded border px-3 pt-4" data-index="{{ $matchLeads->id }}" id="land_section" style="display: none;">
+                                                            <h5 class="text-dark fw-semibold">
+                                                                <span class="nav-icon">
+                                                                    <iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon>
+                                                                </span> LAND
+                                                            </h5>
+                                                            <hr>
+                                                            <div class="row my-3">
+                                                                <div class="col-lg-12 mb-3" id="group_land_localization">
+                                                                    <label for="land_localization" class="form-label">Localization</label>
+                                                                    <select id="land_localization" class="form-select" name="land_localization">
+                                                                        <option value="" disabled selected>Select Region</option>
+                                                                        @foreach ($data_localization as $localization)
+                                                                            <option value="{{ $localization->name }}"
+                                                                                {{ $landData && $localization->name == $landData->localization ? 'selected' : '' }}>
+                                                                                {{ $localization->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
+
+                                                                @if ($landData && $landData->min_budget_idr !== null && $landData->max_budget_idr !== null)
+                                                                    <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" value="{{ $landData->min_budget_idr }}" />
+                                                                    <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" value="{{ $landData->max_budget_idr }}" />
+                                                                @elseif ($landData && $landData->min_budget_usd !== null && $landData->max_budget_usd !== null)
+                                                                    <x-form-input className="col-lg-3" type="text" name="land_min_budget_usd" label="Budget Min" value="{{ $landData->min_budget_usd }}" />
+                                                                    <x-form-input className="col-lg-3" type="text" name="land_max_budget_usd" label="Budget Max" value="{{ $landData->max_budget_usd }}" />
+                                                                @endif
+
+                                                                <x-form-input className="col-lg-3" type="text" name="min_land_size" label="Size Min" value="{{ $landData->min_land_size ?? '' }}" />
+                                                                <x-form-input className="col-lg-3" type="text" name="max_land_size" label="Size Max" value="{{ $landData->max_land_size ?? '' }}" />
                                                             </div>
-                                                        @endforeach
+                                                        </div>
 
                                                         {{-- If it is a master, you can input it directly to a specific agent so that the selected agent gets the leads. --}}
                                                         @if (Auth::user()->role == 'Master')
@@ -446,6 +337,78 @@
                                     {{-- END Modal Edit Data Leads --}}
                                 @endif
                             @endforeach
+
+                            <!-- Modal Properties Match -->
+                            <div class="modal modal-lg fade" id="matchingPropertiesModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="matchingPropertiesModalLabel">Matching Properties - {{ $matchLeads->id }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <div id="modalLoading" class="text-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+
+                                            <div id="criteriaInfo" class="row"></div>
+
+                                            <div class="row" id="propertiesData">
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /* Modal Properties Match -->
+
+                            {{-- <!-- Modal -->
+                            <div class="modal fade" id="matchingPropertiesModal-{{ $matchLeads->id }}" tabindex="-1" role="dialog" aria-labelledby="matchingPropertiesModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="matchingPropertiesModalLabel">Matching Properties</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="modalLoading" class="text-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+
+                                            <div id="criteriaInfo"></div>
+
+                                            <table class="table" id="propertiesTable" style="display: none;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Selling Price</th>
+                                                        <th>Bedrooms</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="propertiesTableBody">
+                                                </tbody>
+                                            </table>
+
+                                            <div id="noProperties" class="alert alert-warning" style="display: none;">
+                                                No matching properties found.
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
 
                         </tbody>
                     </table>

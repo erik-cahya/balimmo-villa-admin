@@ -57,7 +57,7 @@
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
 
     {{-- Modal Match Properties --}}
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('.show-matching').on('click', function() {
                 var leadId = $(this).data('lead-id');
@@ -116,8 +116,66 @@
                 return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
         });
-    </script>
+    </script> --}}
     {{-- End Modal Match Properties --}}
+
+    {{-- Match Properties 2 --}}
+    <script>
+        $(document).ready(function() {
+            $('.matching-container').each(function() {
+                var container = $(this);
+                var leadId = container.data('lead-id');
+
+                // Show loading (optional)
+                var loading = $('<div class="loading mb-3">Loading...</div>');
+                container.prepend(loading);
+
+                // AJAX
+                $.get('/leads/' + leadId + '/matching-properties', function(response) {
+                    // Remove loading
+                    loading.remove();
+
+                    console.log(response.properties);
+
+                    var propertiesHTML = '';
+
+                    // === Proses villa
+                    if (response.properties.villa && response.properties.villa.length > 0) {
+                        $.each(response.properties.villa, function(index, property) {
+                            propertiesHTML += `
+                                 <span class="badge bg-primary text-light"><iconify-icon icon="material-symbols:real-estate-agent-sharp" class="align-middle"></iconify-icon> ${property.internal_reference} | ${property.type_properties}</span>
+                        `;
+                        });
+                    }
+
+                    // === Proses land
+                    if (response.properties.land && response.properties.land.length > 0) {
+                        $.each(response.properties.land, function(index, property) {
+                            propertiesHTML += `
+                                 <span class="badge bg-primary text-light"><iconify-icon icon="material-symbols:real-estate-agent-sharp" class="align-middle"></iconify-icon> ${property.internal_reference} | ${property.type_properties}</span>
+                        `;
+                        });
+                    }
+
+                    // === Tampilkan hasil
+                    if (propertiesHTML !== '') {
+                        container.find('.propertiesData').html(propertiesHTML).show();
+                        container.find('.noProperties').hide();
+                    } else {
+                        container.find('.propertiesData').hide();
+                        container.find('.noProperties').show();
+                    }
+                });
+            });
+
+            function formatCurrency(amount) {
+                if (!amount) return '-';
+                return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        });
+    </script>
+
+    {{-- End Match Properties 2 --}}
 
     <script>
         $(document).ready(function() {
