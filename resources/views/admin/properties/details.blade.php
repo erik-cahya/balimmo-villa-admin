@@ -84,9 +84,9 @@
                             <div>
                                 <!-- Villa Name -->
                                 <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
-                                    <div class="d-flex align-items-center gap-2 col-8">
+                                    <div class="d-flex align-items-center gap-2 col-12">
                                         <h3 class="fw-medium text-capitalize mb-0">{{ $data_properties->property_name }}</h3>
-                                        <div>
+                                        <!-- <div>
                                             @php
                                                 if ($data_properties->type_acceptance == 'pending') {
                                                     $className = 'bg-warning';
@@ -97,6 +97,26 @@
                                                 }
                                             @endphp
                                             <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_acceptance }}</span>
+                                        </div> -->
+                                        <div class="dropdown">
+                                            @php
+                                                if ($data_properties->type_acceptance == 'pending') {
+                                                    $className = 'btn-warning';
+                                                } elseif ($data_properties->type_acceptance == 'accept') {
+                                                    $className = 'btn-success';
+                                                } else {
+                                                    $className = 'btn-danger';
+                                                }
+                                            @endphp
+                                            <button class="btn fs-14 fw-semibold {{ $className }} text-capitalize dropdown-toggle px-2 py-1" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ $data_properties->type_acceptance }}
+                                            </button>
+                                            @if (Auth::user()->role === 'Master')
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <a class="dropdown-item" href="#">Pending</a>
+                                                <a class="dropdown-item" href="#">Accept</a>
+                                            </div>
+                                            @endif
                                         </div>
                                         <div>
                                             @php
@@ -106,16 +126,16 @@
                                                     $className = 'bg-secondary';
                                                 }
                                             @endphp
-                                            <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_mandate }}</span>
+                                            <span class="badge {{ $className }} text-light fs-14 text-capitalize px-2 py-2">{{ $data_properties->type_mandate }}</span>
                                         </div>
                                     </div>
-                                    @if (Auth::user()->role === 'Master')                                    
+                                    <!-- @if (Auth::user()->role === 'Master')                                    
                                         <form method="POST" action="{{ route('properties.changeAcceptance', $data_properties->property_slug) }}" class="d-flex gap-2 align-items-center col-4">
                                             @csrf
                                             <x-form-select className="w-100" name="type_acceptance" label="" :options="['pending', 'accept', 'decline']" :selected="old('type_acceptance', $data_properties->type_acceptance ?? '')" />
                                             <button type="submit" class="btn btn-primary">Change</button>
                                         </form>                                            
-                                    @endif                                        
+                                    @endif -->
                                     
                                 </div>
                                 <!-- Villa Detail Information -->
@@ -597,27 +617,27 @@
                             <div class="bg-light-subtle rounded border border-dashed p-2 mb-3">
                                 <div class="row align-items-center g-2 text-center">                                    
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:scale-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->total_land_area }}m² area
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:scale-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->total_land_area }}m²
                                         </p>
                                     </div>
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:home-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->villa_area }}m² area
-                                        </p>
-                                    </div>
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:swimming-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->pool_area }}m² Pool Area
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:home-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->villa_area }}m²
                                         </p>
                                     </div>
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:bed-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bedroom }} Bedroom
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:swimming-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->pool_area }}m²
                                         </p>
                                     </div>
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:bath-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bathroom }} Bathroom
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:bed-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bedroom }}
                                         </p>
                                     </div>
                                     <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
-                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:alarm-broken" class="fs-18 text-warning"></iconify-icon> Built : {{ $data_properties->year_construction }}
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:bath-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bathroom }}
+                                        </p>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                        <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:alarm-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->year_construction }}
                                         </p>
                                     </div>
                                 </div>

@@ -32,7 +32,7 @@
                                 @endphp
 
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">{{ $loop->iteration }}</td>
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">
                                         <div class="d-flex align-items-center gap-1">
                                             <div class="d-block">
@@ -44,7 +44,7 @@
                                         </div>
                                     </td>
                                     @role('Master')
-                                        <td class="d-flex flex-column gap-1 align-items-start">
+                                        <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="d-flex flex-column gap-1 align-items-start cursor-pointer">
                                             <span class="badge bg-primary text-light"> BPA-AGUS-4242 </span>
                                             <span class="badge bg-primary text-light"> BPA-DEVA-5454 </span>
                                             <span class="badge bg-primary text-light"> BPA-ROCKY-2121 </span>
@@ -53,8 +53,8 @@
                                     <td>
                                         <p class="mb-0">{{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</p>
                                     </td>
-                                    <td>{{ $customerData->localization }}</td>
-                                    <td> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">{{ $customerData->localization }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer"> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">
                                         <!-- {{ $cst->count() }} Properties  -->
                                         <span class="badge bg-success me-1">Villa</span>
@@ -257,8 +257,8 @@
                                                                 <div class="col-lg-6 mb-3">
                                                                     <label for="leads_looking_for" class="form-label text-muted">Looking For</label>
                                                                     <div class="form-check">
-                                                                        <input type="checkbox" class="form-check-input" id="customCheck3">
-                                                                        <label class="form-check-label" for="customCheck3">
+                                                                        <input type="checkbox" class="form-check-input" id="villaCheck">
+                                                                        <label class="form-check-label" for="villaCheck">
                                                                             <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <path d="M5.5 0L0 4.125V11H3.72581V8.59381C3.72581 7.64165 4.51713 6.87506 5.5 6.87506C6.48287 6.87506 7.27419 7.64165 7.27419 8.59381V11H11V4.125L5.5 0Z" fill="#063436"></path>
                                                                             </svg>
@@ -266,8 +266,8 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="form-check form-check-inline">
-                                                                        <input type="checkbox" class="form-check-input" id="customCheck4">
-                                                                        <label class="form-check-label" for="customCheck4">
+                                                                        <input type="checkbox" class="form-check-input" id="landCheck">
+                                                                        <label class="form-check-label" for="landCheck">
                                                                             <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16"  
                                                                             fill="#063436" viewBox="0 0 24 24" >
                                                                             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M5 19V5h14v14z"></path><path d="M12 9h3v3h2V7h-5zM9 12H7v5h5v-2H9z"></path>
@@ -278,7 +278,7 @@
                                                                 </div>
                                                                 <x-form-input className="col-lg-6" type="text" name="leads_date" label="Ready to buy*" value="{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}" />
                                                                 <!-- Field Looking Villa -->
-                                                                <div class="row">
+                                                                <div id="formVilla" style="display: none" class="row">
                                                                     <div class="text-center d-flex justify-items-center justify-content-center">
                                                                         <hr class="w-100" />
                                                                         <label class="w-100 text-success">
@@ -306,7 +306,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <!-- Field Looking Land -->
-                                                                <div class="row">
+                                                                <div id="formLand" style="display: none" class="row">
                                                                     <div class="text-center d-flex justify-items-center justify-content-center">
                                                                         <hr class="w-100" />
                                                                         <label class="w-100 text-warning">
@@ -434,8 +434,10 @@
                                     </td>
 
                                 </tr>
+
+                                <!-- ==== Can Delete After ==== -->
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">2</td>
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">
                                         <div class="d-flex align-items-center gap-1">
                                             <div class="d-block">
@@ -447,15 +449,15 @@
                                         </div>
                                     </td>
                                     @role('Master')
-                                        <td class="d-flex flex-column gap-1 align-items-start ">
+                                        <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer" class="d-flex flex-column gap-1 align-items-start ">
                                             <span class="badge bg-primary text-light"> No Match Agent </span>
                                         </td>
                                     @endrole
                                     <td>
                                         <p class="mb-0">{{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_telp), 4)) }}</p>
                                     </td>
-                                    <td>{{ $customerData->localization }}</td>
-                                    <td> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">{{ $customerData->localization }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer"> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties1-{{ $customerData->id }}" class="cursor-pointer">
                                         <!-- {{ $cst->count() }} Properties  -->
                                         <span class="badge bg-success me-1">Villa</span>

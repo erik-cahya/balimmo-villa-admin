@@ -82,7 +82,7 @@
                                     </div>
 
                                     <div class="d-grid mb-1 text-center">
-                                        <button class="btn btn-danger fw-medium py-2" type="submit">Sign In</button>
+                                        <button class="btn btn-primary fw-medium py-2" type="submit">Sign In</button>
                                     </div>
                                 </form>
                             </div> <!-- end col -->

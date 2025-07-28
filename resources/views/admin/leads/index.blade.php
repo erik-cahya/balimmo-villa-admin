@@ -201,4 +201,22 @@
             });
         });
     </script>
+
+    <script>
+        const checkVilla = document.getElementById('villaCheck');
+        const checkLand = document.getElementById('landCheck');
+        const formVilla = document.getElementById('formVilla');
+        const formLand = document.getElementById('formLand');
+
+        function toggleForms() {
+            formVilla.style.display = checkVilla.checked ? 'block' : 'none';
+            formLand.style.display = checkLand.checked ? 'block' : 'none';
+        }
+
+        checkVilla.addEventListener('change', toggleForms);
+        checkLand.addEventListener('change', toggleForms);
+
+        // Inisialisasi saat halaman dimuat
+        toggleForms();
+    </script>
 @endpush

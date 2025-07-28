@@ -39,24 +39,24 @@
                 </div>
             </div>
 
-            <!-- Owners -->
+            
             <div class="row mb-4">
-                <div class="accordion" id="accordionOwner">
+                <div class="accordion" id="accordionExample">
 
+                    <!-- Owners -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOwner">
-                            <button class="accordion-button fs-18 fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOwner" aria-expanded="true" aria-controls="collapseOwner">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button fs-18 fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                 Owners
                             </button>
                         </h2>
-                        <div id="collapseOwner" class="accordion-collapse collapse show" aria-labelledby="headingOwner" data-bs-parent="#accordionOwner">
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex px-4 justify-content-between align-items-start">
-                                <div class="bg-light-subtle border-dark rounded border px-3 pt-3 col-4 row ">
+                                <div class="bg-light-subtle border-dark rounded border px-1 pt-2 col-4 row ">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 1</h5>
                                     <hr>
-                                    <div class="row my-3">
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][first_name]">
+                                    <div class="row p-0 m-0 mb-2">
+                                        <div class="p-1 col-6 mb-1" id="group_owners[0][first_name]">
                                             <label for="owners[0][first_name]" class="form-label">First Name</label>
 
                                             <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
@@ -68,7 +68,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][last_name]">
+                                        <div class="p-1 col-6 mb-1" id="group_owners[0][last_name]">
                                             <label for="owners[0][last_name]" class="form-label">Last Name</label>
 
                                             <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
@@ -80,8 +80,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][email]">
-                                            <label for="owners[0][email]" class="form-label">Emails</label>
+                                        <div class="p-1 col-6 mb-1" id="group_owners[0][email]">
+                                            <label for="owners[0][email]" class="form-label">Email</label>
 
                                             <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
 
@@ -93,7 +93,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][phone_number]">
+                                        <div class="p-1 col-6 mb-1" id="group_owners[0][phone_number]">
                                             <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
 
                                             <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.0.phone_number') }}">
@@ -105,24 +105,15 @@
                                                 </div>
                                             @enderror
                                         </div>
-
                                     </div>
                                 </div>
-                                <div class="bg-light-subtle border-dark rounded border px-3 pt-3 col-4 row">
+                                <div class="bg-light-subtle border-dark rounded border px-1 pt-2 col-4 row">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
-                                    <hr>
-                                    {{-- <div class="row my-3">
+                                    <hr>                               
 
-                                        <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
-                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Emails" />
-                                        <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
+                                    <div class="row p-0 m-0 mb-2">
 
-                                    </div> --}}
-
-                                    <div class="row my-3">
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[1][first_name]">
+                                        <div class="p-1 col-6 mb-1" id="group_owners[1][first_name]">
                                             <label for="owners[1][first_name]" class="form-label">First Name</label>
 
                                             <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.1.first_name') }}">
@@ -135,7 +126,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-lg-6 mb-3" id="group_owners[1][last_name]">
+                                        <div class="p-1 col-6 mb-1" id="group_owners[1][last_name]">
                                             <label for="owners[1][last_name]" class="form-label">Last Name</label>
 
                                             <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.1.last_name') }}">
@@ -148,8 +139,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-lg-6 mb-3" id="group_owners[1][email]">
-                                            <label for="owners[1][email]" class="form-label">Emails</label>
+                                        <div class="p-1 col-6 mb-1" id="group_owners[1][email]">
+                                            <label for="owners[1][email]" class="form-label">Email</label>
 
                                             <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.1.email') }}">
 
@@ -161,7 +152,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-lg-6 mb-3" id="group_owners[1][phone_number]">
+                                        <div class="p-1 col-6 mb-1" id="group_owners[1][phone_number]">
                                             <label for="owners[1][phone_number]" class="form-label">Phone Number</label>
 
                                             <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.1.phone_number') }}">
@@ -176,16 +167,16 @@
 
                                     </div>
                                 </div>
-                                <div class="bg-light-subtle border-dark rounded border px-3 pt-3 col-4 row">
+                                <div class="bg-light-subtle border-dark rounded border px-1 pt-2 col-4 row">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
                                     <hr>
-                                    <div class="row my-3">
+                                    <div class="row p-0 m-0 mb-2">
 
-                                        <x-form-input className="col-lg-12" type="text" name="company_name" label="Company Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_first_name" label="Owner First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Owner Last Name" />
-                                        <x-form-input className="col-lg-6" type="email" name="legal_rep_email" label="Email" />
-                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
+                                        <x-form-input className="p-1 col-12" type="text" name="company_name" label="Company Name"/>
+                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_first_name" label="Owner First Name"/>
+                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_last_name" label="Owner Last Name"/>
+                                        <x-form-input className="p-1 col-6" type="email" name="legal_rep_email" label="Email"/>
+                                        <x-form-input className="p-1 col-6" type="number" name="legal_rep_phone_number" label="Phone Number"/>
 
                                     </div>
                                 </div>
@@ -193,23 +184,18 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-            
-            <!-- Property -->
-            <div class="row mb-4">
-                <div class="accordion" id="accordionExample">
-
+                    <br />
+                    <!-- Property -->
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button fs-18 fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProperty" aria-expanded="true" aria-controls="collapseOne">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button fs-18 fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 Property
                             </button>
                         </h2>
-                        <div id="collapseProperty" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex px-4 gap-4 align-items-start justify-content-between">
 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
                                     <div class="col-lg-6 mb-3" id="group_internal_reference">
                                         <label for="internal_reference" class="form-label">Internal Reference</label>
                                         <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
@@ -259,7 +245,7 @@
                                     <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
 
                                 </div>
-                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
                                     
                                     <div class="mb-4">
                                         <h5 class="text-dark fw-semibold">Type of mandat *</h5>
@@ -269,11 +255,15 @@
                                             <div class="col-6">
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="esstentials_mandate">Essentials Mandate</label>
+                                                    <label class="form-check-label" for="esstentials_mandate">Essentials</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="booster_mandate">Booster Mandate</label>
+                                                    <label class="form-check-label" for="booster_mandate">Booster</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="booster_mandate">Max Booster</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -327,7 +317,7 @@
                                                 <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" />
 
                                                 <div class="row mb-0">
-                                                    <div class="bg-light-subtle border-dark rounded border px-3 pt-4" id="freehold_group">
+                                                    <div class="bg-light-subtle border-dark rounded border p-2" id="freehold_group">
                                                         <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Freehold (Hak Milik)</h5>
                                                         <hr>
                                                         <div class="row">
@@ -336,7 +326,7 @@
                                                             <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
                                                             <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
 
-                                                            <div class="col-lg-6 mb-3">
+                                                            <div class="col-lg-6">
                                                                 <div class="row">
                                                                     <label for="" class="form-label">Zoning</label>
                                                                     <div class="col-12">
@@ -359,10 +349,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="leasehold_group">
+                                                    <div class="bg-light-subtle border-dark mb-1 rounded border p-2" id="leasehold_group">
                                                         <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Leasehold (Hak Sewa)</h5>
                                                         <hr>
-                                                        <div class="row my-3">
+                                                        <div class="row">
 
                                                             <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
                                                             <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
@@ -373,16 +363,16 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="bg-light-subtle border-dark rounded border px-3 pt-4" id="extension_leasehold_group">
+                                                    <div class="bg-light-subtle border-dark rounded border p-2" id="extension_leasehold_group">
                                                         <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Extension Details</h5>
                                                         <hr>
-                                                        <div class="row my-3">
+                                                        <div class="row">
 
                                                             <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" />
                                                             <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
                                                             <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
 
-                                                            <div class="col-lg-6 mb-3">
+                                                            <div class="col-lg-6">
                                                                 <div class="row">
                                                                     <label for="" class="form-label">Zoning</label>
                                                                     <div class="col-12">
@@ -416,41 +406,34 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-
-            <!-- Furnitures -->
-            <div class="row mb-4">
-                <div class="accordion" id="accordionExample">
-
+                    <br />
+                    <!-- Furnitures -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button fs-18 fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFurnitures" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="accordion-button fs-18 fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFurnitures" aria-expanded="true" aria-controls="collapseOne">
                                 Furnitures
                             </button>
                         </h2>
                         <div id="collapseFurnitures" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex gap-4 px-4 align-items-start justify-content-between">
 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-3 pt-3">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 pt-2">
                                     <h5 class="text-dark fw-semibold">Indoor *</h5>
                                     <hr>
-                                    <div class="row">
-
+                                    <div class="row px-2 pb-2">
                                         @foreach ($feature_list_indoor as $feature_indoor)
-                                            <x-form-checkbox className="form-check mb-2 mx-3 col-3" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
+                                            <x-form-checkbox className="form-check col-4" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
                                         @endforeach
-
                                     </div>
                                 </div>
 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-3 pt-3">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 pt-2">
                                     <h5 class="text-dark fw-semibold">Outdoor *</h5>
                                     <hr>
-                                    <div class="row">
+                                    <div class="row px-2 pb-2">
 
                                         @foreach ($feature_list_outdoor as $feature_outdoor)
-                                            <x-form-checkbox className="form-check mb-2 mx-3 col-3" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                            <x-form-checkbox className="form-check col-4" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
                                         @endforeach
 
                                     </div>
@@ -458,23 +441,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Rental yield -->
-            <div class="row mb-4">
-                <div class="accordion" id="accordionExample">
-
+                    <br />
+                    <!-- Rental yield -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button fs-18 fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRentalYield" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="accordion-button fs-18 fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRentalYield" aria-expanded="true" aria-controls="collapseOne">
                                 Rental yield
                             </button>
                         </h2>
                         <div id="collapseRentalYield" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex gap-4 px-4 align-items-start justify-content-between">
 
-                                <div class="col-12 gap-4 row bg-light-subtle border-dark rounded border p-3">
+                                <div class="col-12 gap-4 row bg-light-subtle border-dark rounded border px-1 py-2">
                                     <div class="col-6 row align-content-start">
                                         <h5 class="text-dark fw-semibold">Do you have any data about the rental of the property ? </h5>                                    
                                         <hr>
@@ -482,11 +461,11 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="no" value="Yes" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="no">Yes</label>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="yes" value="Yes">
+                                                    <label class="form-check-label" for="yes">Yes</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="no" value="Yes" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="no" value="No">
                                                     <label class="form-check-label" for="no">No</label>
                                                 </div>
                                             </div>
@@ -508,27 +487,23 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Sale price and conditions -->
-            <div class="row mb-4">
-                <div class="accordion" id="accordionExample">
-
+                    <br />
+                    <!-- Sale price and conditions -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button fs-18 fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSalePrice" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="accordion-button fs-18 fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSalePrice" aria-expanded="true" aria-controls="collapseOne">
                                 Sale price and conditions
                             </button>
                         </h2>
                         <div id="collapseSalePrice" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex gap-4 px-4 align-items-start justify-content-between">
 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
                                     <p class="text-dark ">Let define the good price and commission rate for this good.</p>
                                     <h5 class="text-dark fw-semibold">How did you find the property ?</h5>                                    
                                     <hr>                                    
-                                    <div class="row">
+                                    <div class="row p-0 m-0">
                                         <div class="col-12 mb-3">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="type_mandate" id="no" value="Yes" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
@@ -546,19 +521,19 @@
                                 </div>
 
                                 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-3 pt-3">   
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 pt-2">   
                                     <!-- **SHOW THIS INPUT IF “AGENT”** -->                            
-                                    <div class="row">
+                                    <div class="row p-0 m-0">
                                         <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Desire price from the owner" />
                                         <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Commission of the agent" />
                                         <div class="col-12 mb-3">
                                             <label class="form-label me-3">Full Balimmo commission ?</label>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="no" value="Yes" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="no">Yes</label>
+                                                <input class="form-check-input" type="radio" name="type_mandate" id="yes" value="Yes">
+                                                <label class="form-check-label" for="yes">Yes</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="no" value="Yes" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
+                                                <input class="form-check-input" type="radio" name="type_mandate" id="no" value="No">
                                                 <label class="form-check-label" for="no">No</label>
                                             </div>
                                         </div>
@@ -575,30 +550,26 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Photos and videos -->
-            <div class="row mb-4">
-                <div class="accordion" id="accordionExample">
-
+                    <br />
+                    <!-- Photos and videos -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button fs-18 fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGallery" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="accordion-button fs-18 fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGallery" aria-expanded="true" aria-controls="collapseOne">
                                 Photos and videos
                             </button>
                         </h2>
                         <div id="collapseGallery" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex gap-4 px-4 align-items-start justify-content-between">
 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border p-2">
                                     <h5 class="text-dark fw-semibold">How did you find the property ?</h5>                                    
                                     <hr>                                    
                                     <button type="button" class="btn btn-primary width-xl col-4">Book shooting on calendar</button>
                                 </div>
 
                                 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-3 pt-3">   
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">   
                                     <h5 class="text-dark fw-semibold">Publish photos and videos</h5>                                    
                                     <hr>
                                     <div class="row"> 
@@ -607,13 +578,13 @@
 
                                             <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
 
-                                            <div id="previewContainer" class="d-flex flex-wrap gap-3">
+                                            <div id="previewContainer" class="d-flex flex-wrap gap-2">
                                                 @if (session('old_images'))
                                                     @foreach (session('old_images') as $index => $img)
                                                         <div class="img-preview" data-index="{{ $index }}">
                                                             <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
-                                                                style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
-                                                            <p class="mt-1 text-center">Image {{ $index + 1 }}</p>
+                                                                style="width: 100%; max-width: 100px; aspect-ration: 16 / 9; object-fit: cover; border: 1px solid #ccc; padding: 2px;">
+                                                            <p class="mt-1 mb-0 text-center">Image {{ $index + 1 }}</p>
                                                             <input type="hidden" name="old_images[]" value="{{ $img }}">
                                                         </div>
                                                     @endforeach
@@ -640,6 +611,8 @@
                     </div>
                 </div>
             </div>
+            
+         
 
             <div class="mb-3 rounded">
                 <div class="row justify-content-end g-2">

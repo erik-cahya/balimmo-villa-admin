@@ -20600,7 +20600,7 @@ pre[class*=language-] {
 }
 
 body.authentication-bg {
-  background: ##063436;
+  background: #063436 !important;
 }
 body.authentication-bg .account-pages {
   -webkit-box-align: center;
