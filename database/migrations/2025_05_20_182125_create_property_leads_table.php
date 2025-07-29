@@ -49,8 +49,8 @@ return new class extends Migration
             $table->integer('min_bedroom')->nullable();
             $table->integer('max_bedroom')->nullable();
 
-            $table->integer('min_land_size')->nullable();
-            $table->integer('max_land_size')->nullable();
+            $table->float('min_land_size')->nullable();
+            $table->float('max_land_size')->nullable();
 
 
             $table->string('localization')->nullable();

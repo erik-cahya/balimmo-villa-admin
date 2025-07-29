@@ -67,7 +67,7 @@ Route::post('listing/booking/{slug}', [CustomerController::class, 'booking'])->n
 Route::middleware('auth')->group(function () {
 
     // Route::get('/leadsUpdate', [PropertiesLeadsController::class, 'leadsUpdate']);
-    Route::get('/leads/{lead}/matching-properties', [PropertiesLeadsController::class, 'leadsUpdate']);
+    Route::get('/leads/{lead}/matching-properties', [PropertiesLeadsController::class, 'searchMatchProperties']);
 
 
     // ############################################################### Admin Panel Controller
@@ -119,6 +119,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('prospects', ProspectController::class);
 
     Route::resource('/notary', NotaryController::class);
+
+
 
 
     Route::post('/upload-temp-gallery', [PropertiesController::class, 'uploadTemp'])->name('gallery.upload.temp');

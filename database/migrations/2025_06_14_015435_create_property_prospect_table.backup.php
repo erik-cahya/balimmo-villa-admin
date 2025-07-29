@@ -13,15 +13,25 @@ return new class extends Migration
     {
         Schema::create('property_prospect', function (Blueprint $table) {
             $table->id();
-            $table->string('reference_code')->nullable()->comment('fk to user code');
-            $table->string('properties_id')->nullable()->comment('fk to property id');
-            $table->string('prospect_first_name')->nullable();
-            $table->string('prospect_last_name')->nullable();
-            $table->string('prospect_phone_number')->nullable();
-            $table->string('prospect_email')->nullable();
-            $table->string('prospect_budget')->nullable();
-            $table->string('prospect_req_bedroom')->nullable();
-            $table->string('prospect_localization')->nullable();
+            $table->unsignedBigInteger('properties_id')->nullable()->comment('fk to property id');
+            $table->unsignedBigInteger('customer_id')->nullable()->comment('fk to customer data table');
+            $table->char('type_asset', 10)->nullable();
+
+            $table->bigInteger('min_budget_idr')->nullable();
+            $table->bigInteger('max_budget_idr')->nullable();
+
+            $table->decimal('min_budget_usd', 18, 2)->nullable();
+            $table->decimal('max_budget_usd', 18, 2)->nullable();
+
+            $table->integer('min_bedroom')->nullable();
+            $table->integer('max_bedroom')->nullable();
+
+            $table->float('min_land_size')->nullable();
+            $table->float('max_land_size')->nullable();
+
+            $table->string('localization')->nullable();
+            $table->date('date')->nullable();
+
             $table->timestamps();
         });
     }

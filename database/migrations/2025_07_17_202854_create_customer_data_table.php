@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->bigInteger('cust_phone')->nullable();
             $table->string('cust_email')->nullable();
+            $table->string('cust_nationality')->nullable();
+            $table->string('cust_passport')->nullable();
             $table->timestamps();
         });
     }

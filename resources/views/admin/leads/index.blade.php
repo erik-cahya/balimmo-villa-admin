@@ -55,71 +55,129 @@
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave-phone.us.js') }}"></script>
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
+    {{-- <script src="{{ asset('admin/assets/js/pages/leads.js') }}"></script> --}}
 
-    {{-- Modal Match Properties --}}
-    {{-- <script>
+    {{-- Details --}}
+    <script>
         $(document).ready(function() {
-            $('.show-matching').on('click', function() {
-                var leadId = $(this).data('lead-id');
+            $('.showDetails').on('click', function() {
+                let leadId = $(this).data('data-id');
+                let tablePropertiesID = '#propertiesLeadsDetails-' + leadId;
+                let tableLandID = '#landLeadsDetails-' + leadId;
+                let selectAgent = '#choose_agent-' + leadId;
+                // $('#detailsVilla').hide();
+                // $('#detailsLand').hide();
 
-                // Reset modal
-                $('#criteriaInfo').empty();
-                $('#propertiesData').empty();
-                $('#modalLoading').show();
-                $('#noProperties').hide();
-
-                // AJAX
                 $.get('/leads/' + leadId + '/matching-properties', function(response) {
-                    $('#matchingPropertiesModalLabel').text('Matching Properties for Lead #' + leadId);
 
-                    // Lead data
-                    if (response.lead.length > 0) {
-                        var criteriaHtml = '';
-                        $.each(response.lead, function(index, lead) {
-                            criteriaHtml += `
-                        <div class="col-lg-6">
-                            <div class="alert alert-info mb-3">
-                                <strong>Criteria:</strong><br>
-                                Budget: ${formatCurrency(lead.min_budget)} - ${formatCurrency(lead.max_budget)}<br>
-                                Type Asset: ${lead.type_asset}<br>
-                                Bedrooms: ${lead.min_bedroom} - ${lead.max_bedroom}
-                            </div>
-                        </div>
-                    `;
-                        });
-                        $('#criteriaInfo').html(criteriaHtml);
-                    }
+                    // console.log(response.properties);
+                    // Properties Match
+                    let tablePropertiesHTML = '';
+                    let tableLandHTML = '';
+                    let propertiesDataLeadsHTML = '';
+                    let agentHTML = '';
+                    let addedAgents = new Set(); // gunakan Set agar tidak ada duplikat
+                    // console.log(response.properties);
 
-                    // Properties data
-                    if (response.properties.villa.length > 0) {
-                        var propertiesHTML = '';
+                    if (response.properties.villa && response.properties.villa.length > 0) {
                         $.each(response.properties.villa, function(index, property) {
-                            propertiesHTML += `
-                        <div class="col-lg-6">
-                            <div class="alert alert-info mb-3">
-                                <strong>Properties Name:</strong> ${property.property_name}
-                            </div>
-                        </div>
-                    `;
+                            tablePropertiesHTML += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${property.property_name}</td>
+                                    <td>${property.internal_reference}</td>
+                                    <td>${property.bedroom}</td>
+                                    <td>
+                                        <div class="d-block" bis_skin_checked="1">
+                                            <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
+                                                IDR ${property.selling_price_idr}
+                                            </h5>
+                                            <p class="fs-13 mb-0">USD ${property.selling_price_usd}</p>
+                                        </div>
+                                    </td>
+                                    <td>${property.property_address}, ${property.sub_region}, ${property.region}</td>
+                                </tr>
+                            `;
+
+                            propertiesDataLeadsHTML += `
+                                <input type="hidden" name="properties_name[${property.properties_id}]" value="${property.property_name}">
+                            `;
+                            // console.log(response.properties)
+                            // Agent HTML - hanya tambahkan jika belum ada
+                            if (!addedAgents.has(property.name)) {
+                                addedAgents.add(property.name); // tambahkan ke Set
+                                agentHTML += `
+                                        <option value="${property.internal_reference}">${property.name}</option>
+                                    `;
+                            }
                         });
-                        $('#propertiesData').html(propertiesHTML);
-                    } else {
-                        $('#noProperties').show();
+                    };
+
+                    // Properties Land
+                    if (response.properties.land && response.properties.land.length > 0) {
+                        $.each(response.properties.land, function(index, property) {
+                            tableLandHTML += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${property.property_name}</td>
+                                    <td>${property.internal_reference}</td>
+                                    <td>${property.bedroom}</td>
+                                    <td>
+                                        <div class="d-block" bis_skin_checked="1">
+                                            <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
+                                                IDR ${property.selling_price_idr}
+                                            </h5>
+                                            <p class="fs-13 mb-0">USD ${property.selling_price_usd}</p>
+                                        </div>
+                                    </td>
+                                    <td>${property.property_address}, ${property.sub_region}, ${property.region}</td>
+                                </tr>
+                            `;
+
+                            propertiesDataLeadsHTML += `
+                                <input type="hidden" name="properties_name[${property.properties_id}]" value="${property.property_name}">
+                            `;
+
+                            // Agent HTML - hanya tambahkan jika belum ada
+                            if (!addedAgents.has(property.name)) {
+                                addedAgents.add(property.name); // tambahkan ke Set
+                                agentHTML += `
+                                        <option value="${property.name}">${property.name}</option>
+                                    `;
+                            }
+                        });
                     }
 
-                    $('#modalLoading').hide();
+                    // Tampilkan hasil
+                    if (tablePropertiesHTML !== '' || tableLandHTML !== '') {
+                        if ($.fn.DataTable.isDataTable(tablePropertiesID)) {
+                            $(tablePropertiesID).DataTable().destroy();
+                        }
+                        $('.detailsPropertyTables').html(tablePropertiesHTML);
+                        $(tablePropertiesID).DataTable();
+
+                        if ($.fn.DataTable.isDataTable(tableLandID)) {
+                            $(tableLandID).DataTable().destroy();
+                        }
+                        $('.detailsLandTables').html(tableLandHTML);
+                        $(tableLandID).DataTable();
+
+                        $(selectAgent).html(agentHTML);
+                        $('.propertiesDataLeads').html(propertiesDataLeadsHTML);
+
+                    } else {
+                        // $('.detailsPropertyTables').hide();
+                    }
+
+
                 });
+
             });
-
-            function formatCurrency(amount) {
-                if (!amount) return '-';
-                return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
         });
-    </script> --}}
-    {{-- End Modal Match Properties --}}
+    </script>
+    {{-- EndDetails --}}
 
-    {{-- Match Properties 2 --}}
+    {{-- Match Properties --}}
     <script>
         $(document).ready(function() {
             $('.matching-container').each(function() {
@@ -134,9 +192,7 @@
                 $.get('/leads/' + leadId + '/matching-properties', function(response) {
                     // Remove loading
                     loading.remove();
-
-                    console.log(response.properties);
-
+                    // console.log(response.properties);
                     var propertiesHTML = '';
 
                     // === Proses villa
@@ -174,16 +230,26 @@
             }
         });
     </script>
+    {{-- End Match Properties --}}
 
-    {{-- End Match Properties 2 --}}
-
+    {{-- Data Table Intialize --}}
+    <script>
+        $(document).ready(function() {
+            $('.datatable').each(function() {
+                $(this).DataTable();
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
             $('#specificPropertyTable').DataTable();
+            $('#propertiesLeadsDetails').DataTable();
             $('#seePropertiesTable-' + this.getAttribute('data-nama')).DataTable();
         });
     </script>
+    {{-- End Data Table Intialize --}}
+
     {{-- Sweet Alert --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -196,7 +262,7 @@
 
                     let propertyName = this.getAttribute('data-nama');
                     let propertyId = this.parentElement.querySelector('.propertyId').value;
-                    console.log(propertyId);
+                    // console.log(propertyId);
 
                     const rowToDelete = this.closest('tr');
 
@@ -252,7 +318,7 @@
 
                     let propertyName = this.getAttribute('data-nama');
                     let customerID = this.parentElement.querySelector('.customerID').value;
-                    console.log(propertyName);
+                    // console.log(propertyName);
 
                     const rowToDelete = this.closest('tr');
 
