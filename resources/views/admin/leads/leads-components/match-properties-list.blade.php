@@ -259,7 +259,11 @@
                             $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
                             // Ambil properti yang sudah difilter
                             // $filteredMatchLeads = $referenceCode ? $matchProperties[$matchLeads->id]->where('internal_reference', $referenceCode) : $matchProperties[$matchLeads->id];
+
+                            $matchLeadsProperties = $LeadsMatch->where('type_asset', 'villa')->first();
+                            $matchLeadsLand = $LeadsMatch->where('type_asset', 'land')->first();
                         @endphp
+
                         <!-- Modal See Detail Properties -->
                         <div class="modal modal-xl fade" id="seeProperties-{{ $matchLeads->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -276,21 +280,21 @@
                                                 <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5> <span class="badge bg-success me-1">Villa</span>
                                             </div>
                                             <div class="d-flex my-2 gap-2">
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->first_name . ' ' . $matchLeads->last_name }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->cust_email }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_phone), 4)) }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->first_name . ' ' . $matchLeadsProperties->last_name }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->cust_email }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeadsProperties->cust_phone), 4)) }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeadsProperties->date)->format('d F, Y') }}</span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px">
-                                                    IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}
+                                                    IDR {{ number_format($matchLeadsProperties->min_budget_idr, 0, ',', '.') }}
                                                     -
-                                                    IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}
+                                                    IDR {{ number_format($matchLeadsProperties->max_budget_idr, 0, ',', '.') }}
                                                 </span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px">
-                                                    USD {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}
+                                                    USD {{ number_format($matchLeadsProperties->min_budget_usd, 2, ',', '.') }}
                                                     -
-                                                    USD {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}
+                                                    USD {{ number_format($matchLeadsProperties->max_budget_usd, 2, ',', '.') }}
                                                 </span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> 2 - 4 </span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->min_bedroom . ' - ' . $matchLeadsProperties->max_bedroom }} </span>
                                             </div>
 
                                             <div class="table-responsive">
@@ -334,21 +338,21 @@
                                                 <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5><span class="badge bg-warning me-1">Land</span>
                                             </div>
                                             <div class="d-flex my-2 gap-2">
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->cust_name }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->cust_email }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_telp), 4)) }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->first_name . ' ' . $matchLeadsLand->last_name }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->cust_email }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeadsLand->cust_phone), 4)) }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeadsLand->date)->format('d F, Y') }}</span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px">
-                                                    IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}
+                                                    IDR {{ number_format($matchLeadsLand->min_budget_idr, 0, ',', '.') }}
                                                     -
-                                                    IDR {{ number_format($matchLeads->cust_budget, 0, ',', '.') }}
+                                                    IDR {{ number_format($matchLeadsLand->max_budget_idr, 0, ',', '.') }}
                                                 </span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px">
-                                                    USD {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}
+                                                    USD {{ number_format($matchLeadsLand->min_budget_usd, 2, ',', '.') }}
                                                     -
-                                                    USD {{ number_format($matchLeads->cust_budget_usd, 2, ',', '.') }}
+                                                    USD {{ number_format($matchLeadsLand->max_budget_usd, 2, ',', '.') }}
                                                 </span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:fullscreen" class="fs-16 align-middle"></iconify-icon> 200 - 400 m² </span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:fullscreen" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->min_land_size . ' - ' . $matchLeadsLand->max_land_size }} m² </span>
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table-hover table-centered table text-nowrap" id="landLeadsDetails-{{ $matchLeads->id }}">

@@ -682,20 +682,18 @@ hr {
   opacity: 0;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
+.swiper-button-next, .swiper-button-prev{
   width: calc(var(--swiper-navigation-size) / 44 * 44) !important;
   color: #FFF !important;
 }
 
-.swiper-wrapper {
+.swiper-wrapper{
   padding-bottom: 5rem !important;
 }
 
-.swiper__nav--btn:hover {
+.swiper__nav--btn:hover{
   background: var(--color-foreground-sub) !important;
 }
-
 .swiper__nav--btn.swiper-button-disabled {
   background: var(--color-foreground-sub) !important;
 }
@@ -1907,9 +1905,9 @@ body.overlay__active::before,
   left: 0;
 }
 
-.main__menu--link svg {
+/* .main__menu--link svg {
   margin-right: 4px;
-}
+} */
 
 .menu__arrowdown--icon {
   margin-left: 3px;
@@ -9099,8 +9097,8 @@ body.overlay__active::before,
   line-height: 2rem;
 }
 
-.contact__property--form__input input,
-.contact__property--form__input select {
+.contact__property--form__input input, 
+.contact__property--form__input select{
   width: 100%;
   height: 5rem;
   background: var(--color-background);
@@ -9110,15 +9108,14 @@ body.overlay__active::before,
 }
 
 @media only screen and (min-width: 768px) {
-
-  .contact__property--form__input input,
-  .contact__property--form__input select {
+  .contact__property--form__input input, 
+  .contact__property--form__input select{
     height: 5.5rem;
   }
 }
 
-.contact__property--form__input input:focus,
-.contact__property--form__input select:focus {
+.contact__property--form__input input:focus, 
+.contact__property--form__input select:focus{
   border-color: var(--color-hover);
 }
 
@@ -14280,6 +14277,6 @@ input[type=range]::-moz-range-thumb {
 
 /*# sourceMappingURL=style.css.map */
 
-.iti {
+.iti{
   width: 100%;
 }

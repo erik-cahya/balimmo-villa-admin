@@ -60,7 +60,8 @@ Route::get('/booking', function () {
 Route::post('/booking', [BookingController::class, 'booking'])->name('booking');
 
 // Route::post('/booking', [PropertiesLeadsController::class, 'booking'])->name('booking');
-Route::post('/booking/{slug}', [PropertiesLeadsController::class, 'booking'])->name('booking.slug');
+Route::post('/booking/{slug}', [BookingController::class, 'booking'])->name('booking.slug');
+// Route::post('/booking/{slug}', [PropertiesLeadsController::class, 'booking'])->name('booking.slug');
 Route::post('listing/booking/{slug}', [CustomerController::class, 'booking'])->name('customer.booking');
 
 

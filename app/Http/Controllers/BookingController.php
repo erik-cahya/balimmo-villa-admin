@@ -16,6 +16,7 @@ class BookingController extends Controller
     public function booking(Request $request, $slug = NULL)
     {
 
+        // dd($slug);
         // if ($slug !== NULL) {
         //     $request->validate([
         //         'first_name' => 'required',
@@ -36,9 +37,9 @@ class BookingController extends Controller
         // }
 
         // dd($request->all());
+        // dd($slug);
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
-
         $newCustomerData = CustomerDataModel::create([
             'agent_code' => $slug == NULL ? NULL : $property->internal_reference,
             'first_name' => $request->first_name,
@@ -50,10 +51,10 @@ class BookingController extends Controller
         // IDR / USD Budget
         if ($request->budget_currency == 'idr') {
 
-            $villa_MinimumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr_min_villa);
-            $villa_MaximumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr_max_villa);
-            $land_MinimumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr_min_land);
-            $land_MaximumBudgetIDR = (int)preg_replace('/[^0-9]/', '', $request->budget_idr_max_land);
+            $villa_MinimumBudgetIDR = $this->convertToInteger($request->budget_idr_min_villa);
+            $villa_MaximumBudgetIDR = $this->convertToInteger($request->budget_idr_max_villa);
+            $land_MinimumBudgetIDR = $this->convertToInteger($request->budget_idr_min_land);
+            $land_MaximumBudgetIDR = $this->convertToInteger($request->budget_idr_max_land);
 
             $villa_MinimumBudgetUSD = NULL;
             $villa_MaximumBudgetUSD = NULL;
@@ -77,139 +78,82 @@ class BookingController extends Controller
         $land_size_min = $request->land_size_min;
         $land_size_max = $request->land_size_max;
 
-        if ($request->type_asset_villa == null) {
-            $bedroom_min = NULL;
-            $bedroom_max = NULL;
-        } elseif ($request->type_asset_land == null) {
-            $land_size_min = NULL;
-            $land_size_max = NULL;
-        }
+        if ($slug == null) {
 
-        // Jika type asset villa dipilih
-        if ($request->type_asset_villa !== null) {
+            if ($request->type_asset_villa == null) {
+                $bedroom_min = NULL;
+                $bedroom_max = NULL;
+            } elseif ($request->type_asset_land == null) {
+                $land_size_min = NULL;
+                $land_size_max = NULL;
+            }
+            // Jika type asset villa dipilih
+            if ($request->type_asset_villa !== null) {
+                $leadsData = PropertyLeadsModel::create([
+                    'properties_id' => $slug == NULL ? NULL : $property->id,
+                    'customer_id' => $newCustomerData->id,
+                    'type_asset' => $request->type_asset_villa,
+
+                    'min_budget_idr' => $villa_MinimumBudgetIDR,
+                    'max_budget_idr' => $villa_MaximumBudgetIDR,
+                    'min_budget_usd' => $villa_MinimumBudgetUSD,
+                    'max_budget_usd' => $villa_MaximumBudgetUSD,
+
+                    'min_bedroom' => $bedroom_min,
+                    'max_bedroom' => $bedroom_max,
+
+                    'localization' => $request->location == NULL ? $property->sub_region : $request->location,
+                    'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+                    'message' => $request->message,
+                    'visibility' => 1,
+                ]);
+            }
+            // Jika type asset land dipilih
+            if ($request->type_asset_land !== null) {
+                $leadsData = PropertyLeadsModel::create([
+                    'properties_id' => $slug == NULL ? NULL : $property->id,
+                    'customer_id' => $newCustomerData->id,
+                    'type_asset' => $request->type_asset_land,
+
+                    'min_budget_idr' => $land_MinimumBudgetIDR,
+                    'max_budget_idr' => $land_MaximumBudgetIDR,
+                    'min_budget_usd' => $land_MinimumBudgetUSD,
+                    'max_budget_usd' => $land_MaximumBudgetUSD,
+
+                    'min_land_size' => $land_size_min,
+                    'max_land_size' => $land_size_max,
+
+                    'localization' => $request->location == NULL ? $property->sub_region : $request->location,
+                    'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+                    'message' => $request->message,
+                    'visibility' => 1,
+
+                ]);
+            }
+        } else {
             $leadsData = PropertyLeadsModel::create([
                 'properties_id' => $slug == NULL ? NULL : $property->id,
                 'customer_id' => $newCustomerData->id,
-                'type_asset' => $request->type_asset_villa,
+                'type_asset' => $property->type_properties,
 
-                'min_budget_idr' => $villa_MinimumBudgetIDR,
-                'max_budget_idr' => $villa_MaximumBudgetIDR,
-                'min_budget_usd' => $villa_MinimumBudgetUSD,
-                'max_budget_usd' => $villa_MaximumBudgetUSD,
+                'min_budget_idr' => $request->budget_idr_min !== NULL ? $this->convertToInteger($request->budget_idr_min) : NULL,
+                'max_budget_idr' => $request->budget_idr_max !== NULL ? $this->convertToInteger($request->budget_idr_max) : NULL,
+                'min_budget_usd' => $request->budget_usd_min !== NULL ? floatval(preg_replace('/[^\d.]/', '', $request->budget_usd_min)) : NULL,
+                'max_budget_usd' => $request->budget_usd_max !== NULL ? floatval(preg_replace('/[^\d.]/', '', $request->budget_usd_max)) : NULL,
 
                 'min_bedroom' => $bedroom_min,
                 'max_bedroom' => $bedroom_max,
-
-                'localization' => $request->location == NULL ? $property->sub_region : $request->location,
-                'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
-                'message' => $request->message,
-                'prospect_status' => 0,
-                'visibility' => 1,
-            ]);
-        }
-        // Jika type asset land dipilih
-        if ($request->type_asset_land !== null) {
-            $leadsData = PropertyLeadsModel::create([
-                'properties_id' => $slug == NULL ? NULL : $property->id,
-                'customer_id' => $newCustomerData->id,
-                'type_asset' => $request->type_asset_land,
-
-                'min_budget_idr' => $land_MinimumBudgetIDR,
-                'max_budget_idr' => $land_MaximumBudgetIDR,
-                'min_budget_usd' => $land_MinimumBudgetUSD,
-                'max_budget_usd' => $land_MaximumBudgetUSD,
-
                 'min_land_size' => $land_size_min,
                 'max_land_size' => $land_size_max,
 
                 'localization' => $request->location == NULL ? $property->sub_region : $request->location,
                 'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
                 'message' => $request->message,
-                'prospect_status' => 0,
                 'visibility' => 1,
-
             ]);
         }
 
         // dd('data masuk');
-        return view('error.thankyou-page');
-
-
-        // Form di landing page
-        if ($slug === null) {
-            // dd($booking->id);
-
-            $data['data_leads_matches'] = PropertyLeadsModel::where('property_leads.id', $leadsData->id)->select('property_leads.*', 'properties.id as properties_id', 'properties.property_name')
-                ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
-                ->get();
-
-            // dd($data['data_leads_matches']);
-
-            $leads = $data['data_leads_matches'];
-            $data['matchProperties'] = collect();
-
-            if ($leads->isNotEmpty()) {
-                // Ambil semua lokasi & budget maksimum
-                $regions = $leads->pluck('localization')->unique()->toArray();
-                $maxBudgetIdr = $leads->max('cust_budget');
-                $maxBudgetUsd = $leads->max('cust_budget_usd');
-
-                // Ambil semua properti yang mungkin cocok
-                $properties = PropertiesModel::whereIn('sub_region', $regions)
-                    ->with(['featuredImage' => function ($query) {
-                        $query->select('image_path', 'property_gallery.id');
-                        $query->where('is_featured', 1);
-                    }])
-                    ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                    ->where(function ($query) use ($maxBudgetIdr, $maxBudgetUsd) {
-                        if (!is_null($maxBudgetIdr)) {
-                            $query->where('selling_price_idr', '<=', $maxBudgetIdr);
-                        }
-
-                        if (!is_null($maxBudgetUsd)) {
-                            // Jika sebelumnya sudah ada kondisi (dari IDR), gunakan orWhere
-                            if (!is_null($maxBudgetIdr)) {
-                                $query->orWhere('selling_price_usd', '<=', $maxBudgetUsd);
-                            } else {
-                                $query->where('selling_price_usd', '<=', $maxBudgetUsd);
-                            }
-                        }
-                    })
-                    ->get();
-
-                // Kelompokkan properti berdasarkan region
-                $groupedProperties = $properties->groupBy('sub_region');
-
-                // Kelompokkan kembali sesuai budget masing-masing lead
-                foreach ($leads as $lead) {
-                    $regionProps = $groupedProperties[$lead->localization] ?? collect();
-
-                    $data['matchProperties'][$lead->id] = $regionProps->filter(function ($property) use ($lead) {
-                        return (
-                            ($property->selling_price_idr !== null && $property->selling_price_idr <= $lead->cust_budget) ||
-                            ($property->selling_price_usd !== null && $property->selling_price_usd <= $lead->cust_budget_usd)
-                        );
-                    })->values(); // reset index
-                }
-
-                $emailTo = $request->email;
-
-                Mail::to($emailTo)->send(new NotifikasiEmail([
-                    'properties' => $data['matchProperties'],
-                ]));
-            } else {
-                // Kosongkan jika tidak ada leads
-                $data['matchProperties'] = collect();
-
-                $emailTo = $request->email;
-
-                Mail::to($emailTo)->send(new NotifikasiEmail([
-                    'properties' => $data['matchProperties'],
-                ]));
-            }
-
-            return view('error.thankyou-page');
-        }
         return view('error.thankyou-page');
     }
 

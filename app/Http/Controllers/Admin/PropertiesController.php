@@ -99,7 +99,7 @@ class PropertiesController extends Controller
     {
         // dd($request->images);
         // dd(explode('-', Auth::user()->reference_code)[0]);
-        $typeProperties = 'Properties';
+        $typeProperties = 'properties';
         $slug = $this->generatePropertiesSlug($request->property_name);
 
         // $validated = $request->validate([

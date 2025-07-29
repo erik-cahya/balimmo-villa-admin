@@ -49,7 +49,7 @@ class LandController extends Controller
      */
     public function store(Request $request)
     {
-        $typeProperties = 'Land';
+        $typeProperties = 'land';
         $slug = $this->generatePropertiesSlug($request->property_name);
 
         // $validated = $request->validate([

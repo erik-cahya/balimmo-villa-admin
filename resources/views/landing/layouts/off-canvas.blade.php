@@ -100,6 +100,12 @@
 
                 </li>
                 <li class="offcanvas__menu_li">
+                    <a class="offcanvas__menu_item" href="{{ route('landing-page.listing') }}">Villa for sale</a>
+                </li>
+                <li class="offcanvas__menu_li">
+                    <a class="offcanvas__menu_item" href="{{ route('landing-page.listing') }}">Land for sale</a>
+                </li>
+                <li class="offcanvas__menu_li">
                     <a class="offcanvas__menu_item" href="{{ route('landing-page.about') }}">About Us</a>
                 </li>
 
@@ -120,7 +126,7 @@
                 </div>
                 <div class="side__menu--info__list">
                     <h3 class="side__menu--info__title">Need Live Support?</h3>
-                    <p><a class="side__menu--info__text" href="mailto:info@balimmo.properties">info@balimmo.properties</a></p>
+                    <p><a class="side__menu--info__text" href="mailto:info@balimmo.properties">info@balimmo-properties.com</a></p>
                 </div>
             </div>
             <div class="side__menu--share d-flex align-items-center">

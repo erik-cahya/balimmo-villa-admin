@@ -89,14 +89,6 @@ class PropertiesLeadsController extends Controller
 
         $data['data_properties'] = PropertiesModel::where('type_acceptance', 'accept')->get();
 
-
-        // Data Tabel Leads Match
-        // $data['data_leads_matches'] = PropertyLeadsModel::where('customer_data.agent_code', null)
-
-        //     ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
-        //     // ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
-        //     ->get()->groupBy('customer_id');
-
         $data['data_leads_matches'] = CustomerDataModel::where('customer_data.agent_code', null)
             ->join('property_leads', 'property_leads.customer_id', '=', 'customer_data.id')
             ->get()->groupBy('customer_id');
@@ -105,34 +97,6 @@ class PropertiesLeadsController extends Controller
 
 
         return view('admin.leads.index', $data);
-
-
-
-        // dd([
-        //     'min_bedroom' => $lead->min_bedroom,
-        //     'max_bedroom' => $lead->max_bedroom,
-        //     'min_budget' => $lead->min_budget_idr,
-        //     'max_budget' => $lead->max_budget_idr
-        // ]);
-
-        $properties = PropertiesModel::where('bedroom', '>=', $lead->min_bedroom)
-            ->when($lead->max_bedroom, function ($query) use ($lead) {
-                return $query->where('bedroom', '<=', $lead->max_bedroom);
-            })
-
-            ->where('selling_price_idr', '>=', $lead->min_budget_idr)
-            ->when($lead->max_budget_idr, function ($query) use ($lead) {
-                return $query->where('selling_price_idr', '<=', $lead->max_budget_idr);
-            })
-
-            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-            ->get();
-
-        $data['matchProperties'] = $properties;
-
-        dd($data['matchProperties']);
-
-        // return view('admin.leads.index', $data);
     }
 
 

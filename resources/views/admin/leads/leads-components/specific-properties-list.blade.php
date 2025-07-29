@@ -100,17 +100,16 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach ($cst as $property)
-                                                                        <tr>
-                                                                            <td>{{ $loop->iteration }}</td>
-                                                                            <td>{{ $property->property_name }}</td>
-                                                                            <td>{{ $property->property_address . ' ' . $property->sub_region . ', ' . $property->region }}</td>
-                                                                            <td>{{ $property->require_bedroom }}</td>
-                                                                            <td>IDR {{ number_format($property->cust_budget, 0, ',', '.') }}</td>
-                                                                            <td>USD {{ number_format($property->cust_budget_usd, 2, ',', '.') }}</td>
-                                                                            <td>{{ $property->message }}</td>
-                                                                        </tr>
-                                                                    @endforeach
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>Villa</td>
+                                                                        <td>Villa</td>
+                                                                        <td>Villa</td>
+                                                                        <td>Villa</td>
+                                                                        <td>Villa</td>
+                                                                        <td>Villa</td>
+
+                                                                    </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>

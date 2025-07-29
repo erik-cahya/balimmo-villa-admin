@@ -31,11 +31,13 @@
     <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/rtl.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"/>
 
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.min.js"></script>
+
+
 
     @stack('style')
 
@@ -144,7 +146,7 @@
                                         </a>
                                     </li>
                                     <li class="footer__social--list">
-                                        <a class="footer__social--icon" target="_blank" href="https://www.instagram.com/balimmo.construction/">
+                                        <a class="footer__social--icon" target="_blank" href="https://www.instagram.com/balimmo.properties?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">
                                             <svg width="16" height="16" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path
                                                     d="M7.125 3.60547C5.375 3.60547 3.98047 5.02734 3.98047 6.75C3.98047 8.5 5.375 9.89453 7.125 9.89453C8.84766 9.89453 10.2695 8.5 10.2695 6.75C10.2695 5.02734 8.84766 3.60547 7.125 3.60547ZM7.125 8.80078C6.00391 8.80078 5.07422 7.89844 5.07422 6.75C5.07422 5.62891 5.97656 4.72656 7.125 4.72656C8.24609 4.72656 9.14844 5.62891 9.14844 6.75C9.14844 7.89844 8.24609 8.80078 7.125 8.80078ZM11.1172 3.49609C11.1172 3.08594 10.7891 2.75781 10.3789 2.75781C9.96875 2.75781 9.64062 3.08594 9.64062 3.49609C9.64062 3.90625 9.96875 4.23438 10.3789 4.23438C10.7891 4.23438 11.1172 3.90625 11.1172 3.49609ZM13.1953 4.23438C13.1406 3.25 12.9219 2.375 12.2109 1.66406C11.5 0.953125 10.625 0.734375 9.64062 0.679688C8.62891 0.625 5.59375 0.625 4.58203 0.679688C3.59766 0.734375 2.75 0.953125 2.01172 1.66406C1.30078 2.375 1.08203 3.25 1.02734 4.23438C0.972656 5.24609 0.972656 8.28125 1.02734 9.29297C1.08203 10.2773 1.30078 11.125 2.01172 11.8633C2.75 12.5742 3.59766 12.793 4.58203 12.8477C5.59375 12.9023 8.62891 12.9023 9.64062 12.8477C10.625 12.793 11.5 12.5742 12.2109 11.8633C12.9219 11.125 13.1406 10.2773 13.1953 9.29297C13.25 8.28125 13.25 5.24609 13.1953 4.23438ZM11.8828 10.3594C11.6914 10.9062 11.2539 11.3164 10.7344 11.5352C9.91406 11.8633 8 11.7812 7.125 11.7812C6.22266 11.7812 4.30859 11.8633 3.51562 11.5352C2.96875 11.3164 2.55859 10.9062 2.33984 10.3594C2.01172 9.56641 2.09375 7.65234 2.09375 6.75C2.09375 5.875 2.01172 3.96094 2.33984 3.14062C2.55859 2.62109 2.96875 2.21094 3.51562 1.99219C4.30859 1.66406 6.22266 1.74609 7.125 1.74609C8 1.74609 9.91406 1.66406 10.7344 1.99219C11.2539 2.18359 11.6641 2.62109 11.8828 3.14062C12.2109 3.96094 12.1289 5.875 12.1289 6.75C12.1289 7.65234 12.2109 9.56641 11.8828 10.3594Z"
@@ -217,36 +219,39 @@
 
     <!-- Customscript js -->
     <script src="{{ asset('landing') }}/assets/js/script.js"></script>
-
+    
     <script>
-        const input = document.querySelector("#phone_number");
-        const errorMsg = document.querySelector("#phone_error");
+  const input = document.querySelector("#phone_number");
+  const errorMsg = document.querySelector("#phone_error");
 
-        const iti = window.intlTelInput(input, {
-            initialCountry: "fr", // default Perancis
-            separateDialCode: false, // <== tampilkan full format: +33 6xxxx
-            preferredCountries: ["fr", "id", "us", "gb", "au"],
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-            nationalMode: false, // supaya +code tetap muncul
-            autoPlaceholder: "polite"
-        });
+  const iti = window.intlTelInput(input, {
+    initialCountry: "fr", // default Perancis
+    separateDialCode: false, // <== tampilkan full format: +33 6xxxx
+    preferredCountries: ["fr", "id", "us", "gb", "au"],
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    nationalMode: false, // supaya +code tetap muncul
+    autoPlaceholder: "polite"
+  });
 
-        // Validasi panjang minimum
-        input.addEventListener('input', () => {
-            const fullNumber = iti.getNumber(); // sudah termasuk +code
-            const digitsOnly = fullNumber.replace(/\D/g, '');
+  // Validasi panjang minimum
+  input.addEventListener('input', () => {
+    const fullNumber = iti.getNumber(); // sudah termasuk +code
+    const digitsOnly = fullNumber.replace(/\D/g, '');
+    
+    // minimal 7 digit setelah kode negara
+    const dialCodeLength = iti.getSelectedCountryData().dialCode.length;
+    if (digitsOnly.length - dialCodeLength < 7) {
+      errorMsg.style.display = "block";
+      input.setCustomValidity("Enter the correct number");
+    } else {
+      errorMsg.style.display = "none";
+      input.setCustomValidity("");
+    }
+  });
+</script>
 
-            // minimal 7 digit setelah kode negara
-            const dialCodeLength = iti.getSelectedCountryData().dialCode.length;
-            if (digitsOnly.length - dialCodeLength < 7) {
-                errorMsg.style.display = "block";
-                input.setCustomValidity("Enter the correct number");
-            } else {
-                errorMsg.style.display = "none";
-                input.setCustomValidity("");
-            }
-        });
-    </script>
+
+
 
     @stack('scripts')
 
