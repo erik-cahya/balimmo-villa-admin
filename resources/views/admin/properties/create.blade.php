@@ -17,17 +17,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
-                        <h4 class="fw-semibold mb-0">Add Property</h4>
+                        <h4 class="fw-semibold mb-0">Add Villa</h4>
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Properties </a></li>
-                            <li class="breadcrumb-item active">Listing Property</li>
+                            <li class="breadcrumb-item"><a href="/properties">Villa </a></li>
+                            <li class="breadcrumb-item active">Add Villa</li>
                         </ol>
                     </div>
                 </div>
             </div>
 
             
-            <div class="row mb-4">
+            <div class="row">
                 <div class="col-12 d-flex flex-row flex-wrap gap-2">
                     @if ($errors->any())
                         @foreach ($errors->all() as $error)
@@ -185,11 +185,11 @@
                     </div>
 
                     <br />
-                    <!-- Property -->
+                    <!-- Land -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button fs-18 fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Property
+                                Land
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
@@ -521,20 +521,20 @@
                                 </div>
 
                                 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 pt-2">   
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">   
                                     <!-- **SHOW THIS INPUT IF “AGENT”** -->                            
                                     <div class="row p-0 m-0">
                                         <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Desire price from the owner" />
                                         <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Commission of the agent" />
-                                        <div class="col-12 mb-3">
+                                        <div class="col-12 my-3">
                                             <label class="form-label me-3">Full Balimmo commission ?</label>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="yes" value="Yes">
-                                                <label class="form-check-label" for="yes">Yes</label>
+                                                <input class="form-check-input" type="radio" name="type_mandate" id="commission_balimmo_yes" value="Yes">
+                                                <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="no" value="No">
-                                                <label class="form-check-label" for="no">No</label>
+                                                <input class="form-check-input" type="radio" name="type_mandate" id="commission_balimmo_no" value="No">
+                                                <label class="form-check-label" for="commission_balimmo_no">No</label>
                                             </div>
                                         </div>
                                         <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Balimmo commission" />
@@ -563,7 +563,7 @@
                             <div class="accordion-body row d-flex gap-4 px-4 align-items-start justify-content-between">
 
                                 <div class="col-6 row bg-light-subtle border-dark rounded border p-2">
-                                    <h5 class="text-dark fw-semibold">How did you find the property ?</h5>                                    
+                                    <h5 class="text-dark fw-semibold">Plan shooting</h5>                                    
                                     <hr>                                    
                                     <button type="button" class="btn btn-primary width-xl col-4">Book shooting on calendar</button>
                                 </div>
@@ -573,7 +573,7 @@
                                     <h5 class="text-dark fw-semibold">Publish photos and videos</h5>                                    
                                     <hr>
                                     <div class="row"> 
-                                        <div class="col-lg-12 mb-3">
+                                        <div class="col-lg-12">
                                             <label for="gallery" class="form-label">Property Gallery</label>
 
                                             <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">

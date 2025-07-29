@@ -117,7 +117,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/upload-temp-gallery', [PropertiesController::class, 'uploadTemp'])->name('gallery.upload.temp');
 
     Route::resource('/land', LandController::class);
-
+    Route::get('/land', [LandController::class, 'index'])->name('land.index');
+    
 
     Route::get('/clients', function () {
         return view('admin.clients.index');

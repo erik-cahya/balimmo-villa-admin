@@ -30,7 +30,29 @@ class LandController extends Controller
      */
     public function index()
     {
-        //
+        $data['data_property'] = PropertiesModel::select(
+            'properties.id',
+            'properties.type_properties',
+            'property_name',
+            'property_slug',
+            'internal_reference',
+            'bedroom',
+            'property_code',
+            'region',
+            'sub_region',
+            'property_address',
+            'type_mandate',
+            'type_acceptance',
+            'bathroom',
+            'users.name as agentName',
+            'users.status',
+        )
+            ->with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'property_gallery.id');
+                $query->where('is_featured', 1);
+            }])->leftJoin('users', 'reference_code', '=', 'properties.internal_reference')->get();
+            
+        return view('admin.land.index', $data);
     }
 
     /**

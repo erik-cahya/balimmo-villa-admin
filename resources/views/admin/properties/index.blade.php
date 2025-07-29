@@ -87,7 +87,7 @@
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <span class="text-dark fw-medium fs-15">{{ $property->property_name }}</span>
+                                                    <span class="text-dark fw-medium fs-15" style="text-overflow: ellipsis; max-width: 200px; overflow: hidden; white-space: nowrap">{{ $property->property_name }}</span>
                                                     <span class="text-gray-400 fst-italic">{{ $property->property_code }}</span>
                                                 </div>
                                             </a>

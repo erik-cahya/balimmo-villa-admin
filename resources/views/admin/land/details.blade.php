@@ -143,10 +143,9 @@
                                     <div class="col lg-6">
                                         <p class="mb-2"><span class="fw-medium text-dark">Reference code</span><span class="mx-2">:</span>{{ $agent_data->reference_code }}</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Created date</span><span class="mx-2">:</span>{{ \Carbon\Carbon::parse($data_properties->created_at)->format('d F, Y') }}</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Area</span><span class="mx-2">:</span>Canggu</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Sub region</span><span class="mx-2">:</span>{{ $data_properties->sub_region }}</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Region</span><span class="mx-2">:</span>{{ $data_properties->region }}</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Sector</span><span class="mx-2">:</span>{{ $data_properties->region }}</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Address</span><span class="mx-2">:</span>{{ isset($data_properties->property_address) ? $data_properties->property_address : 'Data Not Found' }}</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Land area</span><span class="mx-2">:</span>{{ $data_properties->total_land_area }} M<sup>2</sup></p>
                                                                             
                                     </div>
 
@@ -157,10 +156,6 @@
                                         <p class="mb-2"><span class="fw-medium text-dark">Number</span><span class="mx-2">:</span>{{ $owner->phone }}</p>
                                         
                                         @endforeach
-                                        <p class="mb-2"><span class="fw-medium text-dark">PT PMA</span><span class="mx-2">:</span>PT Bangun Raja Narayana</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Owner</span><span class="mx-2">:</span>Raja Narayana</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Email</span><span class="mx-2">:</span>info@narayana.com</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Number</span><span class="mx-2">:</span>08125456</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Agent</span><span class="mx-2">:</span>{{ $agent_data->name }}</p>
                                        
                                     </div>                                    

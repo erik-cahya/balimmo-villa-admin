@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('properties.index') ? 'active' : '' }}" href="{{ route('properties.index') }}">
+                    <a class="nav-link {{ request()->routeIs('land.index') ? 'active' : '' }}" href="{{ route('land.index') }}">
                         <span class="nav-icon">
                             <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
                         </span>

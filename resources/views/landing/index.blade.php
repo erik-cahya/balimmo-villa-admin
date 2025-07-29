@@ -17,8 +17,10 @@
                     <div class="advance__search--filter">
                         <ul class="nav advance__tab--btn justify-content-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
                             <li class="nav-item advance__tab--btn__list">
-                                <!-- <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Buy
-                                                                                                                                                                            </button> -->
+                                <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Villa </button>
+                            </li>
+                            <li class="nav-item advance__tab--btn__list">
+                                <button class="advance__tab--btn__field" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Land </button>
                             </li>
                         </ul>
                         <form action="{{ route('filter.properties') }}" method="POST">
@@ -53,7 +55,7 @@
                                         </div>
 
                                         <button type="submit" class="advance__search--btn solid__btn">
-                                            Find My Villa
+                                            Search
                                             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
                                                 <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />
@@ -854,13 +856,33 @@
                         <div class="swiper-slide">
                             <div class="testimonial__card">
                                 <div class="testimonial__card--top d-flex justify-content-between">
-                                    <div class="testimonial__author d-flex align-items-center">
-                                        <div class="testimonial__author--thumbnail">
-                                            <img src="{{ asset('landing') }}/assets/img/other/testimonial-author-thumb3.png" alt="img">
-                                        </div>
+                                    <div class="testimonial__author d-flex align-items-center">                                       
                                         <div class="testimonial__author--content">
                                             <h3 class="testimonial__author--name">Cameron Williamson</h3>
-                                            <span class="testimonial__author--subtitle">Ceo & Founder</span>
+                                        </div>
+                                    </div>
+                                    <span class="testimonial__icon"><svg width="56" height="41" viewBox="0 0 56 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M17.8311 21.1016C17.9536 21.1016 18.0759 21.1354 18.1817 21.2039C18.3821 21.3311 18.4933 21.5575 18.4689 21.7902C18.1183 25.181 17.2177 28.3412 15.7918 31.1837C14.5318 33.6944 12.8821 35.8983 10.864 37.7716C20.7152 32.6251 24.7246 21.6445 23.3721 12.7732C22.5228 7.20455 19.1356 1.25311 12.1763 1.25311C6.17002 1.25308 1.28225 6.02976 1.28225 11.9008C1.28236 17.7707 6.16997 22.5474 12.1763 22.5474C14.0486 22.5473 15.8941 22.0753 17.5159 21.1821C17.6139 21.1277 17.723 21.1017 17.8311 21.1016L17.8311 21.1016ZM6.69995 40.7565C6.45388 40.7565 6.22235 40.6173 6.11549 40.39C5.98301 40.1038 6.08656 39.7655 6.35926 39.598C13.747 35.0813 16.2827 28.1824 17.053 22.8063C15.5225 23.4589 13.8584 23.8006 12.1765 23.8006C5.46212 23.8005 0 18.4615 0 11.9008C0.00010793 5.33901 5.4621 2.89626e-09 12.1765 2.89626e-09C15.527 -7.02862e-05 18.4723 1.27924 20.694 3.6986C22.7266 5.91116 24.0913 8.98545 24.64 12.5894C26.2563 23.1859 20.5827 36.6501 6.88693 40.7294C6.82457 40.7478 6.7611 40.7566 6.69997 40.7565L6.69995 40.7565Z"
+                                                fill="#ddab70" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M48.9217 21.1017C49.0442 21.1017 49.1666 21.1354 49.2735 21.2039C49.4739 21.3311 49.584 21.5575 49.5607 21.7902C49.21 25.181 48.3084 28.3412 46.8825 31.1837C45.6226 33.6944 43.9739 35.8984 41.9558 37.7716C51.8048 32.6251 55.8152 21.6445 54.4628 12.7732C53.6136 7.20455 50.2274 1.25311 43.2682 1.25311C37.2607 1.25308 32.3741 6.02976 32.3741 11.9008C32.3742 17.7707 37.2607 22.5474 43.2682 22.5474C45.1394 22.5473 46.986 22.0753 48.6079 21.1821C48.7059 21.1277 48.8137 21.1017 48.9217 21.1017L48.9217 21.1017ZM37.7906 40.7565C37.5446 40.7565 37.313 40.6173 37.2073 40.39C37.0738 40.1039 37.1783 39.7656 37.4499 39.5981C44.8389 35.0814 47.3734 28.1824 48.1436 22.8063C46.6132 23.4589 44.9501 23.8006 43.2682 23.8006C36.5539 23.8005 31.0918 18.4615 31.0918 11.9008C31.0919 5.33901 36.5539 2.89626e-09 43.2682 2.89626e-09C46.6176 -7.02862e-05 49.5629 1.27924 51.7847 3.6986C53.8173 5.91116 55.1819 8.98545 55.7318 12.5883C57.347 23.1859 51.6734 36.6501 37.9776 40.7294C37.9153 40.7478 37.8529 40.7566 37.7906 40.7565V40.7565Z"
+                                                fill="#ddab70" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <p class="testimonial__desc">The most advanced revenue than this. Iwill refer everyone
+                                    I like Level more and more each day because it makes my
+                                    easier. It really saves me time and effort. Level is exactly
+                                    business has been lacking.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial__card">
+                                <div class="testimonial__card--top d-flex justify-content-between">
+                                    <div class="testimonial__author d-flex align-items-center">                                      
+                                        <div class="testimonial__author--content">
+                                            <h3 class="testimonial__author--name">Cameron Williamson</h3>
                                         </div>
                                     </div>
                                     <span class="testimonial__icon"><svg width="56" height="41" viewBox="0 0 56 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -883,12 +905,8 @@
                             <div class="testimonial__card">
                                 <div class="testimonial__card--top d-flex justify-content-between">
                                     <div class="testimonial__author d-flex align-items-center">
-                                        <div class="testimonial__author--thumbnail">
-                                            <img src="{{ asset('landing') }}/assets/img/other/testimonial-author-thumb.png" alt="img">
-                                        </div>
                                         <div class="testimonial__author--content">
                                             <h3 class="testimonial__author--name">Cameron Williamson</h3>
-                                            <span class="testimonial__author--subtitle">Ceo & Founder</span>
                                         </div>
                                     </div>
                                     <span class="testimonial__icon"><svg width="56" height="41" viewBox="0 0 56 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -911,12 +929,8 @@
                             <div class="testimonial__card">
                                 <div class="testimonial__card--top d-flex justify-content-between">
                                     <div class="testimonial__author d-flex align-items-center">
-                                        <div class="testimonial__author--thumbnail">
-                                            <img src="{{ asset('landing') }}/assets/img/other/testimonial-author-thumb.png" alt="img">
-                                        </div>
                                         <div class="testimonial__author--content">
                                             <h3 class="testimonial__author--name">Cameron Williamson</h3>
-                                            <span class="testimonial__author--subtitle">Ceo & Founder</span>
                                         </div>
                                     </div>
                                     <span class="testimonial__icon"><svg width="56" height="41" viewBox="0 0 56 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -939,40 +953,8 @@
                             <div class="testimonial__card">
                                 <div class="testimonial__card--top d-flex justify-content-between">
                                     <div class="testimonial__author d-flex align-items-center">
-                                        <div class="testimonial__author--thumbnail">
-                                            <img src="{{ asset('landing') }}/assets/img/other/testimonial-author-thumb3.png" alt="img">
-                                        </div>
                                         <div class="testimonial__author--content">
                                             <h3 class="testimonial__author--name">Cameron Williamson</h3>
-                                            <span class="testimonial__author--subtitle">Ceo & Founder</span>
-                                        </div>
-                                    </div>
-                                    <span class="testimonial__icon"><svg width="56" height="41" viewBox="0 0 56 41" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M17.8311 21.1016C17.9536 21.1016 18.0759 21.1354 18.1817 21.2039C18.3821 21.3311 18.4933 21.5575 18.4689 21.7902C18.1183 25.181 17.2177 28.3412 15.7918 31.1837C14.5318 33.6944 12.8821 35.8983 10.864 37.7716C20.7152 32.6251 24.7246 21.6445 23.3721 12.7732C22.5228 7.20455 19.1356 1.25311 12.1763 1.25311C6.17002 1.25308 1.28225 6.02976 1.28225 11.9008C1.28236 17.7707 6.16997 22.5474 12.1763 22.5474C14.0486 22.5473 15.8941 22.0753 17.5159 21.1821C17.6139 21.1277 17.723 21.1017 17.8311 21.1016L17.8311 21.1016ZM6.69995 40.7565C6.45388 40.7565 6.22235 40.6173 6.11549 40.39C5.98301 40.1038 6.08656 39.7655 6.35926 39.598C13.747 35.0813 16.2827 28.1824 17.053 22.8063C15.5225 23.4589 13.8584 23.8006 12.1765 23.8006C5.46212 23.8005 0 18.4615 0 11.9008C0.00010793 5.33901 5.4621 2.89626e-09 12.1765 2.89626e-09C15.527 -7.02862e-05 18.4723 1.27924 20.694 3.6986C22.7266 5.91116 24.0913 8.98545 24.64 12.5894C26.2563 23.1859 20.5827 36.6501 6.88693 40.7294C6.82457 40.7478 6.7611 40.7566 6.69997 40.7565L6.69995 40.7565Z"
-                                                fill="#ddab70" />
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                d="M48.9217 21.1017C49.0442 21.1017 49.1666 21.1354 49.2735 21.2039C49.4739 21.3311 49.584 21.5575 49.5607 21.7902C49.21 25.181 48.3084 28.3412 46.8825 31.1837C45.6226 33.6944 43.9739 35.8984 41.9558 37.7716C51.8048 32.6251 55.8152 21.6445 54.4628 12.7732C53.6136 7.20455 50.2274 1.25311 43.2682 1.25311C37.2607 1.25308 32.3741 6.02976 32.3741 11.9008C32.3742 17.7707 37.2607 22.5474 43.2682 22.5474C45.1394 22.5473 46.986 22.0753 48.6079 21.1821C48.7059 21.1277 48.8137 21.1017 48.9217 21.1017L48.9217 21.1017ZM37.7906 40.7565C37.5446 40.7565 37.313 40.6173 37.2073 40.39C37.0738 40.1039 37.1783 39.7656 37.4499 39.5981C44.8389 35.0814 47.3734 28.1824 48.1436 22.8063C46.6132 23.4589 44.9501 23.8006 43.2682 23.8006C36.5539 23.8005 31.0918 18.4615 31.0918 11.9008C31.0919 5.33901 36.5539 2.89626e-09 43.2682 2.89626e-09C46.6176 -7.02862e-05 49.5629 1.27924 51.7847 3.6986C53.8173 5.91116 55.1819 8.98545 55.7318 12.5883C57.347 23.1859 51.6734 36.6501 37.9776 40.7294C37.9153 40.7478 37.8529 40.7566 37.7906 40.7565V40.7565Z"
-                                                fill="#ddab70" />
-                                        </svg>
-                                    </span>
-                                </div>
-                                <p class="testimonial__desc">The most advanced revenue than this. Iwill refer everyone
-                                    I like Level more and more each day because it makes my
-                                    easier. It really saves me time and effort. Level is exactly
-                                    business has been lacking.</p>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="testimonial__card">
-                                <div class="testimonial__card--top d-flex justify-content-between">
-                                    <div class="testimonial__author d-flex align-items-center">
-                                        <div class="testimonial__author--thumbnail">
-                                            <img src="{{ asset('landing') }}/assets/img/other/testimonial-author-thumb2.png" alt="img">
-                                        </div>
-                                        <div class="testimonial__author--content">
-                                            <h3 class="testimonial__author--name">Cameron Williamson</h3>
-                                            <span class="testimonial__author--subtitle">Ceo & Founder</span>
                                         </div>
                                     </div>
                                     <span class="testimonial__icon"><svg width="56" height="41" viewBox="0 0 56 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1379,7 +1361,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="interior__amenities--area">
+                        <!-- <div class="interior__amenities--area">
                             <h3 class="interior__amenitie--title">Interior Amenities</h3>
                             <div class="advance__apeartment--iner d-flex">
 
@@ -1395,7 +1377,7 @@
                                 </ul>
 
                             </div>
-                        </div>
+                        </div> -->
                         <div class="advance__filter--footer d-flex justify-content-between align-items-center">
                             <button class="advance__filter--reset__btn">Reset all filters</button>
                             <button class="advance__filter--search__btn solid__btn">Find My Villa <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
