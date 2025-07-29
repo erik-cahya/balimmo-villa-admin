@@ -338,87 +338,13 @@
                             </div>
                         </div>
 
-                        <div class="widget__step mb-30">
+                        <div class="widget__step mb-30" style="background-color: #F6F8FB">
                             <h2 class="widget__step--title">Booking Properties</h2>
                             <div class="widget__form">
                                 <form action="{{ route('booking.slug', $property->property_slug) }}" method="POST">
                                     @csrf
-                                    <div class="widget__form--input mb-20">
-                                        <input class="widget__form--input__field" placeholder="Name" name="name" type="text">
+                                    @include('landing.components.form-booking')
 
-                                        @error('name')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="widget__form--input mb-20">
-                                        <input class="widget__form--input__field" placeholder="Phone Number" name="phone_number" type="tel">
-
-                                        @error('phone_number')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="widget__form--input mb-20">
-                                        <input class="widget__form--input__field" placeholder="Email Address" name="email" type="email">
-
-                                        @error('email')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-
-                                    <div class="contact__property--form__input">
-                                        <label for="budget_currency">Budget Currency*</label>
-
-                                        <div class="advance__search--items">
-                                            <select class="advance__search--select" id="budget_currency" name="budget_currency">
-                                                <option selected disabled>Select Currency</option>
-                                                <option value="usd">Dollar (USD)</option>
-                                                <option value="idr">Rupiah (IDR)</option>
-                                            </select>
-                                        </div>
-
-                                        @error('budget_currency')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="contact__property--form__input" id="group_budget_idr">
-                                        <label for="budget_idr">Budget IDR*</label>
-                                        <input id="budget_idr" name="budget_idr" placeholder="IDR Enter your budget" type="text">
-
-                                        @error('budget_idr')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="contact__property--form__input" id="group_budget_usd">
-                                        <label for="budget_usd">Budget USD*</label>
-                                        <input id="budget_usd" name="budget_usd" placeholder="$ Enter your budget" type="text">
-
-                                        @error('budget_usd')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-
-                                    <div class="widget__form--input mb-20">
-                                        <input class="widget__form--input__field" placeholder="Require Bedroom" name="bedroom" type="number">
-
-                                        @error('bedroom')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="widget__form--input mb-20">
-                                        <input class="widget__form--input__field" id="timing" placeholder="Timing" name="timing" type="text">
-
-                                        @error('timing')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="widget__form--input">
-                                        <textarea class="widget__form--textarea__field" name="message" placeholder="Write You Messege"></textarea>
-
-                                        @error('message')
-                                            <p class="text-danger my-2">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <button class="widget__form--btn solid__btn" type="submit">Send Messege</button>
                                 </form>
                             </div>
                         </div>
@@ -484,25 +410,59 @@
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
-
     <script>
-        $(document).ready(function() {
+        function toggleSections() {
+            const selected_villa = $()
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get elements
+            const villaCheckbox = document.getElementById("villa");
+            const landCheckbox = document.getElementById("land");
+            const currencySelect = document.getElementById("budget_currency");
 
-            $('#group_budget_idr').hide();
-            $('#group_budget_usd').hide();
+            const villaSection = document.getElementById("looking_for_villa");
+            const landSection = document.getElementById("looking_for_land");
 
-            // Saat user mengganti pilihan
-            $('#budget_currency').on('change', function() {
-                console.log($('#budget_currency').val());
+            const villaIDR = document.getElementById("villa_budget_idr");
+            const villaUSD = document.getElementById("villa_budget_usd");
+            const villaLOCATION = document.getElementById("villa_location");
+            const landIDR = document.getElementById("land_budget_idr");
+            const landUSD = document.getElementById("land_budget_usd");
+            const landLOCATION = document.getElementById("land_location");
 
-                if ($(this).val() === 'usd') {
-                    $('#group_budget_usd').attr('style', 'display: block !important');
-                    $('#group_budget_idr').attr('style', 'display: none !important');
+            // Function to update visibility
+            function updateVisibility() {
+                const currency = currencySelect.value;
+
+                // Villa
+                if (villaCheckbox.checked) {
+                    villaSection.style.display = "block";
+                    villaIDR.style.display = (currency === "idr") ? "block" : "none";
+                    villaUSD.style.display = (currency === "usd") ? "block" : "none";
                 } else {
-                    $('#group_budget_usd').attr('style', 'display: none !important');
-                    $('#group_budget_idr').attr('style', 'display: block !important');
+                    villaSection.style.display = "none";
                 }
-            });
+
+                // Land
+                if (landCheckbox.checked) {
+                    landSection.style.display = "block";
+                    landIDR.style.display = (currency === "idr") ? "block" : "none";
+                    landUSD.style.display = (currency === "usd") ? "block" : "none";
+                } else {
+                    landSection.style.display = "none";
+                }
+            }
+
+            // Bind change listeners
+            villaCheckbox.addEventListener("change", updateVisibility);
+            landCheckbox.addEventListener("change", updateVisibility);
+            currencySelect.addEventListener("change", updateVisibility);
+
+            // Hide all on load
+            villaSection.style.display = "none";
+            landSection.style.display = "none";
         });
     </script>
 
@@ -514,35 +474,66 @@
 
     <script>
         const cleaveFields = [{
-                id: '#budget_idr',
-                options: {
-                    prefix: 'IDR '
-                }
-            },
-            {
-                id: '#budget_usd',
-                options: {
-                    numeral: true,
-                    numeralThousandsGroupStyle: 'thousand',
-                    prefix: '$ ',
-                    noImmediatePrefix: true,
-                    numeralDecimalMark: '.',
-                    delimiter: ',',
-                }
-            },
-            {
-                id: '#minPriceFilter',
-                options: {
-                    prefix: 'IDR '
-                }
-            },
-            {
-                id: '#maxPriceFilter',
-                options: {
-                    prefix: 'IDR '
-                }
-            },
-        ];
+            id: '#budget_idr_min_land',
+            options: {
+                prefix: 'IDR '
+            }
+        }, {
+            id: '#budget_idr_max_land',
+            options: {
+                prefix: 'IDR '
+            }
+        }, {
+            id: '#budget_idr_min_villa',
+            options: {
+                prefix: 'IDR '
+            }
+        }, {
+            id: '#budget_idr_max_villa',
+            options: {
+                prefix: 'IDR '
+            }
+        }, {
+            id: '#budget_usd_min_villa',
+            options: {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand',
+                prefix: '$ ',
+                noImmediatePrefix: true,
+                numeralDecimalMark: '.',
+                delimiter: ',',
+            }
+        }, {
+            id: '#budget_usd_max_villa',
+            options: {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand',
+                prefix: '$ ',
+                noImmediatePrefix: true,
+                numeralDecimalMark: '.',
+                delimiter: ',',
+            }
+        }, {
+            id: '#budget_usd_min_land',
+            options: {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand',
+                prefix: '$ ',
+                noImmediatePrefix: true,
+                numeralDecimalMark: '.',
+                delimiter: ',',
+            }
+        }, {
+            id: '#budget_usd_max_land',
+            options: {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand',
+                prefix: '$ ',
+                noImmediatePrefix: true,
+                numeralDecimalMark: '.',
+                delimiter: ',',
+            }
+        }];
 
         cleaveFields.forEach(field => {
             new Cleave(field.id, {

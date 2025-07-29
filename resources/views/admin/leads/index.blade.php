@@ -44,7 +44,6 @@
         @include('admin.leads.leads-components.specific-properties-list')
 
         {{-- Match Properties --}}
-
         @include('admin.leads.leads-components.match-properties-list')
 
     </div>

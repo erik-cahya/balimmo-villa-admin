@@ -176,6 +176,8 @@ class LandingPageController extends Controller
         }
         $data['attachment'] = collect($url_attachment);
         $data['regions'] = RegionModel::select('name')->get();
+        $data['sub_regions'] = SubRegionModel::select('name')->get();
+
 
 
         if ($data['property']->type_acceptance == 'accept') {
