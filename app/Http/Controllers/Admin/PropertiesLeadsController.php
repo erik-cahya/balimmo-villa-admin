@@ -29,7 +29,7 @@ class PropertiesLeadsController extends Controller
             $query = PropertiesModel::join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
                 ->leftJoin('users', 'users.reference_code', '=', 'properties.internal_reference');
 
-            if ($customerLead->type_asset == 'villa') {
+            if ($customerLead->type_asset == 'properties') {
                 $query->where('type_properties', 'Properties')
                     ->where('bedroom', '>=', $customerLead->min_bedroom ?? 0)
                     ->when($customerLead->max_bedroom, fn($q) => $q->where('bedroom', '<=', $customerLead->max_bedroom))
@@ -49,7 +49,7 @@ class PropertiesLeadsController extends Controller
         $properties = $results;
         return response()->json([
             'lead' => $customerLeads,
-            'properties' => $properties
+            'asset' => $properties
         ]);
     }
 
@@ -82,6 +82,8 @@ class PropertiesLeadsController extends Controller
                 ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
                 ->get()->groupBy('cust_email');
         }
+
+        // dd($data['data_leads']);
 
 
         $data['data_localization'] = SubRegionModel::select('name')->get();

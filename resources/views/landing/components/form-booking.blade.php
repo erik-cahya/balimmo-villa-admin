@@ -43,7 +43,7 @@
                     </svg>
                     Villa
                 </label>
-                <input value="villa" name="type_asset_villa" class="interior__amenities--check__input" id="villa" type="checkbox">
+                <input value="properties" name="type_asset_villa" class="interior__amenities--check__input" id="villa" type="checkbox">
                 <span class="interior__amenities--checkmark"></span>
             </li>
             <li class="interior__amenities--check__list mb-0">

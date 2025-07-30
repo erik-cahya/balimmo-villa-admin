@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+            <div class="card-header d-flex justify-content-between align-items-center border-bottom text-bg-primary" style="border-radius: 10px 10px 0px 0px">
                 <div>
                     <h4 class="card-title">Property Matches</h4>
                 </div>
@@ -32,11 +32,14 @@
                                     $referenceCode = $authUser->role === 'Master' ? null : $authUser->reference_code;
                                 @endphp
 
+                                {{-- {{ dd($matchLeads->first_name) }} --}}
+
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
 
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer" data-data-id="{{ $matchLeads->id }}">
                                         <div class="d-flex align-items-center gap-1">
+                                            <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
                                             <div class="d-block">
                                                 <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->first_name . ' ' . $matchLeads->last_name }}</h5>
                                                 <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p>
@@ -66,7 +69,7 @@
                                     <td>
                                         @foreach ($LeadsMatch as $leads)
                                             @php
-                                                if ($leads->type_asset == 'villa' && $leads->visibility == 1) {
+                                                if ($leads->type_asset == 'properties' && $leads->visibility == 1) {
                                                     $className = 'bg-success';
                                                 } elseif ($leads->type_asset == 'land' && $leads->visibility == 1) {
                                                     $className = 'bg-danger';
@@ -79,7 +82,7 @@
                                     </td>
 
                                     <td>
-                                        <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#editLeads-{{ $matchLeads->id }}">
+                                        <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#makeProspect-{{ $matchLeads->id }}">
                                             <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon> Make to Prospect
                                         </button>
 
@@ -94,7 +97,7 @@
                                 </tr>
 
                                 {{-- Modal Make to Prospect --}}
-                                <div class="modal modal-lg fade" id="editLeads-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal modal-lg fade" id="makeProspect-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -114,7 +117,7 @@
 
                                                         @php
                                                             $isVillaChecked = collect($LeadsMatch)->contains(function ($item) {
-                                                                return $item->type_asset === 'villa' && $item->visibility == 1;
+                                                                return $item->type_asset === 'properties' && $item->visibility == 1;
                                                             });
                                                             $isLandChecked = collect($LeadsMatch)->contains(function ($item) {
                                                                 return $item->type_asset === 'land' && $item->visibility == 1;
@@ -153,7 +156,7 @@
                                                     </div>
 
                                                     @php
-                                                        $villaData = collect($LeadsMatch)->firstWhere('type_asset', 'villa');
+                                                        $villaData = collect($LeadsMatch)->firstWhere('type_asset', 'properties');
                                                         $landData = collect($LeadsMatch)->firstWhere('type_asset', 'land');
                                                     @endphp
                                                     {{-- VILLA --}}
@@ -249,6 +252,7 @@
                                 </div>
                                 {{-- END Modal Make to Prospect --}}
                             @endforeach
+
                         </tbody>
                     </table>
 
@@ -260,7 +264,7 @@
                             // Ambil properti yang sudah difilter
                             // $filteredMatchLeads = $referenceCode ? $matchProperties[$matchLeads->id]->where('internal_reference', $referenceCode) : $matchProperties[$matchLeads->id];
 
-                            $matchLeadsProperties = $LeadsMatch->where('type_asset', 'villa')->first();
+                            $matchLeadsProperties = $LeadsMatch->where('type_asset', 'properties')->first();
                             $matchLeadsLand = $LeadsMatch->where('type_asset', 'land')->first();
                         @endphp
 

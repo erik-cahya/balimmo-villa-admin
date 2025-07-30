@@ -76,10 +76,9 @@
                     let propertiesDataLeadsHTML = '';
                     let agentHTML = '';
                     let addedAgents = new Set(); // gunakan Set agar tidak ada duplikat
-                    // console.log(response.properties);
 
-                    if (response.properties.villa && response.properties.villa.length > 0) {
-                        $.each(response.properties.villa, function(index, property) {
+                    if (response.asset.properties && response.asset.properties.length > 0) {
+                        $.each(response.asset.properties, function(index, property) {
                             tablePropertiesHTML += `
                                 <tr>
                                     <td>${index + 1}</td>
@@ -113,8 +112,8 @@
                     };
 
                     // Properties Land
-                    if (response.properties.land && response.properties.land.length > 0) {
-                        $.each(response.properties.land, function(index, property) {
+                    if (response.asset.land && response.asset.land.length > 0) {
+                        $.each(response.asset.land, function(index, property) {
                             tableLandHTML += `
                                 <tr>
                                     <td>${index + 1}</td>
@@ -195,8 +194,8 @@
                     var propertiesHTML = '';
 
                     // === Proses villa
-                    if (response.properties.villa && response.properties.villa.length > 0) {
-                        $.each(response.properties.villa, function(index, property) {
+                    if (response.asset.properties && response.asset.properties.length > 0) {
+                        $.each(response.asset.properties, function(index, property) {
                             propertiesHTML += `
                                  <span class="badge bg-primary text-light"><iconify-icon icon="material-symbols:real-estate-agent-sharp" class="align-middle"></iconify-icon> ${property.internal_reference} | ${property.type_properties}</span>
                         `;
@@ -204,8 +203,8 @@
                     }
 
                     // === Proses land
-                    if (response.properties.land && response.properties.land.length > 0) {
-                        $.each(response.properties.land, function(index, property) {
+                    if (response.asset.land && response.asset.land.length > 0) {
+                        $.each(response.asset.land, function(index, property) {
                             propertiesHTML += `
                                  <span class="badge bg-primary text-light"><iconify-icon icon="material-symbols:real-estate-agent-sharp" class="align-middle"></iconify-icon> ${property.internal_reference} | ${property.type_properties}</span>
                         `;

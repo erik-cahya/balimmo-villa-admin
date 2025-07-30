@@ -40,12 +40,14 @@ class BookingController extends Controller
         // dd($slug);
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
-        $newCustomerData = CustomerDataModel::create([
-            'agent_code' => $slug == NULL ? NULL : $property->internal_reference,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
+        // Jika data phone dan email cust sama dengan yang sebelumnya, maka gunakan data ID yang sudah ada di DB
+        $newCustomerData = CustomerDataModel::firstOrCreate([
             'cust_phone' => $request->phone_number,
             'cust_email' => $request->email
+        ], [
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'agent_code' => $slug == NULL ? NULL : $property?->internal_reference,
         ]);
 
         // IDR / USD Budget
