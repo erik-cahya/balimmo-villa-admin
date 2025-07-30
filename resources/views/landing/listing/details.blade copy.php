@@ -114,7 +114,35 @@
                         <div class="listing__details--main__content">
                             <div class="listing__details--content__step mb-80">
                                 <h3 class="listing__details--content__title">Description:</h3>
-                                <p class="listing__details--content__desc">{{ $property->property_description }}</p>                               
+                                <p class="listing__details--content__desc">{{ $property->property_description }}</p>
+
+                                {{-- Villa --}}
+                                <!-- <div class="apartment__info listing__d--info">
+                                    <div class="apartment__info--wrapper d-flex">
+                                        <div class="apartment__info--list">
+                                            <span class="apartment__info--icon"><img src="{{ asset('landing') }}/assets/img/icon/bed-realistic.png" alt="img"></span>
+                                            <p>
+                                                <span class="apartment__info--count">{{ $property->bedroom }}</span>
+                                                <span class="apartment__info--title">Bedrooms</span>
+                                            </p>
+                                        </div>
+                                        <div class="apartment__info--list">
+                                            <span class="apartment__info--icon"><img src="{{ asset('landing') }}/assets/img/icon/bathroom.png" alt="img"></span>
+                                            <p>
+                                                <span class="apartment__info--count">{{ $property->bathroom }}</span>
+                                                <span class="apartment__info--title">Bathrooms</span>
+                                            </p>
+                                        </div>
+                                        <div class="apartment__info--list">
+                                            <span class="apartment__info--icon"><img src="{{ asset('landing') }}/assets/img/icon/land.png" alt="img"></span>
+                                            <p>
+                                                <span class="apartment__info--count">{{ $property->total_land_area }} m²</span>
+                                                <span class="apartment__info--title">Land</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div> -->
 
                                 {{-- Land --}}
                                 <div class="apartment__info listing__d--info">
@@ -137,7 +165,7 @@
                                 </div>
                             </div>
 
-                            {{-- Land --}}
+                            
                             <div class="listing__details--content__step properties__info mb-80">
                                 <h3 class="listing__details--content__title mb-40">Properties Details:</h3>
                                 <ul class="properties__details--info__wrapper d-flex">
@@ -151,26 +179,62 @@
                                     <li class="properties__details--info__list d-flex justify-content-between">
                                         <span class="properties__details--info__title">Property ID:</span>
                                         <span class="properties__details--info__subtitle">{{ $property->property_code }}</span>
-                                    </li>                                    
+                                    </li>
+                                    <li class="properties__details--info__list d-flex justify-content-between">
+                                        <span class="properties__details--info__title">Living Area:</span>
+                                        <span class="properties__details--info__subtitle">{{ $property->villa_area }} m²</span>
+                                    </li>
                                     <li class="properties__details--info__list d-flex justify-content-between">
                                         <span class="properties__details--info__title">Land Area Size:</span>
                                         <span class="properties__details--info__subtitle">{{ $property->total_land_area }} m²</span>
                                     </li>
                                     <li class="properties__details--info__list d-flex justify-content-between">
-                                        <span class="properties__details--info__title">Zoning:</span>
-                                        <span class="properties__details--info__subtitle">Green Zone</span>
+                                        <span class="properties__details--info__title">Bedrooms:</span>
+                                        <span class="properties__details--info__subtitle">{{ $property->bedroom }}</span>
                                     </li>
                                     <li class="properties__details--info__list d-flex justify-content-between">
-                                        <span class="properties__details--info__title">Width:</span>
-                                        <span class="properties__details--info__subtitle">30 m</span>
+                                        <span class="properties__details--info__title">Bathrooms:</span>
+                                        <span class="properties__details--info__subtitle">{{ $property->bathroom }}</span>
                                     </li>
                                     <li class="properties__details--info__list d-flex justify-content-between">
-                                        <span class="properties__details--info__title">Length:</span>
-                                        <span class="properties__details--info__subtitle">10 m</span>
-                                    </li>                                   
+                                        <span class="properties__details--info__title">Year Built</span>
+                                        <span class="properties__details--info__subtitle">{{ $property->year_construction }}</span>
+                                    </li>
+                                    <li class="properties__details--info__list d-flex justify-content-between">
+                                        <span class="properties__details--info__title">Year Renovation</span>
+                                        <span class="properties__details--info__subtitle">{{ $property->year_renovated }}</span>
+                                    </li>
                                 </ul>
                             </div>
-                        
+                            <div class="listing__details--content__step properties__amenities mb-80">
+                                <h3 class="listing__details--content__title mb-40">Properties Amenities</h3>
+
+                                <div class="container">
+                                    <div class="row g-2">
+
+                                        @if ($feature_list->count() == 0)
+                                            <p>No Data</p>
+                                        @else
+                                            @foreach ($feature_list as $feature)
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-2">
+                                                            <span class="properties__amenities--mark__icon"><svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M15.794 2.174C14.426 3.422 13.094 4.874 11.798 6.53C10.67 7.958 9.656 9.422 8.756 10.922C7.94 12.266 7.346 13.418 6.974 14.378C6.962 14.414 6.938 14.444 6.902 14.468C6.866 14.504 6.824 14.522 6.776 14.522C6.764 14.534 6.752 14.54 6.74 14.54C6.656 14.54 6.596 14.516 6.56 14.468L0.134 7.934C0.122 7.922 0.278 7.766 0.602 7.466C0.926 7.154 1.244 6.872 1.556 6.62C1.904 6.332 2.09 6.2 2.114 6.224L5.642 8.996C6.674 7.784 7.832 6.584 9.116 5.396C11.048 3.62 13.04 2.108 15.092 0.86C15.128 0.86 15.266 1.028 15.506 1.364L15.866 1.886C15.878 1.934 15.878 1.988 15.866 2.048C15.854 2.096 15.83 2.138 15.794 2.174Z" fill="currentColor" />
+                                                                </svg>
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <span class="properties__amenities--text">{{ $feature->feature_name }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
                             @if ($image_gallery->count() >= 1)
                                 <div class="listing__details--content__step mb-80">
                                     <h3 class="listing__details--content__title mb-40">Gallery</h3>
@@ -205,7 +269,11 @@
                                             <span class="location__google--maps__info--subtitle">{{ $property->sub_region }}</span>
                                         </li>
                                     </ul>
-                                    <ul class="location__google--maps__info--step">                                     
+                                    <ul class="location__google--maps__info--step">
+                                        <li class="location__google--maps__info--list d-flex">
+                                            <span class="location__google--maps__info--title">Address:</span>
+                                            <span class="location__google--maps__info--subtitle">{{ $property->property_address }}</span>
+                                        </li>
                                         <li class="location__google--maps__info--list d-flex">
                                             <span class="location__google--maps__info--title">Property Type: </span>
                                             <span class="location__google--maps__info--subtitle">{{ $property->legalStatus }}</span>
@@ -213,26 +281,6 @@
                                     </ul>
                                 </div>
                             </div>
-                            @if ($virtualTour !== null)
-                                <div class="listing__details--content__step mb-80">
-                                    <h3 class="listing__details--content__title mb-40">Visit Tour</h3>
-                                    <div class="listing__details--video__thumbnail position-relative">
-                                        @if ($virtualTour === null)
-                                            <p class="admin__profile--desc">No Data</p>
-                                        @else
-                                            <img src="https://img.youtube.com/vi/{{ $virtualTour }}/maxresdefault.jpg" alt="img">
-                                            <div class="bideo__play">
-                                                <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $virtualTour }}" data-gallery="video">
-                                                    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
-                                                    </svg>
-                                                    <span class="visually-hidden">Video Play</span>
-                                                </a>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
                             @if ($lifestyle !== null)
                                 <div class="listing__details--content__step mb-80">
                                     <h3 class="listing__details--content__title mb-40">Lifestyle</h3>
@@ -253,7 +301,26 @@
                                     </div>
                                 </div>
                             @endif
-                            
+                            @if ($virtualTour !== null)
+                                <div class="listing__details--content__step mb-80">
+                                    <h3 class="listing__details--content__title mb-40">Virtual Tour</h3>
+                                    <div class="listing__details--video__thumbnail position-relative">
+                                        @if ($virtualTour === null)
+                                            <p class="admin__profile--desc">No Data</p>
+                                        @else
+                                            <img src="https://img.youtube.com/vi/{{ $virtualTour }}/maxresdefault.jpg" alt="img">
+                                            <div class="bideo__play">
+                                                <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $virtualTour }}" data-gallery="video">
+                                                    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
+                                                    </svg>
+                                                    <span class="visually-hidden">Video Play</span>
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
 
                             @if ($experience !== null)
                                 <div class="listing__details--content__step mb-80">
@@ -295,248 +362,87 @@
                             </div>
                         </div>
 
-                        <div class="widget__step mb-30 " style="background: #F2F6F7">
+                        <div class="widget__step mb-30">
                             <h2 class="widget__step--title">Booking Properties</h2>
                             <div class="widget__form">
                                 <form action="{{ route('booking.slug', $property->property_slug) }}" method="POST">
                                     @csrf
-                                    <div class="contact__property--form__inner">
-                                        <div class="d-flex gap-4">
-                                            <div class="contact__property--form__input">
-                                                <label for="first_name">First Name*</label>
-                                                <input id="first_name" name="first_name" placeholder="Enter your name" type="text">
-                                                @error('first_name')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                            <div class="contact__property--form__input">
-                                                <label for="last_name">Last Name*</label>
-                                                <input id="last_name" name="last_name" placeholder="Enter your name" type="text">
-                                                @error('last_name')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="contact__property--form__input w-full">
-                                            <label for="phone_number">Phone number*</label>
-                                            <input id="phone_number" class="w-full" name="phone_number" type="tel" placeholder="+33 44 55 678" required>
+                                    <div class="widget__form--input mb-20">
+                                        <input class="widget__form--input__field" placeholder="Name" name="name" type="text">
 
-                                            @error('phone_number')
-                                                <p class="text-danger my-2">{{ $message }}</p>
-                                            @enderror
-                                        </div>
+                                        @error('name')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="widget__form--input mb-20">
+                                        <input class="widget__form--input__field" placeholder="Phone Number" name="phone_number" type="tel">
 
-                                        <div class="contact__property--form__input">
-                                            <label for="email">Email*</label>
-                                            <input id="email" name="email" placeholder="Enter your email" type="text">
-                                            @error('email')
-                                                <p class="text-danger my-2">{{ $message }}</p>
-                                            @enderror
-                                        </div>
+                                        @error('phone_number')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="widget__form--input mb-20">
+                                        <input class="widget__form--input__field" placeholder="Email Address" name="email" type="email">
 
-                                        <!-- Looking For Field -->
-                                        <div class="contact__property--form__input">
-                                            <label for="looking_for">Looking For*</label>
-                                            <ul class="interior__amenities--check d-flex gap-4" id="looking_for">
-                                                <li class="interior__amenities--check__list mb-0">
-                                                    <label class="interior__amenities--check__label mb-0" style="padding-left: 2.5rem;" for="villa">
-                                                        <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M5.5 0L0 4.125V11H3.72581V8.59381C3.72581 7.64165 4.51713 6.87506 5.5 6.87506C6.48287 6.87506 7.27419 7.64165 7.27419 8.59381V11H11V4.125L5.5 0Z" fill="#063436"></path>
-                                                        </svg>
-                                                        Villa
-                                                    </label>
-                                                    <input value="villa" name="looking_for" class="interior__amenities--check__input" id="villa" type="checkbox">
-                                                    <span class="interior__amenities--checkmark"></span>
-                                                </li>
-                                                <li class="interior__amenities--check__list mb-0">
-                                                    <label class="interior__amenities--check__label mb-0" style="padding-left: 2.5rem;" for="land">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg" width="18" height="18"  
-                                                        fill="#063436" viewBox="0 0 24 24" >
-                                                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M5 19V5h14v14z"></path><path d="M12 9h3v3h2V7h-5zM9 12H7v5h5v-2H9z"></path>
-                                                        </svg>    
-                                                        Land
-                                                    </label>
-                                                    <input value="land" name="looking_for" class="interior__amenities--check__input" id="land" type="checkbox">
-                                                    <span class="interior__amenities--checkmark"></span>
-                                                </li>                                  
-                                            </ul>
-                                            @error('email')
-                                                <p class="text-danger my-2">{{ $message }}</p>
-                                            @enderror
-                                        </div>
+                                        @error('email')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
 
-                                        <div class="contact__property--form__input w-full">
-                                            <label for="budget_currency">Select Budget Currency*</label>
+                                    <div class="contact__property--form__input">
+                                        <label for="budget_currency">Budget Currency*</label>
 
-                                            <select id="budget_currency" name="budget_currency">
+                                        <div class="advance__search--items">
+                                            <select class="advance__search--select" id="budget_currency" name="budget_currency">
                                                 <option selected disabled>Select Currency</option>
                                                 <option value="usd">Dollar (USD)</option>
                                                 <option value="idr">Rupiah (IDR)</option>
                                             </select>
-
-                                            @error('budget_currency')
-                                                <p class="text-danger my-2">{{ $message }}</p>
-                                            @enderror
                                         </div>
 
-                                        <!-- looking_for_villa -->
-                                        <div id="looking_for_villa" style="display: none;">
-                                            <div class="text-center d-flex justify-items-center justify-content-center">
-                                                <hr class="w-100" />
-                                                <label class="w-100">Looking For Villa</label>
-                                                <hr class="w-100" />
-                                            </div>
-                                            <div class="contact__property--form__input" id="villa_budget_idr" style="display: none;">
-                                                <label for="budget_idr">Budget IDR*</label>
-                                                <div class="widget__price--filtering">
-                                                    <div class="price-input">
-                                                        <input type="text" class="input-min bg-white" name="budget_idr_min" id="minPriceFilter" placeholder="IDR 100 000 000">
-                                                        <div class="separator">-</div>
-                                                        <input type="text" class="input-max bg-white" name="budget_idr_max" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
-                                                    </div>                               
-                                                </div>
-
-                                                @error('budget_idr')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>     
-                                            
-                                            <div class="contact__property--form__input" id="villa_budget_usd" style="display: none;">
-                                                <label for="budget_usd">Budget USD*</label>
-                                                <div class="widget__price--filtering">
-                                                    <div class="price-input">
-                                                        <input type="text" class="input-min bg-white" name="budget_usd_min" id="minPriceFilter" placeholder="$ 1 000">
-                                                        <div class="separator">-</div>
-                                                        <input type="text" class="input-max bg-white" name="budget_usd_max" id="maxPriceFilter" placeholder="$ 100 000">
-                                                    </div>                               
-                                                </div>
-
-                                                @error('budget_usd')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-
-                                            <div class="contact__property--form__input" id="villa_location">
-                                                <label for="location">Location*</label>
-                                                <select name="location">
-                                                    <option selected disabled>Property Location</option>
-                                                    <option value="Ubud">Ubud</option>
-                                                    <option value="Canggu">Canggu</option>
-                                                    <option value="Uluwatu">Uluwatu</option>                                                    
-                                                    <option value="Sanur / Nusa Dua">Sanur / Nusa Dua</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-
-                                                @error('location')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>                        
-
-                                            <div class="contact__property--form__input" id="villa_bedroom">
-                                                <label for="villa_bedroom">Bedroom*</label>
-                                                <div class="widget__price--filtering">
-                                                    <div class="price-input">
-                                                        <input type="number" class="input-min bg-white" name="bedroom_min" id="bedroom_min" placeholder="Bedroom min">
-                                                        <div class="separator">-</div>
-                                                        <input type="number" class="input-max bg-white" name="bedroom_max" id="bedroom_max" placeholder="Bedroom max">
-                                                    </div>                               
-                                                </div>
-
-                                                @error('villa_bedroom')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <!-- looking_for_land -->
-                                        <div id="looking_for_land" style="display: none;">
-                                            <div class="text-center d-flex justify-items-center justify-content-center">
-                                                <hr class="w-100" />
-                                                <label class="w-100">Looking For Land</label>
-                                                <hr class="w-100" />
-                                            </div>
-                                            <div class="contact__property--form__input" id="land_budget_idr" style="display: none;">
-                                                <label for="budget_idr">Budget IDR*</label>
-                                                <div class="widget__price--filtering">
-                                                    <div class="price-input">
-                                                        <input type="text" class="input-min bg-white" name="budget_idr_min" id="minPriceFilter" placeholder="IDR 100 000 000">
-                                                        <div class="separator">-</div>
-                                                        <input type="text" class="input-max bg-white" name="budget_idr_max" id="maxPriceFilter" placeholder="IDR 50 000 000 000">
-                                                    </div>                               
-                                                </div>
-
-                                                @error('budget_idr')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        
-                                            <div class="contact__property--form__input" id="land_budget_usd" style="display: none;">
-                                                <label for="budget_usd">Budget USD*</label>
-                                                <div class="widget__price--filtering">
-                                                    <div class="price-input">
-                                                        <input type="text" class="input-min bg-white" name="budget_usd_min" id="minPriceFilter" placeholder="$ 1 000">
-                                                        <div class="separator">-</div>
-                                                        <input type="text" class="input-max bg-white" name="budget_usd_max" id="maxPriceFilter" placeholder="$ 100 000">
-                                                    </div>                               
-                                                </div>
-
-                                                @error('budget_usd')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-
-                                            <div class="contact__property--form__input" id="villa_location">
-                                                <label for="location">Location*</label>
-                                                <select name="location">
-                                                    <option selected disabled>Property Location</option>
-                                                    <option value="Ubud">Ubud</option>
-                                                    <option value="Canggu">Canggu</option>
-                                                    <option value="Uluwatu">Uluwatu</option>                                                    
-                                                    <option value="Sanur / Nusa Dua">Sanur / Nusa Dua</option>
-                                                    <option value="Other">Other</option>
-                                                </select>
-
-                                                @error('location')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div> 
-
-                                            <div class="contact__property--form__input" id="land_size">
-                                                <label for="land_size">Land size*</label>
-                                                <div class="widget__price--filtering">
-                                                    <div class="price-input">
-                                                        <input type="number" class="input-min bg-white" name="land_size_min" id="land_size_min" placeholder="Land size min">
-                                                        <div class="separator">-</div>
-                                                        <input type="number" class="input-max bg-white" name="land_size_max" id="land_size_max" placeholder="Land size max">
-                                                    </div>                               
-                                                </div>
-
-                                                @error('land_size')
-                                                    <p class="text-danger my-2">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="contact__property--form__input">
-                                            <label for="timing">Ready to buy*</label>
-                                            <input id="timing" name="timing" placeholder="Timing" type="text">
-
-                                            @error('timing')
-                                                <p class="text-danger my-2">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-
-                                        <div class="contact__property--form__input">
-                                            <label for="email">Message</label>
-                                            <textarea id="text" name="message" placeholder="Enter your message"></textarea>
-
-                                            @error('message')
-                                                <p class="text-danger my-2">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                        <button class="contact__property--btn solid__btn" type="submit">Send message</button>
+                                        @error('budget_currency')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
                                     </div>
-                                    
+                                    <div class="contact__property--form__input" id="group_budget_idr">
+                                        <label for="budget_idr">Budget IDR*</label>
+                                        <input id="budget_idr" name="budget_idr" placeholder="IDR Enter your budget" type="text">
+
+                                        @error('budget_idr')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="contact__property--form__input" id="group_budget_usd">
+                                        <label for="budget_usd">Budget USD*</label>
+                                        <input id="budget_usd" name="budget_usd" placeholder="$ Enter your budget" type="text">
+
+                                        @error('budget_usd')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+
+                                    <div class="widget__form--input mb-20">
+                                        <input class="widget__form--input__field" placeholder="Require Bedroom" name="bedroom" type="number">
+
+                                        @error('bedroom')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="widget__form--input mb-20">
+                                        <input class="widget__form--input__field" id="timing" placeholder="Timing" name="timing" type="text">
+
+                                        @error('timing')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="widget__form--input">
+                                        <textarea class="widget__form--textarea__field" name="message" placeholder="Write You Messege"></textarea>
+
+                                        @error('message')
+                                            <p class="text-danger my-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <button class="widget__form--btn solid__btn" type="submit">Send Messege</button>
                                 </form>
                             </div>
                         </div>
@@ -602,57 +508,6 @@
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get elements
-        const villaCheckbox = document.getElementById("villa");
-        const landCheckbox = document.getElementById("land");
-        const currencySelect = document.getElementById("budget_currency");
-
-        const villaSection = document.getElementById("looking_for_villa");
-        const landSection = document.getElementById("looking_for_land");
-
-        const villaIDR = document.getElementById("villa_budget_idr");
-        const villaUSD = document.getElementById("villa_budget_usd");
-        const villaLOCATION = document.getElementById("villa_location");
-        const landIDR = document.getElementById("land_budget_idr");
-        const landUSD = document.getElementById("land_budget_usd");
-        const landLOCATION = document.getElementById("land_location");
-
-        // Function to update visibility
-        function updateVisibility() {
-        const currency = currencySelect.value;
-
-        // Villa
-        if (villaCheckbox.checked) {
-            villaSection.style.display = "block";
-            villaIDR.style.display = (currency === "idr") ? "block" : "none";
-            villaUSD.style.display = (currency === "usd") ? "block" : "none";
-        } else {
-            villaSection.style.display = "none";
-        }
-
-        // Land
-        if (landCheckbox.checked) {
-            landSection.style.display = "block";
-            landIDR.style.display = (currency === "idr") ? "block" : "none";
-            landUSD.style.display = (currency === "usd") ? "block" : "none";
-        } else {
-            landSection.style.display = "none";
-        }
-        }
-
-        // Bind change listeners
-        villaCheckbox.addEventListener("change", updateVisibility);
-        landCheckbox.addEventListener("change", updateVisibility);
-        currencySelect.addEventListener("change", updateVisibility);
-
-        // Hide all on load
-        villaSection.style.display = "none";
-        landSection.style.display = "none";
-    });
-    </script>
 
     <script>
         $(document).ready(function() {

@@ -111,6 +111,10 @@ Route::middleware('auth')->group(function () {
         return view('admin.prospect.detail');
     });
 
+    Route::get('estimate', function(){
+        return view('admin.estimate.create');
+    });
+
     Route::resource('/notary', NotaryController::class);
 
 

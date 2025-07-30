@@ -506,47 +506,108 @@
                                     <div class="row p-0 m-0">
                                         <div class="col-12 mb-3">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="no" value="Yes" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="no">Owner of the villa</label>
+                                                <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="Owner of the villa">
+                                                <label class="form-check-label" for="by_owner">Owner of the villa</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="no" value="Yes" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="no">By an agent</label>
+                                                <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="By an agent">
+                                                <label class="form-check-label" for="by_agent">By an agent</label>
                                             </div>
                                         </div>
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Name of this agent" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Email of this agent" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Whatsapp of this agent" />
+                                        <div id="find_property_selection" style="display: none">
+                                            <x-form-input className="col-12" type="text" name="" label="Name of this agent" />
+                                            <x-form-input className="col-12" type="text" name="" label="Email of this agent" />
+                                            <x-form-input className="col-12" type="text" name="" label="Whatsapp of this agent" />
+                                        </div>
                                     </div>
                                 </div>
 
                                 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">   
-                                    <!-- **SHOW THIS INPUT IF “AGENT”** -->                            
+                                <div id="find_property_by_agent" style="display: none" class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">   
+                                    <!-- **SHOW THIS INPUT IF “AGENT”** -->     
+                                    <h5 class="text-dark fw-semibold">By an agent</h5>                                    
+                                    <hr>                        
                                     <div class="row p-0 m-0">
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Desire price from the owner" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Commission of the agent" />
-                                        <div class="col-12 my-3">
+                                        <div class="col-12">
+                                            <label class="form-label me-3">Whats the base price ?</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
+                                                <label class="form-check-label" for="base_price_1">NET saler</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
+                                                <label class="form-check-label" for="base_price_2">Selling price</label>
+                                            </div>
+                                        </div>
+
+                                        <x-form-input className="col-12" type="text" name="desire_price_from_the_owner" label="Desire price from the owner" />
+
+                                        <div class="col-12 mb-1">
+                                            <label class="form-check-label" for="commission_of_the_agent">Commission of the agent</label>
+                                            <br />
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="int" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" placeholder="%">
+                                                <label for="">AMMOUNT</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 my-1">
                                             <label class="form-label me-3">Full Balimmo commission ?</label>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="commission_balimmo_yes" value="Yes">
+                                                <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
                                                 <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="commission_balimmo_no" value="No">
+                                                <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
                                                 <label class="form-check-label" for="commission_balimmo_no">No</label>
                                             </div>
                                         </div>
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Balimmo commission" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Website price" />
-                                    </div>
-                                    <!-- **SHOW THIS INPUT IF OWNER”** -->                            
-                                    <!-- <div class="row">
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Desire price from the owner" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Balimmo commission" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Website price" />
-                                    </div> -->
+
+                                        <div class="col-12 mb-1">
+                                            <label class="form-check-label" for="balimmo_commission">Balimmo commission</label>
+                                            <br />
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="int" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%">
+                                                <label for="">AMMOUNT</label>
+                                            </div>
+                                        </div>
+
+                                        <x-form-input className="col-12" type="int" name="website_price" label="Website price" />
+                                    </div>                                    
                                 </div>
+
+                                <div id="find_property_by_owner" style="display: none" class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">   
+                                    <!-- **SHOW THIS INPUT IF “OWNER”** -->     
+                                    <h5 class="text-dark fw-semibold">Owner of the villa</h5>                                    
+                                    <hr>                        
+                                    <div class="row p-0 m-0">
+                                        <div class="col-12">
+                                            <label class="form-label me-3">Whats the base price ?</label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
+                                                <label class="form-check-label" for="base_price_1">NET saler</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
+                                                <label class="form-check-label" for="base_price_2">Selling price</label>
+                                            </div>
+                                        </div>
+
+                                        <x-form-input className="col-12" type="text" name="desire_price_from_the_owner" label="Desire price from the owner" />                                        
+
+                                        <div class="col-12 mb-1">
+                                            <label class="form-check-label" for="balimmo_commission">Balimmo commission</label>
+                                            <br />
+                                            <div class="d-flex align-items-center gap-2">
+                                                <input type="int" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%">
+                                                <label for="">AMMOUNT</label>
+                                            </div>
+                                        </div>
+
+                                        <x-form-input className="col-12" type="int" name="website_price" label="Website price" />
+                                    </div>                                    
+                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -1172,6 +1233,32 @@
 
     <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
 
+    <script>
+    // Ambil semua radio button dengan name "split_land"
+        const findProperty = document.querySelectorAll('input[name="find_property"]');
+        const findPropertySelected = document.getElementById('find_property_selection');
+        const findPropertyAgent = document.getElementById('find_property_by_agent');
+        const findPropertyOwner = document.getElementById('find_property_by_owner');
+
+        findProperty.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === "By an agent") {
+                    findPropertySelected.style.display = 'block';
+                    findPropertyAgent.style.display = 'block';
+                    findPropertyOwner.style.display = 'none';
+                } else if (this.value === "Owner of the villa") {
+                    findPropertySelected.style.display = 'none';
+                    findPropertyAgent.style.display = 'none';
+                    findPropertyOwner.style.display = 'block';
+                } else {
+                    findPropertySelected.style.display = 'none';  
+                    findPropertyAgent.style.display = 'none';
+                    findPropertyOwner.style.display = 'none';                  
+                }
+            });
+        });
+    </script>
+
     {{-- Custom Toggle --}}
     <script>
         $(document).ready(function() {
@@ -1185,6 +1272,19 @@
 
                 $(target).toggle(showCondition);
             });
+        });
+
+        $(document).ready(function() {
+            // Sembunyikan semua grup toggle
+            $('.find_property_section').hide();
+
+            const oldLegalCategory = "{{ old('legal_category') }}";
+            // Handle semua toggle sekaligus
+            if (oldLegalCategory === 'By Owner') {
+                $('#leasehold_group').attr('style', 'display: block !important');                
+            } else if (oldLegalCategory === 'Freehold') {
+                $('#leasehold_group').attr('style', 'display: none !important');                
+            }
         });
 
         $(document).ready(function() {

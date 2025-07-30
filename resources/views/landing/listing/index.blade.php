@@ -7,14 +7,14 @@
     <section class="breadcrumb__section section--padding">
         <div class="container">
             <div class="breadcrumb__content text-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
-                <h1 class="breadcrumb__title h2"><span>Listing</span> Page</h1>
+                <h1 class="breadcrumb__title h2"><span>Listing</span> Villa</h1>
                 <ul class="breadcrumb__menu d-flex justify-content-center">
                     <li class="breadcrumb__menu--items"><a class="breadcrumb__menu--link" href="/">Home</a></li>
                     <li><span><svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.22321 4.65179C5.28274 4.71131 5.3125 4.77976 5.3125 4.85714C5.3125 4.93452 5.28274 5.00298 5.22321 5.0625L1.0625 9.22321C1.00298 9.28274 0.934524 9.3125 0.857143 9.3125C0.779762 9.3125 0.71131 9.28274 0.651786 9.22321L0.205357 8.77679C0.145833 8.71726 0.116071 8.64881 0.116071 8.57143C0.116071 8.49405 0.145833 8.4256 0.205357 8.36607L3.71429 4.85714L0.205357 1.34821C0.145833 1.28869 0.116071 1.22024 0.116071 1.14286C0.116071 1.06548 0.145833 0.997023 0.205357 0.9375L0.651786 0.491071C0.71131 0.431547 0.779762 0.401785 0.857143 0.401785C0.934524 0.401785 1.00298 0.431547 1.0625 0.491071L5.22321 4.65179Z" fill="#706C6C" />
                             </svg>
                         </span></li>
-                    <li><span class="breadcrumb__menu--text">Listing Page </span></li>
+                    <li><span class="breadcrumb__menu--text">Listing Villa </span></li>
                 </ul>
             </div>
         </div>
@@ -40,23 +40,23 @@
                             </div>
                         </div>
                         <div class="listing__widget--inner" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
-                            {{-- <div class="widget__list mb-40">
+                             <div class="widget__list mb-40">
                                     <h2 class="widget__title mb-30">Price Filtering (IDR)</h2>
                                     <div class="widget__price--filtering">
                                         <div class="price-input">
-                                            <input type="number" class="input-min" value="2500">
+                                            <input type="number" class="input-min bg-white" placeholder="Price Min">
                                             <div class="separator">-</div>
-                                            <input type="number" class="input-max" value="10000000000">
+                                            <input type="number" class="input-max bg-white" placeholder="Price Max">
                                         </div>
                                         <div class="price-slider">
                                             <div class="progress"></div>
                                         </div>
                                         <div class="range-input">
-                                            <input type="range" name="price_min" class="range-min" min="0" max="10000" value="2500" step="100">
-                                            <input type="range" name="price_max" class="range-max" min="0" max="10000" value="7500" step="100">
+                                            <input type="range" name="price_min" class="range-min" min="0" max="10000000000" value="2500000000" step="10000000">
+                                            <input type="range" name="price_max" class="range-max" min="0" max="10000000000" value="7500000000" step="10000000">
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
                             <div class="widget__list mb-30">
                                 <h2 class="widget__title mb-15">Properties Type</h2>
                                 <ul class="widget__catagories">
@@ -75,17 +75,30 @@
                             </div>
                             <div class="widget__list mb-30">
                                 <h2 class="widget__title mb-15">Bedrooms</h2>
+                                <div class="widget__price--filtering">
+                                    <div class="price-input">
+                                        <input type="number" class="input-min bg-white" name="bedroom_min" id="bedroom_min" placeholder="Bedroom min">
+                                        <div class="separator">-</div>
+                                        <input type="number" class="input-max bg-white" name="bedroom_max" id="bedroom_max" placeholder="Bedroom max">
+                                    </div>                               
+                                </div>
+                            </div>
+
+                            <div class="widget__list mb-30">
+                                <h2 class="widget__title mb-15">Area</h2>
                                 <ul class="widget__catagories">
-                                    <select name="bedroom" class="add__listing--form__select">
-                                        <option selected="" value="">All Bedroom</option>
-                                        <option value="2">2 Bedrooms</option>
-                                        <option value="3">3 Bedrooms</option>
-                                        <option value="4">4 Bedrooms</option>
+                                    <select name="bedroom" class="add__listing--form__select fw-bold">
+                                        <option selected="" value="" disabled>Area</option>
+                                        <option value="2">Ubud</option>
+                                        <option value="2">Canggu</option>
+                                        <option value="2">Uluwatu</option>
+                                        <option value="3">Sanur / Nusa Dua</option>
+                                        <option value="4">Other</option>
                                     </select>
                                 </ul>
                             </div>
 
-                            <div class="widget__list mb-0">
+                            <!-- <div class="widget__list mb-0">
                                 <h2 class="widget__title mb-30">Find By Location</h2>
                                 <ul class="widget__location">
                                     @foreach ($regions as $rgn)
@@ -97,7 +110,7 @@
                                     @endforeach
 
                                 </ul>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>

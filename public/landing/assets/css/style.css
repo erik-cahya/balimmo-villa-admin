@@ -11401,7 +11401,7 @@ input[type=range]::-moz-range-thumb {
 
 @media only screen and (min-width: 1200px) {
   .widget__admin--profile {
-    padding: 4rem 3rem;
+    padding: 2rem 3rem;
   }
 }
 
@@ -11444,7 +11444,7 @@ input[type=range]::-moz-range-thumb {
 .admin__profile--email {
   font-weight: 700;
   font-size: 1.7rem;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 }
 
 .profile__social {
