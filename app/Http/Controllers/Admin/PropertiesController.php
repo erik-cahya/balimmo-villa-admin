@@ -97,6 +97,7 @@ class PropertiesController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         // dd($request->images);
         // dd(explode('-', Auth::user()->reference_code)[0]);
         $typeProperties = 'properties';
@@ -149,10 +150,6 @@ class PropertiesController extends Controller
             'feature' => 'required|array|min:1',
 
             'legal_category' => 'required',
-
-            // 'url_virtual_tour' => 'required',
-            // 'url_lifestyle' => 'required',
-            // 'url_experience' => 'required',
 
             // ##### Rental Yield
             'average_nightly_rate' => 'required',

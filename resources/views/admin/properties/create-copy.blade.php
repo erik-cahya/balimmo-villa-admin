@@ -26,6 +26,18 @@
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <div class="col-12 d-flex flex-row flex-wrap gap-2">
+                    @if ($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger fs-11 m-0 p-1">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+
             <div class="row">
 
                 <div class="col-xl-6 col-lg-6">
@@ -50,7 +62,7 @@
                                             <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
 
                                             @error('owners.0.first_name')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -62,7 +74,7 @@
                                             <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
 
                                             @error('owners.0.last_name')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -74,7 +86,8 @@
                                             <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
 
                                             @error('owners.0.email')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -83,10 +96,11 @@
                                         <div class="col-lg-6 mb-3" id="group_owners[0][phone_number]">
                                             <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
 
-                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.phone_number') }}">
+                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.0.phone_number') }}">
 
                                             @error('owners.0.phone_number')
-                                                <div class="alert alert-danger mt-1 p-1" role="alert">
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -98,12 +112,68 @@
                                 <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
                                     <hr>
-                                    <div class="row my-3">
+                                    {{-- <div class="row my-3">
 
                                         <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" />
                                         <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
+                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Emails" />
                                         <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
-                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Email" />
+
+                                    </div> --}}
+
+                                    <div class="row my-3">
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[1][first_name]">
+                                            <label for="owners[1][first_name]" class="form-label">First Name</label>
+
+                                            <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.1.first_name') }}">
+
+                                            @error('owners.1.first_name')
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[1][last_name]">
+                                            <label for="owners[1][last_name]" class="form-label">Last Name</label>
+
+                                            <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.1.last_name') }}">
+
+                                            @error('owners.1.last_name')
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[1][email]">
+                                            <label for="owners[1][email]" class="form-label">Emails</label>
+
+                                            <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.1.email') }}">
+
+                                            @error('owners.1.email')
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="col-lg-6 mb-3" id="group_owners[1][phone_number]">
+                                            <label for="owners[1][phone_number]" class="form-label">Phone Number</label>
+
+                                            <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.1.phone_number') }}">
+
+                                            @error('owners.1.phone_number')
+                                                <div class="alert alert-danger fs-11 m-0 p-1">
+
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
 
                                     </div>
                                 </div>
@@ -116,8 +186,8 @@
                                         <x-form-input className="col-lg-12" type="text" name="company_name" label="Company Name" />
                                         <x-form-input className="col-lg-6" type="text" name="legal_rep_first_name" label="Legal Representative First Name" />
                                         <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Legal Representative Last Name" />
-                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
                                         <x-form-input className="col-lg-6" type="email" name="legal_rep_email" label="Email" />
+                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
 
                                     </div>
                                 </div>
@@ -315,15 +385,15 @@
                                                 <label for="" class="form-label">Zoning</label>
                                                 <div class="col-12">
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone">
+                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone" {{ old('freehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="freehold_green_zone">Green Zone</label>
                                                     </div>
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone">
+                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone" {{ old('freehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="freehold_yellow_zone">Yellow Zone</label>
                                                     </div>
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone">
+                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone" {{ old('freehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="freehold_pink_zone">Pink Zone</label>
                                                     </div>
                                                 </div>
@@ -361,15 +431,15 @@
                                                 <label for="" class="form-label">Zoning</label>
                                                 <div class="col-12">
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone">
+                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone" {{ old('leasehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="leasehold_green_zone">Green Zone</label>
                                                     </div>
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone">
+                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone" {{ old('leasehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="leasehold_yellow_zone">Yellow Zone</label>
                                                     </div>
                                                     <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone">
+                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone" {{ old('leasehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="leasehold_pink_zone">Pink Zone</label>
                                                     </div>
                                                 </div>
@@ -422,11 +492,11 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate">
+                                                <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="esstentials_mandate">Essentials Mandate</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate">
+                                                <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="booster_mandate">Booster Mandate</label>
                                             </div>
                                         </div>
@@ -453,10 +523,22 @@
                             <div class="row">
 
                                 <div class="col-lg-12 mb-3">
-                                    <label for="gallery" class="form-label">Property Gallery (min 4)</label>
+                                    <label for="gallery" class="form-label">Property Gallery</label>
 
                                     <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
-                                    <div id="previewContainer" class="d-flex flex-wrap gap-3"></div>
+
+                                    <div id="previewContainer" class="d-flex flex-wrap gap-3">
+                                        @if (session('old_images'))
+                                            @foreach (session('old_images') as $index => $img)
+                                                <div class="img-preview" data-index="{{ $index }}">
+                                                    <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
+                                                        style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
+                                                    <p class="mt-1 text-center">Image {{ $index + 1 }}</p>
+                                                    <input type="hidden" name="old_images[]" value="{{ $img }}">
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
 
                                     <input type="hidden" name="order" id="imageOrder">
 
@@ -761,27 +843,48 @@
         let files = [];
 
         imageInput.addEventListener('change', (e) => {
-            files = Array.from(e.target.files);
+            const newFiles = Array.from(e.target.files);
+
+            if (newFiles.length < 4) {
+                alert('Minimum must be 4 images!');
+                imageInput.value = ''; // reset input
+                return;
+            }
+
             previewContainer.innerHTML = '';
 
-            files.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const imgDiv = document.createElement('div');
-                    imgDiv.classList.add('img-preview');
-                    imgDiv.setAttribute('data-index', index);
-                    imgDiv.innerHTML = `
-                              <img src="${event.target.result}" alt="Image Preview"
-                                   style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
-                              <p class="text-center mt-1">Image ${index + 1}</p>
-                         `;
-                    previewContainer.appendChild(imgDiv);
-                };
-                reader.readAsDataURL(file);
-            });
+            newFiles.forEach((file, index) => {
+                const formData = new FormData();
+                formData.append('file', file);
 
-            updateOrder();
+                // Kirim ke server
+                fetch("{{ route('gallery.upload.temp') }}", {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            const imgDiv = document.createElement('div');
+                            imgDiv.classList.add('img-preview');
+                            imgDiv.setAttribute('data-index', index);
+                            imgDiv.innerHTML = `
+                    <img src="/tmp_uploads/{{ Auth::user()->reference_code }}/${data.filename}"
+                         alt="Preview"
+                         style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
+                    <p class="text-center mt-1">Image ${index + 1}</p>
+                    <input type="hidden" name="old_images[]" value="${data.filename}">
+                `;
+                            previewContainer.appendChild(imgDiv);
+                            updateOrder(); // tetap panggil ini
+                        }
+                    });
+            });
         });
+
 
         function updateOrder() {
             const items = document.querySelectorAll('.img-preview');

@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\ProspectController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\RegionController;
+use App\Models\FeatureListModel;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -67,8 +68,15 @@ Route::post('listing/booking/{slug}', [CustomerController::class, 'booking'])->n
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('/properties/create/2', function () {
+        $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
+        $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
+        return view('admin.properties.create-copy', $data);
+    });
+
     // Route::get('/leadsUpdate', [PropertiesLeadsController::class, 'leadsUpdate']);
     Route::get('/leads/{lead}/matching-properties', [PropertiesLeadsController::class, 'searchMatchProperties']);
+    Route::get('/leads/{customer}/get-specific-properties', [PropertiesLeadsController::class, 'getSpecificProperties']);
 
 
     // ############################################################### Admin Panel Controller

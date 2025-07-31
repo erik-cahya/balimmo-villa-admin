@@ -1,4 +1,3 @@
-// Details Modal
 $(document).ready(function () {
     $('.showDetails').on('click', function () {
         let leadId = $(this).data('data-id');
@@ -10,17 +9,16 @@ $(document).ready(function () {
 
         $.get('/leads/' + leadId + '/matching-properties', function (response) {
 
-            // console.log(response.properties);
             // Properties Match
             let tablePropertiesHTML = '';
             let tableLandHTML = '';
             let propertiesDataLeadsHTML = '';
             let agentHTML = '';
-            let addedAgents = new Set(); // gunakan Set agar tidak ada duplikat
-            // console.log(response.properties);
+            let addedAgents = new Set(); // no duplicate
 
-            if (response.properties.villa && response.properties.villa.length > 0) {
-                $.each(response.properties.villa, function (index, property) {
+            if (response.asset.properties && response.asset.properties.length > 0) {
+                $.each(response.asset.properties, function (index, property) {
+
                     tablePropertiesHTML += `
                                 <tr>
                                     <td>${index + 1}</td>
@@ -40,22 +38,22 @@ $(document).ready(function () {
                             `;
 
                     propertiesDataLeadsHTML += `
-                                <input type="hidden" name="properties_name['properties'][${property.properties_id}]" value="${property.property_name}">
+                                <input type="hidden" name="properties_name[${property.properties_id}]" value="${property.property_name}">
                             `;
-
+                    // console.log(response.properties)
                     // Agent HTML - hanya tambahkan jika belum ada
                     if (!addedAgents.has(property.name)) {
                         addedAgents.add(property.name); // tambahkan ke Set
                         agentHTML += `
-                                        <option value="${property.name}">${property.name}</option>
+                                        <option value="${property.internal_reference}">${property.name}</option>
                                     `;
                     }
                 });
             };
 
             // Properties Land
-            if (response.properties.land && response.properties.land.length > 0) {
-                $.each(response.properties.land, function (index, property) {
+            if (response.asset.land && response.asset.land.length > 0) {
+                $.each(response.asset.land, function (index, property) {
                     tableLandHTML += `
                                 <tr>
                                     <td>${index + 1}</td>
@@ -75,7 +73,7 @@ $(document).ready(function () {
                             `;
 
                     propertiesDataLeadsHTML += `
-                                <input type="hidden" name="properties_name['land'][${property.properties_id}]" value="${property.property_name}">
+                                <input type="hidden" name="properties_name[${property.properties_id}]" value="${property.property_name}">
                             `;
 
                     // Agent HTML - hanya tambahkan jika belum ada
@@ -108,8 +106,9 @@ $(document).ready(function () {
             } else {
                 // $('.detailsPropertyTables').hide();
             }
+
+
         });
 
     });
 });
-// End Details Modal

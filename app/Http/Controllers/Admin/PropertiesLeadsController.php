@@ -53,6 +53,39 @@ class PropertiesLeadsController extends Controller
         ]);
     }
 
+    public function getSpecificProperties($customerID)
+    {
+
+        $propertiesData  = PropertyLeadsModel::where('customer_id', $customerID)
+            ->where('property_leads.type_asset', 'properties')
+            ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->select(
+                'property_leads.customer_id',
+                'property_leads.properties_id',
+                'properties.*',
+                'property_financial.*',
+            )
+            ->get();
+
+        $landData  = PropertyLeadsModel::where('customer_id', $customerID)
+            ->where('property_leads.type_asset', 'land')
+            ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->select(
+                'property_leads.customer_id',
+                'property_leads.properties_id',
+                'properties.*',
+                'property_financial.*',
+            )
+            ->get();
+        return response()->json([
+            'customerID' => $customerID,
+            'propertiesData' => $propertiesData,
+            'landData' => $landData
+        ]);
+    }
+
     public function index()
     {
 
@@ -65,7 +98,7 @@ class PropertiesLeadsController extends Controller
             $data['data_leads'] = PropertyLeadsModel::where('customer_data.agent_code', '!=', null)
                 ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
                 ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
-                ->get();
+                ->get()->groupBy('customer_id');
         } else {
 
             $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)->where('prospect_status', 0)
