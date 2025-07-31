@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer_data', function (Blueprint $table) {
+        Schema::create('customer', function (Blueprint $table) {
             $table->id();
             $table->string('agent_code')->nullable();
             $table->string('first_name')->nullable();

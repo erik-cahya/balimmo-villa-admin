@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\FeatureListModel;
+use App\Models\Land;
+use App\Models\PropertyFeatureListModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyFinancialModel;
@@ -30,7 +31,61 @@ class LandController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::user()->role == 'Master') {
+            $data['data_property'] = PropertiesModel::where('type_properties', 'land')
+                ->select(
+                    'properties.id',
+                    'properties.type_properties',
+                    'property_name',
+                    'property_slug',
+                    'internal_reference',
+                    'bedroom',
+                    'property_code',
+                    'region',
+                    'sub_region',
+                    'property_address',
+                    'type_mandate',
+                    'type_acceptance',
+                    'bathroom',
+                    'users.name as agentName',
+                    'users.status',
+                    'property_financial.selling_price_idr',
+                    'property_financial.selling_price_usd',
+
+                )
+                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+                ->with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'property_gallery.id');
+                    $query->where('is_featured', 1);
+                }])->leftJoin('users', 'reference_code', '=', 'properties.internal_reference')->get();
+        } else {
+            $data['data_property'] = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
+                ->where('type_properties', 'land')
+                ->select(
+                    'properties.id',
+                    'properties.type_properties',
+                    'property_name',
+                    'property_slug',
+                    'internal_reference',
+                    'bedroom',
+                    'property_code',
+                    'region',
+                    'sub_region',
+                    'property_address',
+                    'type_mandate',
+                    'type_acceptance',
+                    'bathroom',
+                    'property_financial.selling_price_idr',
+                    'property_financial.selling_price_usd',
+
+                )
+                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+                ->with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'property_gallery.id');
+                    $query->where('is_featured', 1);
+                }])->get();
+        }
+        return view('admin.land.index', $data);
     }
 
     /**
@@ -38,9 +93,9 @@ class LandController extends Controller
      */
     public function create()
     {
-        $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->where('name', 'LIKE', '%view%')
+        $data['feature_list_outdoor'] = PropertyFeatureListModel::where('type', 'outdoor')->where('name', 'LIKE', '%view%')
             ->get();
-        $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
+        $data['feature_list_indoor'] = PropertyFeatureListModel::where('type', 'indoor')->get();
         return view('admin.land.create', $data);
     }
 
@@ -49,6 +104,7 @@ class LandController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $typeProperties = 'land';
         $slug = $this->generatePropertiesSlug($request->property_name);
 
@@ -275,7 +331,7 @@ class LandController extends Controller
         // ########### Create Property Feature Data
         // ==========================================================================================================================================
         foreach ($request->feature as $index => $feature) {
-            $idFeature = FeatureListModel::select('id')->where('slug', $index)->first();
+            $idFeature = PropertyFeatureListModel::select('id')->where('slug', $index)->first();
             PropertyFeatureModel::create([
                 'properties_id' => $propertyCreate->id,
                 'feature_id' => $idFeature->id

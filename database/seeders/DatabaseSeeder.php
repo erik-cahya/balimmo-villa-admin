@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call(FeatureListSeeder::class);
+        $this->call(PropertyFeatureListSeeder::class);
+        $this->call(LandFeatureListSeeder::class);
         $this->call(RegionSeeder::class);
     }
 }

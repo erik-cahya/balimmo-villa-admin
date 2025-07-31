@@ -9,7 +9,7 @@ class PropertyLeadsModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'property_leads';
+    protected $table = 'leads';
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
 }

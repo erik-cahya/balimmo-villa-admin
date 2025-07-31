@@ -13,7 +13,7 @@
 
                 <div class="d-flex align-items-center gap-1">
                     <!-- Theme Color (Light/Dark) -->
-                    <span class="badge {{ Auth::user()->role === 'Master' || 'master' ? 'bg-danger' : 'bg-success' }} text-capitalize me-1">{{ Auth::user()->role }} Users</span>
+                    <span class="badge {{ Auth::user()->role === 'master' ? 'bg-danger' : 'bg-success' }} text-capitalize me-1">{{ Auth::user()->role }} Users</span>
 
                     <div class="topbar-item">
                         <button type="button" class="topbar-button" id="light-dark-mode">

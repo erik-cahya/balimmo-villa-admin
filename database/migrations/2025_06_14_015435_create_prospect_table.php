@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_prospect', function (Blueprint $table) {
+        Schema::create('prospect', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('properties_id')->nullable()->comment('fk to property id');
             $table->unsignedBigInteger('customer_id')->nullable()->comment('fk to customer data table');

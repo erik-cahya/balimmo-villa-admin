@@ -58,7 +58,7 @@
                                 <x-form-input className="col-lg-4" type="email" name="email" label="Email Agent" />
 
                                 <x-form-input className="col-lg-4" type="number" name="phone_number" label="Phone Number" />
-                                <x-form-select className="col-lg-6" name="role" label="User Role" :options="['Agent', 'Master']" />
+                                <x-form-select className="col-lg-6" name="role" label="User Role" :options="['agent', 'master']" />
 
                                 <div class="col-md-6" id="group_month_rented_per_year">
                                     <label for="month_rented_per_year" class="form-label">Reference ID</label>

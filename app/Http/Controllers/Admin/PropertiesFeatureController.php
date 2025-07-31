@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\FeatureListModel;
+use App\Models\PropertyFeatureListModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -12,8 +12,8 @@ class PropertiesFeatureController extends Controller
 {
     public function index()
     {
-        $data['feature_indoor'] = FeatureListModel::where('type', 'indoor')->get();
-        $data['feature_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
+        $data['feature_indoor'] = PropertyFeatureListModel::where('type', 'indoor')->get();
+        $data['feature_outdoor'] = PropertyFeatureListModel::where('type', 'outdoor')->get();
         return view('admin.properties.feature-list.index', $data);
     }
 
@@ -25,12 +25,12 @@ class PropertiesFeatureController extends Controller
         $counter = 2;
 
         // Cek property slug if exist in database
-        while (FeatureListModel::where('slug', $slug)->exists()) {
+        while (PropertyFeatureListModel::where('slug', $slug)->exists()) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
 
-        FeatureListModel::create([
+        PropertyFeatureListModel::create([
             'name' => $request->name_category,
             'slug' => $slug,
             'type' => $request->feature_category,
@@ -50,7 +50,7 @@ class PropertiesFeatureController extends Controller
 
         $slug = Str::slug($request->name_category);
 
-        FeatureListModel::where('id', $id)->update([
+        PropertyFeatureListModel::where('id', $id)->update([
             'name' => $request->name_category,
             'slug' => $slug,
             'type' => $request->feature_category,
@@ -66,7 +66,7 @@ class PropertiesFeatureController extends Controller
 
     public function destroy($id)
     {
-        FeatureListModel::destroy($id);
+        PropertyFeatureListModel::destroy($id);
 
         $flashData = [
             'judul' => 'Delete Success',

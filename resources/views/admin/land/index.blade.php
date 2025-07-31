@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="fw-semibold mb-0">Listing List</h4>
+                    <h4 class="fw-semibold mb-0">Land List</h4>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Properties</a></li>
                         <li class="breadcrumb-item active">Land List</li>
@@ -48,9 +48,9 @@
 
                     <div class="card-header d-flex justify-content-between align-items-center border-bottom" bis_skin_checked="1">
                         <div bis_skin_checked="1">
-                            <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">{{ $data_property->count() }} </span></h4>
+                            <h4 class="card-title mb-0">All Land List <span class="badge bg-danger ms-1">0 </span></h4>
                         </div>
-                        <a href="{{ route('properties.create') }}" class="btn btn-sm btn-success width-md">Add Properties</a>
+                        <a href="{{ route('land.create') }}" class="btn btn-sm btn-success width-md">Add Land</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table-hover table-centered fs-13 mb-0 table text-nowrap align-middle" id="tableProperties">
@@ -88,7 +88,7 @@
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <a href="{{ route('properties.details', $property->property_slug) }}" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
+                                                    <a href="#!" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
                                                     <span class="fst-italic">{{ $property->property_code }}</span>
                                                 </div>
                                             </div>
@@ -100,10 +100,10 @@
                                                 <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
                                             </div>
                                         </td>
-                                        <td><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
+                                        <td><span class="badge bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
                                         <td class="text-capitalize">
                                             <div class="d-flex flex-column">
-                                                <span class="text-dark fw-medium fs-15"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> {{ $property->region . ', ' . $property->sub_region }}</span>
+                                                <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> {{ $property->region . ', ' . $property->sub_region }}</a>
                                                 <span class="fst-italic">{{ Str::limit($property->property_address, 50) }}</span>
                                             </div>
                                         </td>
@@ -114,7 +114,7 @@
 
                                         <td class="text-capitalize">
                                             <div class="d-flex flex-column">
-                                                <span class="text-dark fw-medium fs-15">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
+                                                <a href="#!" class="text-dark fw-medium fs-15">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</a>
                                                 <span class="fst-italic">USD {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
                                             </div>
                                         </td>

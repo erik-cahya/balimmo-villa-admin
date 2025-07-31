@@ -9,7 +9,7 @@ class PropertyProspectModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'property_prospect';
+    protected $table = 'prospect';
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
 }

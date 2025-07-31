@@ -41,6 +41,33 @@
         // If Master : get all data
         $data['data_client'] = Auth::user()->role == 'Master' ? ClientModel::get() : ClientModel::where('reference_code', Auth::user()->reference_code)->get();
     @endphp
+
+    {{-- Cleave / Formatting Currency --}}
+    <script>
+        const cleaveFields = [
+            '#budget_usd_min',
+            '#budget_usd_max',
+            '#budget_idr_min',
+            '#budget_idr_max',
+        ];
+
+        cleaveFields.forEach(selector => {
+            const isIDR = selector.includes('_idr_');
+            const options = isIDR ? {
+                prefix: 'IDR ',
+                numeral: true
+            } : {
+                numeral: true,
+                numeralThousandsGroupStyle: 'thousand',
+                prefix: '$ ',
+                noImmediatePrefix: true,
+                numeralDecimalMark: '.',
+                delimiter: ',',
+            };
+
+            new Cleave(selector, options);
+        });
+    </script>
 </body>
 
 </html>

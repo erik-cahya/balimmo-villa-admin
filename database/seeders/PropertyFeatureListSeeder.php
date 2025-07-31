@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\FeatureListModel;
+use App\Models\PropertyFeatureListModel;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class FeatureListSeeder extends Seeder
+class PropertyFeatureListSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -157,7 +158,7 @@ class FeatureListSeeder extends Seeder
         ];
 
         foreach ($dataFeature as $row) {
-            FeatureListModel::create($row);
+            PropertyFeatureListModel::create($row);
         }
 
         User::create([
@@ -166,7 +167,7 @@ class FeatureListSeeder extends Seeder
             'phone_number' => "089522648527",
             'password' => bcrypt('master123'),
             'reference_code' => 'BPM-MASTER-3213',
-            'role' => 'Master',
+            'role' => 'master',
             'status' => 1
         ]);
     }

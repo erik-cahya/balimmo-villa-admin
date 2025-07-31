@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Land;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FeatureListModel extends Model
+class LandUrlAttachmentModel extends Model
 {
     use HasFactory;
-    protected $table = 'feature_list';
+    protected $table = 'land_url_attachment';
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
 }

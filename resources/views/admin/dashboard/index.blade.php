@@ -91,7 +91,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <p class="fs-15 fw-medium mb-2">Total Leads/Customers</p>
-                                <h3 class="text-dark fw-bold d-flex align-items-center mb-0 gap-2">{{ $data_leads->count() }} Lead</h3>
+                                <h3 class="text-dark fw-bold d-flex align-items-center mb-0 gap-2">0 Lead</h3>
                             </div>
                             <div>
                                 <div class="avatar-md bg-success-subtle rounded">

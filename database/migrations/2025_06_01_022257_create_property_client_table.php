@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_client', function (Blueprint $table) {
+        Schema::create('client', function (Blueprint $table) {
             $table->id();
             $table->string('reference_code')->nullable()->comment('fk to user code');
             $table->string('client_name')->nullable();

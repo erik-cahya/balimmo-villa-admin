@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
-use App\Models\FeatureListModel;
+use App\Models\PropertyFeatureListModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyGalleryImageModel;
@@ -58,7 +58,7 @@ class LandingPageController extends Controller
         // Simpan ke variabel untuk view
         $data['data_property'] = $properties;
         $data['sub_regions'] = SubRegionModel::select('name')->get();
-        $data['feature_list'] = FeatureListModel::get();
+        $data['feature_list'] = PropertyFeatureListModel::get();
 
         // Cache::forget('properties_list_cache');
         return view('landing.index', $data);
@@ -152,8 +152,8 @@ class LandingPageController extends Controller
         // $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['property']['featuredImage']->id)->get();
 
         $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['property']->id)
-            ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
-            ->select('feature_list.name as feature_name')->get();
+            ->join('property_feature_list', 'property_feature_list.id', '=', 'property_feature.feature_id')
+            ->select('property_feature_list.name as feature_name')->get();
 
         $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['property']->id)->get();
 

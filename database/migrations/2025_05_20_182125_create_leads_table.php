@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_leads', function (Blueprint $table) {
+        Schema::create('leads', function (Blueprint $table) {
             // $table->id();
 
             // $table->unsignedBigInteger('properties_id')->nullable()->comment('fk to properties table');

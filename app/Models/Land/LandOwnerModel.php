@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Land;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ClientModel extends Model
+class LandOwnerModel extends Model
 {
-    use HasFactory;
-    protected $table = 'client';
+    protected $table = 'land_owner';
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
 }

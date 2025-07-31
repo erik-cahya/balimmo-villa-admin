@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_feature_list', function (Blueprint $table) {
+        Schema::create('land_gallery', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('slug');
-            $table->string('type');
+            $table->unsignedBigInteger('land_id')->comment('fk to land table');
+            $table->text('description')->nullable();
             $table->timestamps();
+
+            // Foreign Key Constraint with ON DELETE CASCADE
+            $table->foreign('land_id')->references('id')->on('land')->onDelete('cascade');
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('feature_list');
+        Schema::dropIfExists('land_gallery');
     }
 };

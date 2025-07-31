@@ -37,8 +37,8 @@ class DashboardController extends Controller
                     'properties.created_at',
                 )->get();
         } else {
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)
-                ->get();
+            // $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)
+            //     ->get();
 
             $data['data_properties'] = PropertiesModel::where('internal_reference', Auth::user()->reference_code)->join('users', 'users.reference_code', '=', 'properties.internal_reference')
                 ->select(

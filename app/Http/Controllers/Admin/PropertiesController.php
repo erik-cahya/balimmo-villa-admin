@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\FeatureListModel;
+use App\Models\PropertyFeatureListModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
 use App\Models\PropertyFinancialModel;
@@ -44,7 +44,11 @@ class PropertiesController extends Controller
                 'bathroom',
                 'users.name as agentName',
                 'users.status',
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
+
             )
+                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
                     $query->where('is_featured', 1);
@@ -64,8 +68,12 @@ class PropertiesController extends Controller
                     'property_address',
                     'type_mandate',
                     'type_acceptance',
-                    'bathroom'
+                    'bathroom',
+                    'property_financial.selling_price_idr',
+                    'property_financial.selling_price_usd',
+
                 )
+                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
                 ->with(['featuredImage' => function ($query) {
                     $query->select('image_path', 'property_gallery.id');
                     $query->where('is_featured', 1);
@@ -89,15 +97,17 @@ class PropertiesController extends Controller
 
         // dd($regions);
 
-        $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
-        $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
+        $data['feature_list_outdoor'] = PropertyFeatureListModel::where('type', 'outdoor')->get();
+        $data['feature_list_indoor'] = PropertyFeatureListModel::where('type', 'indoor')->get();
 
         return view('admin.properties.create', $data);
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
+
+        // dd($request->all());
+        // dd($request->balimmo_commission);
         // dd($request->images);
         // dd(explode('-', Auth::user()->reference_code)[0]);
         $typeProperties = 'properties';
@@ -131,42 +141,38 @@ class PropertiesController extends Controller
 
         $request->validate($rules, $messages);
 
-        $request->validate([
-            // 'images' => 'required|array|min:4',
-            // 'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
+        // $request->validate([
+        //     // 'images' => 'required|array|min:4',
+        //     // 'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
 
-            'property_name' => 'required',
-            'description' => 'required',
-            'region' => 'required',
-            'subregion' => 'required',
-            'property_address' => 'required',
-            'land_size' => 'required',
-            'built_area' => 'required',
-            'pool_area' => 'required',
-            'bedroom' => 'required',
-            'bathroom' => 'required',
-            'year_construction' => 'required',
-            'year_renovated' => 'required',
-            'feature' => 'required|array|min:1',
+        //     'property_name' => 'required',
+        //     'description' => 'required',
+        //     'region' => 'required',
+        //     'subregion' => 'required',
+        //     'property_address' => 'required',
+        //     'land_size' => 'required',
+        //     'built_area' => 'required',
+        //     'pool_area' => 'required',
+        //     'bedroom' => 'required',
+        //     'bathroom' => 'required',
+        //     'year_construction' => 'required',
+        //     'year_renovated' => 'required',
+        //     'feature' => 'required|array|min:1',
 
-            'legal_category' => 'required',
+        //     'legal_category' => 'required',
 
-            // ##### Rental Yield
-            'average_nightly_rate' => 'required',
-            'average_occupancy_rate' => 'required',
-            'month_rented_per_year' => 'required',
-            'estimated_annual_turnover' => 'required',
+        //     // ##### Rental Yield
+        //     'average_nightly_rate' => 'required',
+        //     'average_occupancy_rate' => 'required',
+        //     'month_rented_per_year' => 'required',
+        //     'estimated_annual_turnover' => 'required',
 
-            // ##### Gallery
-            // 'images.*' => 'required|image|max:2048',
-        ], [
-            'feature' => 'Please Choose features & Amenities',
+        //     // ##### Gallery
+        //     // 'images.*' => 'required|image|max:2048',
+        // ], [
+        //     'feature' => 'Please Choose features & Amenities',
 
-        ]);
-
-
-
-
+        // ]);
 
         // Freehold Validation
         if ($request->legal_category === 'Freehold') {
@@ -237,6 +243,7 @@ class PropertiesController extends Controller
             'property_description' => $request->description,
             'region' => Str::title($request->region),
             'sub_region' => Str::title($request->subregion),
+            'area' => Str::title($request->area),
             'property_address' => $request->property_address,
             'total_land_area' => $this->floatNumbering($request->land_size),
             'villa_area' => $this->floatNumbering($request->built_area),
@@ -294,12 +301,15 @@ class PropertiesController extends Controller
             'purchase_cost' =>  (int)preg_replace('/[^0-9]/', '', $request->leasehold_purchase_cost),
             'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
             'zoning' => $zoning,
+
+            'construction_quality' => $request->construction_quality,
+            'constructor_name' => $request->constructor_name,
         ]);
 
         // ==========================================================================================================================================
         // ############## Create Properties Financial ##############
         // ==========================================================================================================================================
-        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
+        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->find_property == 'owner' ? $request->website_price_owner : $request->website_price_agent);
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
 
         // Presentase
@@ -321,25 +331,40 @@ class PropertiesController extends Controller
 
         PropertyFinancialModel::create([
             'properties_id' => $propertyCreate->id,
+            'average_price_status' => $request->average_price_status,
             'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
             'avg_occupancy_rate' => $request->average_occupancy_rate,
-            'months_rented' => $request->month_rented_per_year,
-            'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
+
+            'find_property_of' => $request->find_property,
+            'agent_name' => $request->agent_name,
+            'agent_email' => $request->agent_email,
+            'agent_phone' => $request->agent_whatsapp,
+
+            'base_price' => $request->base_price,
+            'desired_price_idr' => $request->desire_price_from_the_owner,
+            'desired_price_usd' => $this->idrToUsdConvert($request->desire_price_from_the_owner),
+            'agent_commision' => $request->commission_of_the_agent,
+            'give_balimmo_commision' => $request->full_commission_balimmo,
+            'balimmmo_commision' => $request->balimmo_commission,
+
+
+            // 'months_rented' => $request->month_rented_per_year,
+            // 'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
 
             // Sale Price & Conditions
-            'selling_price_idr' => $idrPrice,
-            'selling_price_usd' => $usdPrice,
-            'commision_ammount_idr' => $commisionAmmountIDR,
-            'commision_ammount_usd' => $commisionAmmountUSD,
-            'net_seller_idr' => $netSellerIDR,
-            'net_seller_usd' => $netSellerUSD,
+            'selling_price_idr' => $this->convertToInteger($request->website_price),
+            'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
+            'net_seller_idr' => $request->base_price == 'Selling price' ? $request->net_profit : NULL,
+            'net_seller_usd' => $request->base_price == 'Selling price' ? $this->idrToUsdConvert($request->net_profit) : NULL,
+            // 'net_seller_idr' => $netSellerIDR,
+            // 'net_seller_usd' => $netSellerUSD,
         ]);
 
         // ==========================================================================================================================================
         // ########### Create Property Feature Data
         // ==========================================================================================================================================
         foreach ($request->feature as $index => $feature) {
-            $idFeature = FeatureListModel::select('id')->where('slug', $index)->first();
+            $idFeature = PropertyFeatureListModel::select('id')->where('slug', $index)->first();
             PropertyFeatureModel::create([
                 'properties_id' => $propertyCreate->id,
                 'feature_id' => $idFeature->id
@@ -466,14 +491,10 @@ class PropertiesController extends Controller
 
                 'property_financial.avg_nightly_rate',
                 'property_financial.avg_occupancy_rate',
-                'property_financial.months_rented',
-                'property_financial.annual_turnover',
                 'property_financial.selling_price_idr',
                 'property_financial.selling_price_usd',
                 'property_financial.commision_ammount_idr',
                 'property_financial.commision_ammount_usd',
-                'property_financial.net_seller_idr',
-                'property_financial.net_seller_usd',
 
 
                 'property_legal.company_name',
@@ -496,8 +517,8 @@ class PropertiesController extends Controller
 
 
         $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['data_properties']->id)
-            ->join('feature_list', 'feature_list.id', '=', 'property_feature.feature_id')
-            ->select('feature_list.name as feature_name')
+            ->join('property_feature_list', 'property_feature_list.id', '=', 'property_feature.feature_id')
+            ->select('property_feature_list.name as feature_name')
             ->get();
 
         // dd($data['data_properties']);
@@ -558,8 +579,6 @@ class PropertiesController extends Controller
 
                 'property_financial.avg_nightly_rate',
                 'property_financial.avg_occupancy_rate',
-                'property_financial.months_rented',
-                'property_financial.annual_turnover',
                 'property_financial.selling_price_idr',
                 'property_financial.selling_price_usd',
                 'property_financial.commision_ammount_idr',
@@ -594,8 +613,8 @@ class PropertiesController extends Controller
         $data['property_owner'] = PropertyOwnerModel::where('properties_id', $data['data_properties']->id)->get();
 
         // Properties Feature
-        $data['feature_list_outdoor'] = FeatureListModel::where('type', 'outdoor')->get();
-        $data['feature_list_indoor'] = FeatureListModel::where('type', 'indoor')->get();
+        $data['feature_list_outdoor'] = PropertyFeatureListModel::where('type', 'outdoor')->get();
+        $data['feature_list_indoor'] = PropertyFeatureListModel::where('type', 'indoor')->get();
         // User Checked berdasarkan id
         $data['properties_feature'] = PropertyFeatureModel::where('properties_id', $data['data_properties']->id)->get();
         // Ambil ID fitur yang sudah dipilih
@@ -1023,6 +1042,15 @@ class PropertiesController extends Controller
 
         return $slug;
     }
+
+    private function idrToUsdConvert($idrValue)
+    {
+        $idrPrice = (int)preg_replace('/[^0-9]/', '', $idrValue);
+        $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
+
+        return $usdPrice;
+    }
+
 
     private function floatNumbering($number)
     {

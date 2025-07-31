@@ -50,7 +50,7 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse show collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex justify-content-between align-items-start px-4">
-                                <div class="bg-light-subtle border-dark col-4 row rounded border px-1 pt-2">
+                                <div class="bg-light-subtle border-dark col-6 row rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 1</h5>
                                     <hr>
                                     <div class="row m-0 mb-2 p-0">
@@ -105,7 +105,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="bg-light-subtle border-dark col-4 row rounded border px-1 pt-2">
+                                <div class="bg-light-subtle border-dark col-6 row rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
                                     <hr>
 
@@ -118,7 +118,6 @@
 
                                             @error('owners.1.first_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -157,7 +156,6 @@
 
                                             @error('owners.1.phone_number')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -165,10 +163,10 @@
 
                                     </div>
                                 </div>
-                                <div class="bg-light-subtle border-dark col-4 row rounded border px-1 pt-2">
+                                <div class="bg-light-subtle border-dark col-12 row mt-3 rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
                                     <hr>
-                                    <div class="row m-0 mb-2 p-0">
+                                    <div class="row">
 
                                         <x-form-input className="p-1 col-12" type="text" name="company_name" label="Company Name" />
                                         <x-form-input className="p-1 col-6" type="text" name="legal_rep_first_name" label="Owner First Name" />
@@ -193,7 +191,7 @@
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
                                     <div class="col-lg-6 mb-3" id="group_internal_reference">
                                         <label for="internal_reference" class="form-label">Internal Reference</label>
                                         <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
@@ -201,10 +199,16 @@
 
                                     <x-form-input className="col-lg-6" type="text" name="property_name" label="Property Name" />
 
-                                    <div class="col-lg-4 mb-3" id="group_region">
-                                        <label for="region" class="form-label">Area</label>
-                                        <select id="region" class="form-select" name="region">
+                                    <div class="col-lg-4 mb-3" id="group_area">
+                                        <label for="area" class="form-label">Area</label>
+                                        <select id="area" class="form-select" name="area">
                                             <option value="" selected disabled>Select Area</option>
+                                            <option value="ubud">Ubud</option>
+                                            <option value="canggu">Canggu</option>
+                                            <option value="uluwatu">Uluwatu</option>
+                                            <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
+                                            <option value="other">Other</option>
+
                                         </select>
                                     </div>
 
@@ -243,28 +247,28 @@
                                     <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
 
                                 </div>
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
 
                                     <div class="mb-4">
                                         <h5 class="text-dark fw-semibold">Type of mandat *</h5>
                                         <hr>
 
                                         <div class="row align-items-center">
-                                            <div class="col-6">
+                                            <div class="col-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="essentials mandate" {{ old('type_mandate') == 'essentials mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="esstentials_mandate">Essentials</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="booster mandate" {{ old('type_mandate') == 'booster mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="booster_mandate">Booster</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="booster_mandate">Max Booster</label>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="max_booster_mandate" value="max booster mandate" {{ old('type_mandate') == 'max booster mandate' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="max_booster_mandate">Max Booster</label>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-6 mt-3">
                                                 <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
                                             </div>
                                         </div>
@@ -277,20 +281,20 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="esstentials_mandate">Invest</label>
+                                                    <input class="form-check-input" type="radio" name="construction_quality" id="construction_quality_invest" value="invest" {{ old('type_mandate') == 'invest' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="construction_quality_invest">Invest</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="booster_mandate">Confort</label>
+                                                    <input class="form-check-input" type="radio" name="construction_quality" id="construction_quality_comfort" value="comfort" {{ old('type_mandate') == 'comfort' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="construction_quality_comfort">Comfort</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="booster_mandate">Premium</label>
+                                                    <input class="form-check-input" type="radio" name="construction_quality" id="construction_quality_premium" value="premium" {{ old('type_mandate') == 'premium' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="construction_quality_premium">Premium</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <x-form-input type="text" name="property_name" label="Constructor name" />
+                                                <x-form-input type="text" name="constructor_name" label="Constructor name" />
                                             </div>
                                         </div>
                                     </div>
@@ -301,15 +305,15 @@
 
                                         <div class="row align-items-center">
                                             <!-- <div class="col-6">
-                                                                                                        <div class="form-check form-check-inline">
-                                                                                                            <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                                                                            <label class="form-check-label" for="esstentials_mandate">Leasehold</label>
-                                                                                                        </div>
-                                                                                                        <div class="form-check form-check-inline">
-                                                                                                            <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                                                                            <label class="form-check-label" for="booster_mandate">Freehold</label>
-                                                                                                        </div>
-                                                                                                    </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="form-check form-check-inline">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label class="form-check-label" for="esstentials_mandate">Leasehold</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="form-check form-check-inline">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label class="form-check-label" for="booster_mandate">Freehold</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
                                             <div class="col-12">
 
                                                 <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" />
@@ -414,23 +418,23 @@
                         <div id="collapseFurnitures" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 pt-2">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
                                     <h5 class="text-dark fw-semibold">Indoor *</h5>
                                     <hr>
                                     <div class="row px-2 pb-2">
                                         @foreach ($feature_list_indoor as $feature_indoor)
-                                            <x-form-checkbox className="form-check col-6" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
+                                            <x-form-checkbox className="form-check col-6 pt-2" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
                                         @endforeach
                                     </div>
                                 </div>
 
-                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 pt-2">
+                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
                                     <h5 class="text-dark fw-semibold">Outdoor *</h5>
                                     <hr>
                                     <div class="row px-2 pb-2">
 
                                         @foreach ($feature_list_outdoor as $feature_outdoor)
-                                            <x-form-checkbox className="form-check col-6" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                            <x-form-checkbox className="form-check col-6 pt-2" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
                                         @endforeach
 
                                     </div>
@@ -450,7 +454,7 @@
                         <div id="collapseRentalYield" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
 
-                                <div class="col-12 row bg-light-subtle border-dark gap-4 rounded border px-1 py-2">
+                                <div class="col-12 row bg-light-subtle border-dark gap-4 rounded border p-3">
                                     <div class="col-6 row align-content-start">
                                         <h5 class="text-dark fw-semibold">Do you have any data about the rental of the property ? </h5>
                                         <hr>
@@ -458,11 +462,11 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="yes" value="Yes">
+                                                    <input class="form-check-input" type="radio" name="average_price_status" id="yes" value="yes">
                                                     <label class="form-check-label" for="yes">Yes</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="no" value="No">
+                                                    <input class="form-check-input" type="radio" name="average_price_status" id="no" value="no">
                                                     <label class="form-check-label" for="no">No</label>
                                                 </div>
                                             </div>
@@ -470,8 +474,8 @@
                                     </div>
 
                                     <div class="col-6 row">
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Average nightly price" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Average occupation rate" />
+                                        <x-form-input className="col-12" type="text" name="average_nightly_rate" label="Average nightly price" />
+                                        <x-form-input className="col-12" type="text" name="average_occupancy_rate" label="Average occupation rate" />
                                         <div class="col-12">
                                             <label class="form-check-label" for="booster_mandate">Supporting document</label>
                                             <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
@@ -494,115 +498,89 @@
                         </h2>
                         <div id="collapseSalePrice" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
-
-                                <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
-                                    <p class="text-dark">Let define the good price and commission rate for this good.</p>
-                                    <h5 class="text-dark fw-semibold">How did you find the property ?</h5>
+                                <!-- PILIHAN AGENT / OWNER -->
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
+                                    <h5 class="text-dark fw-semibold">How did you find the property?</h5>
                                     <hr>
-                                    <div class="row m-0 p-0">
-                                        <div class="col-12 mb-3">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="Owner of the villa">
-                                                <label class="form-check-label" for="by_owner">Owner of the villa</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="By an agent">
-                                                <label class="form-check-label" for="by_agent">By an agent</label>
-                                            </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="owner">
+                                            <label class="form-check-label" for="by_owner">Owner of the villa</label>
                                         </div>
-                                        <div id="find_property_selection" style="display: none">
-                                            <x-form-input className="col-12" type="text" name="" label="Name of this agent" />
-                                            <x-form-input className="col-12" type="text" name="" label="Email of this agent" />
-                                            <x-form-input className="col-12" type="text" name="" label="Whatsapp of this agent" />
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="agent">
+                                            <label class="form-check-label" for="by_agent">By an agent</label>
                                         </div>
+                                    </div>
+
+                                    <!-- Jika by agent -->
+                                    <div id="agent_fields" style="display: none;">
+                                        <x-form-input className="col-12" type="text" name="agent_name" label="Name of this agent" />
+                                        <x-form-input className="col-12" type="text" name="agent_email" label="Email of this agent" />
+                                        <x-form-input className="col-12" type="text" name="agent_whatsapp" label="Whatsapp of this agent" />
                                     </div>
                                 </div>
 
-                                <div id="find_property_by_agent" style="display: none" class="col-6 row bg-light-subtle border-dark rounded border p-3">
-                                    <!-- **SHOW THIS INPUT IF “AGENT”** -->
-                                    <h5 class="text-dark fw-semibold">By an agent</h5>
+                                <!-- FORM UTAMA -->
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2" id="common_fields" style="display: none;">
+                                    <h5 class="text-dark fw-semibold" id="form_title">Property Details</h5>
                                     <hr>
-                                    <div class="row m-0 p-0">
-                                        <div class="col-12">
-                                            <label class="form-label me-3">Whats the base price ?</label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
-                                                <label class="form-check-label" for="base_price_1">NET saler</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
-                                                <label class="form-check-label" for="base_price_2">Selling price</label>
-                                            </div>
+
+                                    <!-- BASE PRICE -->
+                                    <div class="col-12">
+                                        <label class="form-label">What's the base price?</label><br />
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
+                                            <label class="form-check-label" for="base_price_1">NET saler</label>
                                         </div>
-
-                                        <x-form-input className="col-12" type="text" name="desire_price_from_the_owner" label="Desire price from the owner" />
-
-                                        <div class="col-12 mb-1">
-                                            <label class="form-check-label" for="commission_of_the_agent">Commission of the agent</label>
-                                            <br />
-                                            <div class="d-flex align-items-center gap-2">
-                                                <input type="int" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" placeholder="%">
-                                                <label for="">AMMOUNT</label>
-                                            </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
+                                            <label class="form-check-label" for="base_price_2">Selling price</label>
                                         </div>
+                                    </div>
 
-                                        <div class="col-12 my-1">
-                                            <label class="form-label me-3">Full Balimmo commission ?</label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
-                                                <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
-                                                <label class="form-check-label" for="commission_balimmo_no">No</label>
-                                            </div>
+                                    <!-- DESIRE PRICE -->
+                                    <div class="col-12 mt-2">
+                                        <label>Desire price from the owner</label>
+                                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner">
+                                    </div>
+
+                                    <!-- FULL COMMISSION (AGENT ONLY) -->
+                                    <div id="agent_commission_fields" style="display: none;" class="col-12 mt-2">
+                                        <label>Full Balimmo commission?</label><br />
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
+                                            <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
                                         </div>
-
-                                        <div class="col-12 mb-1">
-                                            <label class="form-check-label" for="balimmo_commission">Balimmo commission</label>
-                                            <br />
-                                            <div class="d-flex align-items-center gap-2">
-                                                <input type="int" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%">
-                                                <label for="">AMMOUNT</label>
-                                            </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
+                                            <label class="form-check-label" for="commission_balimmo_no">No</label>
                                         </div>
+                                    </div>
 
-                                        <x-form-input className="col-12" type="int" name="website_price" label="Website price" />
+                                    <!-- COMMISSIONS -->
+                                    <div class="col-12 mt-2" id="agent_commission_field">
+                                        <label>Commission of the agent (%)</label>
+                                        <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" />
+                                    </div>
+
+                                    <div class="col-12 mt-2">
+                                        <label>Balimmo commission (%)</label>
+                                        <input type="text" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%" />
+                                    </div>
+
+                                    <!-- WEBSITE PRICE -->
+                                    <div class="col-12 mt-2">
+                                        <label>Website price (calculated)</label>
+                                        <input type="text" name="website_price" id="website_price" class="form-control" readonly />
+                                    </div>
+
+                                    <!-- NET PROFIT (Selling Price Only) -->
+                                    <div class="col-12 mt-2" id="profit_wrapper" style="display: none;">
+                                        <label>Net Profit / Margin (Estimated)</label>
+                                        <input type="text" name="net_profit" id="net_profit" class="form-control" readonly />
                                     </div>
                                 </div>
-
-                                <div id="find_property_by_owner" style="display: none" class="col-6 row bg-light-subtle border-dark rounded border p-3">
-                                    <!-- **SHOW THIS INPUT IF “OWNER”** -->
-                                    <h5 class="text-dark fw-semibold">Owner of the villa</h5>
-                                    <hr>
-                                    <div class="row m-0 p-0">
-                                        <div class="col-12">
-                                            <label class="form-label me-3">Whats the base price ?</label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
-                                                <label class="form-check-label" for="base_price_1">NET saler</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
-                                                <label class="form-check-label" for="base_price_2">Selling price</label>
-                                            </div>
-                                        </div>
-
-                                        <x-form-input className="col-12" type="text" name="desire_price_from_the_owner" label="Desire price from the owner" />
-
-                                        <div class="col-12 mb-1">
-                                            <label class="form-check-label" for="balimmo_commission">Balimmo commission</label>
-                                            <br />
-                                            <div class="d-flex align-items-center gap-2">
-                                                <input type="int" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%">
-                                                <label for="">AMMOUNT</label>
-                                            </div>
-                                        </div>
-
-                                        <x-form-input className="col-12" type="int" name="website_price" label="Website price" />
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -655,12 +633,13 @@
                                             @enderror
 
                                         </div>
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Visit Tour Link" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Lifestyle" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Experience" />
+                                        <x-form-input className="col-12" type="text" name="url_virtual_tour" label="Visit Tour Link" />
+                                        <x-form-input className="col-12" type="text" name="url_lifestyle" label="Lifestyle" />
+                                        <x-form-input className="col-12" type="text" name="url_experience" label="Experience" />
                                     </div>
 
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -677,6 +656,7 @@
                     </div>
                 </div>
             </div>
+
     </form>
 @endsection
 @push('scripts')
@@ -691,6 +671,172 @@
 
     <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
 
+    {{-- {-- PRICE CALCULTAION --} --}}
+    <script>
+        function parseRupiah(value) {
+            return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
+        }
+
+        function getBalimmoCommissionRate(price) {
+            if (price < 15_000_000_000) return 5;
+            if (price < 34_000_000_000) return 4;
+            if (price < 70_000_000_000) return 3;
+            return 2.5;
+        }
+
+        function getBalimmoMinCommission(price) {
+            if (price < 15_000_000_000) return 3.5;
+            if (price < 34_000_000_000) return 3;
+            if (price < 70_000_000_000) return 2.2;
+            return 2;
+        }
+
+        function isOwnerSelected() {
+            return document.getElementById("by_owner").checked;
+        }
+
+        function getBasePriceType() {
+            const selected = document.querySelector('input[name="base_price"]:checked');
+            return selected ? selected.value : "NET saler";
+        }
+
+        function updateBalimmoCommission() {
+            const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+            const balimmoInput = document.getElementById("balimmo_commission");
+            const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
+            const isAgentFullYes = fullCommission === "Yes";
+            const isAgentFullNo = fullCommission === "No";
+            const isAgent = document.getElementById("by_agent").checked;
+            const isOwner = isOwnerSelected();
+
+            if (!price || !balimmoInput) {
+                balimmoInput.value = "0";
+                return;
+            }
+
+            const rate = getBalimmoCommissionRate(price);
+            const min = getBalimmoMinCommission(price);
+            let val = parseFloat(balimmoInput.value);
+
+            if (!balimmoInput.value || val === 0) {
+                // Auto-fill jika belum ada input manual
+                if (isOwner || isAgentFullYes) {
+                    balimmoInput.value = rate.toFixed(2);
+                } else if (isAgentFullNo) {
+                    balimmoInput.value = min.toFixed(2);
+                }
+            }
+
+            val = parseFloat(balimmoInput.value);
+
+            // Validasi manual input
+            if (balimmoInput === document.activeElement) {
+                if ((isOwner || isAgentFullYes) && val < rate) {
+                    alert(`Balimmo commission cannot be lower than ${rate}%`);
+                    balimmoInput.value = rate.toFixed(2);
+                } else if (isAgentFullNo && val < min) {
+                    alert(`Balimmo commission cannot be lower than minimum: ${min}%`);
+                    balimmoInput.value = min.toFixed(2);
+                } else if (val > 100) {
+                    alert("Balimmo commission cannot exceed 100%");
+                    balimmoInput.value = "100";
+                }
+            }
+
+            calculateWebsitePrice();
+        }
+
+        function calculateWebsitePrice() {
+            const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+            const agent = parseFloat(document.getElementById("commission_of_the_agent").value) || 0;
+            const balimmo = parseFloat(document.getElementById("balimmo_commission").value) || 0;
+            const base = getBasePriceType();
+
+            const totalCommission = price * (agent + balimmo) / 100;
+            let websitePrice = 0;
+            const netProfitField = document.getElementById("net_profit");
+            const profitWrapper = document.getElementById("profit_wrapper");
+
+            if (base === "NET saler") {
+                websitePrice = price + totalCommission;
+                profitWrapper.style.display = "none";
+            } else {
+                websitePrice = price;
+                profitWrapper.style.display = "block";
+                netProfitField.value = Math.round(price - totalCommission).toLocaleString('id-ID');
+            }
+
+            document.getElementById("website_price").value = Math.round(websitePrice).toLocaleString('id-ID');
+        }
+
+        function setupListeners() {
+            const fields = [
+                'desire_price_from_the_owner',
+                'commission_of_the_agent',
+                'balimmo_commission',
+                'commission_balimmo_yes',
+                'commission_balimmo_no',
+                'base_price_1',
+                'base_price_2'
+            ];
+
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('input', () => {
+                        updateBalimmoCommission();
+                        calculateWebsitePrice();
+                    });
+                    el.addEventListener('change', () => {
+                        updateBalimmoCommission();
+                        calculateWebsitePrice();
+                    });
+                }
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const ownerRadio = document.getElementById("by_owner");
+            const agentRadio = document.getElementById("by_agent");
+
+            const commonFields = document.getElementById("common_fields");
+            const agentFields = document.getElementById("agent_fields");
+            const agentCommissionFields = document.getElementById("agent_commission_fields");
+
+            function updateFormDisplay() {
+                const agentFields = document.getElementById("agent_fields");
+                const agentCommissionFields = document.getElementById("agent_commission_fields");
+                const agentCommissionField = document.getElementById("agent_commission_field");
+                const commonFields = document.getElementById("common_fields");
+
+                commonFields.style.display = "block";
+
+                if (document.getElementById("by_agent").checked) {
+                    agentFields.style.display = "block";
+                    agentCommissionFields.style.display = "block";
+                    agentCommissionField.style.display = "block"; // SHOW field agent commission
+                } else {
+                    agentFields.style.display = "none";
+                    agentCommissionFields.style.display = "none";
+                    agentCommissionField.style.display = "none"; // HIDE when owner
+                }
+
+                document.getElementById("balimmo_commission").value = "0";
+                document.getElementById("website_price").value = "";
+                document.getElementById("net_profit").value = "";
+                document.getElementById("profit_wrapper").style.display = "none";
+
+                updateBalimmoCommission();
+                setupListeners();
+            }
+
+
+            ownerRadio.addEventListener("change", updateFormDisplay);
+            agentRadio.addEventListener("change", updateFormDisplay);
+        });
+    </script>
+    {{-- {-- PRICE CALCULTAION --} --}}
+
     <script>
         // Ambil semua radio button dengan name "split_land"
         const findProperty = document.querySelectorAll('input[name="find_property"]');
@@ -700,11 +846,11 @@
 
         findProperty.forEach(radio => {
             radio.addEventListener('change', function() {
-                if (this.value === "By an agent") {
+                if (this.value === "agent") {
                     findPropertySelected.style.display = 'block';
                     findPropertyAgent.style.display = 'block';
                     findPropertyOwner.style.display = 'none';
-                } else if (this.value === "Owner of the villa") {
+                } else if (this.value === "owner") {
                     findPropertySelected.style.display = 'none';
                     findPropertyAgent.style.display = 'none';
                     findPropertyOwner.style.display = 'block';

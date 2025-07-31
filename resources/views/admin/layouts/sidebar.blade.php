@@ -32,34 +32,29 @@
                 </a>
             </li>
 
-            @role('Master|agent')
+            @role('master|agent')
                 <li class="menu-title">Management Listing</li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-arrow {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="#sidebarProperty" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProperty">
+                    <a class="nav-link {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="{{ route('properties.index') }}">
                         <span class="nav-icon">
                             <i class="ri-community-line"></i>
                         </span>
-                        <span class="nav-text"> Data Listing </span>
+                        <span class="nav-text">Properties</span>
                     </a>
-                    <div class="{{ request()->routeIs('properties.*') ? 'show' : '' }} collapse" id="sidebarProperty">
-                        <ul class="nav sub-navbar-nav">
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('properties.index') }}">Data Listing</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('properties.create') }}">Create Properties Listing</a>
-                            </li>
-                            <li class="sub-nav-item">
-                                <a class="sub-nav-link" href="{{ route('land.create') }}">Create Land Listing</a>
-                            </li>
+                </li>
 
-                        </ul>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('land.*') ? 'active' : '' }}" href="{{ route('land.index') }}">
+                        <span class="nav-icon">
+                            <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
+                        </span>
+                        <span class="nav-text">Lands</span>
+                    </a>
                 </li>
             @endrole
 
-            @role('Master|agent')
+            @role('master|agent')
                 <li class="menu-title">Customer Management</li>
 
                 <li class="nav-item">
@@ -90,7 +85,7 @@
                 </li>
             @endrole
 
-            @role('Master|agent')
+            @role('master|agent')
                 <li class="menu-title">Document Management</li>
 
                 <li class="nav-item">
@@ -134,7 +129,7 @@
                 </li>
             @endrole
 
-            @role('Master')
+            @role('master')
                 <li class="menu-title">User Management</li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('agent.*') ? 'active' : '' }}" href="{{ route('agent.index') }}">
@@ -166,7 +161,7 @@
                 </a>
             </li>
 
-            @role('Master')
+            @role('master')
                 <li class="menu-title">Setting</li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('localization.*') ? 'active' : '' }}" href="{{ route('localization.index') }}">
