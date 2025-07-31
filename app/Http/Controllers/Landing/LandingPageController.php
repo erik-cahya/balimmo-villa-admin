@@ -231,9 +231,10 @@ class LandingPageController extends Controller
 
     public function landListingDetail($slug)
     {
-        $data['property'] = PropertiesModel::where('property_slug', $slug)
+        dd($slug);
+        $data['property'] = LandModel::where('land_slug', $slug)
             ->select(
-                'properties.*',
+                'land.*',
                 'users.name as agent_name',
                 'users.reference_code as agent_code',
                 'users.email as agent_email',
@@ -241,14 +242,14 @@ class LandingPageController extends Controller
                 'users.tagline as agent_tagline',
                 'users.profile as profilePicture',
                 'property_legal.legal_status as legalStatus',
-                'property_financial.selling_price_idr',
-                'property_financial.selling_price_usd',
+                'land_financial.selling_price_idr',
+                'land_financial.selling_price_usd',
             )
-            ->join('users', 'reference_code', '=', 'properties.internal_reference')
-            ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
-            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->join('users', 'reference_code', '=', 'land.internal_reference')
+            ->join('property_legal', 'property_legal.land_id', '=', 'land.id')
+            ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
             ->with(['featuredImage' => function ($query) {
-                $query->select('image_path', 'property_gallery.id');
+                $query->select('image_path', 'land_gallery.id');
                 $query->where('is_featured', 1);
             }])->first();
 
