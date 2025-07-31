@@ -498,116 +498,89 @@
                         </h2>
                         <div id="collapseSalePrice" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex gap-4 px-4 align-items-start justify-content-between">
-
+                                <!-- PILIHAN AGENT / OWNER -->
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
-                                    <p class="text-dark ">Let define the good price and commission rate for this good.</p>
-                                    <h5 class="text-dark fw-semibold">How did you find the property ?</h5>                                    
-                                    <hr>                                    
-                                    <div class="row p-0 m-0">
-                                        <div class="col-12 mb-3">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="Owner of the villa">
-                                                <label class="form-check-label" for="by_owner">Owner of the villa</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="By an agent">
-                                                <label class="form-check-label" for="by_agent">By an agent</label>
-                                            </div>
-                                        </div>
-                                        <div id="find_property_selection" style="display: none">
-                                            <x-form-input className="col-12" type="text" name="" label="Name of this agent" />
-                                            <x-form-input className="col-12" type="text" name="" label="Email of this agent" />
-                                            <x-form-input className="col-12" type="text" name="" label="Whatsapp of this agent" />
-                                        </div>
+                                    <h5 class="text-dark fw-semibold">How did you find the property?</h5>
+                                    <hr>
+                                    <div class="col-12 mb-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="Owner of the villa">
+                                        <label class="form-check-label" for="by_owner">Owner of the villa</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="By an agent">
+                                        <label class="form-check-label" for="by_agent">By an agent</label>
+                                    </div>
+                                    </div>
+
+                                    <!-- Jika by agent -->
+                                    <div id="agent_fields" style="display: none;">
+                                        <x-form-input className="col-12" type="text" name="agent_name" label="Name of this agent" />
+                                        <x-form-input className="col-12" type="text" name="agent_email" label="Email of this agent" />
+                                        <x-form-input className="col-12" type="text" name="agent_whatsapp" label="Whatsapp of this agent" />
                                     </div>
                                 </div>
 
-                                
-                                <div id="find_property_by_agent" style="display: none" class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">   
-                                    <!-- **SHOW THIS INPUT IF “AGENT”** -->     
-                                    <h5 class="text-dark fw-semibold">By an agent</h5>                                    
-                                    <hr>                        
-                                    <div class="row p-0 m-0">
-                                        <div class="col-12">
-                                            <label class="form-label me-3">Whats the base price ?</label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
-                                                <label class="form-check-label" for="base_price_1">NET saler</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
-                                                <label class="form-check-label" for="base_price_2">Selling price</label>
-                                            </div>
-                                        </div>
+                                <!-- FORM UTAMA -->
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2" id="common_fields" style="display: none;">
+                                    <h5 class="text-dark fw-semibold" id="form_title">Property Details</h5>
+                                    <hr>
 
-                                        <x-form-input className="col-12" type="text" name="desire_price_from_the_owner" label="Desire price from the owner" />
+                                    <!-- BASE PRICE -->
+                                    <div class="col-12">
+                                    <label class="form-label">What's the base price?</label><br />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
+                                        <label class="form-check-label" for="base_price_1">NET saler</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
+                                        <label class="form-check-label" for="base_price_2">Selling price</label>
+                                    </div>
+                                    </div>
 
-                                        <div class="col-12 mb-1">
-                                            <label class="form-check-label" for="commission_of_the_agent">Commission of the agent</label>
-                                            <br />
-                                            <div class="d-flex align-items-center gap-2">
-                                                <input type="int" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" placeholder="%">
-                                                <label for="">AMMOUNT</label>
-                                            </div>
-                                        </div>
+                                    <!-- DESIRE PRICE -->
+                                    <div class="col-12 mt-2">
+                                    <label>Desire price from the owner</label>
+                                    <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner">
+                                    </div>
 
-                                        <div class="col-12 my-1">
-                                            <label class="form-label me-3">Full Balimmo commission ?</label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
-                                                <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
-                                                <label class="form-check-label" for="commission_balimmo_no">No</label>
-                                            </div>
-                                        </div>
+                                    <!-- FULL COMMISSION (AGENT ONLY) -->
+                                    <div id="agent_commission_fields" style="display: none;" class="col-12 mt-2">
+                                    <label>Full Balimmo commission?</label><br />
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
+                                        <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
+                                        <label class="form-check-label" for="commission_balimmo_no">No</label>
+                                    </div>
+                                    </div>
 
-                                        <div class="col-12 mb-1">
-                                            <label class="form-check-label" for="balimmo_commission">Balimmo commission</label>
-                                            <br />
-                                            <div class="d-flex align-items-center gap-2">
-                                                <input type="int" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%">
-                                                <label for="">AMMOUNT</label>
-                                            </div>
-                                        </div>
+                                    <!-- COMMISSIONS -->
+                                    <div class="col-12 mt-2" id="agent_commission_field">
+                                    <label>Commission of the agent (%)</label>
+                                    <input type="number" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" />
+                                    </div>
 
-                                        <x-form-input className="col-12" type="int" name="website_price" label="Website price" />
-                                    </div>                                    
+                                    <div class="col-12 mt-2">
+                                    <label>Balimmo commission (%)</label>
+                                    <input type="number" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%" value="0" />
+                                    </div>
+
+                                    <!-- WEBSITE PRICE -->
+                                    <div class="col-12 mt-2">
+                                    <label>Website price (calculated)</label>
+                                    <input type="text" name="website_price" id="website_price" class="form-control" readonly />
+                                    </div>
+
+                                    <!-- NET PROFIT (Selling Price Only) -->
+                                    <div class="col-12 mt-2" id="profit_wrapper" style="display: none;">
+                                    <label>Net Profit / Margin (Estimated)</label>
+                                    <input type="text" name="net_profit" id="net_profit" class="form-control" readonly />
+                                    </div>
                                 </div>
-
-                                <div id="find_property_by_owner" style="display: none" class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">   
-                                    <!-- **SHOW THIS INPUT IF “OWNER”** -->     
-                                    <h5 class="text-dark fw-semibold">Owner of the villa</h5>                                    
-                                    <hr>                        
-                                    <div class="row p-0 m-0">
-                                        <div class="col-12">
-                                            <label class="form-label me-3">Whats the base price ?</label>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
-                                                <label class="form-check-label" for="base_price_1">NET saler</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
-                                                <label class="form-check-label" for="base_price_2">Selling price</label>
-                                            </div>
-                                        </div>
-
-                                        <x-form-input className="col-12" type="text" name="desire_price_from_the_owner" label="Desire price from the owner" />                                        
-
-                                        <div class="col-12 mb-1">
-                                            <label class="form-check-label" for="balimmo_commission">Balimmo commission</label>
-                                            <br />
-                                            <div class="d-flex align-items-center gap-2">
-                                                <input type="int" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%">
-                                                <label for="">AMMOUNT</label>
-                                            </div>
-                                        </div>
-
-                                        <x-form-input className="col-12" type="int" name="website_price" label="Website price" />
-                                    </div>                                    
-                                </div>
-                               
                             </div>
                         </div>
                     </div>
@@ -686,539 +659,6 @@
                 </div>
             </div>
 
-<!-- ================ Old Add Property ================ -->
-            <!-- <div class="row">
-
-                <div class="col-xl-6 col-lg-6">
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Properties Information Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Property Owners</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 1</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][first_name]">
-                                            <label for="owners[0][first_name]" class="form-label">First Name</label>
-
-                                            <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
-
-                                            @error('owners.0.first_name')
-                                                <div class="alert alert-danger fs-11 m-0 p-1">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][last_name]">
-                                            <label for="owners[0][last_name]" class="form-label">Last Name</label>
-
-                                            <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
-
-                                            @error('owners.0.last_name')
-                                                <div class="alert alert-danger fs-11 m-0 p-1">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][email]">
-                                            <label for="owners[0][email]" class="form-label">Emails</label>
-
-                                            <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
-
-                                            @error('owners.0.email')
-                                                <div class="alert alert-danger fs-11 m-0 p-1">
-
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[0][phone_number]">
-                                            <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
-
-                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.0.phone_number') }}">
-
-                                            @error('owners.0.phone_number')
-                                                <div class="alert alert-danger fs-11 m-0 p-1">
-
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
-                                    <hr>
-                                    {{-- <div class="row my-3">
-
-                                        <x-form-input className="col-lg-6" type="text" name="owners[1][first_name]" label="First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="owners[1][last_name]" label="Last Name" />
-                                        <x-form-input className="col-lg-6" type="email" name="owners[1][email]" label="Emails" />
-                                        <x-form-input className="col-lg-6" type="number" name="owners[1][phone_number]" label="Phone Number" />
-
-                                    </div> --}}
-
-                                    <div class="row my-3">
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[1][first_name]">
-                                            <label for="owners[1][first_name]" class="form-label">First Name</label>
-
-                                            <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.1.first_name') }}">
-
-                                            @error('owners.1.first_name')
-                                                <div class="alert alert-danger fs-11 m-0 p-1">
-
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[1][last_name]">
-                                            <label for="owners[1][last_name]" class="form-label">Last Name</label>
-
-                                            <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.1.last_name') }}">
-
-                                            @error('owners.1.last_name')
-                                                <div class="alert alert-danger fs-11 m-0 p-1">
-
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[1][email]">
-                                            <label for="owners[1][email]" class="form-label">Emails</label>
-
-                                            <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.1.email') }}">
-
-                                            @error('owners.1.email')
-                                                <div class="alert alert-danger fs-11 m-0 p-1">
-
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="col-lg-6 mb-3" id="group_owners[1][phone_number]">
-                                            <label for="owners[1][phone_number]" class="form-label">Phone Number</label>
-
-                                            <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.1.phone_number') }}">
-
-                                            @error('owners.1.phone_number')
-                                                <div class="alert alert-danger fs-11 m-0 p-1">
-
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <x-form-input className="col-lg-12" type="text" name="company_name" label="Company Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_first_name" label="Legal Representative First Name" />
-                                        <x-form-input className="col-lg-6" type="text" name="legal_rep_last_name" label="Legal Representative Last Name" />
-                                        <x-form-input className="col-lg-6" type="email" name="legal_rep_email" label="Email" />
-                                        <x-form-input className="col-lg-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Features & Amenities Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Features & Amenities</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                @error('feature')
-                                    <div class="alert alert-danger alert-icon" role="alert">
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar-sm bg-danger d-flex justify-content-center align-items-center fs-18 me-2 flex-shrink-0 rounded">
-                                                <i class="bx bx-info-circle text-white"></i>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                {{ $message }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                @enderror
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Indoor Features</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        @foreach ($feature_list_indoor as $feature_indoor)
-                                            <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
-                                        @endforeach
-
-                                    </div>
-                                </div>
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Outdoor Features</h5>
-                                    <hr>
-                                    <div class="row my-3">
-                                        @foreach ($feature_list_outdoor as $feature_outdoor)
-                                            <x-form-checkbox className="form-check mb-2 mx-3" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-xl-6 col-lg-6">
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Purpose of The Mandate Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Purpose of The Mandate</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <div class="col-lg-12 mb-3" id="group_internal_reference">
-                                    <label for="internal_reference" class="form-label">Internal Reference</label>
-                                    <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
-                                </div>
-
-                                <x-form-input className="col-lg-12" type="text" name="property_name" label="Property Name" />
-
-                                <div class="col-lg-6 mb-3" id="group_region">
-                                    <label for="region" class="form-label">Region</label>
-                                    <select id="region" class="form-select" name="region">
-                                        <option value="" selected disabled>Select Region</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-lg-6 mb-3" id="group_region">
-                                    <label for="region" class="form-label">Sub Region</label>
-                                    <select id="subregion" class="form-select" name="subregion">
-                                        <option value="" selected disabled>Select Region First </option>
-                                    </select>
-                                </div>
-
-                                <div class="col-lg-12 mb-3" id="group_property_address">
-                                    <label for="property_address" class="form-label">Property Address</label>
-                                    <textarea class="form-control" id="property_address" name="property_address" rows="3" placeholder="Enter address">{{ old('property_address') }}</textarea>
-                                </div>
-
-                                <div class="col-lg-12 mb-3" id="group_description">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ old('description') }}</textarea>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Technical Details of The Property Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Technical Details of The Property</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" />
-                                <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" />
-                                <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" />
-
-                                <x-form-input className="col-lg-6" type="number" name="bedroom" label="Bedroom" />
-                                <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" />
-
-                                <x-form-input className="col-lg-6" type="number" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" />
-                                <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Rental Yield Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Rental Yield</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <x-form-input className="col-lg-6" type="text" name="average_nightly_rate" label="Average Nightly Rate (IDR) *" />
-
-                                <div class="col-md-6" id="group_average_occupancy_rate">
-                                    <label for="average_occupancy_rate" class="form-label">Average Occupancy Rate (%) *</label>
-                                    <div class="input-group">
-                                        <input type="number" name="average_occupancy_rate" class="form-control" placeholder="Input Avg Occupancy Rate" value="{{ old('average_occupancy_rate') }}">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6" id="group_month_rented_per_year">
-                                    <label for="month_rented_per_year" class="form-label">Months Rented per Year *</label>
-                                    <div class="input-group">
-                                        <input type="number" name="month_rented_per_year" class="form-control" min="1" max="120" placeholder="Months Rented per Year" value="{{ old('month_rented_per_year') }}">
-                                        <span class="input-group-text">month(s)</span>
-                                    </div>
-                                </div>
-
-                                <x-form-input className="col-lg-6" type="text" name="estimated_annual_turnover" label="Estimated Annual Turnover (IDR) *" />
-                                <div class="col-lg-12 mb-3">
-                                    <label for="file_rental_support" class="form-label">Supporting Document (e.g. : agency report, booking.com, airbnb, etc)</label>
-                                    <input type="file" id="file_rental_support" name="file_rental_support" class="form-control" placeholder="">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Legal Status of the Property Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Legal Status of the Property</h4>
-                        </div>
-                        <div class="card-body">
-
-                            <x-form-select className="col-lg-12" name="legal_category" label="Property Legal Category" :options="['Leasehold', 'Freehold']" />
-
-                            <div class="row">
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="freehold_group">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Freehold (Hak Milik)</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" />
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
-
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="row">
-                                                <label for="" class="form-label">Zoning</label>
-                                                <div class="col-12">
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone" {{ old('freehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="freehold_green_zone">Green Zone</label>
-                                                    </div>
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone" {{ old('freehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="freehold_yellow_zone">Yellow Zone</label>
-                                                    </div>
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone" {{ old('freehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="freehold_pink_zone">Pink Zone</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="leasehold_group">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Leasehold (Hak Sewa)</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
-
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" />
-
-                                    </div>
-                                </div>
-
-                                <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4" id="extension_leasehold_group">
-                                    <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Extension Details</h5>
-                                    <hr>
-                                    <div class="row my-3">
-
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
-                                        <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
-
-                                        <div class="col-lg-6 mb-3">
-                                            <div class="row">
-                                                <label for="" class="form-label">Zoning</label>
-                                                <div class="col-12">
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone" {{ old('leasehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="leasehold_green_zone">Green Zone</label>
-                                                    </div>
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone" {{ old('leasehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="leasehold_yellow_zone">Yellow Zone</label>
-                                                    </div>
-                                                    <div class="form-check form-check">
-                                                        <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone" {{ old('leasehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="leasehold_pink_zone">Pink Zone</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Sale Price & Conditions Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Sale Price & Conditions</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <x-form-input className="col-lg-6" type="text" name="idr_price" label="Desired Selling Price" />
-                                <x-form-input className="col-lg-6" type="text" name="usd_price" label="Estimated USD Conversion" disabled="true" />
-                                <input type="hidden" name="usd_price" id="usd_price_raw">
-
-                                <x-form-input className="col-lg-4" type="text" name="commision_rate" label="Commision Rate (%)" value="4%" disabled="true" />
-
-                                <x-form-input className="col-lg-4" type="text" name="estimated_commision_idr" label="Est. Commision Ammount" value="IDR 0" disabled="true" />
-                                <x-form-input className="col-lg-4" type="text" name="estimated_commision_usd" label="Est. Commision Ammount" value="$0" disabled="true" />
-
-                                <x-form-input className="col-lg-6" type="text" name="net_seller_price_idr" label="Net Seller price (Excluding Commision)" value="IDR 0" disabled="true" />
-                                <x-form-input className="col-lg-6" type="text" name="net_seller_price_usd" label="Net Seller price (Excluding Commision)" value="$0" disabled="true" />
-                                <p id="exchange_rate_info" class="text-muted"></p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Type of Mandate Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Type of Mandate</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <div class="col-lg-12 mb-3">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="esstentials_mandate">Essentials Mandate</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="booster_mandate">Booster Mandate</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 mb-3">
-                                    <label for="file_type_of_mandate" class="form-label">Supporting Document</label>
-                                    <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- -------------------------------------------------------------------------  --}}
-                    {{-- Document & Attachment Section Form  --}}
-                    {{-- -------------------------------------------------------------------------  --}}
-                    <div class="card">
-                        <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                            <h4 class="card-title text-uppercase">Document & Attachment</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-
-                                <div class="col-lg-12 mb-3">
-                                    <label for="gallery" class="form-label">Property Gallery</label>
-
-                                    <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
-
-                                    <div id="previewContainer" class="d-flex flex-wrap gap-3">
-                                        @if (session('old_images'))
-                                            @foreach (session('old_images') as $index => $img)
-                                                <div class="img-preview" data-index="{{ $index }}">
-                                                    <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
-                                                        style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
-                                                    <p class="mt-1 text-center">Image {{ $index + 1 }}</p>
-                                                    <input type="hidden" name="old_images[]" value="{{ $img }}">
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
-
-                                    <input type="hidden" name="order" id="imageOrder">
-
-                                    @error('images')
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-
-                                </div>
-
-                                <x-form-input className="col-lg-12" type="text" name="url_virtual_tour" label="Virtual Tour Link" placeholder="Input Youtube URL" />
-                                <x-form-input className="col-lg-12" type="text" name="url_lifestyle" label="Lifestyle" placeholder="Input Youtube URL" />
-                                <x-form-input className="col-lg-12" type="text" name="url_experience" label="Experience" placeholder="Input Youtube URL" />
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 rounded">
-                        <div class="row justify-content-end g-2">
-                            <div class="col-lg-3">
-                                <button type="submit" class="btn btn-outline-primary w-100">Create Properties</button>
-                            </div>
-                            <div class="col-lg-2">
-                                <a href="#!" class="btn btn-danger w-100">Cancel</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> -->
     </form>
 @endsection
 @push('scripts')
@@ -1233,111 +673,172 @@
 
     <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
 
+    {-- PRICE CALCULTAION --}
     <script>
-  // Format harga string → number
-  function parseRupiah(value) {
-    return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
-  }
-
-  // Komisi berdasarkan range harga
-  function getBalimmoCommissionRate(price) {
-    if (price < 15_000_000_000) return 5;
-    if (price < 34_000_000_000) return 4;
-    if (price < 70_000_000_000) return 3;
-    return 2.5;
-  }
-
-  // Minimum komisi berdasarkan range harga
-  function getBalimmoMinCommission(price) {
-    if (price < 15_000_000_000) return 3.5;
-    if (price < 34_000_000_000) return 3;
-    if (price < 70_000_000_000) return 2.2;
-    return 2;
-  }
-
-  // Update Balimmo Commission (otomatis/minimum)
-  function updateBalimmoCommission() {
-    const desirePrice = parseRupiah(document.querySelector('input[name="desire_price_from_the_owner"]').value);
-    const isFullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value === 'Yes';
-    const balimmoInput = document.getElementById("balimmo_commission");
-
-    if (isFullCommission) {
-      const rate = getBalimmoCommissionRate(desirePrice);
-      balimmoInput.value = rate.toFixed(2);
-      balimmoInput.readOnly = false;
-    } else {
-      balimmoInput.readOnly = false;
-      const min = getBalimmoMinCommission(desirePrice);
-      let val = parseFloat(balimmoInput.value);
-      if (!isNaN(val)) {
-        if (val < min) {
-          alert("Balimmo commission terlalu rendah. Disesuaikan ke minimum: " + min + "%");
-          balimmoInput.value = min.toFixed(2);
-        } else if (val > 100) {
-          alert("Balimmo commission tidak boleh lebih dari 100%");
-          balimmoInput.value = "100";
+        function parseRupiah(value) {
+        return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
         }
-      }
-    }
 
-    calculateWebsitePrice(); // update harga website setelah komisi berubah
-  }
+        function getBalimmoCommissionRate(price) {
+        if (price < 15_000_000_000) return 5;
+        if (price < 34_000_000_000) return 4;
+        if (price < 70_000_000_000) return 3;
+        return 2.5;
+        }
 
-  // Kalkulasi harga Website otomatis
-  function calculateWebsitePrice() {
-    const desirePrice = parseRupiah(document.querySelector('input[name="desire_price_from_the_owner"]').value);
-    const agentPercentInput = document.getElementById("commission_of_the_agent");
-    const balimmoPercentInput = document.getElementById("balimmo_commission");
-    const websiteInput = document.querySelector('input[name="website_price"]');
+        function getBalimmoMinCommission(price) {
+        if (price < 15_000_000_000) return 3.5;
+        if (price < 34_000_000_000) return 3;
+        if (price < 70_000_000_000) return 2.2;
+        return 2;
+        }
 
-    let agent = parseFloat(agentPercentInput.value) || 0;
-    let balimmo = parseFloat(balimmoPercentInput.value) || 0;
+        function isOwnerSelected() {
+        return document.getElementById("by_owner").checked;
+        }
 
-    // Validasi tidak boleh lebih dari 100%
-    if (agent > 100) {
-      alert("Agent commission tidak boleh lebih dari 100%");
-      agent = 100;
-      agentPercentInput.value = "100";
-    }
+        function getBasePriceType() {
+        const selected = document.querySelector('input[name="base_price"]:checked');
+        return selected ? selected.value : "NET saler";
+        }
 
-    if (balimmo > 100) {
-      alert("Balimmo commission tidak boleh lebih dari 100%");
-      balimmo = 100;
-      balimmoPercentInput.value = "100";
-    }
+        function updateBalimmoCommission() {
+        const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+        const balimmoInput = document.getElementById("balimmo_commission");
+        const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
+        const isAgentFullYes = fullCommission === "Yes";
+        const isAgentFullNo  = fullCommission === "No";
+        const isAgent = document.getElementById("by_agent").checked;
+        const isOwner = isOwnerSelected();
 
-    const total = desirePrice * (1 + ((agent + balimmo) / 100));
-    websiteInput.value = total.toLocaleString('id-ID'); // Format ribuan
-  }
+        if (!price || !balimmoInput) {
+            balimmoInput.value = "0";
+            return;
+        }
 
-  // Event listener untuk semua perubahan
-  function setupListeners() {
-    const elementsToWatch = [
-      'desire_price_from_the_owner',
-      'commission_of_the_agent',
-      'balimmo_commission',
-      'commission_balimmo_yes',
-      'commission_balimmo_no'
-    ];
+        const rate = getBalimmoCommissionRate(price);
+        const min = getBalimmoMinCommission(price);
+        let val = parseFloat(balimmoInput.value);
 
-    elementsToWatch.forEach(id => {
-      const el = document.getElementById(id) || document.querySelector(`input[name="${id}"]`);
-      if (el) {
-        el.addEventListener('input', () => {
-          updateBalimmoCommission();
-          calculateWebsitePrice();
+        if (!balimmoInput.value || val === 0) {
+            // Auto-fill jika belum ada input manual
+            if (isOwner || isAgentFullYes) {
+            balimmoInput.value = rate.toFixed(2);
+            } else if (isAgentFullNo) {
+            balimmoInput.value = min.toFixed(2);
+            }
+        }
+
+        val = parseFloat(balimmoInput.value);
+
+        // Validasi manual input
+        if (balimmoInput === document.activeElement) {
+            if ((isOwner || isAgentFullYes) && val < rate) {
+            alert(`Balimmo commission cannot be lower than ${rate}%`);
+            balimmoInput.value = rate.toFixed(2);
+            } else if (isAgentFullNo && val < min) {
+            alert(`Balimmo commission cannot be lower than minimum: ${min}%`);
+            balimmoInput.value = min.toFixed(2);
+            } else if (val > 100) {
+            alert("Balimmo commission cannot exceed 100%");
+            balimmoInput.value = "100";
+            }
+        }
+
+        calculateWebsitePrice();
+        }
+
+        function calculateWebsitePrice() {
+        const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+        const agent = parseFloat(document.getElementById("commission_of_the_agent").value) || 0;
+        const balimmo = parseFloat(document.getElementById("balimmo_commission").value) || 0;
+        const base = getBasePriceType();
+
+        const totalCommission = price * (agent + balimmo) / 100;
+        let websitePrice = 0;
+        const netProfitField = document.getElementById("net_profit");
+        const profitWrapper = document.getElementById("profit_wrapper");
+
+        if (base === "NET saler") {
+            websitePrice = price + totalCommission;
+            profitWrapper.style.display = "none";
+        } else {
+            websitePrice = price;
+            profitWrapper.style.display = "block";
+            netProfitField.value = Math.round(price - totalCommission).toLocaleString('id-ID');
+        }
+
+        document.getElementById("website_price").value = Math.round(websitePrice).toLocaleString('id-ID');
+        }
+
+        function setupListeners() {
+        const fields = [
+            'desire_price_from_the_owner',
+            'commission_of_the_agent',
+            'balimmo_commission',
+            'commission_balimmo_yes',
+            'commission_balimmo_no',
+            'base_price_1',
+            'base_price_2'
+        ];
+
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+            el.addEventListener('input', () => {
+                updateBalimmoCommission();
+                calculateWebsitePrice();
+            });
+            el.addEventListener('change', () => {
+                updateBalimmoCommission();
+                calculateWebsitePrice();
+            });
+            }
         });
-        el.addEventListener('change', () => {
-          updateBalimmoCommission();
-          calculateWebsitePrice();
-        });
-      }
-    });
-  }
+        }
 
-  // Jalankan setelah halaman dimuat
-  window.addEventListener("DOMContentLoaded", setupListeners);
-</script>
+        window.addEventListener("DOMContentLoaded", () => {
+        const ownerRadio = document.getElementById("by_owner");
+        const agentRadio = document.getElementById("by_agent");
+
+        const commonFields = document.getElementById("common_fields");
+        const agentFields = document.getElementById("agent_fields");
+        const agentCommissionFields = document.getElementById("agent_commission_fields");
+
+        function updateFormDisplay() {
+        const agentFields = document.getElementById("agent_fields");
+        const agentCommissionFields = document.getElementById("agent_commission_fields");
+        const agentCommissionField = document.getElementById("agent_commission_field");
+        const commonFields = document.getElementById("common_fields");
+
+        commonFields.style.display = "block";
+
+        if (document.getElementById("by_agent").checked) {
+            agentFields.style.display = "block";
+            agentCommissionFields.style.display = "block";
+            agentCommissionField.style.display = "block"; // SHOW field agent commission
+        } else {
+            agentFields.style.display = "none";
+            agentCommissionFields.style.display = "none";
+            agentCommissionField.style.display = "none"; // HIDE when owner
+        }
+
+        document.getElementById("balimmo_commission").value = "0";
+        document.getElementById("website_price").value = "";
+        document.getElementById("net_profit").value = "";
+        document.getElementById("profit_wrapper").style.display = "none";
+
+        updateBalimmoCommission();
+        setupListeners();
+        }
+
+
+        ownerRadio.addEventListener("change", updateFormDisplay);
+        agentRadio.addEventListener("change", updateFormDisplay);
+        });
+    </script>
+    {-- PRICE CALCULTAION --}
+
 
 
     <script>
