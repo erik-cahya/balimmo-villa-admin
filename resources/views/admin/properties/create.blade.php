@@ -1234,6 +1234,113 @@
     <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
 
     <script>
+  // Format harga string → number
+  function parseRupiah(value) {
+    return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
+  }
+
+  // Komisi berdasarkan range harga
+  function getBalimmoCommissionRate(price) {
+    if (price < 15_000_000_000) return 5;
+    if (price < 34_000_000_000) return 4;
+    if (price < 70_000_000_000) return 3;
+    return 2.5;
+  }
+
+  // Minimum komisi berdasarkan range harga
+  function getBalimmoMinCommission(price) {
+    if (price < 15_000_000_000) return 3.5;
+    if (price < 34_000_000_000) return 3;
+    if (price < 70_000_000_000) return 2.2;
+    return 2;
+  }
+
+  // Update Balimmo Commission (otomatis/minimum)
+  function updateBalimmoCommission() {
+    const desirePrice = parseRupiah(document.querySelector('input[name="desire_price_from_the_owner"]').value);
+    const isFullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value === 'Yes';
+    const balimmoInput = document.getElementById("balimmo_commission");
+
+    if (isFullCommission) {
+      const rate = getBalimmoCommissionRate(desirePrice);
+      balimmoInput.value = rate.toFixed(2);
+      balimmoInput.readOnly = false;
+    } else {
+      balimmoInput.readOnly = false;
+      const min = getBalimmoMinCommission(desirePrice);
+      let val = parseFloat(balimmoInput.value);
+      if (!isNaN(val)) {
+        if (val < min) {
+          alert("Balimmo commission terlalu rendah. Disesuaikan ke minimum: " + min + "%");
+          balimmoInput.value = min.toFixed(2);
+        } else if (val > 100) {
+          alert("Balimmo commission tidak boleh lebih dari 100%");
+          balimmoInput.value = "100";
+        }
+      }
+    }
+
+    calculateWebsitePrice(); // update harga website setelah komisi berubah
+  }
+
+  // Kalkulasi harga Website otomatis
+  function calculateWebsitePrice() {
+    const desirePrice = parseRupiah(document.querySelector('input[name="desire_price_from_the_owner"]').value);
+    const agentPercentInput = document.getElementById("commission_of_the_agent");
+    const balimmoPercentInput = document.getElementById("balimmo_commission");
+    const websiteInput = document.querySelector('input[name="website_price"]');
+
+    let agent = parseFloat(agentPercentInput.value) || 0;
+    let balimmo = parseFloat(balimmoPercentInput.value) || 0;
+
+    // Validasi tidak boleh lebih dari 100%
+    if (agent > 100) {
+      alert("Agent commission tidak boleh lebih dari 100%");
+      agent = 100;
+      agentPercentInput.value = "100";
+    }
+
+    if (balimmo > 100) {
+      alert("Balimmo commission tidak boleh lebih dari 100%");
+      balimmo = 100;
+      balimmoPercentInput.value = "100";
+    }
+
+    const total = desirePrice * (1 + ((agent + balimmo) / 100));
+    websiteInput.value = total.toLocaleString('id-ID'); // Format ribuan
+  }
+
+  // Event listener untuk semua perubahan
+  function setupListeners() {
+    const elementsToWatch = [
+      'desire_price_from_the_owner',
+      'commission_of_the_agent',
+      'balimmo_commission',
+      'commission_balimmo_yes',
+      'commission_balimmo_no'
+    ];
+
+    elementsToWatch.forEach(id => {
+      const el = document.getElementById(id) || document.querySelector(`input[name="${id}"]`);
+      if (el) {
+        el.addEventListener('input', () => {
+          updateBalimmoCommission();
+          calculateWebsitePrice();
+        });
+        el.addEventListener('change', () => {
+          updateBalimmoCommission();
+          calculateWebsitePrice();
+        });
+      }
+    });
+  }
+
+  // Jalankan setelah halaman dimuat
+  window.addEventListener("DOMContentLoaded", setupListeners);
+</script>
+
+
+    <script>
     // Ambil semua radio button dengan name "split_land"
         const findProperty = document.querySelectorAll('input[name="find_property"]');
         const findPropertySelected = document.getElementById('find_property_selection');

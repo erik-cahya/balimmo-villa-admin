@@ -45,9 +45,9 @@
 
 <body>
     <!-- Preloader start -->
-    <div id="preloader">
+    <!-- <div id="preloader">
         <div class="loader--border"></div>
-    </div>
+    </div> -->
     <!-- Preloader end -->
     <!-- Start header area -->
     @include('landing.layouts.header')
