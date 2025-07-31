@@ -493,8 +493,8 @@ class PropertiesController extends Controller
                 'property_financial.avg_occupancy_rate',
                 'property_financial.selling_price_idr',
                 'property_financial.selling_price_usd',
-                'property_financial.commision_ammount_idr',
-                'property_financial.commision_ammount_usd',
+                // 'property_financial.commision_ammount_idr',
+                // 'property_financial.commision_ammount_usd',
 
 
                 'property_legal.company_name',

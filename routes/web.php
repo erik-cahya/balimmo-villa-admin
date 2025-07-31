@@ -87,7 +87,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/properties/change_acceptance/{slug}', [PropertiesController::class, 'changeAcceptance'])->name('properties.changeAcceptance'); // Accept Listing Properties
     Route::resource('/properties', PropertiesController::class)->except(['show']); // CRUD Property Management
     Route::resource('/properties/features', PropertiesFeatureController::class)->except(['show', 'create']); // CRUD Feature & Ammenities
-    Route::get('/properties/{slug}', [PropertiesController::class, 'detail'])->name('properties.details'); // See Properties Detail
+    Route::get('/properties/details/{slug}', [PropertiesController::class, 'detail'])->name('properties.details'); // See Properties Detail
 
     Route::get('/agent/{refcode}/properties', [AgentController::class, 'agentProperty'])->name('agent.properties'); // See Properties Listing From Agents
     Route::get('/agent/{refcode}', [AgentController::class, 'detailAgent'])->name('agent.detail'); // See Detail Data Agents
@@ -139,7 +139,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/upload-temp-gallery-land', [LandController::class, 'uploadTemp'])->name('gallery.upload.temp.land');
 
     Route::post('/land/change_acceptance/{slug}', [LandController::class, 'changeAcceptance'])->name('land.changeAcceptance'); // Accept Listing Properties
-    Route::get('/land/{slug}', [LandController::class, 'detail'])->name('land.details'); // See Properties Detail
+    Route::get('/land/details/{slug}', [LandController::class, 'detail'])->name('land.details'); // See Properties Detail
     Route::resource('/land', LandController::class);
 
 
