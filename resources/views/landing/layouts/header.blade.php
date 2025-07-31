@@ -22,7 +22,7 @@
                 </div>
                 <div class="main__menu d-none d-lg-block">
                     <nav class="main__menu--navigation">
-                        <ul class="main__menu--wrapper d-flex">                      
+                        <ul class="main__menu--wrapper d-flex">
                             <li class="main__menu--items">
                                 <a class="main__menu--link" href="{{ route('landing-page.listing') }}">
                                     <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,30 +32,31 @@
                                 </a>
                             </li>
                             <li class="main__menu--items">
-                                <a class="main__menu--link" href="{{ route('landing-page.listing') }}">                                    
-                                    <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16"  
-                                        fill="currentColor" viewBox="0 0 24 24" >
-                                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M5 19V5h14v14z"></path><path d="M12 9h3v3h2V7h-5zM9 12H7v5h5v-2H9z"></path>
+                                <a class="main__menu--link" href="{{ route('landing-page.land.listing') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2M5 19V5h14v14z"></path>
+                                        <path d="M12 9h3v3h2V7h-5zM9 12H7v5h5v-2H9z"></path>
                                     </svg>
                                     Land for sale
                                 </a>
                             </li>
                             <li class="main__menu--items">
                                 <a class="main__menu--link" href="{{ route('landing-page.about') }}">About Us</a>
-                            </li>                        
+                            </li>
 
                         </ul>
                     </nav>
                 </div>
                 <div class="main__header--right d-flex align-items-center">
                     <li class="main__menu--items me-0">
-                        <a class="main__menu--link" href="./listing.html"> Select Currency</a>  
+                        <a class="main__menu--link" href="./listing.html"> Select Currency</a>
                         <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 12 7.41">
                             <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"></path>
                         </svg>
                         <ul class="sub__menu">
                             <li class="sub__menu--items"><a href="/" class="sub__menu--link">USD</a></li>
-                            <li class="sub__menu--items"><a href="/" class="sub__menu--link">IDR</a></li>                            
+                            <li class="sub__menu--items"><a href="/" class="sub__menu--link">IDR</a></li>
                         </ul>
                     </li>
                     <a class="add__listing--btn solid__btn" href="{{ route('landing-page.contact') }}">

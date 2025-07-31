@@ -150,8 +150,8 @@
 
                                         <td>
                                             <div class="d-flex gap-2">
-                                                <a href="{{ route('properties.details', $property->land_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="fs-18 align-middle"></iconify-icon></a>
-                                                <a href="{{ route('properties.edit', $property->land_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a>
+                                                <a href="{{ route('land.details', $property->land_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="fs-18 align-middle"></iconify-icon></a>
+                                                {{-- <a href="{{ route('properties.edit', $property->land_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a> --}}
 
                                                 {{-- Delete Button --}}
                                                 <input type="hidden" class="propertyId" value="{{ $property->id }}">

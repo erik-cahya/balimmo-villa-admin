@@ -48,6 +48,9 @@ Route::get('/about', [LandingPageController::class, 'about'])->name('landing-pag
 Route::get('/buy-villa', [LandingPageController::class, 'listing'])->name('landing-page.listing');
 Route::get('/buy-villa/{slug}', [LandingPageController::class, 'listingDetail'])->name('landing-page.listing.detail');
 
+Route::get('/buy-land', [LandingPageController::class, 'landListing'])->name('landing-page.land.listing');
+Route::get('/buy-land/{slug}', [LandingPageController::class, 'landListingDetail'])->name('landing-page.land.listing.detail');
+
 Route::get('/blog', [LandingPageController::class, 'blog'])->name('landing-page.blog');
 Route::get('/landing-login', [LandingPageController::class, 'login'])->name('landing-page.login');
 Route::get('/landing-signup', [LandingPageController::class, 'signup'])->name('landing-page.sign-up');
@@ -135,6 +138,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/upload-temp-gallery', [PropertiesController::class, 'uploadTemp'])->name('gallery.upload.temp');
     Route::post('/upload-temp-gallery-land', [LandController::class, 'uploadTemp'])->name('gallery.upload.temp.land');
 
+    Route::post('/land/change_acceptance/{slug}', [LandController::class, 'changeAcceptance'])->name('land.changeAcceptance'); // Accept Listing Properties
+    Route::get('/land/{slug}', [LandController::class, 'detail'])->name('land.details'); // See Properties Detail
     Route::resource('/land', LandController::class);
 
 

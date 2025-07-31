@@ -27,7 +27,7 @@ class PropertiesController extends Controller
     public function index()
     {
 
-        if (Auth::user()->role == 'Master') {
+        if (Auth::user()->role == 'master') {
             $data['data_property'] = PropertiesModel::select(
                 'properties.id',
                 'properties.type_properties',

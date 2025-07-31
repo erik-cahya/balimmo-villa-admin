@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
+use App\Models\Land\LandModel;
 use App\Models\PropertyFeatureListModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
@@ -192,6 +193,119 @@ class LandingPageController extends Controller
                 ->get();
 
             return view('landing.listing.details', $data);
+        } else {
+            return abort(404);
+        }
+    }
+
+
+    public function landListing()
+    {
+        $properties = Cache::rememberForever('land_list_cache', function () {
+            $data_property = LandModel::select(
+                'land.*',
+
+                'land_financial.selling_price_idr',
+                'land_financial.selling_price_usd',
+
+            )->where('land.type_acceptance', 'accept')
+                ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
+                ->with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'land_gallery.id');
+                    $query->where('is_featured', 1);
+                }])
+                ->get();
+
+            foreach ($data_property as $item) {
+                $item->formatted_price = $this->shortPriceIDR($item->selling_price_idr);
+            }
+            return $data_property;
+        });
+
+        $data['data_property'] = $properties;
+        $data['regions'] = RegionModel::select('name')->get();
+
+        // dd($data['data_property']);
+        return view('landing.land-listing.index', $data);
+    }
+
+    public function landListingDetail($slug)
+    {
+        $data['property'] = PropertiesModel::where('property_slug', $slug)
+            ->select(
+                'properties.*',
+                'users.name as agent_name',
+                'users.reference_code as agent_code',
+                'users.email as agent_email',
+                'users.description as agent_description',
+                'users.tagline as agent_tagline',
+                'users.profile as profilePicture',
+                'property_legal.legal_status as legalStatus',
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
+            )
+            ->join('users', 'reference_code', '=', 'properties.internal_reference')
+            ->join('property_legal', 'property_legal.properties_id', '=', 'properties.id')
+            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'property_gallery.id');
+                $query->where('is_featured', 1);
+            }])->first();
+
+        if ($data['property'] == null) {
+            return view('error.404');
+        };
+
+
+        $galleryId = optional($data['property']['featuredImage'])->id;
+        // dd($galleryId);
+        $data['image_gallery'] = $galleryId
+            ? PropertyGalleryImageModel::where('gallery_id', $galleryId)->get()
+            : collect(); // Jika galleryId null, hasilkan koleksi kosong
+
+        // $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['property']['featuredImage']->id)->get();
+
+        $data['feature_list'] = PropertyFeatureModel::where('properties_id', $data['property']->id)
+            ->join('property_feature_list', 'property_feature_list.id', '=', 'property_feature.feature_id')
+            ->select('property_feature_list.name as feature_name')->get();
+
+        $url_attachment = PropertyUrlAttachmentModel::where('properties_id', $data['property']->id)->get();
+
+        foreach ($url_attachment as $url) {
+            if (in_array($url->name, ['url_virtual_tour', 'url_lifestyle', 'url_experience'])) {
+                preg_match(
+                    '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/',
+                    $url->path_attachment,
+                    $match
+                );
+
+                // Cek apakah $match[1] ada sebelum diakses
+                if (isset($match[1])) {
+                    $url->path_attachment = $match[1];
+                } else {
+                    // Bisa kosongin, kasih nilai default, atau handle error sesuai kebutuhan
+                    $url->path_attachment = null; // atau bisa log error di sini
+                }
+            }
+        }
+        $data['attachment'] = collect($url_attachment);
+        $data['regions'] = RegionModel::select('name')->get();
+        $data['sub_regions'] = SubRegionModel::select('name')->get();
+
+
+
+        if ($data['property']->type_acceptance == 'accept') {
+
+            $data['other_properties'] = PropertiesModel::where('internal_reference', $data['property']->internal_reference)->where('properties.id', '!=', $data['property']->id)->where('type_acceptance', 'accept')
+                ->with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'property_gallery.id');
+                    $query->where('is_featured', 1);
+                }])
+                ->inRandomOrder()
+                ->limit(2)
+                ->get();
+
+            return view('landing.land-listing.details', $data);
         } else {
             return abort(404);
         }

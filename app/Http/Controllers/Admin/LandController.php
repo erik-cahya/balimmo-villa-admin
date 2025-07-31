@@ -14,14 +14,11 @@ use App\Models\Land\LandModel;
 use App\Models\Land\LandOwnerModel;
 use App\Models\Land\LandUrlAttachmentModel;
 use App\Models\PropertyFeatureListModel;
-use App\Models\PropertiesModel;
-use App\Models\PropertyFeatureModel;
 use App\Models\PropertyFinancialModel;
 use App\Models\PropertyGalleryImageModel;
 use App\Models\PropertyGalleryModel;
 use App\Models\PropertyLegalModel;
-use App\Models\PropertyOwnerModel;
-use App\Models\PropertyUrlAttachmentModel;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,7 +38,7 @@ class LandController extends Controller
     public function index()
     {
 
-        if (Auth::user()->role == 'Master') {
+        if (Auth::user()->role == 'master') {
             $data['data_land'] = LandModel::select(
                 'land.id',
                 'land.type_properties',
@@ -97,6 +94,93 @@ class LandController extends Controller
         return view('admin.land.index', $data);
     }
 
+    public function detail($slug)
+    {
+        $property = LandModel::where('land_slug', $slug)->select('id', 'internal_reference')->first();
+
+
+        $data['data_properties'] = LandModel::where('land_slug', $slug)
+            ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
+            ->join('land_legal', 'land_legal.land_id', '=', 'land.id')
+            ->with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'land_gallery.id');
+                $query->where('is_featured', 1);
+            }])
+            ->select(
+                'land.*',
+                // 'land_financial.*',
+
+                'land_financial.avg_nightly_rate',
+                'land_financial.avg_occupancy_rate',
+                'land_financial.selling_price_idr',
+                'land_financial.selling_price_usd',
+                // 'land_financial.commision_ammount_idr',
+                // 'land_financial.commision_ammount_usd',
+
+
+                'land_legal.company_name',
+                'land_legal.rep_first_name',
+                'land_legal.rep_last_name',
+                'land_legal.phone',
+                'land_legal.email',
+                'land_legal.legal_status',
+                'land_legal.holder_name',
+                'land_legal.holder_number',
+                'land_legal.start_date',
+                'land_legal.end_date',
+                'land_legal.purchase_date',
+                'land_legal.extension_cost',
+                'land_legal.purchase_cost',
+                'land_legal.deadline_payment',
+                'land_legal.zoning',
+            )
+            ->first();
+
+
+        $data['feature_list'] = LandFeatureModel::where('land_id', $data['data_properties']->id)
+            ->join('land_feature_list', 'land_feature_list.id', '=', 'land_feature.feature_land_id')
+            ->select('land_feature_list.name as feature_name')
+            ->get();
+
+        // dd($data['data_properties']);
+
+        $galleryId = optional($data['data_properties']['featuredImage'])->id;
+        $data['image_gallery'] = $galleryId
+            ? PropertyGalleryImageModel::where('gallery_id', $galleryId)->get()
+            : collect();
+
+        // $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
+
+        $data['agent_data'] = User::where('reference_code', $property->internal_reference)->first();
+
+        $data['property_owner'] = LandOwnerModel::where('land_id', $data['data_properties']->id)->get();
+
+        $url_attachment = LandUrlAttachmentModel::where('land_id', $data['data_properties']->id)->get();
+
+        foreach ($url_attachment as $url) {
+
+            if (in_array($url->name, ['url_virtual_tour', 'url_lifestyle', 'url_experience'])) {
+
+                preg_match(
+                    '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/',
+                    $url->path_attachment,
+                    $match
+                );
+
+                // Cek apakah $match[1] ada sebelum diakses
+                if (isset($match[1])) {
+                    $url->path_attachment = $match[1];
+                } else {
+                    // Bisa kosongin, kasih nilai default, atau handle error sesuai kebutuhan
+                    $url->path_attachment = null; // atau bisa log error di sini
+                }
+            }
+        }
+
+        $data['attachment'] = collect($url_attachment);
+
+        return view('admin.land.details', $data);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -539,7 +623,7 @@ class LandController extends Controller
     {
         if ($request->hasFile($inputName)) {
             // Cek jika sudah ada file lama
-            $existing = PropertyUrlAttachmentModel::where('properties_id', $propertyId)
+            $existing = LandUrlAttachmentModel::where('land_id', $propertyId)
                 ->where('name', $inputName)
                 ->first();
 
@@ -577,7 +661,7 @@ class LandController extends Controller
         $counter = 2;
 
         // Cek property slug if exist in database
-        while (PropertiesModel::where('property_slug', $slug)->exists()) {
+        while (LandModel::where('land_slug', $slug)->exists()) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
@@ -619,7 +703,7 @@ class LandController extends Controller
     public function changeAcceptance(Request $request, $slug)
     {
 
-        PropertiesModel::where('property_slug', $slug)->update(
+        LandModel::where('land_slug', $slug)->update(
             [
                 'type_acceptance' => $request->type_acceptance
             ]
@@ -633,7 +717,7 @@ class LandController extends Controller
         // Hapus cache lama agar nanti di-refresh otomatis saat index() dipanggil lagi
         Cache::forget('properties_list_cache');
 
-        return redirect()->route('properties.index')->with('flashData', $flashData);
+        return redirect()->route('land.index')->with('flashData', $flashData);
     }
 
     // GalleryController.php
