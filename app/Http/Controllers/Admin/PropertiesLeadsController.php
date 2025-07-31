@@ -57,24 +57,24 @@ class PropertiesLeadsController extends Controller
     {
 
         $propertiesData  = PropertyLeadsModel::where('customer_id', $customerID)
-            ->where('property_leads.type_asset', 'properties')
-            ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+            ->where('leads.type_asset', 'properties')
+            ->join('properties', 'properties.id', '=', 'leads.properties_id')
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->select(
-                'property_leads.customer_id',
-                'property_leads.properties_id',
+                'leads.customer_id',
+                'leads.properties_id',
                 'properties.*',
                 'property_financial.*',
             )
             ->get();
 
         $landData  = PropertyLeadsModel::where('customer_id', $customerID)
-            ->where('property_leads.type_asset', 'land')
-            ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+            ->where('leads.type_asset', 'land')
+            ->join('properties', 'properties.id', '=', 'leads.properties_id')
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->select(
-                'property_leads.customer_id',
-                'property_leads.properties_id',
+                'leads.customer_id',
+                'leads.properties_id',
                 'properties.*',
                 'property_financial.*',
             )
@@ -95,15 +95,15 @@ class PropertiesLeadsController extends Controller
 
         if (Auth::user()->role == 'Master') {
 
-            $data['data_leads'] = PropertyLeadsModel::where('customer_data.agent_code', '!=', null)
-                ->join('customer_data', 'customer_data.id', '=', 'property_leads.customer_id')
-                ->join('properties', 'properties.id', '=', 'property_leads.properties_id')
+            $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', '!=', null)
+                ->join('customer', 'customer.id', '=', 'leads.customer_id')
+                ->join('properties', 'properties.id', '=', 'leads.properties_id')
                 ->get()->groupBy('customer_id');
         } else {
 
-            $data['data_leads'] = PropertyLeadsModel::where('agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)->where('prospect_status', 0)
+            $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)->where('prospect_status', 0)
                 ->select(
-                    'property_leads.*',
+                    'leads.*',
                     'properties.id as properties_id',
                     'properties.property_name',
                     'properties.property_address',
@@ -112,7 +112,8 @@ class PropertiesLeadsController extends Controller
                     'properties.bedroom',
                     'properties.bathroom',
                 )
-                ->leftJoin('properties', 'properties.id', '=', 'property_leads.properties_id')
+                ->leftJoin('customer', 'customer.id', '=', 'leads.customer_id')
+                ->leftJoin('properties', 'properties.id', '=', 'leads.properties_id')
                 ->get()->groupBy('cust_email');
         }
 
@@ -124,8 +125,8 @@ class PropertiesLeadsController extends Controller
 
         $data['data_properties'] = PropertiesModel::where('type_acceptance', 'accept')->get();
 
-        $data['data_leads_matches'] = CustomerDataModel::where('customer_data.agent_code', null)
-            ->join('property_leads', 'property_leads.customer_id', '=', 'customer_data.id')
+        $data['data_leads_matches'] = CustomerDataModel::where('customer.agent_code', null)
+            ->join('leads', 'leads.customer_id', '=', 'customer.id')
             ->get()->groupBy('customer_id');
 
         // dd($data['data_leads_matches']);
