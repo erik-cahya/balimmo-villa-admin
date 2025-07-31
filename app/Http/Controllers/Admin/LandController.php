@@ -4,6 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Land;
+use App\Models\Land\LandFeatureListModel;
+use App\Models\Land\LandFeatureModel;
+use App\Models\Land\LandFinancialModel;
+use App\Models\Land\LandGalleryImageModel;
+use App\Models\Land\LandGalleryModel;
+use App\Models\Land\LandLegalModel;
+use App\Models\Land\LandModel;
+use App\Models\Land\LandOwnerModel;
+use App\Models\Land\LandUrlAttachmentModel;
 use App\Models\PropertyFeatureListModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyFeatureModel;
@@ -31,60 +40,60 @@ class LandController extends Controller
      */
     public function index()
     {
+
         if (Auth::user()->role == 'Master') {
-            $data['data_property'] = PropertiesModel::where('type_properties', 'land')
-                ->select(
-                    'properties.id',
-                    'properties.type_properties',
-                    'property_name',
-                    'property_slug',
-                    'internal_reference',
-                    'bedroom',
-                    'property_code',
-                    'region',
-                    'sub_region',
-                    'property_address',
-                    'type_mandate',
-                    'type_acceptance',
-                    'bathroom',
-                    'users.name as agentName',
-                    'users.status',
-                    'property_financial.selling_price_idr',
-                    'property_financial.selling_price_usd',
+            $data['data_land'] = LandModel::select(
+                'land.id',
+                'land.type_properties',
+                'land_name',
+                'land_slug',
+                'internal_reference',
+                'land_code',
+                'region',
+                'total_land_area',
+                'sub_region',
+                'land_address',
+                'type_mandate',
+                'type_acceptance',
+                'users.name as agentName',
+                'users.status',
+                'land_financial.selling_price_idr',
+                'land_financial.selling_price_usd',
 
-                )
-                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            )
+                ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
                 ->with(['featuredImage' => function ($query) {
-                    $query->select('image_path', 'property_gallery.id');
+                    $query->select('image_path', 'land_gallery.id');
                     $query->where('is_featured', 1);
-                }])->leftJoin('users', 'reference_code', '=', 'properties.internal_reference')->get();
+                }])->leftJoin('users', 'reference_code', '=', 'land.internal_reference')->get();
         } else {
-            $data['data_property'] = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
-                ->where('type_properties', 'land')
+            $data['data_land'] = LandModel::where('land.internal_reference', Auth::user()->reference_code)
                 ->select(
-                    'properties.id',
-                    'properties.type_properties',
-                    'property_name',
-                    'property_slug',
+                    'land.id',
+                    'land.type_properties',
+                    'land_name',
+                    'land_slug',
                     'internal_reference',
-                    'bedroom',
-                    'property_code',
+                    'land_code',
+                    'total_land_area',
                     'region',
                     'sub_region',
-                    'property_address',
+                    'land_address',
                     'type_mandate',
                     'type_acceptance',
-                    'bathroom',
-                    'property_financial.selling_price_idr',
-                    'property_financial.selling_price_usd',
+                    'land_financial.selling_price_idr',
+                    'land_financial.selling_price_usd',
 
                 )
-                ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+                ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
                 ->with(['featuredImage' => function ($query) {
-                    $query->select('image_path', 'property_gallery.id');
+                    $query->select('image_path', 'land_gallery.id');
                     $query->where('is_featured', 1);
                 }])->get();
         }
+
+        // dd($data['data_land']);
+
         return view('admin.land.index', $data);
     }
 
@@ -93,8 +102,8 @@ class LandController extends Controller
      */
     public function create()
     {
-        $data['feature_list_outdoor'] = PropertyFeatureListModel::where('type', 'outdoor')->where('name', 'LIKE', '%view%')
-            ->get();
+        $data['feature_list'] = LandFeatureListModel::get();
+
         $data['feature_list_indoor'] = PropertyFeatureListModel::where('type', 'indoor')->get();
         return view('admin.land.create', $data);
     }
@@ -104,16 +113,11 @@ class LandController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+
         $typeProperties = 'land';
         $slug = $this->generatePropertiesSlug($request->property_name);
 
-        // $validated = $request->validate([
-        //     'images' => 'required|array|min:4',
-        //     // 'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
-        // ]);
-
-        // Validate Owners
         $rules = [];
         foreach ($request->owners as $index => $owner) {
             $prefix = "owners.$index.";
@@ -134,37 +138,41 @@ class LandController extends Controller
                 $messages["{$prefix}phone_number.required"] = 'Phone number of Owner 1 is required.';
             }
         }
-        // /* Validate Owners */
-
 
         $request->validate($rules, $messages);
 
-        $request->validate([
-            // 'images' => 'required|array|min:4',
-            // 'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
+        // $request->validate([
+        //     // 'images' => 'required|array|min:4',
+        //     // 'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
 
-            'property_name' => 'required',
-            'description' => 'required',
-            'region' => 'required',
-            'subregion' => 'required',
-            'property_address' => 'required',
+        //     'property_name' => 'required',
+        //     'description' => 'required',
+        //     'region' => 'required',
+        //     'subregion' => 'required',
+        //     'property_address' => 'required',
+        //     'land_size' => 'required',
+        //     'built_area' => 'required',
+        //     'pool_area' => 'required',
+        //     'bedroom' => 'required',
+        //     'bathroom' => 'required',
+        //     'year_construction' => 'required',
+        //     'year_renovated' => 'required',
+        //     'feature' => 'required|array|min:1',
 
-            'feature' => 'required|array|min:1',
+        //     'legal_category' => 'required',
 
-            'legal_category' => 'required',
+        //     // ##### Rental Yield
+        //     'average_nightly_rate' => 'required',
+        //     'average_occupancy_rate' => 'required',
+        //     'month_rented_per_year' => 'required',
+        //     'estimated_annual_turnover' => 'required',
 
-            // // ##### Rental Yield
-            // 'average_nightly_rate' => 'required',
-            // 'average_occupancy_rate' => 'required',
-            // 'month_rented_per_year' => 'required',
-            // 'estimated_annual_turnover' => 'required',
+        //     // ##### Gallery
+        //     // 'images.*' => 'required|image|max:2048',
+        // ], [
+        //     'feature' => 'Please Choose features & Amenities',
 
-            // ##### Gallery
-            // 'images.*' => 'required|image|max:2048',
-        ], [
-            'feature' => 'Please Choose features & Amenities',
-
-        ]);
+        // ]);
 
         // Freehold Validation
         if ($request->legal_category === 'Freehold') {
@@ -220,30 +228,38 @@ class LandController extends Controller
         };
 
         // ==========================================================================================================================================
-        // ########### Create Properties Data ##############
+        // ########### Create Land Data ##############
         // ==========================================================================================================================================
         do {
-            $property_code = 'BLM-' . random_int(1000000000, 9999999999);
-        } while (PropertiesModel::where('property_code', $property_code)->exists());
+            $land_code = 'BLM-' . random_int(1000000000, 9999999999);
+        } while (LandModel::where('land_code', $land_code)->exists());
 
-        $propertyCreate = PropertiesModel::create([
+        $landCreate = LandModel::create([
             'type_properties' => $typeProperties,
-            'property_code' => $property_code,
-            'property_name' => $request->property_name,
-            'property_slug' => $slug,
+            'land_code' => $land_code,
+            'land_name' => $request->property_name,
+            'land_slug' => $slug,
             'internal_reference' => Auth::user()->reference_code,
-            'property_description' => $request->description,
+            'land_description' => $request->description,
             'region' => Str::title($request->region),
             'sub_region' => Str::title($request->subregion),
-            'property_address' => $request->property_address,
+            'area' => Str::title($request->area),
+            'land_address' => $request->property_address,
             'total_land_area' => $this->floatNumbering($request->land_size),
+
+            'land_width' => $this->floatNumbering($request->land_width),
+            'land_length' => $this->floatNumbering($request->land_length),
+
+            'is_land_split' => $request->split_land,
+            'minimum_split' => $request->split_land_value,
+
             'type_mandate' => $request->type_mandate,
 
             'type_acceptance' => explode('-', Auth::user()->reference_code)[0] == 'BPM' ? 'accept' : 'pending',
         ]);
 
         // ==========================================================================================================================================
-        // ########### Create Property Owner Data ##############
+        // ########### Create Land Owner Data ##############
         // ==========================================================================================================================================
         foreach ($request->owners as $index => $owner) {
             // Cek apakah semua field bernilai null atau kosong
@@ -255,8 +271,8 @@ class LandController extends Controller
             ) {
                 continue;
             }
-            PropertyOwnerModel::create([
-                'properties_id' => $propertyCreate->id,
+            LandOwnerModel::create([
+                'land_id' => $landCreate->id,
                 'first_name' => $owner['first_name'],
                 'last_name' => $owner['last_name'],
                 'phone' => $owner['phone_number'],
@@ -266,10 +282,10 @@ class LandController extends Controller
         }
 
         // ==========================================================================================================================================
-        // ########### Create Properties Legal ##############
+        // ########### Create Land Legal ##############
         // ==========================================================================================================================================
-        PropertyLegalModel::create([
-            'properties_id' => $propertyCreate->id,
+        LandLegalModel::create([
+            'land_id' => $landCreate->id,
             'company_name' => $request->company_name,
             'rep_first_name' => $request->legal_rep_last_name,
             'rep_last_name' => $request->legal_rep_first_name,
@@ -286,12 +302,15 @@ class LandController extends Controller
             'purchase_cost' =>  (int)preg_replace('/[^0-9]/', '', $request->leasehold_purchase_cost),
             'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
             'zoning' => $zoning,
+
+            // 'construction_quality' => $request->construction_quality,
+            // 'constructor_name' => $request->constructor_name,
         ]);
 
         // ==========================================================================================================================================
         // ############## Create Properties Financial ##############
         // ==========================================================================================================================================
-        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->idr_price);
+        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->find_property == 'owner' ? $request->website_price_owner : $request->website_price_agent);
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
 
         // Presentase
@@ -311,30 +330,47 @@ class LandController extends Controller
         $netSellerUSD = round($usdPrice - $commisionAmmountUSD, 2);
 
 
-        PropertyFinancialModel::create([
-            'properties_id' => $propertyCreate->id,
+        LandFinancialModel::create([
+            'land_id' => $landCreate->id,
+            'average_price_status' => $request->average_price_status,
             'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
             'avg_occupancy_rate' => $request->average_occupancy_rate,
-            'months_rented' => $request->month_rented_per_year,
-            'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
+
+            'find_property_of' => $request->find_property,
+            'agent_name' => $request->agent_name,
+            'agent_email' => $request->agent_email,
+            'agent_phone' => $request->agent_whatsapp,
+
+            'base_price' => $request->base_price,
+            'desired_price_idr' => $request->desire_price_from_the_owner,
+            'desired_price_usd' => $this->idrToUsdConvert($request->desire_price_from_the_owner),
+            'agent_commision' => $request->commission_of_the_agent,
+            'give_balimmo_commision' => $request->full_commission_balimmo,
+            'balimmmo_commision' => $request->balimmo_commission,
+
+
+            // 'months_rented' => $request->month_rented_per_year,
+            // 'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
 
             // Sale Price & Conditions
-            'selling_price_idr' => $idrPrice,
-            'selling_price_usd' => $usdPrice,
-            'commision_ammount_idr' => $commisionAmmountIDR,
-            'commision_ammount_usd' => $commisionAmmountUSD,
-            'net_seller_idr' => $netSellerIDR,
-            'net_seller_usd' => $netSellerUSD,
+            'selling_price_idr' => $this->convertToInteger($request->website_price),
+            'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
+            'net_seller_idr' => $request->base_price == 'Selling price' ? $request->net_profit : NULL,
+            'net_seller_usd' => $request->base_price == 'Selling price' ? $this->idrToUsdConvert($request->net_profit) : NULL,
+            // 'net_seller_idr' => $netSellerIDR,
+            // 'net_seller_usd' => $netSellerUSD,
         ]);
+
+
 
         // ==========================================================================================================================================
         // ########### Create Property Feature Data
         // ==========================================================================================================================================
         foreach ($request->feature as $index => $feature) {
-            $idFeature = PropertyFeatureListModel::select('id')->where('slug', $index)->first();
-            PropertyFeatureModel::create([
-                'properties_id' => $propertyCreate->id,
-                'feature_id' => $idFeature->id
+            $idFeature = LandFeatureListModel::select('id')->where('slug', $index)->first();
+            LandFeatureModel::create([
+                'land_id' => $landCreate->id,
+                'feature_land_id' => $idFeature->id
             ]);
         }
 
@@ -363,8 +399,8 @@ class LandController extends Controller
         $dataURL['file_type_of_mandate'] = $fileTypeMandate;
 
         foreach ($dataURL as $key => $value) {
-            PropertyUrlAttachmentModel::create([
-                'properties_id' => $propertyCreate->id,
+            LandUrlAttachmentModel::create([
+                'land_id' => $landCreate->id,
                 'name' => $key,
                 'path_attachment' => $value
             ]);
@@ -373,9 +409,9 @@ class LandController extends Controller
         // ==========================================================================================================================================
         // ############## Gallery Handler ##############
         // ==========================================================================================================================================
-        $gallery = PropertyGalleryModel::create([
-            'properties_id' => $propertyCreate->id,
-            'description' => 'deskripsi',
+        $gallery = LandGalleryModel::create([
+            'land_id' => $landCreate->id,
+            'description' => 'land gallery',
         ]);
 
         if ($request->has('old_images')) {
@@ -391,8 +427,8 @@ class LandController extends Controller
                 if (file_exists($from)) {
                     rename($from, $to);
 
-                    PropertyGalleryImageModel::create([
-                        'gallery_id' => $gallery->id,
+                    LandGalleryImageModel::create([
+                        'land_gallery_id' => $gallery->id,
                         'image_path' => "admin/gallery/{$slug}/{$filename}",
                         'order' => $i,
                         'is_featured' => $i === 0,
@@ -418,8 +454,8 @@ class LandController extends Controller
                     $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('admin/gallery/' . $slug), $filename);
 
-                    PropertyGalleryImageModel::create([
-                        'gallery_id' => $gallery->id,
+                    LandGalleryImageModel::create([
+                        'land_gallery_id' => $gallery->id,
                         'image_path' => 'admin/gallery/' . $slug . '/' . $filename,
                         'order' => $i,
                         'is_featured' => $i === 0,
@@ -431,14 +467,17 @@ class LandController extends Controller
 
         Cache::forget('properties_list_cache');
 
+        // dd($gallery->id);
 
         $flashData = [
             'judul' => 'Create Land Success',
             'pesan' => 'New land successfully listed',
             'swalFlashIcon' => 'success',
         ];
-        return redirect()->route('properties.index')->with('flashData', $flashData);
+        return redirect()->route('land.index')->with('flashData', $flashData);
     }
+
+
 
     /**
      * Display the specified resource.
@@ -469,23 +508,57 @@ class LandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $slug = LandModel::where('id', $id)->first();
+
+        // Delete File Gallery
+        if (file_exists(public_path('admin/gallery/' . $slug->land_slug))) {
+            File::deleteDirectory(public_path('admin/gallery/' . $slug->land_slug));
+        };
+
+        // Delete File Attachment
+        if (file_exists(public_path('admin/attachment/' . $slug->land_slug))) {
+            File::deleteDirectory(public_path('admin/attachment/' . $slug->land_slug));
+        };
+
+        LandModel::destroy($id);
+
+        $flashData = [
+            'judul' => 'Delete Success',
+            'pesan' => 'Data Property Telah Dihapus',
+            'swalFlashIcon' => 'success',
+        ];
+
+        Cache::forget('properties_list_cache');
+
+        return response()->json($flashData);
     }
 
 
 
-
-    private function getUSDtoIDRRate()
+    private function handleFileUpdate($request, $inputName, $folderPath, $propertyId)
     {
-        return Cache::remember('usd_to_idr_rate', now()->addHours(1), function () {
-            try {
-                $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
-                return $response['rates']['IDR'] ?? 15000;
-            } catch (\Exception $e) {
-                return 15000;
+        if ($request->hasFile($inputName)) {
+            // Cek jika sudah ada file lama
+            $existing = PropertyUrlAttachmentModel::where('properties_id', $propertyId)
+                ->where('name', $inputName)
+                ->first();
+
+            if ($existing && $existing->path_attachment) {
+                $oldPath = $folderPath . '/' . $existing->path_attachment;
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
             }
-        });
+
+            $newFile = $request->file($inputName);
+            $filename = $newFile->getClientOriginalName();
+            $newFile->move($folderPath, $filename);
+            return $filename;
+        }
+
+        return null;
     }
+
 
     private function convertToInteger($value)
     {
@@ -512,6 +585,15 @@ class LandController extends Controller
         return $slug;
     }
 
+    private function idrToUsdConvert($idrValue)
+    {
+        $idrPrice = (int)preg_replace('/[^0-9]/', '', $idrValue);
+        $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
+
+        return $usdPrice;
+    }
+
+
     private function floatNumbering($number)
     {
         $number = trim($number);
@@ -532,5 +614,54 @@ class LandController extends Controller
         }
 
         return floatval($number);
+    }
+
+    public function changeAcceptance(Request $request, $slug)
+    {
+
+        PropertiesModel::where('property_slug', $slug)->update(
+            [
+                'type_acceptance' => $request->type_acceptance
+            ]
+        );
+        $flashData = [
+            'judul' => 'Change Status Property Success',
+            'pesan' => 'Property Status Changed Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+
+        // Hapus cache lama agar nanti di-refresh otomatis saat index() dipanggil lagi
+        Cache::forget('properties_list_cache');
+
+        return redirect()->route('properties.index')->with('flashData', $flashData);
+    }
+
+    // GalleryController.php
+    public function uploadTemp(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $userFolder = 'tmp_uploads/' . Auth::user()->reference_code;
+
+            $file->move(public_path($userFolder), $filename);
+
+            session()->push('old_images', $filename); // simpan ke session
+            return response()->json(['success' => true, 'filename' => $filename]);
+        }
+
+        return response()->json(['success' => false], 400);
+    }
+
+    private function getUSDtoIDRRate()
+    {
+        return Cache::remember('usd_to_idr_rate', now()->addHours(1), function () {
+            try {
+                $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
+                return $response['rates']['IDR'] ?? 15000;
+            } catch (\Exception $e) {
+                return 15000;
+            }
+        });
     }
 }

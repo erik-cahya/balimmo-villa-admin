@@ -133,6 +133,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/upload-temp-gallery', [PropertiesController::class, 'uploadTemp'])->name('gallery.upload.temp');
+    Route::post('/upload-temp-gallery-land', [LandController::class, 'uploadTemp'])->name('gallery.upload.temp.land');
 
     Route::resource('/land', LandController::class);
 

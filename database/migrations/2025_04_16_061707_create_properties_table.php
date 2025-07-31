@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('property_description')->nullable();
             $table->string('region')->nullable();
             $table->string('sub_region')->nullable();
+            $table->string('area')->nullable();
             $table->text('property_address')->nullable();
             $table->float('total_land_area')->nullable();
             $table->float('villa_area')->nullable();

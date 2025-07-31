@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('land_description')->nullable();
             $table->string('region')->nullable();
             $table->string('sub_region')->nullable();
+            $table->string('area')->nullable();
             $table->text('land_address')->nullable();
             $table->float('total_land_area')->nullable();
             $table->float('land_width')->nullable();

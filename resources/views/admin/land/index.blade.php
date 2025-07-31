@@ -48,7 +48,7 @@
 
                     <div class="card-header d-flex justify-content-between align-items-center border-bottom" bis_skin_checked="1">
                         <div bis_skin_checked="1">
-                            <h4 class="card-title mb-0">All Land List <span class="badge bg-danger ms-1">0 </span></h4>
+                            <h4 class="card-title mb-0">All Land List <span class="badge bg-danger ms-1">{{ $data_land->count() }}</span></h4>
                         </div>
                         <a href="{{ route('land.create') }}" class="btn btn-sm btn-success width-md">Add Land</a>
                     </div>
@@ -66,14 +66,14 @@
                                     <th>Agent</th>
                                     <th>Mandat</th>
                                     <th>Location</th>
-                                    <th>Bedrooms</th>
+                                    <th>Size (m²)</th>
                                     <th>Price</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data_property as $property)
+                                @foreach ($data_land as $property)
                                     <tr>
                                         <td>
                                             <div class="form-check">
@@ -88,8 +88,8 @@
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <a href="#!" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
-                                                    <span class="fst-italic">{{ $property->property_code }}</span>
+                                                    <a href="#!" class="text-dark fw-medium fs-15">{{ $property->land_name }}</a>
+                                                    <span class="fst-italic">{{ $property->land_code }}</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -100,16 +100,15 @@
                                                 <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
                                             </div>
                                         </td>
-                                        <td><span class="badge bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
+                                        <td><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
                                         <td class="text-capitalize">
                                             <div class="d-flex flex-column">
                                                 <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> {{ $property->region . ', ' . $property->sub_region }}</a>
-                                                <span class="fst-italic">{{ Str::limit($property->property_address, 50) }}</span>
+                                                <span class="fst-italic">{{ Str::limit($property->land_address, 50) }}</span>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="solar:bed-broken" class="fs-18 text-primary"></iconify-icon>{{ $property->bedroom }} Bedroom</p>
-                                            <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="cil:bathroom" class="fs-18 text-primary"></iconify-icon>{{ $property->bathroom }} Bathroom</p>
+                                            <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="wpf:ruler" class="fs-18 text-primary"></iconify-icon>{{ $property->total_land_area }} m²</p>
                                         </td>
 
                                         <td class="text-capitalize">
@@ -151,12 +150,12 @@
 
                                         <td>
                                             <div class="d-flex gap-2">
-                                                <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="fs-18 align-middle"></iconify-icon></a>
-                                                <a href="{{ route('properties.edit', $property->property_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a>
+                                                <a href="{{ route('properties.details', $property->land_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="fs-18 align-middle"></iconify-icon></a>
+                                                <a href="{{ route('properties.edit', $property->land_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a>
 
                                                 {{-- Delete Button --}}
                                                 <input type="hidden" class="propertyId" value="{{ $property->id }}">
-                                                <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->property_name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="fs-18 align-middle"></iconify-icon></button>
+                                                <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->land_name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="fs-18 align-middle"></iconify-icon></button>
                                                 {{-- /. Delete Button --}}
                                             </div>
 
@@ -203,7 +202,7 @@
 
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: "Delete property " + propertyName + "?",
+                        text: "Delete land " + propertyName + "?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -212,7 +211,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             // Kirim DELETE request manual lewat JavaScript
-                            fetch('/properties/' + propertyId, {
+                            fetch('/land/' + propertyId, {
                                     method: 'DELETE',
                                     headers: {
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}',

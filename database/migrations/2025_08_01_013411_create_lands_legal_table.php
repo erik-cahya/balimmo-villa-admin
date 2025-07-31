@@ -33,7 +33,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Foreign Key Constraint with ON DELETE CASCADE
-            $table->foreign('land_id')->references('id')->on('properties')->onDelete('cascade');
+            $table->foreign('land_id')->references('id')->on('land')->onDelete('cascade');
         });
     }
 

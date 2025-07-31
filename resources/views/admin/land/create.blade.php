@@ -197,6 +197,11 @@
                                         <label for="area" class="form-label">Area</label>
                                         <select id="area" class="form-select" name="area">
                                             <option value="" selected disabled>Select Area</option>
+                                            <option value="ubud">Ubud</option>
+                                            <option value="canggu">Canggu</option>
+                                            <option value="uluwatu">Uluwatu</option>
+                                            <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
+                                            <option value="other">Other</option>
                                         </select>
                                     </div>
 
@@ -243,15 +248,15 @@
                                         </div>
                                         <div class="col-6" id="split_field_container" style="display: none;">
                                             <label for="split_land_value" class="form-label">Minimum split</label>
-                                            <input type="text" id="split_land_value" name="land_length" class="form-control" />
+                                            <input type="text" id="split_land_value" name="split_land_value" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="mt-2">
                                         <label for="description" class="form-label">Features</label>
                                         <div class="d-flex gap-4">
-                                            @foreach ($feature_list_outdoor as $feature_outdoor)
-                                                <x-form-checkbox className="form-check" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                            @foreach ($feature_list as $feature)
+                                                <x-form-checkbox className="form-check" name="feature[{{ $feature->slug }}]" label="{{ $feature->name }}" />
                                             @endforeach
                                         </div>
                                     </div>
@@ -264,21 +269,21 @@
                                         <hr>
 
                                         <div class="row align-items-center">
-                                            <div class="col-6">
+                                            <div class="col-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="essentials mandate" {{ old('type_mandate') == 'essentials mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="esstentials_mandate">Essentials</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="booster mandate" {{ old('type_mandate') == 'booster mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="booster_mandate">Booster</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="booster_mandate">Max Booster</label>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="max_booster_mandate" value="max booster mandate" {{ old('type_mandate') == 'max booster mandate' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="max_booster_mandate">Max Booster</label>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-6 mt-3">
                                                 <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
                                             </div>
                                         </div>
@@ -562,6 +567,23 @@
     <script src="{{ asset('admin/assets/js/custom/currency-format.js') }}"></script>
 
     <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
+
+    <script>
+        // Ambil semua radio button dengan name "split_land"
+        const splitRadios = document.querySelectorAll('input[name="split_land"]');
+        const splitField = document.getElementById('split_field_container');
+
+        splitRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === "Yes") {
+                    splitField.style.display = 'block';
+                } else {
+                    splitField.style.display = 'none';
+                    document.getElementById('split_land_value').value = ''; // kosongkan input jika dipilih No
+                }
+            });
+        });
+    </script>
 
     {{-- {-- PRICE CALCULTAION --} --}}
     <script>
@@ -1041,7 +1063,7 @@
                 formData.append('file', file);
 
                 // Kirim ke server
-                fetch("{{ route('gallery.upload.temp') }}", {
+                fetch("{{ route('gallery.upload.temp.land') }}", {
                         method: "POST",
                         headers: {
                             "X-CSRF-TOKEN": "{{ csrf_token() }}"
