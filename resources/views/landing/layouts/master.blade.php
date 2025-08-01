@@ -31,13 +31,11 @@
     <link rel="stylesheet" href="{{ asset('landing') }}/assets/css/rtl.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
 
     <!-- JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.min.js"></script>
-
-
 
     @stack('style')
 
@@ -45,9 +43,9 @@
 
 <body>
     <!-- Preloader start -->
-    <div id="preloader">
+    {{-- <div id="preloader">
         <div class="loader--border"></div>
-    </div>
+    </div> --}}
     <!-- Preloader end -->
     <!-- Start header area -->
     @include('landing.layouts.header')
@@ -219,39 +217,36 @@
 
     <!-- Customscript js -->
     <script src="{{ asset('landing') }}/assets/js/script.js"></script>
-    
+
     <script>
-  const input = document.querySelector("#phone_number");
-  const errorMsg = document.querySelector("#phone_error");
+        const input = document.querySelector("#phone_number");
+        const errorMsg = document.querySelector("#phone_error");
 
-  const iti = window.intlTelInput(input, {
-    initialCountry: "fr", // default Perancis
-    separateDialCode: false, // <== tampilkan full format: +33 6xxxx
-    preferredCountries: ["fr", "id", "us", "gb", "au"],
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    nationalMode: false, // supaya +code tetap muncul
-    autoPlaceholder: "polite"
-  });
+        const iti = window.intlTelInput(input, {
+            initialCountry: "fr", // default Perancis
+            separateDialCode: false, // <== tampilkan full format: +33 6xxxx
+            preferredCountries: ["fr", "id", "us", "gb", "au"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            nationalMode: false, // supaya +code tetap muncul
+            autoPlaceholder: "polite"
+        });
 
-  // Validasi panjang minimum
-  input.addEventListener('input', () => {
-    const fullNumber = iti.getNumber(); // sudah termasuk +code
-    const digitsOnly = fullNumber.replace(/\D/g, '');
-    
-    // minimal 7 digit setelah kode negara
-    const dialCodeLength = iti.getSelectedCountryData().dialCode.length;
-    if (digitsOnly.length - dialCodeLength < 7) {
-      errorMsg.style.display = "block";
-      input.setCustomValidity("Enter the correct number");
-    } else {
-      errorMsg.style.display = "none";
-      input.setCustomValidity("");
-    }
-  });
-</script>
+        // Validasi panjang minimum
+        input.addEventListener('input', () => {
+            const fullNumber = iti.getNumber(); // sudah termasuk +code
+            const digitsOnly = fullNumber.replace(/\D/g, '');
 
-
-
+            // minimal 7 digit setelah kode negara
+            const dialCodeLength = iti.getSelectedCountryData().dialCode.length;
+            if (digitsOnly.length - dialCodeLength < 7) {
+                errorMsg.style.display = "block";
+                input.setCustomValidity("Enter the correct number");
+            } else {
+                errorMsg.style.display = "none";
+                input.setCustomValidity("");
+            }
+        });
+    </script>
 
     @stack('scripts')
 

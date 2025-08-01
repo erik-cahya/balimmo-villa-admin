@@ -3,7 +3,7 @@
     <link href="{{ asset('admin') }}/assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
 @endpush
 @section('content')
-    <!-- Start Hero section -->
+     <!-- Start Hero section -->
     <div class="hero__section hero__section--bg">
         <div class="container-fluid-2">
             <div class="hero__section--inner">
@@ -17,8 +17,10 @@
                     <div class="advance__search--filter">
                         <ul class="nav advance__tab--btn justify-content-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="150">
                             <li class="nav-item advance__tab--btn__list">
-                                <!-- <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Buy
-                                                                                                                                                                                                                                                                                    </button> -->
+                                <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Villa </button>
+                            </li>
+                            <li class="nav-item advance__tab--btn__list">
+                                <button class="advance__tab--btn__field" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Land </button>
                             </li>
                         </ul>
                         <form action="{{ route('filter.properties') }}" method="POST">
@@ -53,7 +55,7 @@
                                         </div>
 
                                         <button type="submit" class="advance__search--btn solid__btn">
-                                            Find My Villa
+                                            Search
                                             <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M6.60519 0C2.96319 0 0 2.96338 0 6.60562C0 10.2481 2.96319 13.2112 6.60519 13.2112C10.2474 13.2112 13.2104 10.2481 13.2104 6.60562C13.2104 2.96338 10.2474 0 6.60519 0ZM6.60519 11.9918C3.6355 11.9918 1.21942 9.57553 1.21942 6.60565C1.21942 3.63576 3.6355 1.2195 6.60519 1.2195C9.57487 1.2195 11.991 3.63573 11.991 6.60562C11.991 9.5755 9.57487 11.9918 6.60519 11.9918Z" fill="white" />
                                                 <path d="M14.8206 13.9597L11.325 10.4638C11.0868 10.2256 10.701 10.2256 10.4628 10.4638C10.2246 10.7018 10.2246 11.088 10.4628 11.326L13.9585 14.8219C14.0776 14.941 14.2335 15.0006 14.3896 15.0006C14.5454 15.0006 14.7015 14.941 14.8206 14.8219C15.0588 14.5839 15.0588 14.1977 14.8206 13.9597Z" fill="white" />

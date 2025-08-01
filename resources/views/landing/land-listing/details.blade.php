@@ -342,7 +342,7 @@
                             <h2 class="widget__step--title">Booking this {{ $property->type_properties }}</h2>
                             <div class="widget__form">
                                 {{-- Booking Form --}}
-                                <form action="{{ route('booking.slug', $property->property_slug) }}" method="POST">
+                                <form action="{{ route('booking.slug', $property->land_slug) }}" method="POST">
                                     @csrf
                                     @if ($property->type_properties == 'Properties')
                                         <div class="contact__property--form__inner">
@@ -645,7 +645,7 @@
                                         </p>
                                         <h3 class="widget__featured--properties__title">{{ $oth_props->property_name }}</h3>
 
-                                        <a href="{{ route('landing-page.listing.detail', $oth_props->property_slug) }}" class="solid__btn">View Properties</a>
+                                        {{-- <a href="{{ route('landing-page.land.listing.detail', $oth_props->land_slug) }}" class="solid__btn">View Properties</a> --}}
 
                                     </div>
                                 </div>

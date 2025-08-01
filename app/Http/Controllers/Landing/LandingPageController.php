@@ -231,7 +231,7 @@ class LandingPageController extends Controller
 
     public function landListingDetail($slug)
     {
-        dd($slug);
+        // dd($slug);
         $data['property'] = LandModel::where('land_slug', $slug)
             ->select(
                 'land.*',
@@ -241,12 +241,12 @@ class LandingPageController extends Controller
                 'users.description as agent_description',
                 'users.tagline as agent_tagline',
                 'users.profile as profilePicture',
-                'property_legal.legal_status as legalStatus',
+                'land_legal.legal_status as legalStatus',
                 'land_financial.selling_price_idr',
                 'land_financial.selling_price_usd',
             )
             ->join('users', 'reference_code', '=', 'land.internal_reference')
-            ->join('property_legal', 'property_legal.land_id', '=', 'land.id')
+            ->join('land_legal', 'land_legal.land_id', '=', 'land.id')
             ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
             ->with(['featuredImage' => function ($query) {
                 $query->select('image_path', 'land_gallery.id');
@@ -297,9 +297,9 @@ class LandingPageController extends Controller
 
         if ($data['property']->type_acceptance == 'accept') {
 
-            $data['other_properties'] = PropertiesModel::where('internal_reference', $data['property']->internal_reference)->where('properties.id', '!=', $data['property']->id)->where('type_acceptance', 'accept')
+            $data['other_properties'] = LandModel::where('internal_reference', $data['property']->internal_reference)->where('land.id', '!=', $data['property']->id)->where('type_acceptance', 'accept')
                 ->with(['featuredImage' => function ($query) {
-                    $query->select('image_path', 'property_gallery.id');
+                    $query->select('image_path', 'land_gallery.id');
                     $query->where('is_featured', 1);
                 }])
                 ->inRandomOrder()
