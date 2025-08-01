@@ -89,11 +89,12 @@ class PropertiesLeadsController extends Controller
     public function index()
     {
 
+
         if (!Auth::check()) {
             return redirect()->route('login');
         }
 
-        if (Auth::user()->role == 'Master') {
+        if (Auth::user()->role == 'master') {
 
             $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', '!=', null)
                 ->join('customer', 'customer.id', '=', 'leads.customer_id')
@@ -116,6 +117,11 @@ class PropertiesLeadsController extends Controller
                 ->leftJoin('properties', 'properties.id', '=', 'leads.properties_id')
                 ->get()->groupBy('cust_email');
         }
+
+        // $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', '!=', null)
+        //     ->join('customer', 'customer.id', '=', 'leads.customer_id')
+        //     ->join('properties', 'properties.id', '=', 'leads.properties_id')
+        //     ->get()->groupBy('customer_id');
 
         // dd($data['data_leads']);
 

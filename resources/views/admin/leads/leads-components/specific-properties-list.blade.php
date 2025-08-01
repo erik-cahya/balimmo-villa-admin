@@ -87,6 +87,8 @@
                             $customerData = $lead->first();
                             $matchLeadsProperties = $lead->where('type_asset', 'properties')->first();
                             $matchLeadsLand = $lead->where('type_asset', 'land')->first();
+
+                            // dd($matchLeadsProperties);
                         @endphp
 
                         <!-- Modal -->
@@ -156,6 +158,7 @@
                                             <!-- End Information Leads Villa -->
                                         </div>
 
+                                        @if ($matchLeadsLand !== NULL)
                                         <!-- Information Leads Lands -->
                                         <div id="detailsLand">
                                             <div class="d-flex align-items-center gap-2">
@@ -212,6 +215,7 @@
                                             </div>
                                             <!-- End Information Leads Lands -->
                                         </div>
+                                        @endif
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

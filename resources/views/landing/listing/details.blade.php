@@ -433,10 +433,16 @@
                                                 <div class="contact__property--form__input" id="villa_location">
                                                     <label for="location">Location*</label>
                                                     <select name="location">
-                                                        <option selected disabled>Property Location</option>
+                                                        {{-- <option selected disabled>Property Location</option>
                                                         @foreach ($sub_regions as $rgn)
                                                             <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
-                                                        @endforeach
+                                                        @endforeach --}}
+                                                        <option value="" selected disabled>Select Area</option>
+                                                        <option value="ubud">Ubud</option>
+                                                        <option value="canggu">Canggu</option>
+                                                        <option value="uluwatu">Uluwatu</option>
+                                                        <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
+                                                        <option value="other">Other</option>
                                                     </select>
 
                                                     @error('location')
@@ -568,10 +574,16 @@
                                                 <div class="contact__property--form__input" id="villa_location">
                                                     <label for="location">Location*</label>
                                                     <select name="location">
-                                                        <option selected disabled>Property Location</option>
+                                                        {{-- <option selected disabled>Property Location</option>
                                                         @foreach ($sub_regions as $rgn)
                                                             <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
-                                                        @endforeach
+                                                        @endforeach --}}
+                                                        <option value="" selected disabled>Select Area</option>
+                                                        <option value="ubud">Ubud</option>
+                                                        <option value="canggu">Canggu</option>
+                                                        <option value="uluwatu">Uluwatu</option>
+                                                        <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
+                                                        <option value="other">Other</option>
                                                     </select>
 
                                                     @error('location')
