@@ -36,7 +36,7 @@
                     <h4 class="fw-semibold mb-0">Listing List</h4>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Properties</a></li>
-                        <li class="breadcrumb-item active">Land List</li>
+                        <li class="breadcrumb-item active">Listing List</li>
                     </ol>
                 </div>
             </div>
@@ -45,12 +45,11 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
-
-                    <div class="card-header d-flex justify-content-between align-items-center border-bottom" bis_skin_checked="1">
-                        <div bis_skin_checked="1">
+                    <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                        <div>
                             <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">{{ $data_property->count() }} </span></h4>
                         </div>
-                        <a href="{{ route('properties.create') }}" class="btn btn-sm btn-success width-md">Add Properties</a>
+                        <a href="{{ route('properties.create') }}" class="btn btn-success width-md">Add Villa</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table-hover table-centered fs-13 mb-0 table text-nowrap align-middle" id="tableProperties">
@@ -62,11 +61,11 @@
                                             <label class="form-check-label" for="customCheck1"></label>
                                         </div>
                                     </th>
-                                    <th>Land Photo & Name</th>
+                                    <th>Properties Photo & Name</th>
                                     <th>Agent</th>
-                                    <th>Mandat</th>
-                                    <th>Location</th>
-                                    <th>Bedrooms</th>
+                                    <th>Mandates</th>                                    
+                                    <th>Localization</th>
+                                    <th>Bedroom</th>
                                     <th>Price</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -83,39 +82,31 @@
                                         </td>
 
                                         <td>
-                                            <div class="d-flex align-items-center gap-2">
+                                            <a href="{{ route('properties.details', $property->property_slug) }}" class="d-flex align-items-center gap-2">
                                                 <div>
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <a href="{{ route('properties.details', $property->property_slug) }}" class="text-dark fw-medium fs-15">{{ $property->property_name }}</a>
-                                                    <span class="fst-italic">{{ $property->property_code }}</span>
+                                                    <span class="text-dark fw-medium fs-15" style="text-overflow: ellipsis; max-width: 200px; overflow: hidden; white-space: nowrap">{{ $property->property_name }}</span>
+                                                    <span class="text-gray-400 fst-italic">{{ $property->property_code }}</span>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </td>
                                         <td>
-                                            <div class="d-flex flex-column">
-
-                                                <span class="fst-italic">{{ $property->agentName }}</span>
-                                                <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
-                                            </div>
+                                            <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
                                         </td>
+
                                         <td><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
                                         <td class="text-capitalize">
-                                            <div class="d-flex flex-column">
-                                                <span class="text-dark fw-medium fs-15"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> {{ $property->region . ', ' . $property->sub_region }}</span>
-                                                <span class="fst-italic">{{ Str::limit($property->property_address, 50) }}</span>
-                                            </div>
+                                            <span class="text-dark fw-medium fs-15">{{ $property->region }}</span>
                                         </td>
                                         <td>
-                                            <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="solar:bed-broken" class="fs-18 text-primary"></iconify-icon>{{ $property->bedroom }} Bedroom</p>
-                                            <p class="d-flex align-items-center mb-1 gap-2"><iconify-icon icon="cil:bathroom" class="fs-18 text-primary"></iconify-icon>{{ $property->bathroom }} Bathroom</p>
-                                        </td>
-
-                                        <td class="text-capitalize">
+                                            <span class="text-dark fw-medium fs-15">{{ $property->bedroom }} </span>
+                                        </td>                                   
+                                        <td>
                                             <div class="d-flex flex-column">
-                                                <span class="text-dark fw-medium fs-15">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
-                                                <span class="fst-italic">USD {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
+                                                <span class="text-dark fw-medium fs-15">IDR 2 500 000 000 </span>
+                                                <span class="text-gray-400 fst-italic">USD 239 000</span>
                                             </div>
                                         </td>
 
@@ -151,7 +142,6 @@
 
                                         <td>
                                             <div class="d-flex gap-2">
-                                                <a href="{{ route('properties.details', $property->property_slug) }}" class="btn btn-light btn-sm"><iconify-icon icon="solar:eye-broken" class="fs-18 align-middle"></iconify-icon></a>
                                                 <a href="{{ route('properties.edit', $property->property_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a>
 
                                                 {{-- Delete Button --}}
