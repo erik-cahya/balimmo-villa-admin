@@ -88,23 +88,21 @@
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <a href="#!" class="text-dark fw-medium fs-15">{{ $property->land_name }}</a>
+                                                    <a href="{{ route('land.details', $property->land_slug) }}" class="text-dark fw-medium fs-15">{{ $property->land_name }}</a>
                                                     <span class="fst-italic">{{ $property->land_code }}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column">
-
-                                                <span class="fst-italic">{{ $property->agentName }}</span>
                                                 <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
                                             </div>
                                         </td>
                                         <td><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
                                         <td class="text-capitalize">
                                             <div class="d-flex flex-column">
-                                                <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> {{ $property->region . ', ' . $property->sub_region }}</a>
-                                                <span class="fst-italic">{{ Str::limit($property->land_address, 50) }}</span>
+                                                <a href="#!" class="text-dark fw-medium fs-15"><iconify-icon icon="pajamas:location" class="fs-18 align-middle"></iconify-icon> {{ $property->sub_region }}</a>
+                                                {{-- <span class="fst-italic">{{ Str::limit($property->land_address, 50) }}</span> --}}
                                             </div>
                                         </td>
                                         <td>
