@@ -18,12 +18,11 @@ class AgentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('role:Master');
+        $this->middleware('role:master');
     }
 
     public function index()
     {
-
         // if ($redirect = $this->checkMasterRole()) {
         //     return $redirect;
         // }

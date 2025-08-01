@@ -33,7 +33,7 @@
             </li>
 
             @role('master|agent')
-                <li class="menu-title">Management Listing</li>
+                <li class="menu-title">Listing</li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('properties.*') ? 'active' : '' }}" href="{{ route('properties.index') }}">
@@ -85,7 +85,7 @@
                 </li>
             @endrole
 
-            @role('master|agent')
+            @role('')
                 <li class="menu-title">Document Management</li>
 
                 <li class="nav-item">
@@ -129,7 +129,7 @@
                 </li>
             @endrole
 
-            @role('master')
+            @role('')
                 <li class="menu-title">User Management</li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('agent.*') ? 'active' : '' }}" href="{{ route('agent.index') }}">
@@ -150,35 +150,85 @@
                 </li>
             @endrole
 
-            <li class="menu-title">Personal</li>
+            @role('')
+                <li class="menu-title">Personal</li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
-                    <span class="nav-icon">
-                        <i class="ri-group-line"></i>
-                    </span>
-                    <span class="nav-text">My Profile</span>
-                </a>
-            </li>
-
-            @role('master')
-                <li class="menu-title">Setting</li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('localization.*') ? 'active' : '' }}" href="{{ route('localization.index') }}">
+                    <a class="nav-link {{ request()->routeIs('profile.*') ? 'active' : '' }}" href="{{ route('profile.index') }}">
                         <span class="nav-icon">
-                            <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
+                            <i class="ri-group-line"></i>
                         </span>
-                        <span class="nav-text">Localization Management</span>
+                        <span class="nav-text">My Profile</span>
                     </a>
                 </li>
+            @endrole
 
+            @role('master')
+                <!-- <li class="menu-title">Setting</li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link {{ request()->routeIs('localization.*') ? 'active' : '' }}" href="{{ route('localization.index') }}">
+                                                                <span class="nav-icon">
+                                                                    <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
+                                                                </span>
+                                                                <span class="nav-text">Localization Management</span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="nav-item">
+                                                            <a class="nav-link {{ request()->routeIs('features.*') ? 'active' : '' }}" href="{{ route('features.index') }}">
+                                                                <span class="nav-icon">
+                                                                    <iconify-icon icon="mynaui:air-conditioner-solid" class="fs-18 align-middle"></iconify-icon>
+                                                                </span>
+                                                                <span class="nav-text">Features & Ammenities</span>
+                                                            </a>
+                                                        </li> -->
+
+                <li class="menu-title">Setting</li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('features.*') ? 'active' : '' }}" href="{{ route('features.index') }}">
+                    <a class="nav-link menu-arrow {{ request()->routeIs('data-management.*') ? 'active' : '' }}" href="#dataManagement" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="dataManagement">
                         <span class="nav-icon">
-                            <iconify-icon icon="mynaui:air-conditioner-solid" class="fs-18 align-middle"></iconify-icon>
+                            <iconify-icon icon="carbon:document" class="fs-18 align-middle"></iconify-icon>
                         </span>
-                        <span class="nav-text">Features & Ammenities</span>
+                        <span class="nav-text"> Data management </span>
                     </a>
+                    <div class="{{ request()->routeIs('data-management.*') ? 'show' : '' }} collapse" id="dataManagement">
+                        <ul class="nav sub-navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('agent.*') ? 'active' : '' }}" href="{{ route('agent.index') }}">
+                                    <span class="nav-icon">
+                                        <i class="ri-group-line"></i>
+                                    </span>
+                                    <span class="nav-text">Agent</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('notary.*') ? 'active' : '' }}" href="{{ route('notary.index') }}">
+                                    <span class="nav-icon">
+                                        <i class="ri-group-line"></i>
+                                    </span>
+                                    <span class="nav-text">Notary</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('localization.*') ? 'active' : '' }}" href="{{ route('localization.index') }}">
+                                    <span class="nav-icon">
+                                        <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
+                                    </span>
+                                    <span class="nav-text">Localization Management</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('features.*') ? 'active' : '' }}" href="{{ route('features.index') }}">
+                                    <span class="nav-icon">
+                                        <iconify-icon icon="mynaui:air-conditioner-solid" class="fs-18 align-middle"></iconify-icon>
+                                    </span>
+                                    <span class="nav-text">Features & Ammenities</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
                 </li>
             @endrole
 

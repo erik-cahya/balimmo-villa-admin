@@ -89,10 +89,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/properties/features', PropertiesFeatureController::class)->except(['show', 'create']); // CRUD Feature & Ammenities
     Route::get('/properties/details/{slug}', [PropertiesController::class, 'detail'])->name('properties.details'); // See Properties Detail
 
+    Route::resource('/agent', AgentController::class); // CRUD Agent
     Route::get('/agent/{refcode}/properties', [AgentController::class, 'agentProperty'])->name('agent.properties'); // See Properties Listing From Agents
     Route::get('/agent/{refcode}', [AgentController::class, 'detailAgent'])->name('agent.detail'); // See Detail Data Agents
     Route::post('/agent/change-password', [AgentController::class, 'changePassword'])->name('agent.changePassword'); // Change Password Agents
-    Route::resource('/agent', AgentController::class); // CRUD Agent
     Route::post('/agent/reactivate/{id}', [AgentController::class, 'reactivate']); // Turn ON Agent Account
 
     Route::post('/leads/sendmail', [PropertiesLeadsController::class, 'sendMail'])->name('leads.sendmail');
@@ -119,8 +119,8 @@ Route::middleware('auth')->group(function () {
     // Route::resource('/clients', ClientController::class);
 
     Route::get('/api/regions', [RegionController::class, 'getRegions'])->name('api.regions');
-    Route::post('localization/addRegion', [LocalizationController::class, 'addRegion'])->name('localization.addRegion')->middleware('role:Master');
-    Route::resource('localization', LocalizationController::class)->middleware('role:Master');
+    Route::post('localization/addRegion', [LocalizationController::class, 'addRegion'])->name('localization.addRegion')->middleware('role:master');
+    Route::resource('localization', LocalizationController::class)->middleware('role:master');
 
     Route::post('offer-purchase/generate/english', [DocsOfferToPurchaseController::class, 'generateEnglishPDF'])->name('offer-purchase.pdf.english');
     Route::get('getDataProperties/{id}', [DocsOfferToPurchaseController::class, 'getPropertiesAjax'])->name('getPropertiesAjax');
