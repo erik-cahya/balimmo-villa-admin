@@ -47,7 +47,7 @@
 
             <div class="col-xl-8 col-lg-5">
 
-                @if (Auth::user()->role === 'Master')
+                @if (Auth::user()->role === 'master')
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
