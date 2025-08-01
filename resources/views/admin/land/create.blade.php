@@ -269,7 +269,7 @@
                                         <hr>
 
                                         <div class="row align-items-center">
-                                            <div class="col-12">
+                                            <div class="col-6">
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="essentials mandate" {{ old('type_mandate') == 'essentials mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="esstentials_mandate">Essentials</label>
@@ -283,7 +283,7 @@
                                                     <label class="form-check-label" for="max_booster_mandate">Max Booster</label>
                                                 </div>
                                             </div>
-                                            <div class="col-6 mt-3">
+                                            <div class="col-6">
                                                 <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
                                             </div>
                                         </div>

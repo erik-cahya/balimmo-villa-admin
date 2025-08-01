@@ -50,7 +50,7 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse show collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex justify-content-between align-items-start px-4">
-                                <div class="bg-light-subtle border-dark col-6 row rounded border p-3">
+                                <div class="bg-light-subtle border-dark col-4 row rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 1</h5>
                                     <hr>
                                     <div class="row m-0 mb-2 p-0">
@@ -105,7 +105,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="bg-light-subtle border-dark col-6 row rounded border p-3">
+                                <div class="bg-light-subtle border-dark col-4 row rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
                                     <hr>
 
@@ -163,7 +163,7 @@
 
                                     </div>
                                 </div>
-                                <div class="bg-light-subtle border-dark col-12 row mt-3 rounded border p-3">
+                                <div class="bg-light-subtle border-dark col-4 row rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
                                     <hr>
                                     <div class="row">
@@ -181,11 +181,11 @@
                     </div>
 
                     <br />
-                    <!-- Land -->
+                    <!-- Villa -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button fs-18 fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Land
+                                Villa
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
@@ -254,7 +254,7 @@
                                         <hr>
 
                                         <div class="row align-items-center">
-                                            <div class="col-12">
+                                            <div class="col-6">
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="essentials mandate" {{ old('type_mandate') == 'essentials mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="esstentials_mandate">Essentials</label>
@@ -268,7 +268,7 @@
                                                     <label class="form-check-label" for="max_booster_mandate">Max Booster</label>
                                                 </div>
                                             </div>
-                                            <div class="col-6 mt-3">
+                                            <div class="col-6">
                                                 <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
                                             </div>
                                         </div>
@@ -423,7 +423,7 @@
                                     <hr>
                                     <div class="row px-2 pb-2">
                                         @foreach ($feature_list_indoor as $feature_indoor)
-                                            <x-form-checkbox className="form-check col-6 pt-2" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
+                                            <x-form-checkbox className="form-check col-4 pt-2" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
                                         @endforeach
                                     </div>
                                 </div>
@@ -434,7 +434,7 @@
                                     <div class="row px-2 pb-2">
 
                                         @foreach ($feature_list_outdoor as $feature_outdoor)
-                                            <x-form-checkbox className="form-check col-6 pt-2" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                            <x-form-checkbox className="form-check col-4 pt-2" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
                                         @endforeach
 
                                     </div>

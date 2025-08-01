@@ -6,7 +6,7 @@ Docs
 --}}
 @props(['className', 'name', 'label', 'options' => null, 'selected' => null, 'defaultOptions' => ['Yes', 'No'], 'toggle'])
 
-<div class="{{ $className }} text-capitalize mb-3" id="group_{{ $name }}">
+<div class="{{ $className }} text-capitalize mb-1" id="group_{{ $name }}">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
     <select class="form-control" id="{{ $name }}" name="{{ $name }}" data-choices data-choices-sorting-false data-toggle-target="{{ isset($toggle) ? $toggle : '' }}">
         <option value="" selected disabled>Choose {{ $label }}</option>

@@ -40,7 +40,7 @@
                         <span class="nav-icon">
                             <i class="ri-community-line"></i>
                         </span>
-                        <span class="nav-text">Properties</span>
+                        <span class="nav-text">Villas</span>
                     </a>
                 </li>
 

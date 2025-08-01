@@ -33,10 +33,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="fw-semibold mb-0">Listing List</h4>
+                    <h4 class="fw-semibold mb-0">Villa List</h4>
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Properties</a></li>
-                        <li class="breadcrumb-item active">Listing List</li>
+                        <li class="breadcrumb-item active">Villa List</li>
                     </ol>
                 </div>
             </div>
@@ -47,9 +47,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center border-bottom">
                         <div>
-                            <h4 class="card-title mb-0">All Properties List <span class="badge bg-danger ms-1">{{ $data_property->count() }} </span></h4>
+                            <h4 class="card-title mb-0">All Villa List <span class="badge bg-danger ms-1">{{ $data_property->count() }} </span></h4>
                         </div>
-                        <a href="{{ route('properties.create') }}" class="btn btn-success width-md">Add Villa</a>
+                        <a href="{{ route('properties.create') }}" class="btn btn-sm btn-success width-md">Add Villa</a>                        
                     </div>
                     <div class="table-responsive">
                         <table class="table-hover table-centered fs-13 mb-0 table text-nowrap align-middle" id="tableProperties">
@@ -61,10 +61,10 @@
                                             <label class="form-check-label" for="customCheck1"></label>
                                         </div>
                                     </th>
-                                    <th>Properties Photo & Name</th>
+                                    <th>Villa Photo & Name</th>
                                     <th>Agent</th>
                                     <th>Mandates</th>                                    
-                                    <th>Localization</th>
+                                    <th>Location</th>
                                     <th>Bedroom</th>
                                     <th>Price</th>
                                     <th>Status</th>
@@ -73,7 +73,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($data_property as $property)
-                                    <tr>
+                                    <tr data-href="{{ route('properties.details', $property->property_slug) }}" style="cursor: pointer;">
                                         <td>
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="customCheck2">
@@ -98,7 +98,7 @@
 
                                         <td><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
                                         <td class="text-capitalize">
-                                            <span class="text-dark fw-medium fs-15">{{ $property->region }}</span>
+                                            <span class="text-dark fw-medium fs-15">{{ $property->area }}</span>
                                         </td>
                                         <td>
                                             <span class="text-dark fw-medium fs-15">{{ $property->bedroom }} </span>
@@ -176,6 +176,16 @@
         $(document).ready(function() {
             $('#tableProperties').DataTable();
         });
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("tr[data-href]").forEach(row => {
+        row.addEventListener("click", () => {
+            window.location.href = row.dataset.href;
+        });
+        });
+    });
     </script>
     {{-- /* Data Table --}}
     {{-- Sweet Alert --}}

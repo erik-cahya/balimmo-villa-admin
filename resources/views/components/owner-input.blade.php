@@ -1,4 +1,4 @@
-<div class="owner-block border rounded p-3 mb-3 position-relative" data-index="{{ $index }}">
+<div class="owner-block border rounded p-3 mb-1 position-relative" data-index="{{ $index }}">
     <button type="button" class="btn-close position-absolute top-0 end-0 m-2" onclick="removeOwner(this)" aria-label="Close"></button>
 
     <input type="hidden" name="owners[{{ $index }}][id]" value="{{ $owner->id ?? '' }}">

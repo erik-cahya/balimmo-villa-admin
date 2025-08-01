@@ -1,7 +1,7 @@
 <div class="row mt-4">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center border-bottom text-bg-primary" style="border-radius: 10px 10px 0px 0px">
+            <div class="card-header d-flex justify-content-between align-items-center border-bottom " style="border-radius: 10px 10px 0px 0px">
                 <div>
                     <h4 class="card-title">Specific Property List</h4>
                 </div>
@@ -13,10 +13,10 @@
                         <thead class="table-light">
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Customer Name</th>
-                                <th scope="col">Leads From</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Localization</th>
+                                <th scope="col">Leads Name</th>
+                                <th scope="col">Agent</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Area</th>
                                 <th scope="col">Ready to Buy</th>
                                 <th scope="col">Looking For</th>
 
