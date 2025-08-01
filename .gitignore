@@ -25,4 +25,4 @@ yarn-error.log
 
 /public/admin/attachment
 
-storage/framework/cache/*
+/storage/framework/cache/*
