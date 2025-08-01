@@ -24,3 +24,5 @@ yarn-error.log
 /public/tmp_uploads
 
 /public/admin/attachment
+
+storage/framework/cache/*
