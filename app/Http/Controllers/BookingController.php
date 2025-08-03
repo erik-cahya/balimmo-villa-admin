@@ -36,7 +36,7 @@ class BookingController extends Controller
         //     ]);
         // }
 
-        // dd($request->all());
+        dd($request->all());
         // dd($slug);
 
         $property = PropertiesModel::where('property_slug', $slug)->first();

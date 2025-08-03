@@ -43,7 +43,7 @@
                     </svg>
                     Villa
                 </label>
-                <input value="properties" name="type_asset_villa" class="interior__amenities--check__input" id="villa" type="checkbox">
+                <input value="properties" name="type_asset_villa" class="interior__amenities--check__input" id="villa" type="checkbox" > 
                 <span class="interior__amenities--checkmark"></span>
             </li>
             <li class="interior__amenities--check__list mb-0">
@@ -81,9 +81,9 @@
     <!-- looking_for_villa -->
     <div id="looking_for_villa" style="display: none;">
         <div class="d-flex justify-content-center justify-items-center text-center">
-            <hr class="w-100" />
+            <hr class="w-50" />
             <label class="w-100">Looking For Villa</label>
-            <hr class="w-100" />
+            <hr class="w-50" />
         </div>
         <div class="contact__property--form__input" id="villa_budget_idr" style="display: none;">
             <label for="budget_idr">Budget IDR*</label>
@@ -154,9 +154,9 @@
     <!-- looking_for_land -->
     <div id="looking_for_land" style="display: none;">
         <div class="d-flex justify-content-center justify-items-center text-center">
-            <hr class="w-100" />
+            <hr class="w-50" />
             <label class="w-100">Looking For Land</label>
-            <hr class="w-100" />
+            <hr class="w-50" />
         </div>
         <div class="contact__property--form__input" id="land_budget_idr" style="display: none;">
             <label for="budget_idr">Budget IDR*</label>
@@ -189,8 +189,8 @@
         </div>
 
         <div class="contact__property--form__input" id="land_location">
-            <label for="location">Location*</label>
-            <select name="location">
+            <label for="land_location">Location*</label>
+            <select name="land_location">
                 {{-- <option selected disabled>Property Location</option>
                 @foreach ($sub_regions as $rgn)
                     <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
@@ -204,7 +204,7 @@
                 <option value="other">Other</option>
             </select>
 
-            @error('location')
+            @error('land_location')
                 <p class="text-danger my-2">{{ $message }}</p>
             @enderror
         </div>

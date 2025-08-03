@@ -88,7 +88,7 @@
                             $matchLeadsProperties = $lead->where('type_asset', 'properties')->first();
                             $matchLeadsLand = $lead->where('type_asset', 'land')->first();
 
-                            // dd($matchLeadsProperties);
+                            // dd($matchLeadsProperties->max_bedroom);
                         @endphp
 
                         <!-- Modal -->
@@ -106,21 +106,22 @@
                                                 <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5> <span class="badge bg-success me-1">Villa</span>
                                             </div>
                                             <div class="d-flex my-2 gap-2">
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties?->first_name ?? ('' . ' ' . $matchLeadsProperties?->last_name ?? '') }}</span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->first_name . ' ' . $matchLeadsProperties->last_name }}</span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties?->cust_email ?? '' }}</span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeadsProperties?->cust_phone ?? ''), 4)) }}</span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeadsProperties?->date ?? '')->format('d F, Y') }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                
+                                                <span class="badge bg-warning text-light p-1" style="font-size: 14px">
                                                     IDR {{ number_format($matchLeadsProperties?->min_budget_idr ?? 0, 0, ',', '.') }}
                                                     -
                                                     IDR {{ number_format($matchLeadsProperties?->max_budget_idr ?? 0, 0, ',', '.') }}
                                                 </span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                <span class="badge bg-success text-light p-1" style="font-size: 14px">
                                                     USD {{ number_format($matchLeadsProperties?->min_budget_usd ?? 0, 2, ',', '.') }}
                                                     -
                                                     USD {{ number_format($matchLeadsProperties?->max_budget_usd ?? 0, 2, ',', '.') }}
                                                 </span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties?->min_bedroom ?? ('' . ' - ' . $matchLeadsProperties?->max_bedroom ?? '') }} </span>
+                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->min_bedroom . ' - ' . $matchLeadsProperties->max_bedroom }} </span>
                                             </div>
 
                                             <div class="table-responsive">

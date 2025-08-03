@@ -81,7 +81,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/leads/{lead}/matching-properties', [PropertiesLeadsController::class, 'searchMatchProperties']);
     Route::get('/leads/{customer}/get-specific-properties', [PropertiesLeadsController::class, 'getSpecificProperties']);
 
-
     // ############################################################### Admin Panel Controller
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/properties/change_acceptance/{slug}', [PropertiesController::class, 'changeAcceptance'])->name('properties.changeAcceptance'); // Accept Listing Properties
