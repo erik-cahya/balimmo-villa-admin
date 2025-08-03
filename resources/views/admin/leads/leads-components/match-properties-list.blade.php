@@ -177,11 +177,11 @@
                                                                 <label for="villa_localization" class="form-label">Localization</label>
                                                                 <select id="villa_localization" class="form-select" name="villa_localization">
                                                                     <option value="" selected disabled>Select Area</option>
-                                                                    <option value="ubud">Ubud</option>
-                                                                    <option value="canggu">Canggu</option>
-                                                                    <option value="uluwatu">Uluwatu</option>
-                                                                    <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
-                                                                    <option value="other">Other</option>
+                                                                    <option value="ubud" {{ $villaData->localization == 'ubud' ? 'selected' : '' }}>Ubud</option>
+                                                                    <option value="canggu" {{ $villaData->localization == 'canggu' ? 'selected' : '' }}>Canggu</option>
+                                                                    <option value="uluwatu" {{ $villaData->localization == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
+                                                                    <option value="sanur/nusa dua" {{ $villaData->localization == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
+                                                                    <option value="other" {{ $villaData->localization == 'other' ? 'selected' : '' }}>Other</option>
                                                                 </select>
                                                             </div>
 
@@ -217,11 +217,11 @@
                                                                 <label for="land_localization" class="form-label">Localization</label>
                                                                 <select id="land_localization" class="form-select" name="land_localization">
                                                                     <option value="" selected disabled>Select Area</option>
-                                                                    <option value="ubud">Ubud</option>
-                                                                    <option value="canggu">Canggu</option>
-                                                                    <option value="uluwatu">Uluwatu</option>
-                                                                    <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
-                                                                    <option value="other">Other</option>
+                                                                    <option value="ubud" {{ isset($landData->localization) == 'ubud' ? 'selected' : '' }}>Ubud</option>
+                                                                    <option value="canggu" {{ isset($landData->localization) == 'canggu' ? 'selected' : '' }}>Canggu</option>
+                                                                    <option value="uluwatu" {{ isset($landData->localization) == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
+                                                                    <option value="sanur/nusa dua" {{ isset($landData->localization) == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
+                                                                    <option value="other" {{ isset($landData->localization) == 'other' ? 'selected' : '' }}>Other</option>
                                                                 </select>
                                                             </div>
 

@@ -68,6 +68,13 @@ class ProspectController extends Controller
             'agent_code' => $request->agent_code
         ]);
 
+        $flashData = [
+            'judul' => 'Leads Change to Prospect',
+            'pesan' => 'Leads Data Changed Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+        return back()->with('flashData', $flashData);
+
         dd('data dipindah dan masuk ke prospect');
 
 
