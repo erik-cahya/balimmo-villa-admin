@@ -101,30 +101,12 @@ class PropertiesLeadsController extends Controller
                 ->join('properties', 'properties.id', '=', 'leads.properties_id')
                 ->get()->groupBy('customer_id');
         } else {
-
-            $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)->where('prospect_status', 0)
-                ->select(
-                    'leads.*',
-                    'properties.id as properties_id',
-                    'properties.property_name',
-                    'properties.property_address',
-                    'properties.region',
-                    'properties.sub_region',
-                    'properties.bedroom',
-                    'properties.bathroom',
-                )
+            // dd(Auth::user()->reference_code);
+            $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)
                 ->leftJoin('customer', 'customer.id', '=', 'leads.customer_id')
                 ->leftJoin('properties', 'properties.id', '=', 'leads.properties_id')
                 ->get()->groupBy('cust_email');
         }
-
-        // $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', '!=', null)
-        //     ->join('customer', 'customer.id', '=', 'leads.customer_id')
-        //     ->join('properties', 'properties.id', '=', 'leads.properties_id')
-        //     ->get()->groupBy('customer_id');
-
-        // dd($data['data_leads']);
-
 
         $data['data_localization'] = SubRegionModel::select('name')->get();
         $data['data_agent'] = User::where('role', 'agent')->get();
