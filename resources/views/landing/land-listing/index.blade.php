@@ -138,7 +138,7 @@
 
                                             {{-- ####### Property List --}}
                                             <div class="row" id="property-list">
-                                                @include('landing.land-listing.partials.property_list', ['data_property' => $data_property])
+                                                @include('landing.land-listing.partials.land_list', ['data_property' => $data_property])
                                             </div>
                                             {{-- ####### Property List --}}
 
@@ -204,7 +204,7 @@
                 });
 
                 $.ajax({
-                    url: '{{ route('property.search') }}',
+                    url: '{{ route('land.search') }}',
                     type: 'GET',
                     data: formData,
                     beforeSend: function() {

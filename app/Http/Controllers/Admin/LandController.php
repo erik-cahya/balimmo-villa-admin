@@ -549,7 +549,7 @@ class LandController extends Controller
         }
         // /* Gallery Handler
 
-        Cache::forget('properties_list_cache');
+        Cache::forget('land_list_cache');
 
         // dd($gallery->id);
 
@@ -685,7 +685,7 @@ class LandController extends Controller
             'swalFlashIcon' => 'success',
         ];
 
-        Cache::forget('properties_list_cache');
+        Cache::forget('land_list_cache');
 
         return response()->json($flashData);
     }
@@ -789,7 +789,7 @@ class LandController extends Controller
         ];
 
         // Hapus cache lama agar nanti di-refresh otomatis saat index() dipanggil lagi
-        Cache::forget('properties_list_cache');
+        Cache::forget('land_list_cache');
 
         return redirect()->route('land.index')->with('flashData', $flashData);
     }

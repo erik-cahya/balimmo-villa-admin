@@ -338,7 +338,7 @@ class LandingPageController extends Controller
     }
 
     // ======================================================
-    // Search / Filter in listing page
+    // Search / Filter Properties in listing page
     // ======================================================
     public function search(Request $request)
     {
@@ -378,6 +378,46 @@ class LandingPageController extends Controller
         }
 
         return view('landing.listing.partials.property_list', compact('data_property'))->render();
+    }
+
+    // ======================================================
+    // Search / Filter land in listing page
+    // ======================================================
+    public function search_land(Request $request)
+    {
+        $query = $request->get('query');
+        $bedroom = $request->get('bedroom');
+        $propertyTypes = $request->get('property_type', []);
+        $locations = $request->get('location', []);
+
+        // Jika semua filter kosong gunakan query from cache
+        if (empty($query) && empty($bedroom) && empty($propertyTypes) && empty($locations)) {
+            $data_property = Cache::rememberForever('land_list_cache', function () {
+                return LandModel::with(['featuredImage' => function ($query) {
+                    $query->select('image_path', 'land_gallery.id');
+                    $query->where('is_featured', 1);
+                }])->where('type_acceptance', 'Accept')
+                    ->join('land_legal', 'land_legal.land_id', '=', 'land.id')
+                    ->get();
+            });
+        } else {
+            $data_property = LandModel::with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'property_gallery.id');
+                $query->where('is_featured', 1);
+            }])
+                ->join('land_legal', 'land_legal.land_id', '=', 'land.id')
+                ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
+                ->where('type_acceptance', 'Accept')
+                ->when($query, function ($q) use ($query) {
+                    $q->where(function ($q2) use ($query) {
+                        $q2->where('land_name', 'like', "%{$query}%")
+                            ->orWhere('land_address', 'like', "%{$query}%");
+                    });
+                })
+                ->get();
+        }
+
+        return view('landing.land-listing.partials.land_list', compact('data_property'))->render();
     }
 
 
