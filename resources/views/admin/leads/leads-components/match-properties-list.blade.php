@@ -96,7 +96,7 @@
                                     </td>
                                 </tr>
 
-                                {{-- Modal Make to Prospect --}}
+                                {{-- Modal Edit Data Leads--}}
                                 <div class="modal modal-lg fade" id="makeProspect-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -248,7 +248,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- END Modal Make to Prospect --}}
+                                {{-- END Modal Edit Data Leads--}}
                             @endforeach
 
                         </tbody>

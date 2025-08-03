@@ -17,7 +17,7 @@ class ProspectController extends Controller
     public function leadsToProspect(Request $request, $id)
     {
 
-        dd($id);
+        // dd($id);
 
 
         // dd($request->all());
@@ -42,10 +42,6 @@ class ProspectController extends Controller
             ];
             return back()->with('flashData', $flashData);
         }
-
-        // foreach ($request->properties_name as $propeties => $value) {
-        //     dd($propeties);
-        // };
 
         // Pindahkan data dari table leads ke prospect
         $dataLeads = PropertyLeadsModel::where('customer_id', $customerID)->get();

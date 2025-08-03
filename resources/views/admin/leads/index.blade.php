@@ -374,69 +374,40 @@
     {{-- /* End Sweet Alert --}}
 
     {{-- Currency Format --}}
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const cleaveFields = [
+                '#villa_min_budget_idr',
+                '#villa_max_budget_idr',
+                '#villa_min_budget_usd',
+                '#villa_max_budget_usd',
+                '#land_min_budget_idr',
+                '#land_max_budget_idr',
+                '#land_min_budget_idr',
+                '#land_max_budget_usd',
+            ];
 
-            const cleaveFields = [{
-                id: '#villa_min_budget_idr',
-                options: {
-                    prefix: 'IDR '
-                }
-            }, {
-                id: '#villa_max_budget_idr',
-                options: {
-                    prefix: 'IDR '
-                }
-            }, {
-                id: '#land_min_budget_idr',
-                options: {
-                    prefix: 'IDR '
-                }
-            }, {
-                id: '#land_max_budget_idr',
-                options: {
-                    prefix: 'IDR '
-                }
-            }, {
-                id: '#land_min_budget_usd',
-                options: {
+            cleaveFields.forEach(selector => {
+                const isIDR = selector.includes('_idr');
+                const options = isIDR ? {
+                    prefix: 'IDR ',
+                    numeral: true
+                } : {
                     numeral: true,
                     numeralThousandsGroupStyle: 'thousand',
                     prefix: '$ ',
                     noImmediatePrefix: true,
                     numeralDecimalMark: '.',
                     delimiter: ',',
-                }
-            }, {
-                id: '#land_max_budget_usd',
-                options: {
-                    numeral: true,
-                    numeralThousandsGroupStyle: 'thousand',
-                    prefix: '$ ',
-                    noImmediatePrefix: true,
-                    numeralDecimalMark: '.',
-                    delimiter: ',',
-                }
-            }, ];
+                };
 
-            cleaveFields.forEach(field => {
-                const el = document.querySelector(field.id);
-                if (el) {
-                    new Cleave(el, {
-                        numeral: true,
-                        numeralThousandsGroupStyle: 'thousand',
-                        prefix: '$ ',
-                        noImmediatePrefix: true,
-                        numeralDecimalMark: ',',
-                        delimiter: '.',
-                        ...field.options
-                    });
-                } else {
-                    console.warn(`Element not found: ${field.id}`);
-                }
+                new Cleave(selector, options);
             });
         });
     </script>
+    
+   
     {{-- /* End Currency Format --}}
 
     {{-- Toggle Villa/Land Checkbox --}}
