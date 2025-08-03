@@ -83,7 +83,7 @@
                                         </td>
 
                                         <td>
-                                            <div class="d-flex align-items-center gap-2">
+                                            <a href="{{ route('land.details', $property->land_slug) }}" class="d-flex align-items-center gap-2">
                                                 <div>
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
@@ -91,7 +91,7 @@
                                                     <span class="text-dark fw-medium fs-15" style="text-overflow: ellipsis; max-width: 200px; overflow: hidden; white-space: nowrap">{{ $property->land_name }}</span>
                                                     <span class="fst-italic">{{ $property->land_code }}</span>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </td>
                                         <td>
                                             <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
@@ -144,9 +144,9 @@
                                         <td>                                        
 
                                             <div class="d-flex gap-2">
-                                                {{--
-                                                <a href="{{ route('land.edit', $property->property_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a>
-                                                --}}
+                                                
+                                                <a href="{{ route('land.edit', $property->land_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a>
+                                               
                                                 {{-- Delete Button --}}
                                                 <input type="hidden" class="propertyId" value="{{ $property->id }}">
                                                 <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->property_name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="fs-18 align-middle"></iconify-icon></button>

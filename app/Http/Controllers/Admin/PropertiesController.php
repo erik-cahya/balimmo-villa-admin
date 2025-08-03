@@ -581,10 +581,10 @@ class PropertiesController extends Controller
                 'property_financial.avg_occupancy_rate',
                 'property_financial.selling_price_idr',
                 'property_financial.selling_price_usd',
-                'property_financial.commision_ammount_idr',
-                'property_financial.commision_ammount_usd',
-                'property_financial.net_seller_idr',
-                'property_financial.net_seller_usd',
+                // 'property_financial.commision_ammount_idr',
+                // 'property_financial.commision_ammount_usd',
+                // 'property_financial.net_seller_idr',
+                // 'property_financial.net_seller_usd',
 
                 'property_legal.company_name',
                 'property_legal.rep_first_name',
@@ -1074,12 +1074,12 @@ class PropertiesController extends Controller
         return floatval($number);
     }
 
-    public function changeAcceptance(Request $request, $slug)
+    public function changeAcceptance($slug, $status)
     {
-
         PropertiesModel::where('property_slug', $slug)->update(
             [
-                'type_acceptance' => $request->type_acceptance
+                // 'type_acceptance' => $request->type_acceptance
+                'type_acceptance' => $status
             ]
         );
         $flashData = [

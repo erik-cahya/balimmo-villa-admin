@@ -111,11 +111,14 @@
                                             <button class="btn fs-14 fw-semibold {{ $className }} text-capitalize dropdown-toggle px-2 py-1" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                 {{ $data_properties->type_acceptance }}
                                             </button>
-                                            @if (Auth::user()->role === 'Master')
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <a class="dropdown-item" href="#">Pending</a>
-                                                <a class="dropdown-item" href="#">Accept</a>
-                                            </div>
+                                            @if (Auth::user()->role === 'master')
+                                                @php
+                                                    $status = 'pending';
+                                                @endphp
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <a class="dropdown-item" href="{{ route('properties.changeAcceptance', ['slug' => $data_properties->property_slug, 'status' => 'pending']) }}">Pending</a>
+                                                    <a class="dropdown-item" href="{{ route('properties.changeAcceptance', ['slug' => $data_properties->property_slug, 'status' => 'accept']) }}">Accept</a>
+                                                </div>
                                             @endif
                                         </div>
                                         <div>

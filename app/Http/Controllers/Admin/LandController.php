@@ -96,9 +96,8 @@ class LandController extends Controller
 
     public function detail($slug)
     {
+        // dd($slug);
         $property = LandModel::where('land_slug', $slug)->select('id', 'internal_reference')->first();
-
-
         $data['data_properties'] = LandModel::where('land_slug', $slug)
             ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
             ->join('land_legal', 'land_legal.land_id', '=', 'land.id')
@@ -136,8 +135,9 @@ class LandController extends Controller
             )
             ->first();
 
+        // dd($property);
 
-        $data['feature_list'] = LandFeatureModel::where('land_id', $data['data_properties']->id)
+        $data['feature_list'] = LandFeatureModel::where('land_id', $property->id)
             ->join('land_feature_list', 'land_feature_list.id', '=', 'land_feature.feature_land_id')
             ->select('land_feature_list.name as feature_name')
             ->get();
@@ -574,9 +574,82 @@ class LandController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($slug)
     {
-        //
+        $data['data_properties'] = LandModel::where('land_slug', $slug)
+            ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
+            ->join('land_legal', 'land_legal.land_id', '=', 'land.id')
+            ->with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'land_gallery.id');
+                $query->where('is_featured', 1);
+            }])
+            ->select(
+                'land.*',
+                // 'land_financial.*',
+
+                'land_financial.avg_nightly_rate',
+                'land_financial.avg_occupancy_rate',
+                'land_financial.selling_price_idr',
+                'land_financial.selling_price_usd',
+                // 'land_financial.commision_ammount_idr',
+                // 'land_financial.commision_ammount_usd',
+                // 'land_financial.net_seller_idr',
+                // 'land_financial.net_seller_usd',
+
+                'land_legal.company_name',
+                'land_legal.rep_first_name',
+                'land_legal.rep_last_name',
+                'land_legal.phone',
+                'land_legal.email',
+                'land_legal.legal_status',
+                'land_legal.holder_name',
+                'land_legal.holder_number',
+                'land_legal.start_date',
+                'land_legal.end_date',
+                'land_legal.purchase_date',
+                'land_legal.extension_cost',
+                'land_legal.purchase_cost',
+                'land_legal.deadline_payment',
+                'land_legal.zoning',
+            )
+            ->first();
+
+        // dd($data['data_properties']['featuredImage']->id);
+
+
+
+        // Property Owner
+        // dd($data['data_properties']);
+        $data['property_owner'] = LandOwnerModel::where('land_id', $data['data_properties']->id)->get();
+
+        // Properties Feature
+        $data['feature_list'] = LandFeatureListModel::where('type', 'outdoor')->get();
+        // $data['feature_list_indoor'] = LandFeatureListModel::where('type', 'indoor')->get();
+        // User Checked berdasarkan id
+        $data['properties_feature'] = LandFeatureModel::where('land_id', $data['data_properties']->id)->get();
+        // Ambil ID fitur yang sudah dipilih
+        $data['selected_feature_ids'] = $data['properties_feature']->pluck('feature_id')->toArray();
+
+        // URL Attachment
+        $url_attachment = LandUrlAttachmentModel::where('land_id', $data['data_properties']->id)->select('name', 'path_attachment')->get();
+        $attachment = [];
+        foreach ($url_attachment as $key) {
+            $attachment[$key->name] = $key->path_attachment;
+        };
+
+
+        $data['attachment'] = $attachment;
+
+        $galleryId = optional($data['data_properties']['featuredImage'])->id;
+        // dd($galleryId);
+        $data['image_gallery'] = $galleryId
+            ? LandGalleryImageModel::where('land_gallery_id', $galleryId)->get()
+            : collect(); // Jika galleryId null, hasilkan koleksi kosong
+
+        // $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
+
+
+        return view('admin.land.edit', $data);
     }
 
     /**
@@ -700,12 +773,13 @@ class LandController extends Controller
         return floatval($number);
     }
 
-    public function changeAcceptance(Request $request, $slug)
+    public function changeAcceptance($slug, $status)
     {
 
         LandModel::where('land_slug', $slug)->update(
             [
-                'type_acceptance' => $request->type_acceptance
+                // 'type_acceptance' => $request->type_acceptance
+                'type_acceptance' => $status
             ]
         );
         $flashData = [
