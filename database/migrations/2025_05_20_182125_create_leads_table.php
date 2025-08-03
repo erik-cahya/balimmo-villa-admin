@@ -36,6 +36,7 @@ return new class extends Migration
 
             $table->id();
             $table->unsignedBigInteger('properties_id')->nullable()->comment('fk to properties table');
+            $table->unsignedBigInteger('land_id')->nullable()->comment('fk to land table');
             $table->unsignedBigInteger('customer_id')->nullable()->comment('fk to customer data table');
             $table->char('type_asset', 10)->nullable();
 
@@ -58,14 +59,15 @@ return new class extends Migration
 
             $table->text('message')->nullable();
 
-            $table->boolean('prospect_status')->comment('1 : True/Prospect | 0 : False');
-            $table->tinyInteger('docs_status')->comment('0 : Decline | 1 : Visit | 2 : Offering | 3 : Done Client')->nullable();
+            // $table->boolean('prospect_status')->comment('1 : True/Prospect | 0 : False');
+            // $table->tinyInteger('docs_status')->comment('0 : Decline | 1 : Visit | 2 : Offering | 3 : Done Client')->nullable();
 
             $table->boolean('visibility')->comment('1 : True | 0 : False');
             $table->timestamps();
 
             // Foreign Key Constraint with ON DELETE CASCADE
             $table->foreign('properties_id')->references('id')->on('properties')->onDelete('cascade');
+            $table->foreign('land_id')->references('id')->on('land')->onDelete('cascade');
         });
     }
 

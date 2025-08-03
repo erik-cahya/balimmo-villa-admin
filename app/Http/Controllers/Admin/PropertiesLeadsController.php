@@ -70,15 +70,16 @@ class PropertiesLeadsController extends Controller
 
         $landData  = PropertyLeadsModel::where('customer_id', $customerID)
             ->where('leads.type_asset', 'land')
-            ->join('properties', 'properties.id', '=', 'leads.properties_id')
-            ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->join('land', 'land.id', '=', 'leads.land_id')
+            ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
             ->select(
                 'leads.customer_id',
-                'leads.properties_id',
-                'properties.*',
-                'property_financial.*',
+                'leads.land_id',
+                'land.*',
+                'land_financial.*',
             )
             ->get();
+
         return response()->json([
             'customerID' => $customerID,
             'propertiesData' => $propertiesData,
@@ -88,25 +89,22 @@ class PropertiesLeadsController extends Controller
 
     public function index()
     {
-
-
         if (!Auth::check()) {
             return redirect()->route('login');
         }
 
         if (Auth::user()->role == 'master') {
-
             $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', '!=', null)
                 ->join('customer', 'customer.id', '=', 'leads.customer_id')
-                ->join('properties', 'properties.id', '=', 'leads.properties_id')
                 ->get()->groupBy('customer_id');
         } else {
             // dd(Auth::user()->reference_code);
-            $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', Auth::user()->reference_code)->where('properties_id', '!=', null)
+            $data['data_leads'] = PropertyLeadsModel::where('customer.agent_code', Auth::user()->reference_code)
                 ->leftJoin('customer', 'customer.id', '=', 'leads.customer_id')
-                ->leftJoin('properties', 'properties.id', '=', 'leads.properties_id')
-                ->get()->groupBy('cust_email');
+                ->get()->groupBy('customer_id');
         }
+
+        // dd($data['data_leads']);
 
         $data['data_localization'] = SubRegionModel::select('name')->get();
         $data['data_agent'] = User::where('role', 'agent')->get();

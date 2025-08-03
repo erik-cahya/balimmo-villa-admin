@@ -434,13 +434,10 @@
 
             villaCheckbox.checked = true;
             villaCheckbox.addEventListener("change", function () {
-            if (!villaCheckbox.checked) {
-                villaCheckbox.checked = true; // paksa tetap centang
-            }
-})
-            // villaSection.style.display = "block";
-
-
+                if (!villaCheckbox.checked) {
+                    villaCheckbox.checked = true; // paksa tetap centang
+                }
+            })
             // Function to update visibility
             function updateVisibility() {
                 const currency = currencySelect.value;

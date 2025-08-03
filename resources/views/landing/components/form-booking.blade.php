@@ -116,8 +116,8 @@
         </div>
 
         <div class="contact__property--form__input" id="villa_location">
-            <label for="location">Location*</label>
-            <select name="location">
+            <label for="properties_location">Location*</label>
+            <select name="properties_location">
                 {{-- <option selected disabled>Property Location</option>
                 @foreach ($sub_regions as $rgn)
                     <option value="{{ $rgn->name }}">{{ $rgn->name }}</option>
@@ -130,7 +130,7 @@
                 <option value="other">Other</option>
             </select>
 
-            @error('location')
+            @error("properties_location")
                 <p class="text-danger my-2">{{ $message }}</p>
             @enderror
         </div>

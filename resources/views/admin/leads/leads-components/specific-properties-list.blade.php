@@ -50,7 +50,7 @@
                                     <td>
                                         <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_phone), 4)) }}</p>
                                     </td>
-                                    <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $customerData->localization }}</td>
+                                    <td class="text-capitalize"><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $customerData->localization }}</td>
 
                                     <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
                                     <td>
@@ -82,13 +82,15 @@
                         </tbody>
                     </table>
 
+
+
                     @foreach ($data_leads as $leads => $lead)
                         @php
                             $customerData = $lead->first();
                             $matchLeadsProperties = $lead->where('type_asset', 'properties')->first();
                             $matchLeadsLand = $lead->where('type_asset', 'land')->first();
 
-                            // dd($matchLeadsProperties->max_bedroom);
+                            // dd($matchLeadsProperties);
                         @endphp
 
                         <!-- Modal -->
@@ -124,98 +126,105 @@
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->min_bedroom . ' - ' . $matchLeadsProperties->max_bedroom }} </span>
                                             </div>
 
-                                            <div class="table-responsive">
-                                                <table class="table-hover table-centered table text-nowrap" id="tableProperties_specificLeads-{{ $customerData->customer_id }}">
-                                                    <thead class="table-light">
-                                                        <tr>
-                                                            <th scope="col">No</th>
-                                                            <th scope="col">Property Name</th>
-                                                            <th scope="col">Agent</th>
-                                                            <th scope="col">Bedroom</th>
-                                                            <th scope="col">Price</th>
-                                                            <th scope="col">Property Address</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="tableContentProperties_specificLeads-{{ $customerData->customer_id }}">
-                                                        {{-- <tbody>
-                                                        <tr>
+                                            @if (isset($matchLeadsProperties->properties_id) && $matchLeadsProperties->properties_id !== NULL)
+
+                                                <div class="table-responsive">
+                                                    <table class="table-hover table-centered table text-nowrap" id="tableProperties_specificLeads-{{ $customerData->customer_id }}">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th scope="col">No</th>
+                                                                <th scope="col">Property Name</th>
+                                                                <th scope="col">Agent</th>
+                                                                <th scope="col">Bedroom</th>
+                                                                <th scope="col">Price</th>
+                                                                <th scope="col">Property Address</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="tableContentProperties_specificLeads-{{ $customerData->customer_id }}">
+                                                            {{-- <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>Villa Agung</td>
+                                                                <td>BPM-MASTER-3213</td>
+                                                                <td>5</td>
+                                                                <td>
+                                                                    <div class="d-block" bis_skin_checked="1">
+                                                                        <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
+                                                                            IDR 4.000.000.000
+                                                                        </h5>
+                                                                        <p class="fs-13 mb-0">USD 400.000</p>
+                                                                    </div>
+                                                                </td>
+                                                                <td>Jl Raya Kuta No 44 Kuta, Badung</td>
+                                                            </tr> --}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @endif
+
+                                            <!-- End Information Leads Villa -->
+                                        </div>
+
+                                        <hr class="my-4">
+
+
+                                        @if (isset($matchLeadsLand->land_id) && $matchLeadsLand->land_id !== NULL)
+                                            <!-- Information Leads Lands -->
+                                            <div id="detailsLand">
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5><span class="badge bg-warning me-1">Land</span>
+                                                </div>
+                                                <div class="d-flex my-2 gap-2">
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->first_name . ' ' . $matchLeadsLand->last_name }}</span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->cust_email }}</span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeadsLand->cust_phone), 4)) }}</span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeadsLand->date)->format('d F, Y') }}</span>
+                                                    <span class="badge bg-warning p-1" style="font-size: 14px">
+                                                        IDR {{ number_format($matchLeadsLand->min_budget_idr, 0, ',', '.') }}
+                                                        -
+                                                        IDR {{ number_format($matchLeadsLand->max_budget_idr, 0, ',', '.') }}
+                                                    </span>
+                                                    <span class="badge bg-success p-1" style="font-size: 14px">
+                                                        USD {{ number_format($matchLeadsLand->min_budget_usd, 2, ',', '.') }}
+                                                        -
+                                                        USD {{ number_format($matchLeadsLand->max_budget_usd, 2, ',', '.') }}
+                                                    </span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:fullscreen" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->min_land_size . ' - ' . $matchLeadsLand->max_land_size }} m² </span>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table-hover table-centered table text-nowrap" id="tableLand_specificLeads-{{ $customerData->customer_id }}">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th scope="col">No</th>
+                                                                <th scope="col">Land Name</th>
+                                                                <th scope="col">Agent</th>
+                                                                <th scope="col">Size</th>
+                                                                <th scope="col">Price</th>
+                                                                <th scope="col">Property Address</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="tableContentLand_specificLeads-{{ $customerData->customer_id }}">
+                                                            {{-- <tr>
                                                             <td>1</td>
-                                                            <td>Villa Agung</td>
-                                                            <td>BPM-MASTER-3213</td>
-                                                            <td>5</td>
+                                                            <td>1</td>
+                                                            <td>1</td>
+                                                            <td>200 m²</td>
                                                             <td>
-                                                                <div class="d-block" bis_skin_checked="1">
-                                                                    <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
-                                                                        IDR 4.000.000.000
+                                                                <div class="d-block">
+                                                                    <h5 class="text-dark fw-medium mb-0"
+                                                                        data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $matchLeads->id }}">
+                                                                        IDR 4.000.000.00000
                                                                     </h5>
                                                                     <p class="fs-13 mb-0">USD 400.000</p>
                                                                 </div>
                                                             </td>
-                                                            <td>Jl Raya Kuta No 44 Kuta, Badung</td>
+                                                            <td>Address</td>
                                                         </tr> --}}
-                                                    </tbody>
-                                                </table>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- End Information Leads Lands -->
                                             </div>
-                                            <!-- End Information Leads Villa -->
-                                        </div>
-
-                                        @if ($matchLeadsLand !== NULL)
-                                        <!-- Information Leads Lands -->
-                                        <div id="detailsLand">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5><span class="badge bg-warning me-1">Land</span>
-                                            </div>
-                                            <div class="d-flex my-2 gap-2">
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->first_name . ' ' . $matchLeadsLand->last_name }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->cust_email }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeadsLand->cust_phone), 4)) }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeadsLand->date)->format('d F, Y') }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
-                                                    IDR {{ number_format($matchLeadsLand->min_budget_idr, 0, ',', '.') }}
-                                                    -
-                                                    IDR {{ number_format($matchLeadsLand->max_budget_idr, 0, ',', '.') }}
-                                                </span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
-                                                    USD {{ number_format($matchLeadsLand->min_budget_usd, 2, ',', '.') }}
-                                                    -
-                                                    USD {{ number_format($matchLeadsLand->max_budget_usd, 2, ',', '.') }}
-                                                </span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:fullscreen" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsLand->min_land_size . ' - ' . $matchLeadsLand->max_land_size }} m² </span>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table-hover table-centered table text-nowrap" id="tableLand_specificLeads-{{ $customerData->customer_id }}">
-                                                    <thead class="table-light">
-                                                        <tr>
-                                                            <th scope="col">No</th>
-                                                            <th scope="col">Land Name</th>
-                                                            <th scope="col">Agent</th>
-                                                            <th scope="col">Size</th>
-                                                            <th scope="col">Price</th>
-                                                            <th scope="col">Property Address</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="tableContentLand_specificLeads-{{ $customerData->customer_id }}">
-                                                        {{-- <tr>
-                                                        <td>1</td>
-                                                        <td>1</td>
-                                                        <td>1</td>
-                                                        <td>200 m²</td>
-                                                        <td>
-                                                            <div class="d-block">
-                                                                <h5 class="text-dark fw-medium mb-0"
-                                                                    data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $matchLeads->id }}">
-                                                                    IDR 4.000.000.00000
-                                                                </h5>
-                                                                <p class="fs-13 mb-0">USD 400.000</p>
-                                                            </div>
-                                                        </td>
-                                                        <td>Address</td>
-                                                    </tr> --}}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <!-- End Information Leads Lands -->
-                                        </div>
                                         @endif
                                     </div>
                                     <div class="modal-footer">

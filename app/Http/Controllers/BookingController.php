@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotifikasiEmail;
-
+use App\Models\Land\LandModel;
 
 class BookingController extends Controller
 {
@@ -36,10 +36,11 @@ class BookingController extends Controller
         //     ]);
         // }
 
-        dd($request->all());
-        // dd($slug);
+        // dd($request->all());
 
         $property = PropertiesModel::where('property_slug', $slug)->first();
+        $land = LandModel::where('land_slug', $slug)->first();
+
         // Jika data phone dan email cust sama dengan yang sebelumnya, maka gunakan data ID yang sudah ada di DB
         $newCustomerData = CustomerDataModel::firstOrCreate([
             'cust_phone' => $request->phone_number,
@@ -47,7 +48,7 @@ class BookingController extends Controller
         ], [
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
-            'agent_code' => $slug == NULL ? NULL : $property?->internal_reference,
+            'agent_code' => $property->internal_reference ?? $land->internal_reference ?? null
         ]);
 
         // IDR / USD Budget
@@ -80,6 +81,7 @@ class BookingController extends Controller
         $land_size_min = $request->land_size_min;
         $land_size_max = $request->land_size_max;
 
+        // Jika slug null (match properties)
         if ($slug == null) {
 
             if ($request->type_asset_villa == null) {
@@ -92,7 +94,8 @@ class BookingController extends Controller
             // Jika type asset villa dipilih
             if ($request->type_asset_villa !== null) {
                 $leadsData = PropertyLeadsModel::create([
-                    'properties_id' => $slug == NULL ? NULL : $property->id,
+                    'properties_id' => isset($property->id) ? $property->id : NULL,
+                    'land_id' => isset($land->id) ? $land->id : NULL,
                     'customer_id' => $newCustomerData->id,
                     'type_asset' => $request->type_asset_villa,
 
@@ -104,7 +107,7 @@ class BookingController extends Controller
                     'min_bedroom' => $bedroom_min,
                     'max_bedroom' => $bedroom_max,
 
-                    'localization' => $request->location == NULL ? $property->sub_region : $request->location,
+                    'localization' => $request->properties_location,
                     'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
                     'message' => $request->message,
                     'visibility' => 1,
@@ -113,7 +116,8 @@ class BookingController extends Controller
             // Jika type asset land dipilih
             if ($request->type_asset_land !== null) {
                 $leadsData = PropertyLeadsModel::create([
-                    'properties_id' => $slug == NULL ? NULL : $property->id,
+                    'properties_id' => isset($property->id) ? $property->id : NULL,
+                    'land_id' => isset($land->id) ? $land->id : NULL,
                     'customer_id' => $newCustomerData->id,
                     'type_asset' => $request->type_asset_land,
 
@@ -125,34 +129,68 @@ class BookingController extends Controller
                     'min_land_size' => $land_size_min,
                     'max_land_size' => $land_size_max,
 
-                    'localization' => $request->location == NULL ? $property->sub_region : $request->location,
+                    'localization' => $request->land_location,
                     'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
                     'message' => $request->message,
                     'visibility' => 1,
 
                 ]);
             }
-        } else {
-            $leadsData = PropertyLeadsModel::create([
-                'properties_id' => $slug == NULL ? NULL : $property->id,
-                'customer_id' => $newCustomerData->id,
-                'type_asset' => $property->type_properties,
+        }
+        // Ada Slug (Specific Properties)
+        else {
+            if ($request->type_asset_villa == null) {
+                $bedroom_min = NULL;
+                $bedroom_max = NULL;
+            } elseif ($request->type_asset_land == null) {
+                $land_size_min = NULL;
+                $land_size_max = NULL;
+            }
+            // Jika type asset villa dipilih
+            if ($request->type_asset_villa !== null) {
+                $leadsData = PropertyLeadsModel::create([
+                    'properties_id' => isset($property->id) ? $property->id : NULL,
+                    'land_id' => NULL,
+                    'customer_id' => $newCustomerData->id,
+                    'type_asset' => $request->type_asset_villa,
 
-                'min_budget_idr' => $request->budget_idr_min !== NULL ? $this->convertToInteger($request->budget_idr_min) : NULL,
-                'max_budget_idr' => $request->budget_idr_max !== NULL ? $this->convertToInteger($request->budget_idr_max) : NULL,
-                'min_budget_usd' => $request->budget_usd_min !== NULL ? floatval(preg_replace('/[^\d.]/', '', $request->budget_usd_min)) : NULL,
-                'max_budget_usd' => $request->budget_usd_max !== NULL ? floatval(preg_replace('/[^\d.]/', '', $request->budget_usd_max)) : NULL,
+                    'min_budget_idr' => $villa_MinimumBudgetIDR,
+                    'max_budget_idr' => $villa_MaximumBudgetIDR,
+                    'min_budget_usd' => $villa_MinimumBudgetUSD,
+                    'max_budget_usd' => $villa_MaximumBudgetUSD,
 
-                'min_bedroom' => $bedroom_min,
-                'max_bedroom' => $bedroom_max,
-                'min_land_size' => $land_size_min,
-                'max_land_size' => $land_size_max,
+                    'min_bedroom' => $bedroom_min,
+                    'max_bedroom' => $bedroom_max,
 
-                'localization' => $request->location == NULL ? $property->sub_region : $request->location,
-                'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
-                'message' => $request->message,
-                'visibility' => 1,
-            ]);
+                    'localization' => $request->properties_location,
+                    'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+                    'message' => $request->message,
+                    'visibility' => 1,
+                ]);
+            }
+            // Jika type asset land dipilih
+            if ($request->type_asset_land !== null) {
+                $leadsData = PropertyLeadsModel::create([
+                    'properties_id' => NULL,
+                    'land_id' => isset($land->id) ? $land->id : NULL,
+                    'customer_id' => $newCustomerData->id,
+                    'type_asset' => $request->type_asset_land,
+
+                    'min_budget_idr' => $land_MinimumBudgetIDR,
+                    'max_budget_idr' => $land_MaximumBudgetIDR,
+                    'min_budget_usd' => $land_MinimumBudgetUSD,
+                    'max_budget_usd' => $land_MaximumBudgetUSD,
+
+                    'min_land_size' => $land_size_min,
+                    'max_land_size' => $land_size_max,
+
+                    'localization' => $request->land_location,
+                    'date' => Carbon::createFromFormat('d-m-Y', $request->timing)->format('Y-m-d'),
+                    'message' => $request->message,
+                    'visibility' => 1,
+
+                ]);
+            }
         }
 
         // dd('data masuk');

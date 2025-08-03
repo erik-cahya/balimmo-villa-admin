@@ -56,17 +56,17 @@
     <script src="{{ asset('admin/assets/js/flatpickr-min.js') }}"></script>
     <script src="{{ asset('admin/assets/js/pages/leads.js') }}"></script>
 
-    {{-- Details Specific --}}
+    {{-- Details Specific Properties --}}
     <script>
         $(document).ready(function() {
             $('.showDetailsSpecific').on('click', function() {
-                let customerID = $(this).data('customer-id');
 
+                let customerID = $(this).data('customer-id');
                 let tablePropertiesID = '#tableProperties_specificLeads-' + customerID;
                 let tableLandID = '#tableLand_specificLeads-' + customerID;
 
-
                 $(tablePropertiesID).DataTable();
+                $(tableLandID).DataTable();
 
                 // let tableLandID = '#landLeadsDetails-' + leadId;
                 // let selectAgent = '#choose_agent-' + leadId;
@@ -77,6 +77,8 @@
                 $.get('/leads/' + customerID + '/get-specific-properties', function(response) {
 
 
+                    console.log(response);
+
                     let tablePropertiesHTML = '';
                     let tableLandHTML = '';
                     // let propertiesDataLeadsHTML = '';
@@ -84,9 +86,18 @@
                     // let addedAgents = new Set(); // no duplicate
 
                     if (response.propertiesData && response.propertiesData.length > 0) {
-                        console.log(response);
-
                         $.each(response.propertiesData, function(index, property) {
+                            let formattedIDR = new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR',
+                                minimumFractionDigits: 2
+                            }).format(property.selling_price_idr);
+
+                            let formattedUSD = new Intl.NumberFormat('en-US', {
+                                style: 'currency',
+                                currency: 'USD',
+                                minimumFractionDigits: 2
+                            }).format(property.selling_price_usd);
                             tablePropertiesHTML += `
                                 <tr>
                                     <td>${index + 1}</td>
@@ -96,9 +107,9 @@
                                     <td>
                                         <div class="d-block" bis_skin_checked="1">
                                             <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
-                                                IDR ${property.selling_price_idr}
+                                                IDR ${formattedIDR}
                                             </h5>
-                                            <p class="fs-13 mb-0">USD ${property.selling_price_usd}</p>
+                                            <p class="fs-13 mb-0">USD ${formattedUSD}</p>
                                         </div>
                                     </td>
                                     <td>${property.property_address}, ${property.sub_region}, ${property.region}</td>
@@ -109,22 +120,34 @@
 
                     // Properties Land
                     if (response.landData && response.landData.length > 0) {
-                        $.each(response.landData, function(index, property) {
+                        $.each(response.landData, function(index, land) {
+                            let formattedIDR = new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR',
+                                minimumFractionDigits: 2
+                            }).format(land.selling_price_idr);
+
+                            let formattedUSD = new Intl.NumberFormat('en-US', {
+                                style: 'currency',
+                                currency: 'USD',
+                                minimumFractionDigits: 2
+                            }).format(land.selling_price_usd);
+
                             tableLandHTML += `
                             <tr>
                             <td>${index + 1}</td>
-                            <td>${property.property_name}</td>
-                            <td>${property.internal_reference}</td>
-                            <td>${property.bedroom}</td>
+                            <td>${land.land_name}</td>
+                            <td>${land.internal_reference}</td>
+                            <td>${land.total_land_area} m²</td>
                             <td>
                                 <div class="d-block" bis_skin_checked="1">
                                     <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
-                                        IDR ${property.selling_price_idr}
+                                        ${formattedIDR}
                                     </h5>
-                                    <p class="fs-13 mb-0">USD ${property.selling_price_usd}</p>
+                                    <p class="fs-13 mb-0">USD ${formattedUSD}</p>
                                 </div>
                             </td>
-                            <td>${property.property_address}, ${property.sub_region}, ${property.region}</td>
+                            <td>${land.land_address}, ${land.sub_region}, ${land.region}</td>
                         </tr>
                         `;
 
@@ -155,7 +178,7 @@
             });
         });
     </script>
-    {{-- End Details Specific --}}
+    {{-- End Details Specific Properties --}}
 
     {{-- Details Matching --}}
     {{-- <script></script> --}}
