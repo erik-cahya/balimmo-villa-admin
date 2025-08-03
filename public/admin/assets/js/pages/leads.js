@@ -19,6 +19,18 @@ $(document).ready(function () {
             if (response.asset.properties && response.asset.properties.length > 0) {
                 $.each(response.asset.properties, function (index, property) {
 
+                    let formattedIDR = new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        minimumFractionDigits: 2
+                    }).format(property.selling_price_idr);
+
+                    let formattedUSD = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2
+                    }).format(property.selling_price_usd);
+
                     tablePropertiesHTML += `
                                 <tr>
                                     <td>${index + 1}</td>
@@ -28,9 +40,9 @@ $(document).ready(function () {
                                     <td>
                                         <div class="d-block" bis_skin_checked="1">
                                             <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
-                                                IDR ${property.selling_price_idr}
+                                                ${formattedIDR}
                                             </h5>
-                                            <p class="fs-13 mb-0">USD ${property.selling_price_usd}</p>
+                                            <p class="fs-13 mb-0">USD ${formattedUSD}</p>
                                         </div>
                                     </td>
                                     <td>${property.property_address}, ${property.sub_region}, ${property.region}</td>
@@ -54,21 +66,32 @@ $(document).ready(function () {
             // Properties Land
             if (response.asset.land && response.asset.land.length > 0) {
                 $.each(response.asset.land, function (index, property) {
+                    let formattedIDR = new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        minimumFractionDigits: 2
+                    }).format(property.selling_price_idr);
+
+                    let formattedUSD = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        minimumFractionDigits: 2
+                    }).format(property.selling_price_usd);
                     tableLandHTML += `
                                 <tr>
                                     <td>${index + 1}</td>
-                                    <td>${property.property_name}</td>
+                                    <td>${property.land_name}</td>
                                     <td>${property.internal_reference}</td>
-                                    <td>${property.bedroom}</td>
+                                    <td>${property.total_land_area} m²</td>
                                     <td>
                                         <div class="d-block" bis_skin_checked="1">
                                             <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
-                                                IDR ${property.selling_price_idr}
+                                                ${formattedIDR}
                                             </h5>
-                                            <p class="fs-13 mb-0">USD ${property.selling_price_usd}</p>
+                                            <p class="fs-13 mb-0">USD ${formattedUSD}</p>
                                         </div>
                                     </td>
-                                    <td>${property.property_address}, ${property.sub_region}, ${property.region}</td>
+                                    <td>${property.land_address}, ${property.sub_region}, ${property.region}</td>
                                 </tr>
                             `;
 

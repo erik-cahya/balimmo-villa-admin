@@ -17,7 +17,7 @@ class ProspectController extends Controller
     public function leadsToProspect(Request $request, $id)
     {
 
-        // dd($id);
+        dd($id);
 
 
         // dd($request->all());

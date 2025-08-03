@@ -98,6 +98,7 @@
                                 currency: 'USD',
                                 minimumFractionDigits: 2
                             }).format(property.selling_price_usd);
+                            
                             tablePropertiesHTML += `
                                 <tr>
                                     <td>${index + 1}</td>

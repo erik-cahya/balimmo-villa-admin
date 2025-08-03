@@ -83,7 +83,7 @@
 
                                     <td>
                                         <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#makeProspect-{{ $matchLeads->id }}">
-                                            <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon> Make to Prospect
+                                            <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon> Edit Data Leads
                                         </button>
 
                                         {{-- Delete Button --}}
@@ -176,13 +176,12 @@
                                                             <div class="col-lg-12 mb-3" id="group_villa_localization">
                                                                 <label for="villa_localization" class="form-label">Localization</label>
                                                                 <select id="villa_localization" class="form-select" name="villa_localization">
-                                                                    <option value="" disabled selected>Select Region</option>
-                                                                    @foreach ($data_localization as $localization)
-                                                                        <option value="{{ $localization->name }}"
-                                                                            {{ $villaData && $localization->name == $villaData->localization ? 'selected' : '' }}>
-                                                                            {{ $localization->name }}
-                                                                        </option>
-                                                                    @endforeach
+                                                                    <option value="" selected disabled>Select Area</option>
+                                                                    <option value="ubud">Ubud</option>
+                                                                    <option value="canggu">Canggu</option>
+                                                                    <option value="uluwatu">Uluwatu</option>
+                                                                    <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
+                                                                    <option value="other">Other</option>
                                                                 </select>
                                                             </div>
 
@@ -217,13 +216,12 @@
                                                             <div class="col-lg-12 mb-3" id="group_land_localization">
                                                                 <label for="land_localization" class="form-label">Localization</label>
                                                                 <select id="land_localization" class="form-select" name="land_localization">
-                                                                    <option value="" disabled selected>Select Region</option>
-                                                                    @foreach ($data_localization as $localization)
-                                                                        <option value="{{ $localization->name }}"
-                                                                            {{ $landData && $localization->name == $landData->localization ? 'selected' : '' }}>
-                                                                            {{ $localization->name }}
-                                                                        </option>
-                                                                    @endforeach
+                                                                    <option value="" selected disabled>Select Area</option>
+                                                                    <option value="ubud">Ubud</option>
+                                                                    <option value="canggu">Canggu</option>
+                                                                    <option value="uluwatu">Uluwatu</option>
+                                                                    <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
+                                                                    <option value="other">Other</option>
                                                                 </select>
                                                             </div>
 
@@ -243,7 +241,7 @@
                                                 </div>
                                                 <div class="modal-footer" bis_skin_checked="1">
                                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save and Make Prospect</button>
+                                                    <button type="submit" class="btn btn-primary">Update Data Leads</button>
                                                 </div>
                                             </form>
 
@@ -316,22 +314,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody class="detailsPropertyTables">
-                                                        {{-- <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Villa Agung</td>
-                                                            <td>BPM-MASTER-3213</td>
-                                                            <td>5</td>
-                                                            <td>
-                                                                <div class="d-block" bis_skin_checked="1">
-                                                                    <h5 class="text-dark fw-medium mb-0" data-bs-toggle="modal" data-bs-target="#editMatchProperties-4">
-                                                                        IDR 4.000.000.000
-                                                                    </h5>
-                                                                    <p class="fs-13 mb-0">USD 400.000</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>Jl Raya Kuta No 44 Kuta, Badung</td>
-                                                        </tr> --}}
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -376,22 +359,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody class="detailsLandTables">
-                                                            {{-- <tr>
-                                                            <td>1</td>
-                                                            <td>1</td>
-                                                            <td>1</td>
-                                                            <td>200 m²</td>
-                                                            <td>
-                                                                <div class="d-block">
-                                                                    <h5 class="text-dark fw-medium mb-0"
-                                                                        data-bs-toggle="modal" data-bs-target="#editMatchProperties-{{ $matchLeads->id }}">
-                                                                        IDR 4.000.000.00000
-                                                                    </h5>
-                                                                    <p class="fs-13 mb-0">USD 400.000</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>Address</td>
-                                                        </tr> --}}
+                                                    
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -404,7 +372,15 @@
                                     <form action="{{ route('leadsToProspect', $matchLeads->customer_id) }}" method="POST">
                                         @csrf
                                         <div class="modal-footer">
-                                            @role('Master')
+                                            @role('master')
+                                                <div class="propertiesDataLeads"></div>
+                                                <div class="row" style="min-width: 200px">
+                                                    <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
+                                                        <option value="">Choose agent</option>
+                                                    </select>
+                                                </div>
+                                            @endrole
+                                            @role('agent')
                                                 <div class="propertiesDataLeads"></div>
                                                 <div class="row" style="min-width: 200px">
                                                     <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">

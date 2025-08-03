@@ -6,6 +6,7 @@ use App\Events\BookingCreated;
 use App\Http\Controllers\Controller;
 use App\Mail\NotifikasiEmail;
 use App\Models\CustomerDataModel;
+use App\Models\Land\LandModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyLeadsModel;
 use App\Models\SubRegionModel;
@@ -26,37 +27,46 @@ class PropertiesLeadsController extends Controller
         $results = [];
 
         foreach ($customerLeads as $customerLead) {
-            $query = PropertiesModel::join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                ->leftJoin('users', 'users.reference_code', '=', 'properties.internal_reference');
+            $user = Auth::user();
 
             if ($customerLead->type_asset == 'properties') {
-                $query->where('type_properties', 'Properties')
+                $query = PropertiesModel::join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+                    ->leftJoin('users', 'users.reference_code', '=', 'properties.internal_reference')
                     ->where('bedroom', '>=', $customerLead->min_bedroom ?? 0)
                     ->when($customerLead->max_bedroom, fn($q) => $q->where('bedroom', '<=', $customerLead->max_bedroom))
-                    ->where('sub_region', '=', $customerLead->localization)
-                ;
+                    ->where('area', '=', $customerLead->localization);
+
+                if ($user->role == 'agent') {
+                    $query->where('properties.internal_reference', $user->reference_code);
+                }
             } elseif ($customerLead->type_asset == 'land') {
-                $query->where('type_properties', 'Land')
+                $query = LandModel::join('land_financial', 'land_financial.land_id', '=', 'land.id')
+                    ->leftJoin('users', 'users.reference_code', '=', 'land.internal_reference')
                     ->where('total_land_area', '>=', $customerLead->min_land_size ?? 0)
                     ->when($customerLead->max_land_size, fn($q) => $q->where('total_land_area', '<=', $customerLead->max_land_size))
-                    ->where('sub_region', '=', $customerLead->localization)
-                ;
+                    ->where('area', '=', $customerLead->localization);
+
+                if ($user->role == 'agent') {
+                    $query->where('land.internal_reference', $user->reference_code);
+                }
             }
 
             $results[$customerLead->type_asset] = $query->get();
         }
 
-        $properties = $results;
         return response()->json([
             'lead' => $customerLeads,
-            'asset' => $properties
+            'asset' => $results,
+            'id' => $lead->customer_id
         ]);
     }
 
     public function getSpecificProperties($customerID)
     {
+        $user = Auth::user(); // ambil user yang sedang login
 
-        $propertiesData  = PropertyLeadsModel::where('customer_id', $customerID)
+        // Base query untuk properties
+        $propertiesQuery = PropertyLeadsModel::where('customer_id', $customerID)
             ->where('leads.type_asset', 'properties')
             ->join('properties', 'properties.id', '=', 'leads.properties_id')
             ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
@@ -65,10 +75,10 @@ class PropertiesLeadsController extends Controller
                 'leads.properties_id',
                 'properties.*',
                 'property_financial.*',
-            )
-            ->get();
+            );
 
-        $landData  = PropertyLeadsModel::where('customer_id', $customerID)
+        // Base query untuk land
+        $landQuery = PropertyLeadsModel::where('customer_id', $customerID)
             ->where('leads.type_asset', 'land')
             ->join('land', 'land.id', '=', 'leads.land_id')
             ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
@@ -77,13 +87,18 @@ class PropertiesLeadsController extends Controller
                 'leads.land_id',
                 'land.*',
                 'land_financial.*',
-            )
-            ->get();
+            );
+
+        // Jika role-nya agent, batasi berdasarkan reference_code
+        if ($user->role === 'agent') {
+            $propertiesQuery->where('properties.internal_reference', $user->reference_code);
+            $landQuery->where('land.internal_reference', $user->reference_code);
+        }
 
         return response()->json([
             'customerID' => $customerID,
-            'propertiesData' => $propertiesData,
-            'landData' => $landData
+            'propertiesData' => $propertiesQuery->get(),
+            'landData' => $landQuery->get()
         ]);
     }
 
@@ -136,7 +151,7 @@ class PropertiesLeadsController extends Controller
             'cust_passport' => $request->customer_passport,
         ]);
 
-        PropertyLeadsModel::where('customer_id', $customerID)->where('type_asset', 'villa')->update([
+        PropertyLeadsModel::where('customer_id', $customerID)->where('type_asset', 'properties')->update([
             'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_min_budget_idr),
             'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_max_budget_idr),
 
