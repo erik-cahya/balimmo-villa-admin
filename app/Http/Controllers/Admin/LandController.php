@@ -46,6 +46,7 @@ class LandController extends Controller
                 'land_slug',
                 'internal_reference',
                 'land_code',
+                'area',
                 'region',
                 'total_land_area',
                 'sub_region',

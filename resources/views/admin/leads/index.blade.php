@@ -250,10 +250,18 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#myTable').DataTable();
-            $('#specificPropertyTable').DataTable();
-            $('#propertiesLeadsDetails').DataTable();
-            $('#seePropertiesTable-' + this.getAttribute('data-nama')).DataTable();
+            $('#myTable').DataTable({
+                pageLength: 50
+            });
+            $('#specificPropertyTable').DataTable({
+                pageLength: 50
+            });
+            $('#propertiesLeadsDetails').DataTable({
+                pageLength: 50
+            });
+            $('#seePropertiesTable-' + this.getAttribute('data-nama')).DataTable({
+                pageLength: 50
+            });
         });
     </script>
     {{-- End Data Table Intialize --}}

@@ -85,19 +85,7 @@
                                 <!-- Villa Name -->
                                 <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
                                     <div class="d-flex align-items-center gap-2 col-12">
-                                        <h3 class="fw-medium text-capitalize mb-0">{{ $data_properties->property_name }}</h3>
-                                        <!-- <div>
-                                            @php
-                                                if ($data_properties->type_acceptance == 'pending') {
-                                                    $className = 'bg-warning';
-                                                } elseif ($data_properties->type_acceptance == 'accept') {
-                                                    $className = 'bg-success';
-                                                } else {
-                                                    $className = 'bg-danger';
-                                                }
-                                            @endphp
-                                            <span class="badge {{ $className }} text-light fs-16 text-capitalize px-2 py-1">{{ $data_properties->type_acceptance }}</span>
-                                        </div> -->
+                                        <h3 class="fw-medium text-capitalize mb-0">{{ $data_properties->property_name }}</h3>                                     
                                         <div class="dropdown">
                                             @php
                                                 if ($data_properties->type_acceptance == 'pending') {
@@ -146,7 +134,7 @@
                                     <div class="col lg-6">
                                         <p class="mb-2"><span class="fw-medium text-dark">Reference code</span><span class="mx-2">:</span>{{ $agent_data->reference_code }}</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Created date</span><span class="mx-2">:</span>{{ \Carbon\Carbon::parse($data_properties->created_at)->format('d F, Y') }}</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Area</span><span class="mx-2">:</span>Canggu</p>
+                                        <p class="mb-2"><span class="fw-medium text-dark">Area</span><span class="mx-2">:</span>{{ $data_properties->area }}</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Sub region</span><span class="mx-2">:</span>{{ $data_properties->sub_region }}</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Region</span><span class="mx-2">:</span>{{ $data_properties->region }}</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Address</span><span class="mx-2">:</span>{{ isset($data_properties->property_address) ? $data_properties->property_address : 'Data Not Found' }}</p>
@@ -160,11 +148,36 @@
                                         <p class="mb-2"><span class="fw-medium text-dark">Number</span><span class="mx-2">:</span>{{ $owner->phone }}</p>
                                         
                                         @endforeach
-                                        <p class="mb-2"><span class="fw-medium text-dark">PT PMA</span><span class="mx-2">:</span>PT Bangun Raja Narayana</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Owner</span><span class="mx-2">:</span>Raja Narayana</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Email</span><span class="mx-2">:</span>info@narayana.com</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Number</span><span class="mx-2">:</span>08125456</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Agent</span><span class="mx-2">:</span>{{ $agent_data->name }}</p>
+                                        @if(!empty($data_properties->company_name))
+                                            <p class="mb-2">
+                                                <span class="fw-medium text-dark">PT PMA</span><span class="mx-2">:</span>{{ $data_properties->company_name }}
+                                            </p>
+                                        @endif
+
+                                        @if(!empty($data_properties->rep_first_name) || !empty($data_properties->rep_last_name))
+                                            <p class="mb-2">
+                                                <span class="fw-medium text-dark">Owner</span><span class="mx-2">:</span>{{ $data_properties->rep_first_name }} {{ $data_properties->rep_last_name }}
+                                            </p>
+                                        @endif
+
+                                        @if(!empty($data_properties->email))
+                                            <p class="mb-2">
+                                                <span class="fw-medium text-dark">Email</span><span class="mx-2">:</span>{{ $data_properties->email }}
+                                            </p>
+                                        @endif
+
+                                        @if(!empty($data_properties->phone))
+                                            <p class="mb-2">
+                                                <span class="fw-medium text-dark">Number</span><span class="mx-2">:</span>{{ $data_properties->phone }}
+                                            </p>
+                                        @endif
+
+                                        @if(!empty($agent_data->name))
+                                            <p class="mb-2">
+                                                <span class="fw-medium text-dark">Agent</span><span class="mx-2">:</span>{{ $agent_data->name }}
+                                            </p>
+                                        @endif
+
                                        
                                     </div>                                    
                                 </div>
@@ -183,7 +196,8 @@
                                                                 <p class="mb-2"><span class="fw-medium text-dark">Legal Status</span><span class="mx-2">:</span>{{ isset($data_properties->legal_status) ? $data_properties->legal_status : '-' }}</p>
                                                                 <p class="mb-2"><span class="fw-medium text-dark">Certificate Name</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_name : '-' }}</p>
                                                                 <p class="mb-2"><span class="fw-medium text-dark">Certificate Number</span><span class="mx-2">:</span>{{ isset($data_properties->holder_number) ? $data_properties->holder_number : '-' }}</p>
-                                                                <p class="mb-0"><span class="fw-medium text-dark">Purchase Date</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_date) ? $data_properties->purchase_date : '-' }}</p>
+                                                                <p class="mb-2"><span class="fw-medium text-dark">Purchase Date</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_date) ? $data_properties->purchase_date : '-' }}</p>
+                                                                <p class="mb-0"><span class="fw-medium text-dark">Zoning</span><span class="mx-2">:</span>{{ $data_properties->zoning }}</p>
 
                                                                 <div class="d-flex align-items-center mt-3 flex-wrap gap-2">
                                                                     @if ($data_properties->green_zone == 1)
@@ -216,17 +230,18 @@
                                                                         <p class="mb-2"><span class="fw-medium text-dark">Negotiation Extension Cost</span><span class="mx-2">:</span>{{ isset($data_properties->extension_cost) ? $data_properties->extension_cost : '-' }}</p>
                                                                         <p class="mb-2"><span class="fw-medium text-dark">Purchase Cost</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_cost) ? $data_properties->purchase_cost : '-' }}</p>
                                                                         <p class="mb-2"><span class="fw-medium text-dark">Deadline for Payment to Secure Rate</span><span class="mx-2">:</span>{{ isset($data_properties->deadline_payment) ? $data_properties->deadline_payment : '-' }}</p>
+                                                                        <p class="mb-0"><span class="fw-medium text-dark">Zoning</span><span class="mx-2">:</span>{{ $data_properties->zoning }}</p>
 
                                                                         <div class="d-flex align-items-center mt-3 flex-wrap gap-2">
-                                                                            @if ($data_properties->green_zone == 1)
+                                                                            @if ($data_properties->zoning == 'Yello Zone')
                                                                                 <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Green Zone</span>
                                                                             @endif
 
-                                                                            @if ($data_properties->yellow_zone == 1)
+                                                                            @if ($data_properties->zoning == 2)
                                                                                 <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Yellow Zone</span>
                                                                             @endif
 
-                                                                            @if ($data_properties->red_zone == 1)
+                                                                            @if ($data_properties->zoning == 3)
                                                                                 <span class="badge bg-success-subtle text-dark fw-medium fs-12 border px-2 py-1 text-center"><iconify-icon icon="lets-icons:check-ring-round" class="fs-12"></iconify-icon> Red Zone</span>
                                                                             @endif
                                                                         </div>
@@ -624,27 +639,27 @@
                             <!-- Villa Characteristic Start -->
                             <div class="bg-light-subtle rounded border border-dashed p-2 mb-3">
                                 <div class="row align-items-center g-2 text-center">                                    
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                    <div class="col-lg-4 col-md-6 col-6 border-end">
                                         <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:scale-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->total_land_area }}m²
                                         </p>
                                     </div>
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                    <div class="col-lg-4 col-md-6 col-6 border-end">
                                         <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:home-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->villa_area }}m²
                                         </p>
                                     </div>
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                    <div class="col-lg-4 col-md-6 col-6 border-end">
                                         <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:swimming-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->pool_area }}m²
                                         </p>
                                     </div>
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                    <div class="col-lg-4 col-md-6 col-6 border-end">
                                         <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:bed-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bedroom }}
                                         </p>
                                     </div>
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                    <div class="col-lg-4 col-md-6 col-6 border-end">
                                         <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:bath-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->bathroom }}
                                         </p>
                                     </div>
-                                    <div class="col-xl-3 col-lg-4 col-md-6 col-6 border-end">
+                                    <div class="col-lg-4 col-md-6 col-6 border-end">
                                         <p class="text-muted d-flex align-items-center justify-content-center mb-0 gap-1"><iconify-icon icon="solar:alarm-broken" class="fs-18 text-warning"></iconify-icon> {{ $data_properties->year_construction }}
                                         </p>
                                     </div>
@@ -664,7 +679,7 @@
                             <!-- Villa Aminities End -->
                              
                             <div class="row d-flex align-items-center" style="justify-content: space-between !important ">
-                                <button type="submit" class="btn btn-primary col-4">Edit Property</button>
+                                <a href="{{ route('properties.edit', $data_properties->property_slug) }}" type="submit" class="btn btn-primary col-4">Edit Villa</a>
                                 <div class="col-6 ">
                                     <h4 class="mb-0" style=" text-align: right">IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</h4>
                                     <p class="mb-0" style=" text-align: right">$ {{ number_format($data_properties->selling_price_usd, 2, ',', '.') }}</p>

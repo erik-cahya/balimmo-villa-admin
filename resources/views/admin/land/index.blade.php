@@ -64,7 +64,7 @@
                                     </th>
                                     <th>Land Photo & Name</th>
                                     <th>Agent</th>
-                                    <th>Mandat</th>
+                                    <th>Mandates</th>
                                     <th>Location</th>
                                     <th>Size (m²)</th>
                                     <th>Price</th>
@@ -74,6 +74,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($data_land as $property)
+                                    
                                     <tr data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
                                         <td>
                                             <div class="form-check">
@@ -98,7 +99,7 @@
                                         </td>
                                         <td><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
                                         <td class="text-capitalize">
-                                            <span class="text-dark fw-medium fs-15">{{ $property->region }}</span>
+                                            <span class="text-dark fw-medium fs-15">{{ $property->area }}</span>
                                         </td>
                                         <td>
                                             <span class="text-dark fw-medium fs-15">{{ $property->total_land_area }} m²</span>
@@ -177,7 +178,10 @@
     {{-- Data Table --}}
     <script>
         $(document).ready(function() {
-            $('#tableProperties').DataTable();
+            $('#tableProperties').DataTable({
+                pageLength: 50
+            });
+            
         });
     </script>
     {{-- /* Data Table --}}

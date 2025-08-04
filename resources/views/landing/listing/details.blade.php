@@ -56,7 +56,8 @@
                                             <p class="listing__hero--slider__text"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#ddab70" />
                                                 </svg>
-                                                {{ $property->property_address }}</p>
+                                                {{ $property->sub_region . ', ' . $property->region }}    
+                                            </p>
                                         </div>
                                         <!-- Hero Content .\ -->
                                     </div>
@@ -106,7 +107,7 @@
                                 <p class="listing__details--location__text"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#063436" />
                                     </svg>
-                                    {{ $property->property_address . ', ' . $property->sub_region }}
+                                    {{ $property->sub_region . ', ' . $property->region }}
                                 </p>
 
                             </div>
@@ -246,10 +247,7 @@
                                         </li>
                                     </ul>
                                     <ul class="location__google--maps__info--step">
-                                        <li class="location__google--maps__info--list d-flex">
-                                            <span class="location__google--maps__info--title">Address:</span>
-                                            <span class="location__google--maps__info--subtitle">{{ $property->property_address }}</span>
-                                        </li>
+                                 
                                         <li class="location__google--maps__info--list d-flex">
                                             <span class="location__google--maps__info--title">Property Type: </span>
                                             <span class="location__google--maps__info--subtitle">{{ $property->legalStatus }}</span>
@@ -257,6 +255,27 @@
                                     </ul>
                                 </div>
                             </div>
+                            @if ($virtualTour !== null)
+                                <div class="listing__details--content__step mb-80">
+                                    <h3 class="listing__details--content__title mb-40">Visit Tour</h3>
+                                    <div class="listing__details--video__thumbnail position-relative">
+                                        @if ($virtualTour === null)
+                                            <p class="admin__profile--desc">No Data</p>
+                                        @else
+                                            <img src="https://img.youtube.com/vi/{{ $virtualTour }}/maxresdefault.jpg" alt="img">
+                                            <div class="bideo__play">
+                                                <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $virtualTour }}" data-gallery="video">
+                                                    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
+                                                    </svg>
+                                                    <span class="visually-hidden">Video Play</span>
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+
                             @if ($lifestyle !== null)
                                 <div class="listing__details--content__step mb-80">
                                     <h3 class="listing__details--content__title mb-40">Lifestyle</h3>
@@ -277,26 +296,7 @@
                                     </div>
                                 </div>
                             @endif
-                            @if ($virtualTour !== null)
-                                <div class="listing__details--content__step mb-80">
-                                    <h3 class="listing__details--content__title mb-40">Virtual Tour</h3>
-                                    <div class="listing__details--video__thumbnail position-relative">
-                                        @if ($virtualTour === null)
-                                            <p class="admin__profile--desc">No Data</p>
-                                        @else
-                                            <img src="https://img.youtube.com/vi/{{ $virtualTour }}/maxresdefault.jpg" alt="img">
-                                            <div class="bideo__play">
-                                                <a class="bideo__play--icon glightbox" href="https://www.youtube.com/embed/{{ $virtualTour }}" data-gallery="video">
-                                                    <svg width="13" height="17" viewBox="0 0 13 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M11.9358 7.28498C12.5203 7.67662 12.5283 8.53339 11.9512 8.93591L1.99498 15.8809C1.33555 16.3409 0.430441 15.8741 0.422904 15.0701L0.294442 1.36797C0.286904 0.563996 1.1831 0.0802964 1.85104 0.527837L11.9358 7.28498Z" fill="currentColor" />
-                                                    </svg>
-                                                    <span class="visually-hidden">Video Play</span>
-                                                </a>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
+                            
 
                             @if ($experience !== null)
                                 <div class="listing__details--content__step mb-80">
@@ -327,7 +327,7 @@
                     <div class="listing__widget">
                         <div class="widget__admin--profile mb-30 text-center">
                             <div class="admin__profile--thumbnail">
-                                <img src="{{ asset('admin') }}{{ $property->profilePicture == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $property->agent_code . '/' . $property->profilePicture }}" alt="img" style="width: 20rem; max-height: 20rem; object-fit:cover; border-radius: 10px">
+                                <img src="{{ asset('admin') }}{{ $property->profilePicture == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $property->agent_code . '/' . $property->profilePicture }}" alt="img" style="width: 8rem; max-height: 8rem; object-fit:cover; border-radius: 10px">
                             </div>
                             <div class="admin__profile--content">
                                 <h3 class="admin__profile--name">{{ $property->agent_name }}</h3>
@@ -353,6 +353,7 @@
                             </div>
                         </div>
 
+                        @if (isset($other_properties) && count($other_properties) > 0)
                         <div class="widget__step mb-30">
                             <h2 class="widget__step--title">Other Properties</h2>
 
@@ -383,6 +384,7 @@
                                 </div>
                             @endforeach
                         </div>
+                        @endif
 
                     </div>
                 </div>
