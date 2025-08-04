@@ -24,29 +24,34 @@ class ProspectController extends Controller
 
         $customerID = $id;
 
+        // dd($request->all());
+
         // Validasi nationality & passport customer
-        $dataCustomer = CustomerDataModel::where('id', $customerID)->first();
-        if ($dataCustomer->cust_nationality == null) {
-            $flashData = [
-                'judul' => 'Nationality data is empty',
-                'pesan' => 'Please input nationality in "make prospect"',
-                'swalFlashIcon' => 'error',
-            ];
-            return back()->with('flashData', $flashData);
-        }
-        if ($dataCustomer->cust_passport == null) {
-            $flashData = [
-                'judul' => 'Passport data is empty',
-                'pesan' => 'Please input passport in "make prospect"',
-                'swalFlashIcon' => 'error',
-            ];
-            return back()->with('flashData', $flashData);
-        }
+        // $dataCustomer = CustomerDataModel::where('id', $customerID)->first();
+
+        // if ($dataCustomer->cust_nationality == null) {
+        //     $flashData = [
+        //         'judul' => 'Nationality data is empty',
+        //         'pesan' => 'Please input nationality in "make prospect"',
+        //         'swalFlashIcon' => 'error',
+        //     ];
+        //     return back()->with('flashData', $flashData);
+        // }
+        // if ($dataCustomer->cust_passport == null) {
+        //     $flashData = [
+        //         'judul' => 'Passport data is empty',
+        //         'pesan' => 'Please input passport in "make prospect"',
+        //         'swalFlashIcon' => 'error',
+        //     ];
+        //     return back()->with('flashData', $flashData);
+        // }
 
         // Pindahkan data dari table leads ke prospect
         $dataLeads = PropertyLeadsModel::where('customer_id', $customerID)->get();
         foreach ($dataLeads as $lead) {
             PropertyProspectModel::create([
+                'properties_id' => $lead->properties_id,
+                'land_id' => $lead->land_idd,
                 'customer_id' => $lead->customer_id,
                 'type_asset' => $lead->type_asset,
                 'min_budget_idr' => $lead->min_budget_idr,
@@ -59,6 +64,7 @@ class ProspectController extends Controller
                 'max_land_size' => $lead->max_land_size,
                 'localization' => $lead->localization,
                 'date' => $lead->date,
+                'status' => 'new prospect'
             ]);
         }
         PropertyLeadsModel::where('customer_id', $customerID)->delete();
@@ -75,75 +81,103 @@ class ProspectController extends Controller
         ];
         return back()->with('flashData', $flashData);
 
-        dd('data dipindah dan masuk ke prospect');
+        // if ($request->status_prospect == 'No') {
+        //     $flashData = [
+        //         'judul' => 'Prospect Change Cancelled',
+        //         'pesan' => 'Leads cancelled into prospects',
+        //         'swalFlashIcon' => 'error',
+        //     ];
+        //     return back()->with('flashData', $flashData);
+        // }
+
+        // $status_prospect = PropertyLeadsModel::where('id', $id)->first();
 
 
-        if ($request->status_prospect == 'No') {
-            $flashData = [
-                'judul' => 'Prospect Change Cancelled',
-                'pesan' => 'Leads cancelled into prospects',
-                'swalFlashIcon' => 'error',
-            ];
-            return back()->with('flashData', $flashData);
-        }
+        // // dd($status_prospect->properties_id);
 
-        $status_prospect = PropertyLeadsModel::where('id', $id)->first();
+        // if ($status_prospect->properties_id == null) {
 
+        //     $internalReference = PropertiesModel::where('id', $request->selected_properties_id)->select('id', 'internal_reference')->first();
 
-        // dd($status_prospect->properties_id);
+        //     if (!isset($internalReference->id)) {
+        //         $flashData = [
+        //             'judul' => 'Prospect Change Cancelled',
+        //             'pesan' => 'Please select the properties to assign',
+        //             'swalFlashIcon' => 'error',
+        //         ];
+        //         return back()->with('flashData', $flashData);
+        //     }
+        //     // Cek apakah data leads sudah diambil atau belum
+        //     if ($status_prospect->agent_code == null) {
+        //         PropertyLeadsModel::where('id', $id)->update([
+        //             'properties_id' => $internalReference->id,
+        //             'agent_code' => $internalReference->internal_reference,
+        //             'prospect_status' => 1
+        //         ]);
 
-        if ($status_prospect->properties_id == null) {
+        //         $flashData = [
+        //             'judul' => 'Prospect Change Success',
+        //             'pesan' => 'Leads success change into prospects',
+        //             'swalFlashIcon' => 'success',
+        //         ];
+        //         return back()->with('flashData', $flashData);
+        //     } else {
+        //         $flashData = [
+        //             'judul' => 'Prospect failed to update',
+        //             'pesan' => 'Prospect data has been taken',
+        //             'swalFlashIcon' => 'error',
+        //         ];
+        //         return back()->with('flashData', $flashData);
+        //     }
+        // } else {
 
-            $internalReference = PropertiesModel::where('id', $request->selected_properties_id)->select('id', 'internal_reference')->first();
+        //     PropertyLeadsModel::where('cust_email', $status_prospect->cust_email)->update([
+        //         'prospect_status' => 1
+        //     ]);
 
-            if (!isset($internalReference->id)) {
-                $flashData = [
-                    'judul' => 'Prospect Change Cancelled',
-                    'pesan' => 'Please select the properties to assign',
-                    'swalFlashIcon' => 'error',
-                ];
-                return back()->with('flashData', $flashData);
-            }
-            // Cek apakah data leads sudah diambil atau belum
-            if ($status_prospect->agent_code == null) {
-                PropertyLeadsModel::where('id', $id)->update([
-                    'properties_id' => $internalReference->id,
-                    'agent_code' => $internalReference->internal_reference,
-                    'prospect_status' => 1
-                ]);
-
-                $flashData = [
-                    'judul' => 'Prospect Change Success',
-                    'pesan' => 'Leads success change into prospects',
-                    'swalFlashIcon' => 'success',
-                ];
-                return back()->with('flashData', $flashData);
-            } else {
-                $flashData = [
-                    'judul' => 'Prospect failed to update',
-                    'pesan' => 'Prospect data has been taken',
-                    'swalFlashIcon' => 'error',
-                ];
-                return back()->with('flashData', $flashData);
-            }
-        } else {
-
-            PropertyLeadsModel::where('cust_email', $status_prospect->cust_email)->update([
-                'prospect_status' => 1
-            ]);
-
-            $flashData = [
-                'judul' => 'Leads Change to Prospect',
-                'pesan' => 'Leads Data Changed Successfully',
-                'swalFlashIcon' => 'success',
-            ];
-            return back()->with('flashData', $flashData);
-        }
+        //     $flashData = [
+        //         'judul' => 'Leads Change to Prospect',
+        //         'pesan' => 'Leads Data Changed Successfully',
+        //         'swalFlashIcon' => 'success',
+        //     ];
+        //     return back()->with('flashData', $flashData);
+        // }
     }
 
     public function index()
     {
-        return view('admin.prospect.index');
+
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        if (Auth::user()->role == 'master') {
+             $data['data_prospect_villa'] = PropertyProspectModel::where('prospect.type_asset', 'properties')
+                ->leftJoin('properties', 'properties.id', '=', 'prospect.properties_id')
+                ->join('customer', 'customer.id', '=', 'prospect.customer_id')
+                ->get();
+
+            $data['data_prospect_land'] = PropertyProspectModel::where('prospect.type_asset', 'land')
+                ->leftJoin('properties', 'properties.id', '=', 'prospect.properties_id')
+                ->join('customer', 'customer.id', '=', 'prospect.customer_id')
+                ->get();
+        } else {
+            $data['data_prospect_villa'] = PropertyProspectModel::where('agent_code', Auth::user()->reference_code)->where('prospect.type_asset', 'properties')
+                ->leftJoin('properties', 'properties.id', '=', 'prospect.properties_id')
+                ->join('customer', 'customer.id', '=', 'prospect.customer_id')
+                ->get();
+
+            $data['data_prospect_land'] = PropertyProspectModel::where('agent_code', Auth::user()->reference_code)->where('prospect.type_asset', 'land')
+                ->leftJoin('properties', 'properties.id', '=', 'prospect.properties_id')
+                ->join('customer', 'customer.id', '=', 'prospect.customer_id')
+                ->get();
+        }
+        // dd( $data['data_prospect_villa']);
+
+       
+
+        // dd($data['data_prospect']);
+        return view('admin.prospect.index', $data);
     }
     /**
      * Display a listing of the resource.

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('prospect', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('properties_id')->nullable()->comment('fk to property id');
+            $table->unsignedBigInteger('properties_id')->nullable()->comment('fk to properties table');
+            $table->unsignedBigInteger('land_id')->nullable()->comment('fk to land table');
             $table->unsignedBigInteger('customer_id')->nullable()->comment('fk to customer data table');
             $table->char('type_asset', 10)->nullable();
 
@@ -31,8 +32,12 @@ return new class extends Migration
 
             $table->string('localization')->nullable();
             $table->date('date')->nullable();
+            $table->string('status')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('properties_id')->references('id')->on('properties')->onDelete('cascade');
+            $table->foreign('land_id')->references('id')->on('land')->onDelete('cascade');
         });
     }
 

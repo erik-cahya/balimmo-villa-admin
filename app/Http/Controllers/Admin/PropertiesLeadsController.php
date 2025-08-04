@@ -124,6 +124,8 @@ class PropertiesLeadsController extends Controller
         $data['data_localization'] = SubRegionModel::select('name')->get();
         $data['data_agent'] = User::where('role', 'agent')->get();
 
+        // dd($data['data_agent']);
+
         $data['data_properties'] = PropertiesModel::where('type_acceptance', 'accept')->get();
 
         $data['data_leads_matches'] = CustomerDataModel::where('customer.agent_code', null)

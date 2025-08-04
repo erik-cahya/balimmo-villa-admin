@@ -55,6 +55,7 @@
                                             <div class="noProperties" style="display: none;">
                                                 <span class="badge bg-primary text-light"> No Match Agent</span>
                                             </div>
+
                                         </div>
                                     </td>
                                     <td>
@@ -272,7 +273,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Choose agent</h5>
+                                        <h5 class="modal-title" id="staticBackdropLabel">Agent Details </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -372,12 +373,13 @@
                                     <form action="{{ route('leadsToProspect', $matchLeads->customer_id) }}" method="POST">
                                         @csrf
                                         <div class="modal-footer">
+                                            
                                             @role('master')
                                                 <div class="propertiesDataLeads"></div>
                                                 <div class="row" style="min-width: 200px">
                                                     <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
-                                                        <option value="">Choose agent</option>
-                                                        @foreach ($data_agent->where('role', '!=', 'notary') as $agent)
+                                                        <option value="" selected disabled>Choose agent</option>
+                                                        @foreach ($data_agent as $agent)
                                                             <option value="{{ $agent->reference_code }}" data-agent-id="{{ $agent->id }}">
                                                                 {{ $agent->reference_code }}
                                                             </option>
