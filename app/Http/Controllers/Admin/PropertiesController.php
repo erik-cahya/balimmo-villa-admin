@@ -36,6 +36,7 @@ class PropertiesController extends Controller
                 'internal_reference',
                 'bedroom',
                 'property_code',
+                'area',
                 'region',
                 'sub_region',
                 'property_address',

@@ -328,11 +328,21 @@
 
     <script>
         $(document).ready(function() {
-            $('#villaProspect').DataTable();
-            $('#landProspect').DataTable();
-            $('#myTable').DataTable();
-            $('#specificPropertyTable').DataTable();
-            $('#seePropertiesTable-' + this.getAttribute('data-nama')).DataTable();
+            $('#villaProspect').DataTable({
+                pageLength: 50
+            });
+            $('#landProspect').DataTable({
+                pageLength: 50
+            });
+            $('#myTable').DataTable({
+                pageLength: 50
+            });
+            $('#specificPropertyTable').DataTable({
+                pageLength: 50
+            });
+            $('#seePropertiesTable-' + this.getAttribute('data-nama')).DataTable({
+                pageLength: 50
+            });
         });
     </script>
     {{-- Sweet Alert --}}

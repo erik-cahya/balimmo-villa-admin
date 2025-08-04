@@ -105,8 +105,8 @@
                                         </td>                                   
                                         <td>
                                             <div class="d-flex flex-column">
-                                                <span class="text-dark fw-medium fs-15">IDR 2 500 000 000 </span>
-                                                <span class="text-gray-400 fst-italic">USD 239 000</span>
+                                                <span class="text-dark fw-medium fs-15">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
+                                                <span class="text-gray-400 fst-italic">$ {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
                                             </div>
                                         </td>
 
@@ -174,7 +174,9 @@
     {{-- Data Table --}}
     <script>
         $(document).ready(function() {
-            $('#tableProperties').DataTable();
+            $('#tableProperties').DataTable({
+                pageLength: 50
+            });
         });
     </script>
 
