@@ -117,7 +117,7 @@
                                 <p class="listing__details--content__desc">{{ $property->property_description }}</p>
                                 <div class="apartment__info listing__d--info">
                                     <div class="apartment__info--wrapper d-flex">
-                                        <div class="apartment__info--list">
+                                        <!-- <div class="apartment__info--list">
                                             <span class="apartment__info--icon"><img src="{{ asset('landing') }}/assets/img/icon/bed-realistic.png" alt="img"></span>
                                             <p>
                                                 <span class="apartment__info--count">{{ $property->bedroom }}</span>
@@ -130,7 +130,7 @@
                                                 <span class="apartment__info--count">{{ $property->bathroom }}</span>
                                                 <span class="apartment__info--title">Bathrooms</span>
                                             </p>
-                                        </div>
+                                        </div> -->
                                         <div class="apartment__info--list">
                                             <span class="apartment__info--icon"><img src="{{ asset('landing') }}/assets/img/icon/land.png" alt="img"></span>
                                             <p>

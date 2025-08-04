@@ -496,114 +496,116 @@
                             </button>
                         </h2>
                         <div id="collapseSalePrice" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
-                <!-- PILIHAN AGENT / OWNER -->
-                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
-                    <h5 class="text-dark fw-semibold">How did you find the property?</h5>
-                    <hr>
-                    <div class="col-12 mb-3">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="owner">
-                            <label class="form-check-label" for="by_owner">Owner of the villa</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="agent">
-                            <label class="form-check-label" for="by_agent">By an agent</label>
-                        </div>
-                    </div>
+                            <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
+                                <!-- PILIHAN AGENT / OWNER -->
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
+                                    <h5 class="text-dark fw-semibold">How did you find the property?</h5>
+                                    <hr>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="owner">
+                                            <label class="form-check-label" for="by_owner">Owner of the villa</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="agent">
+                                            <label class="form-check-label" for="by_agent">By an agent</label>
+                                        </div>
+                                    </div>
 
-                    <!-- Jika by agent -->
-                    <div id="agent_fields" style="display: none;">
-                        <div class="col-12 mb-2">
-                            <label class="form-label">Name of this agent</label>
-                            <input type="text" name="agent_name" class="form-control" />
+                                    <!-- Jika by agent -->
+                                    <div id="agent_fields" style="display: none;">
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Name of this agent</label>
+                                            <input type="text" name="agent_name" class="form-control" />
+                                        </div>
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Email of this agent</label>
+                                            <input type="text" name="agent_email" class="form-control" />
+                                        </div>
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Whatsapp of this agent</label>
+                                            <input type="text" name="agent_whatsapp" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FORM UTAMA -->
+                                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2" id="common_fields" style="display: none;">
+                                    <h5 class="text-dark fw-semibold" id="form_title">Property Details</h5>
+                                    <hr>
+
+                                    <!-- BASE PRICE -->
+                                    <div class="col-12">
+                                        <label class="form-label">What's the base price?</label><br />
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
+                                            <label class="form-check-label" for="base_price_1">NET saler</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
+                                            <label class="form-check-label" for="base_price_2">Selling price</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- DESIRE PRICE -->
+                                    <div class="col-12 mt-2">
+                                        <label>Base price</label>
+                                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner">
+                                    </div>
+
+                                    <!-- FULL COMMISSION (AGENT ONLY) -->
+                                    <div id="agent_commission_fields" style="display: none;" class="col-12 mt-2">
+                                        <label>Full Balimmo commission?</label><br />
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
+                                            <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
+                                            <label class="form-check-label" for="commission_balimmo_no">No</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- COMMISSIONS -->
+                                    <div class="col-12 mt-2" id="agent_commission_field">
+                                        <label>Commission of the agent (%)</label>
+                                        <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" />
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6 mt-2">
+                                            <label>Balimmo commission (%)</label>
+                                            <input type="text" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%" />
+                                        </div>
+
+                                        <div class="col-6 mt-2">
+                                            <label>Minimum Balimmo commission (%)</label>
+                                            <input type="text" id="minimum_balimmo_commission" name="minimum_balimmo_commission" class="form-control" placeholder="%" readonly/>
+                                        </div>
+                                    </div>
+
+                                    <!-- WEBSITE PRICE -->
+                                    <div class="col-12 mt-2">
+                                        <label>Website price (calculated)</label>
+                                        <input type="text" name="website_price" id="website_price" class="form-control" readonly />
+                                    </div>
+
+                                    <div class="row">
+                                        <!-- PRICE TO OWNER (NEW FIELD) -->
+                                        <div class="col-6 mt-2">
+                                            <label>Price to Owner</label>
+                                            <input type="text" name="price_to_owner" id="price_to_owner" class="form-control" readonly />
+                                        </div>
+
+                                        <!-- NET PROFIT (Always visible now) -->
+                                        <div class="col-6 mt-2" id="profit_wrapper">
+                                            <label>Net Profit / Margin (Estimated)</label>
+                                            <input type="text" name="net_profit" id="net_profit" class="form-control" readonly />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 mb-2">
-                            <label class="form-label">Email of this agent</label>
-                            <input type="text" name="agent_email" class="form-control" />
-                        </div>
-                        <div class="col-12 mb-2">
-                            <label class="form-label">Whatsapp of this agent</label>
-                            <input type="text" name="agent_whatsapp" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FORM UTAMA -->
-                <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2" id="common_fields" style="display: none;">
-                    <h5 class="text-dark fw-semibold" id="form_title">Property Details</h5>
-                    <hr>
-
-                    <!-- BASE PRICE -->
-                    <div class="col-12">
-                        <label class="form-label">What's the base price?</label><br />
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
-                            <label class="form-check-label" for="base_price_1">NET saler</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
-                            <label class="form-check-label" for="base_price_2">Selling price</label>
-                        </div>
-                    </div>
-
-                    <!-- DESIRE PRICE -->
-                    <div class="col-12 mt-2">
-                        <label>Desire price from the owner</label>
-                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner">
-                    </div>
-
-                    <!-- FULL COMMISSION (AGENT ONLY) -->
-                    <div id="agent_commission_fields" style="display: none;" class="col-12 mt-2">
-                        <label>Full Balimmo commission?</label><br />
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
-                            <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
-                            <label class="form-check-label" for="commission_balimmo_no">No</label>
-                        </div>
-                    </div>
-
-                    <!-- COMMISSIONS -->
-                    <div class="col-12 mt-2" id="agent_commission_field">
-                        <label>Commission of the agent (%)</label>
-                        <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" />
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6 mt-2">
-                            <label>Balimmo commission (%)</label>
-                            <input type="text" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%" />
-                        </div>
-
-                        <div class="col-6 mt-2">
-                            <label>Minimum Balimmo commission (%)</label>
-                            <input type="text" id="minimum_balimmo_commission" name="minimum_balimmo_commission" class="form-control" placeholder="%" readonly/>
-                        </div>
-                    </div>
-
-                    <!-- WEBSITE PRICE -->
-                    <div class="col-12 mt-2">
-                        <label>Website price (calculated)</label>
-                        <input type="text" name="website_price" id="website_price" class="form-control" readonly />
-                    </div>
-
-                    <!-- PRICE TO OWNER (NEW FIELD) -->
-                    <div class="col-12 mt-2">
-                        <label>Price to Owner</label>
-                        <input type="text" name="price_to_owner" id="price_to_owner" class="form-control" readonly />
-                    </div>
-
-                    <!-- NET PROFIT (Always visible now) -->
-                    <div class="col-12 mt-2" id="profit_wrapper">
-                        <label>Net Profit / Margin (Estimated)</label>
-                        <input type="text" name="net_profit" id="net_profit" class="form-control" readonly />
-                    </div>
-                </div>
-            </div>
-        </div>
                     </div>
 
                     <br />
@@ -734,7 +736,7 @@
             minCommissionInput.value = minRate.toFixed(2);
         }
 
-        function updateBalimmoCommission() {
+        function updateBalimmoCommission(forceUpdate = false) {
             const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
             const balimmoInput = document.getElementById("balimmo_commission");
             const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
@@ -756,32 +758,33 @@
             // Update minimum commission display
             updateMinimumBalimmoCommission();
 
-            // Set readonly status PERTAMA sebelum auto-fill
+            // SEMUA kondisi bisa diedit
             if (isOwner) {
-                // Owner: selalu bisa diedit
                 balimmoInput.readOnly = false;
-            } else if (isAgent && isAgentFullYes) {
-                // Agent + Full Commission Yes: tidak bisa diedit
-                balimmoInput.readOnly = true;
-            } else if (isAgent && isAgentFullNo) {
-                // Agent + Full Commission No: BISA diedit
-                balimmoInput.readOnly = false;
+            } else if (isAgent && (isAgentFullYes || isAgentFullNo)) {
+                balimmoInput.readOnly = false; // SEMUA Agent dengan pilihan bisa diedit
             } else if (isAgent) {
                 // Agent belum pilih full commission: tidak bisa diedit
                 balimmoInput.readOnly = true;
             }
 
-            // Auto-fill logic berdasarkan kondisi - SELALU gunakan rate sebagai default
-            if (!balimmoInput.value || val === 0) {
+            // Auto-update logic: update otomatis saat harga berubah atau kondisi tertentu
+            const shouldAutoUpdate = forceUpdate || !balimmoInput.value || val === 0 || 
+                                   (isOwner && event && event.target && event.target.id === 'desire_price_from_the_owner') ||
+                                   (isAgent && isAgentFullYes && event && event.target && event.target.id === 'desire_price_from_the_owner');
+
+            if (shouldAutoUpdate) {
                 if (isOwner) {
-                    // Owner: default RATE (bukan minimum), bisa diedit
+                    // Owner: auto-update dengan rate saat harga berubah
                     balimmoInput.value = rate.toFixed(2);
                 } else if (isAgent && isAgentFullYes) {
-                    // Agent + Full Commission Yes: otomatis isi dengan rate penuh
+                    // Agent + Full Commission Yes: auto-update dengan rate saat harga berubah
                     balimmoInput.value = rate.toFixed(2);
                 } else if (isAgent && isAgentFullNo) {
                     // Agent + Full Commission No: default rate, bisa diedit
-                    balimmoInput.value = rate.toFixed(2);
+                    if (!balimmoInput.value || val === 0) {
+                        balimmoInput.value = rate.toFixed(2);
+                    }
                 } else if (isAgent) {
                     // Agent belum pilih full commission
                     balimmoInput.value = "0";
@@ -790,9 +793,9 @@
 
             val = parseFloat(balimmoInput.value);
 
-            // Validasi manual input hanya jika field bisa diedit - gunakan MINIMUM sebagai batas
+            // Validasi manual input - SEMUA menggunakan minimum yang sama
             if (balimmoInput === document.activeElement && !balimmoInput.readOnly) {
-                if ((isOwner || (isAgent && isAgentFullNo)) && val < minRate) {
+                if (val < minRate) {
                     alert(`Balimmo commission cannot be lower than minimum: ${minRate}%`);
                     balimmoInput.value = minRate.toFixed(2);
                 } else if (val > 100) {
