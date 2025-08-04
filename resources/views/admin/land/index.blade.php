@@ -64,7 +64,7 @@
                                     </th>
                                     <th>Land Photo & Name</th>
                                     <th>Agent</th>
-                                    <th>Mandat</th>
+                                    <th>Mandates</th>
                                     <th>Location</th>
                                     <th>Size (m²)</th>
                                     <th>Price</th>
