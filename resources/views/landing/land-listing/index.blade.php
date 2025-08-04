@@ -73,7 +73,7 @@
 
                                 </ul>
                             </div>
-                            <div class="widget__list mb-30">
+                            <!-- <div class="widget__list mb-30">
                                 <h2 class="widget__title mb-15">Bedrooms</h2>
                                 <ul class="widget__catagories">
                                     <select name="bedroom" class="add__listing--form__select">
@@ -83,7 +83,7 @@
                                         <option value="4">4 Bedrooms</option>
                                     </select>
                                 </ul>
-                            </div>
+                            </div> -->
 
                             <div class="widget__list mb-0">
                                 <h2 class="widget__title mb-30">Find By Location</h2>
