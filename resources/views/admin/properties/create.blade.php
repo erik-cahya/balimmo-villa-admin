@@ -203,12 +203,6 @@
                                         <label for="area" class="form-label">Area</label>
                                         <select id="area" class="form-select" name="area">
                                             <option value="" selected disabled>Select Area</option>
-                                            <option value="ubud">Ubud</option>
-                                            <option value="canggu">Canggu</option>
-                                            <option value="uluwatu">Uluwatu</option>
-                                            <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
-                                            <option value="other">Other</option>
-
                                         </select>
                                     </div>
 
@@ -303,17 +297,7 @@
                                         <h5 class="text-dark fw-semibold">Property legal category *</h5>
                                         <hr>
 
-                                        <div class="row align-items-center">
-                                            <!-- <div class="col-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="form-check form-check-inline">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label class="form-check-label" for="esstentials_mandate">Leasehold</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="form-check form-check-inline">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label class="form-check-label" for="booster_mandate">Freehold</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                        <div class="row align-items-center">                                            
                                             <div class="col-12">
 
                                                 <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" />
@@ -495,7 +479,7 @@
                                 Sale price and conditions
                             </button>
                         </h2>
-                        <div id="collapseSalePrice" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id="collapseSalePrice" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
                                 <!-- PILIHAN AGENT / OWNER -->
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
@@ -1141,16 +1125,31 @@
         const oldSubregion = @json(old('subregion'));
     </script>
     <script>
+        const areaData = [
+            { value: 'ubud', label: 'Ubud' },
+            { value: 'canggu', label: 'Canggu' },
+            { value: 'uluwatu', label: 'Uluwatu' },
+            { value: 'sanur/nusa dua', label: 'Sanur/Nusa Dua' },
+            { value: 'other', label: 'Other' }
+        ];
+
         document.addEventListener('DOMContentLoaded', function() {
+            const areaSelect = document.getElementById('area');
             const regionSelect = document.getElementById('region');
             const subregionSelect = document.getElementById('subregion');
 
+            const areaChoices = new Choices(areaSelect, {
+                searchEnabled: false,
+                shouldSort: false
+            });
             const regionChoices = new Choices(regionSelect, {
                 searchEnabled: false
             });
             const subregionChoices = new Choices(subregionSelect, {
                 searchEnabled: false
             });
+            
+            areaChoices.setChoices(areaData, 'value', 'label', true);
 
             const url = "{{ route('api.regions') }}";
 

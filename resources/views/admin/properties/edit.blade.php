@@ -11,8 +11,9 @@
     </style>
 @endpush
 @section('content')
-    <form action="{{ route('properties.store') }}" method="POST" enctype="multipart/form-data" id="galleryForm">
+    <form action="{{ route('properties.update', $data_properties->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
         @csrf
+        @method('PUT')
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -54,10 +55,12 @@
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 1</h5>
                                     <hr>
                                     <div class="row m-0 mb-2 p-0">
+      
                                         <div class="col-6 mb-1 p-1" id="group_owners[0][first_name]">
                                             <label for="owners[0][first_name]" class="form-label">First Name</label>
 
-                                            <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
+                                           <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" 
+                                            value="{{ old('owners.0.first_name', $property_owner[0]->first_name ?? '') }}">
 
                                             @error('owners.0.first_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
@@ -69,7 +72,8 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[0][last_name]">
                                             <label for="owners[0][last_name]" class="form-label">Last Name</label>
 
-                                            <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
+                                            <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" 
+                                            value="{{ old('owners.0.last_name', $property_owner[0]->last_name ?? '') }}">
 
                                             @error('owners.0.last_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
@@ -81,11 +85,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[0][email]">
                                             <label for="owners[0][email]" class="form-label">Email</label>
 
-                                            <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
+                                            <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" 
+                                            value="{{ old('owners.0.email', $property_owner[0]->email ?? '') }}">
 
                                             @error('owners.0.email')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -94,11 +98,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[0][phone_number]">
                                             <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
 
-                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.0.phone_number') }}">
+                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" 
+                                            value="{{ old('owners.0.phone_number', $property_owner[0]->phone ?? '') }}">
 
                                             @error('owners.0.phone_number')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -114,7 +118,8 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[1][first_name]">
                                             <label for="owners[1][first_name]" class="form-label">First Name</label>
 
-                                            <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.1.first_name') }}">
+                                            <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name"
+                                            value="{{ old('owners.1.first_name', $property_owner[1]->first_name ?? '') }}">
 
                                             @error('owners.1.first_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
@@ -126,11 +131,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[1][last_name]">
                                             <label for="owners[1][last_name]" class="form-label">Last Name</label>
 
-                                            <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.1.last_name') }}">
+                                            <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" 
+                                            value="{{ old('owners.1.last_name', $property_owner[1]->last_name ?? '') }}">
 
                                             @error('owners.1.last_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -139,11 +144,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[1][email]">
                                             <label for="owners[1][email]" class="form-label">Email</label>
 
-                                            <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.1.email') }}">
+                                            <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email"
+                                            value="{{ old('owners.1.email', $property_owner[1]->email ?? '') }}">
 
                                             @error('owners.1.email')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -152,7 +157,8 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[1][phone_number]">
                                             <label for="owners[1][phone_number]" class="form-label">Phone Number</label>
 
-                                            <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.1.phone_number') }}">
+                                            <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" 
+                                            value="{{ old('owners.1.phone_number', $property_owner[1]->phone ?? '') }}">
 
                                             @error('owners.1.phone_number')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
@@ -168,11 +174,11 @@
                                     <hr>
                                     <div class="row">
 
-                                        <x-form-input className="p-1 col-12" type="text" name="company_name" label="Company Name" />
-                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_first_name" label="Owner First Name" />
-                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_last_name" label="Owner Last Name" />
-                                        <x-form-input className="p-1 col-6" type="email" name="legal_rep_email" label="Email" />
-                                        <x-form-input className="p-1 col-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
+                                        <x-form-input className="p-1 col-12" type="text" name="company_name" label="Company Name" value="{{ $data_properties->company_name }}"/>
+                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_first_name" label="Owner First Name" value="{{ $data_properties->rep_first_name }}"/>
+                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_last_name" label="Owner Last Name" value="{{ $data_properties->rep_last_name }}"/>
+                                        <x-form-input className="p-1 col-6" type="email" name="legal_rep_email" label="Email" value="{{ $data_properties->email }}"/>
+                                        <x-form-input className="p-1 col-6" type="number" name="legal_rep_phone_number" label="Phone Number" value="{{ $data_properties->phone }}"/>
 
                                     </div>
                                 </div>
@@ -197,20 +203,15 @@
                                         <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
                                     </div>
 
-                                    <x-form-input className="col-lg-6" type="text" name="property_name" label="Property Name" />
+                                    <x-form-input className="col-lg-6" type="text" name="property_name" label="Property Name" value="{{ $data_properties->property_name }}"/>
 
                                     <div class="col-lg-4 mb-3" id="group_area">
                                         <label for="area" class="form-label">Area</label>
                                         <select id="area" class="form-select" name="area">
                                             <option value="" selected disabled>Select Area</option>
-                                            <option value="ubud">Ubud</option>
-                                            <option value="canggu">Canggu</option>
-                                            <option value="uluwatu">Uluwatu</option>
-                                            <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
-                                            <option value="other">Other</option>
-
                                         </select>
                                     </div>
+
 
                                     <div class="col-lg-4 mb-3" id="group_region">
                                         <label for="region" class="form-label">Region</label>
@@ -219,8 +220,8 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-lg-4 mb-3" id="group_region">
-                                        <label for="region" class="form-label">Sub Region</label>
+                                    <div class="col-lg-4 mb-3" id="group_subregion">
+                                        <label for="subregion" class="form-label">Sub Region</label>
                                         <select id="subregion" class="form-select" name="subregion">
                                             <option value="" selected disabled>Select Region First </option>
                                         </select>
@@ -228,23 +229,23 @@
 
                                     <div class="col-lg-12 mb-3" id="group_property_address">
                                         <label for="property_address" class="form-label">Property Address</label>
-                                        <textarea class="form-control" id="property_address" name="property_address" rows="1" placeholder="Enter address">{{ old('property_address') }}</textarea>
+                                        <textarea class="form-control" id="property_address" name="property_address" rows="1" placeholder="Enter address">{{ old('property_address', $data_properties->property_address) }}</textarea>
                                     </div>
 
                                     <div class="col-lg-12 mb-3" id="group_description">
                                         <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ old('description') }}</textarea>
+                                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ old('property_description', $data_properties->property_description) }}</textarea>
                                     </div>
 
-                                    <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" />
-                                    <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" />
-                                    <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" />
+                                    <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" placeholder="Input Land Size" value="{{ old('total_land_area', $data_properties->total_land_area) }}"/>
+                                    <x-form-input className="col-lg-4" type="text" name="built_area" label="Villa Area (m²)" placeholder="Input Villa Area" value="{{ old('villa_area', $data_properties->villa_area) }}"/>
+                                    <x-form-input className="col-lg-4" type="text" name="pool_area" label="Pool Area (m²)" placeholder="Input Pool Area" value="{{ old('pool_area', $data_properties->pool_area) }}"/>
 
-                                    <x-form-input className="col-lg-6" type="number" name="bedroom" label="Bedroom" />
-                                    <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" />
+                                    <x-form-input className="col-lg-6" type="number" name="bedroom" label="Bedroom" value="{{ old('bedroom', $data_properties->bedroom) }}"/>
+                                    <x-form-input className="col-lg-6" type="number" name="bathroom" label="Bathroom" value="{{ old('bathroom', $data_properties->bathroom) }}"/>
 
-                                    <x-form-input className="col-lg-6" type="number" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" />
-                                    <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" />
+                                    <x-form-input className="col-lg-6" type="number" name="year_construction" label="Year of Construction" placeholder="Input the Year of Construction" value="{{ old('year_construction', $data_properties->year_construction) }}"/>
+                                    <x-form-input className="col-lg-6" type="number" name="year_renovated" label="Year of Last Renovation" placeholder="Input the Year of Renovation" value="{{ old('year_renovated', $data_properties->year_renovated) }}"/>
 
                                 </div>
                                 <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
@@ -304,16 +305,6 @@
                                         <hr>
 
                                         <div class="row align-items-center">
-                                            <!-- <div class="col-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="form-check form-check-inline">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="Essentials Mandate" {{ old('type_mandate') == 'Essentials Mandate' ? 'checked' : '' }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label class="form-check-label" for="esstentials_mandate">Leasehold</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="form-check form-check-inline">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="Booster Mandate" {{ old('type_mandate') == 'Booster Mandate' ? 'checked' : '' }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label class="form-check-label" for="booster_mandate">Freehold</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
                                             <div class="col-12">
 
                                                 <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" />
@@ -1100,29 +1091,51 @@
     {{-- /* Flatpickr --}}
 
     {{-- Get Region & Subregion --}}
+
     <script>
-        const oldRegion = @json(old('region'));
-        const oldSubregion = @json(old('subregion'));
-    </script>
-    <script>
+        const areaData = [
+            { value: 'ubud', label: 'Ubud' },
+            { value: 'canggu', label: 'Canggu' },
+            { value: 'uluwatu', label: 'Uluwatu' },
+            { value: 'sanur/nusa dua', label: 'Sanur/Nusa Dua' },
+            { value: 'other', label: 'Other' }
+        ];
+
         document.addEventListener('DOMContentLoaded', function() {
+            const areaSelect = document.getElementById('area');
             const regionSelect = document.getElementById('region');
             const subregionSelect = document.getElementById('subregion');
 
+            const areaChoices = new Choices(areaSelect, {
+                searchEnabled: false,
+                shouldSort: false
+            });
             const regionChoices = new Choices(regionSelect, {
-                searchEnabled: false
+                searchEnabled: false,
+                shouldSort: false
             });
             const subregionChoices = new Choices(subregionSelect, {
-                searchEnabled: false
+                searchEnabled: false,
+                shouldSort: false
             });
 
-            const url = "{{ route('api.regions') }}";
+            const selectedArea = "{{ old('area', $data_properties->area ?? '') }}".toLowerCase();
+            const selectedRegion = "{{ old('region', $data_properties->region ?? '') }}".toLowerCase();
+            const selectedSubregion = "{{ old('subregion', $data_properties->sub_region ?? '') }}";
+
+            areaChoices.setChoices(areaData, 'value', 'label', true);
+            if (selectedArea) {
+                areaChoices.setChoiceByValue(selectedArea);
+            }
+
+            const url = "{{ route('api.regions') }}"; // Ganti dari asset() ke route()
 
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     const regions = Object.keys(data);
 
+                    // Populate region dropdown
                     regionChoices.setChoices(
                         regions.map(region => ({
                             value: region,
@@ -1133,12 +1146,11 @@
                         true
                     );
 
-                    // ✅ Set old region setelah setChoices selesai
-                    if (oldRegion) {
-                        regionChoices.setChoiceByValue(oldRegion);
+                    // Set selected region dan subregion (jika ada)
+                    if (selectedRegion && regions.includes(selectedRegion)) {
+                        regionChoices.setChoiceByValue(selectedRegion);
 
-                        // ✅ Load subregion berdasarkan region lama
-                        const subregions = data[oldRegion] || [];
+                        const subregions = data[selectedRegion];
                         subregionChoices.setChoices(
                             subregions.map(sub => ({
                                 value: sub,
@@ -1149,16 +1161,15 @@
                             true
                         );
 
-                        // ✅ Set old subregion
-                        if (oldSubregion) {
-                            subregionChoices.setChoiceByValue(oldSubregion);
+                        if (selectedSubregion) {
+                            subregionChoices.setChoiceByValue(selectedSubregion);
                         }
                     }
 
-                    // 🔁 Handle perubahan region (user memilih)
+                    // On region change
                     regionSelect.addEventListener('change', function() {
-                        const selectedRegion = this.value;
-                        const subregions = data[selectedRegion] || [];
+                        const selected = this.value;
+                        const subregions = data[selected] || [];
 
                         subregionChoices.clearChoices();
                         subregionChoices.setChoices(
@@ -1177,6 +1188,7 @@
                 });
         });
     </script>
+
 
     {{-- /* Get Region & Subregion --}}
 

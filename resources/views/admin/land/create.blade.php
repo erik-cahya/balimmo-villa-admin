@@ -197,11 +197,6 @@
                                         <label for="area" class="form-label">Area</label>
                                         <select id="area" class="form-select" name="area">
                                             <option value="" selected disabled>Select Area</option>
-                                            <option value="ubud">Ubud</option>
-                                            <option value="canggu">Canggu</option>
-                                            <option value="uluwatu">Uluwatu</option>
-                                            <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
-                                            <option value="other">Other</option>
                                         </select>
                                     </div>
 
@@ -395,7 +390,7 @@
                                 Sale price and conditions
                             </button>
                         </h2>
-                        <div id="collapseSalePrice" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id="collapseSalePrice" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
                                 <!-- PILIHAN AGENT / OWNER -->
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
@@ -1043,16 +1038,31 @@
         const oldSubregion = @json(old('subregion'));
     </script>
     <script>
+        const areaData = [
+            { value: 'ubud', label: 'Ubud' },
+            { value: 'canggu', label: 'Canggu' },
+            { value: 'uluwatu', label: 'Uluwatu' },
+            { value: 'sanur/nusa dua', label: 'Sanur/Nusa Dua' },
+            { value: 'other', label: 'Other' }
+        ];
+
         document.addEventListener('DOMContentLoaded', function() {
+            const areaSelect = document.getElementById('area');
             const regionSelect = document.getElementById('region');
             const subregionSelect = document.getElementById('subregion');
 
+            const areaChoices = new Choices(areaSelect, {
+                searchEnabled: false,
+                shouldSort: false
+            });
             const regionChoices = new Choices(regionSelect, {
                 searchEnabled: false
             });
             const subregionChoices = new Choices(subregionSelect, {
                 searchEnabled: false
             });
+            
+            areaChoices.setChoices(areaData, 'value', 'label', true);
 
             const url = "{{ route('api.regions') }}";
 
