@@ -248,7 +248,24 @@ table.dataTable thead th,
 table.dataTable thead td,
 table.dataTable tfoot th,
 table.dataTable tfoot td {
-    text-align: left
+    text-align: left;
+    padding-right: 10px !important;
+}
+
+table.dataTable thead th:first-child{
+    width: 40px !important;
+}
+
+table.dataTable thead th:nth-child(3){
+    width: 150px !important;
+}
+
+table.dataTable tbody td:nth-child(2) h5,
+table.dataTable tbody td:nth-child(2) p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+    white-space: nowrap;
 }
 
 table.dataTable thead th.dt-head-left,

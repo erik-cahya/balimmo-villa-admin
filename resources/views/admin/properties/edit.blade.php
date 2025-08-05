@@ -412,10 +412,14 @@
                                 <div class="col-6 row bg-light-subtle border-dark rounded border p-3">
                                     <h5 class="text-dark fw-semibold">Indoor *</h5>
                                     <hr>
-                                    <div class="row px-2 pb-2">
-                                        @foreach ($feature_list_indoor as $feature_indoor)
-                                            <x-form-checkbox className="form-check col-4 pt-2" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
+                                    <div class="row px-2 pb-2">                                    
+                                        @foreach ($feature_list_indoor as $featureIndoor)
+                                            <div class="form-check col-6 pt-2">
+                                                <input type="checkbox" id="feature[{{ $featureIndoor->slug }}]" name="feature[{{ $featureIndoor->slug }}]" value="{{ $featureIndoor->id }}" class="form-check-input" {{ in_array($featureIndoor->id, $selected_feature_ids) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="feature[{{ $featureIndoor->slug }}]">{{ $featureIndoor->name }}</label>
+                                            </div>
                                         @endforeach
+
                                     </div>
                                 </div>
 
@@ -424,8 +428,11 @@
                                     <hr>
                                     <div class="row px-2 pb-2">
 
-                                        @foreach ($feature_list_outdoor as $feature_outdoor)
-                                            <x-form-checkbox className="form-check col-4 pt-2" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                        @foreach ($feature_list_outdoor as $featureOutdoor)
+                                            <div class="form-check col-6 pt-2">
+                                                <input type="checkbox" id="feature[{{ $featureOutdoor->slug }}]" name="feature[{{ $featureOutdoor->slug }}]" value="{{ $featureOutdoor->id }}" class="form-check-input" {{ in_array($featureOutdoor->id, $selected_feature_ids) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="feature[{{ $featureOutdoor->slug }}]">{{ $featureOutdoor->name }}</label>
+                                            </div>
                                         @endforeach
 
                                     </div>

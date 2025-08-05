@@ -16,7 +16,7 @@
                                 <th scope="col">Leads Name</th>
                                 <th scope="col">Agent</th>
                                 <th scope="col">Phone</th>
-                                <th scope="col">Area</th>
+                                <th scope="col">Location</th>
                                 <th scope="col">Ready to Buy</th>
                                 <th scope="col">Looking For</th>
 
@@ -37,23 +37,22 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->customer_id }}" class="showDetailsSpecific cursor-pointer" data-customer-id="{{ $customerData->customer_id }}">
                                         <div class="d-flex align-items-center gap-1">
-                                            <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
                                             <div class="d-block">
                                                 <h5 class="text-dark fw-medium mb-0">{{ $customerData->first_name . ' ' . $customerData->last_name }}</h5>
                                                 <p class="fs-13 mb-0">{{ $customerData->cust_email }}</p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->customer_id }}" class="showDetailsSpecific cursor-pointer" data-customer-id="{{ $customerData->customer_id }}">
                                         <span class="badge bg-primary text-light"> {{ $customerData->agent_code }}</span>
                                     </td>
-                                    <td>
-                                        <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_phone), 4)) }}</p>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->customer_id }}" class="showDetailsSpecific cursor-pointer" data-customer-id="{{ $customerData->customer_id }}">
+                                        <p class="mb-0">{{ implode('-', str_split(preg_replace('/\D/', '', $customerData->cust_phone), 4)) }}</p>
                                     </td>
-                                    <td class="text-capitalize"><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $customerData->localization }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->customer_id }}" class="showDetailsSpecific cursor-pointer text-capitalize" data-customer-id="{{ $customerData->customer_id }}"> {{ $customerData->localization }}</td>
 
-                                    <td><iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
-                                    <td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->customer_id }}" class="showDetailsSpecific cursor-pointer" data-customer-id="{{ $customerData->customer_id }}">{{ \Carbon\Carbon::parse($customerData->date)->format('d F, Y') }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $customerData->customer_id }}" class="showDetailsSpecific cursor-pointer" data-customer-id="{{ $customerData->customer_id }}">
                                         @foreach (collect($lead)->unique('type_asset') as $ld)
                                             @if ($ld->type_asset == 'properties' && $ld->visibility == 1)
                                                 <span class="text-capitalize fw-medium badge bg-success">properties</span>
