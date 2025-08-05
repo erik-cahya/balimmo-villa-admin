@@ -178,11 +178,12 @@
                                                                 <label for="villa_localization" class="form-label">Localization</label>
                                                                 <select id="villa_localization" class="form-select" name="villa_localization">
                                                                     <option value="" selected disabled>Select Area</option>
-                                                                    <option value="ubud" {{ isset($villaData->localization) == 'ubud' ? 'selected' : '' }}>Ubud</option>
-                                                                    <option value="canggu" {{ isset($villaData->localization) == 'canggu' ? 'selected' : '' }}>Canggu</option>
-                                                                    <option value="uluwatu" {{ isset($villaData->localization) == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
-                                                                    <option value="sanur/nusa dua" {{ isset($villaData->localization) == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
-                                                                    <option value="other" {{ isset($villaData->localization) == 'other' ? 'selected' : '' }}>Other</option>
+                                                                    <option value="ubud" {{ ($villaData->localization ?? '') == 'ubud' ? 'selected' : '' }}>Ubud</option>
+                                                                    <option value="canggu" {{ ($villaData->localization ?? '') == 'canggu' ? 'selected' : '' }}>Canggu</option>
+                                                                    <option value="uluwatu" {{ ($villaData->localization ?? '') == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
+                                                                    <option value="sanur/nusa dua" {{ ($villaData->localization ?? '') == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
+                                                                    <option value="other" {{ ($villaData->localization ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+
                                                                 </select>
                                                             </div>
 
@@ -223,11 +224,11 @@
                                                                 <label for="land_localization" class="form-label">Localization</label>
                                                                 <select id="land_localization" class="form-select" name="land_localization">
                                                                     <option value="" selected disabled>Select Area</option>
-                                                                    <option value="ubud" {{ isset($landData->localization) == 'ubud' ? 'selected' : '' }}>Ubud</option>
-                                                                    <option value="canggu" {{ isset($landData->localization) == 'canggu' ? 'selected' : '' }}>Canggu</option>
-                                                                    <option value="uluwatu" {{ isset($landData->localization) == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
-                                                                    <option value="sanur/nusa dua" {{ isset($landData->localization) == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
-                                                                    <option value="other" {{ isset($landData->localization) == 'other' ? 'selected' : '' }}>Other</option>
+                                                                    <option value="ubud" {{ ($landData->localization ?? '') == 'ubud' ? 'selected' : '' }}>Ubud</option>
+                                                                    <option value="canggu" {{ ($landData->localization ?? '') == 'canggu' ? 'selected' : '' }}>Canggu</option>
+                                                                    <option value="uluwatu" {{ ($landData->localization ?? '') == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
+                                                                    <option value="sanur/nusa dua" {{ ($landData->localization ?? '') == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
+                                                                    <option value="other" {{ ($landData->localization ?? '') == 'other' ? 'selected' : '' }}>Other</option>
                                                                 </select>
                                                             </div>
 
@@ -397,11 +398,11 @@
                                             @endrole
                                             <!-- @role('agent')
     <div class="propertiesDataLeads"></div>
-                                                                                                                                                    <div class="row" style="min-width: 200px">
-                                                                                                                                                        <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
-                                                                                                                                                            <option value="">Choose agent</option>
-                                                                                                                                                        </select>
-                                                                                                                                                    </div>
+                                                                                                                                                                                <div class="row" style="min-width: 200px">
+                                                                                                                                                                                    <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
+                                                                                                                                                                                        <option value="">Choose agent</option>
+                                                                                                                                                                                    </select>
+                                                                                                                                                                                </div>
 @endrole -->
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-primary">Save Leads</button>
