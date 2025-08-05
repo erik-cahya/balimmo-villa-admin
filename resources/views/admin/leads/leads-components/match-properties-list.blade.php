@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center border-bottom " style="border-radius: 10px 10px 0px 0px">
+            <div class="card-header d-flex justify-content-between align-items-center border-bottom" style="border-radius: 10px 10px 0px 0px">
                 <div>
                     <h4 class="card-title">Property Matches</h4>
                 </div>
@@ -97,7 +97,7 @@
                                     </td>
                                 </tr>
 
-                                {{-- Modal Edit Data Leads--}}
+                                {{-- Modal Edit Data Leads --}}
                                 <div class="modal modal-lg fade" id="makeProspect-{{ $matchLeads->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -178,13 +178,18 @@
                                                                 <label for="villa_localization" class="form-label">Localization</label>
                                                                 <select id="villa_localization" class="form-select" name="villa_localization">
                                                                     <option value="" selected disabled>Select Area</option>
-                                                                    <option value="ubud" {{ $villaData->localization == 'ubud' ? 'selected' : '' }}>Ubud</option>
-                                                                    <option value="canggu" {{ $villaData->localization == 'canggu' ? 'selected' : '' }}>Canggu</option>
-                                                                    <option value="uluwatu" {{ $villaData->localization == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
-                                                                    <option value="sanur/nusa dua" {{ $villaData->localization == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
-                                                                    <option value="other" {{ $villaData->localization == 'other' ? 'selected' : '' }}>Other</option>
+                                                                    <option value="ubud" {{ isset($villaData->localization) == 'ubud' ? 'selected' : '' }}>Ubud</option>
+                                                                    <option value="canggu" {{ isset($villaData->localization) == 'canggu' ? 'selected' : '' }}>Canggu</option>
+                                                                    <option value="uluwatu" {{ isset($villaData->localization) == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
+                                                                    <option value="sanur/nusa dua" {{ isset($villaData->localization) == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
+                                                                    <option value="other" {{ isset($villaData->localization) == 'other' ? 'selected' : '' }}>Other</option>
                                                                 </select>
                                                             </div>
+
+                                                            @if (!isset($villaData->min_budget_idr) && !isset($villaData->max_budget_idr) && !isset($villaData->min_budget_usd) && !isset($villaData->max_budget_usd))
+                                                                <x-form-input className="col-lg-3" type="text" name="villa_min_budget_idr" label="Budget Min" />
+                                                                <x-form-input className="col-lg-3" type="text" name="villa_max_budget_idr" label="Budget Max" />
+                                                            @endif
 
                                                             @if ($villaData && $villaData->min_budget_idr !== null && $villaData->max_budget_idr !== null)
                                                                 <x-form-input className="col-lg-3" type="text" name="villa_min_budget_idr" label="Budget Min" value="{{ $villaData->min_budget_idr }}" />
@@ -226,6 +231,11 @@
                                                                 </select>
                                                             </div>
 
+                                                            @if (!isset($landData->min_budget_idr) && !isset($landData->max_budget_idr) && !isset($landData->min_budget_usd) && !isset($landData->max_budget_usd))
+                                                                <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" />
+                                                                <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" />
+                                                            @endif
+
                                                             @if ($landData && $landData->min_budget_idr !== null && $landData->max_budget_idr !== null)
                                                                 <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" value="{{ $landData->min_budget_idr }}" />
                                                                 <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" value="{{ $landData->max_budget_idr }}" />
@@ -249,7 +259,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- END Modal Edit Data Leads--}}
+                                {{-- END Modal Edit Data Leads --}}
                             @endforeach
 
                         </tbody>
@@ -278,54 +288,53 @@
                                     </div>
                                     <div class="modal-body">
 
-                                        @if ($matchLeadsProperties !== NULL)
+                                        @if ($matchLeadsProperties !== null)
                                             <div id="detailsVilla">
-                                            <!-- Information Leads Villa -->
-                                            <div class="d-flex align-items-center gap-2">
-                                                <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5> <span class="badge bg-success me-1">Villa</span>
-                                            </div>
-                                            <div class="d-flex my-2 gap-2">
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->first_name . ' ' . $matchLeadsProperties->last_name }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->cust_email }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeadsProperties->cust_phone), 4)) }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeadsProperties->date)->format('d F, Y') }}</span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
-                                                    IDR {{ number_format($matchLeadsProperties->min_budget_idr, 0, ',', '.') }}
-                                                    -
-                                                    IDR {{ number_format($matchLeadsProperties->max_budget_idr, 0, ',', '.') }}
-                                                </span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px">
-                                                    USD {{ number_format($matchLeadsProperties->min_budget_usd, 2, ',', '.') }}
-                                                    -
-                                                    USD {{ number_format($matchLeadsProperties->max_budget_usd, 2, ',', '.') }}
-                                                </span>
-                                                <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->min_bedroom . ' - ' . $matchLeadsProperties->max_bedroom }} </span>
-                                            </div>
+                                                <!-- Information Leads Villa -->
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5> <span class="badge bg-success me-1">Villa</span>
+                                                </div>
+                                                <div class="d-flex my-2 gap-2">
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="solar:user-bold" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->first_name . ' ' . $matchLeadsProperties->last_name }}</span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->cust_email }}</span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeadsProperties->cust_phone), 4)) }}</span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($matchLeadsProperties->date)->format('d F, Y') }}</span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                        IDR {{ number_format($matchLeadsProperties->min_budget_idr, 0, ',', '.') }}
+                                                        -
+                                                        IDR {{ number_format($matchLeadsProperties->max_budget_idr, 0, ',', '.') }}
+                                                    </span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px">
+                                                        USD {{ number_format($matchLeadsProperties->min_budget_usd, 2, ',', '.') }}
+                                                        -
+                                                        USD {{ number_format($matchLeadsProperties->max_budget_usd, 2, ',', '.') }}
+                                                    </span>
+                                                    <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> {{ $matchLeadsProperties->min_bedroom . ' - ' . $matchLeadsProperties->max_bedroom }} </span>
+                                                </div>
 
-                                            <div class="table-responsive">
-                                                <table class="table-hover table-centered table text-nowrap" id="propertiesLeadsDetails-{{ $matchLeads->id }}">
-                                                    <thead class="table-light">
-                                                        <tr>
-                                                            <th scope="col">No</th>
-                                                            <th scope="col">Property Name</th>
-                                                            <th scope="col">Agent</th>
-                                                            <th scope="col">Bedroom</th>
-                                                            <th scope="col">Price</th>
-                                                            <th scope="col">Property Address</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="detailsPropertyTables">
+                                                <div class="table-responsive">
+                                                    <table class="table-hover table-centered table text-nowrap" id="propertiesLeadsDetails-{{ $matchLeads->id }}">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th scope="col">No</th>
+                                                                <th scope="col">Property Name</th>
+                                                                <th scope="col">Agent</th>
+                                                                <th scope="col">Bedroom</th>
+                                                                <th scope="col">Price</th>
+                                                                <th scope="col">Property Address</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="detailsPropertyTables">
 
-                                                    </tbody>
-                                                </table>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- End Information Leads Villa -->
                                             </div>
-                                            <!-- End Information Leads Villa -->
-                                        </div>
                                         @endif
-                                        
 
                                         <!-- Information Leads Lands -->
-                                        @if ($matchLeadsLand !== NULL)    
+                                        @if ($matchLeadsLand !== null)
                                             <div id="detailsLand">
                                                 <div class="d-flex align-items-center gap-2">
                                                     <h5 class="modal-title" id="staticBackdropLabel">Lead Information :</h5><span class="badge bg-warning me-1">Land</span>
@@ -360,7 +369,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody class="detailsLandTables">
-                                                    
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -368,12 +377,11 @@
                                             </div>
                                         @endif
 
-
                                     </div>
                                     <form action="{{ route('leadsToProspect', $matchLeads->customer_id) }}" method="POST">
                                         @csrf
                                         <div class="modal-footer">
-                                            
+
                                             @role('master')
                                                 <div class="propertiesDataLeads"></div>
                                                 <div class="row" style="min-width: 200px">
@@ -388,13 +396,13 @@
                                                 </div>
                                             @endrole
                                             <!-- @role('agent')
-                                                <div class="propertiesDataLeads"></div>
-                                                <div class="row" style="min-width: 200px">
-                                                    <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
-                                                        <option value="">Choose agent</option>
-                                                    </select>
-                                                </div>
-                                            @endrole -->
+    <div class="propertiesDataLeads"></div>
+                                                                                                                                    <div class="row" style="min-width: 200px">
+                                                                                                                                        <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
+                                                                                                                                            <option value="">Choose agent</option>
+                                                                                                                                        </select>
+                                                                                                                                    </div>
+@endrole -->
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-primary">Save Leads</button>
                                         </div>

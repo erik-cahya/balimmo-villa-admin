@@ -153,38 +153,51 @@ class PropertiesLeadsController extends Controller
             'cust_passport' => $request->customer_passport,
         ]);
 
-        PropertyLeadsModel::where('customer_id', $customerID)->where('type_asset', 'properties')->update([
-            'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_min_budget_idr),
-            'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_max_budget_idr),
+        PropertyLeadsModel::updateOrCreate(
+            [
+                'customer_id' => $customerID,
+                'type_asset'  => 'properties',
+            ],
+            [
+                'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_min_budget_idr),
+                'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_max_budget_idr),
 
-            'min_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->villa_min_budget_usd)),
-            'max_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->villa_max_budget_usd)),
+                'min_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->villa_min_budget_usd)),
+                'max_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->villa_max_budget_usd)),
 
-            'min_bedroom' => $request->min_bedroom,
-            'max_bedroom' => $request->max_bedroom,
+                'min_bedroom' => $request->min_bedroom,
+                'max_bedroom' => $request->max_bedroom,
 
-            'localization' => $request->villa_localization,
-            'date' => Carbon::createFromFormat('d F, Y', $request->ready_buy_villa)->format('Y-m-d'),
-            'visibility' => $request->type_properties_villa == null ? 0 : 1,
+                'localization' => $request->villa_localization,
+                'date' => Carbon::createFromFormat('d F, Y', $request->ready_buy_villa)->format('Y-m-d'),
 
-        ]);
+                'visibility' => $request->type_properties_villa == null ? 0 : 1,
+            ]
+        );
 
-        PropertyLeadsModel::where('customer_id', $customerID)->where('type_asset', 'land')->update([
 
-            'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->land_min_budget_idr),
-            'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->land_max_budget_idr),
+        PropertyLeadsModel::updateOrCreate(
+            [
+                'customer_id' => $customerID,
+                'type_asset'  => 'land'
+            ],
+            [
+                'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->land_min_budget_idr),
+                'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->land_max_budget_idr),
 
-            'min_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->land_min_budget_usd)),
-            'max_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->land_max_budget_usd)),
+                'min_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->land_min_budget_usd)),
+                'max_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->land_max_budget_usd)),
 
-            'min_bedroom' => $request->min_land_size,
-            'max_bedroom' => $request->max_land_size,
+                'min_land_size' => $request->min_land_size,
+                'max_land_size' => $request->max_land_size,
 
-            'localization' => $request->land_localization,
-            'date' => Carbon::createFromFormat('d F, Y', $request->ready_buy_villa)->format('Y-m-d'),
+                'localization' => $request->land_localization,
+                'date' => Carbon::createFromFormat('d F, Y', $request->ready_buy_villa)->format('Y-m-d'),
 
-            'visibility' => $request->type_properties_land == null ? 0 : 1,
-        ]);
+                'visibility' => $request->type_properties_land == null ? 0 : 1,
+            ]
+        );
+
 
 
 
