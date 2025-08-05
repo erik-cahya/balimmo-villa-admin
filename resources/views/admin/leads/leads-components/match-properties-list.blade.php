@@ -397,11 +397,11 @@
                                             @endrole
                                             <!-- @role('agent')
     <div class="propertiesDataLeads"></div>
-                                                                                                                                    <div class="row" style="min-width: 200px">
-                                                                                                                                        <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
-                                                                                                                                            <option value="">Choose agent</option>
-                                                                                                                                        </select>
-                                                                                                                                    </div>
+                                                                                                                                                    <div class="row" style="min-width: 200px">
+                                                                                                                                                        <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
+                                                                                                                                                            <option value="">Choose agent</option>
+                                                                                                                                                        </select>
+                                                                                                                                                    </div>
 @endrole -->
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-primary">Save Leads</button>

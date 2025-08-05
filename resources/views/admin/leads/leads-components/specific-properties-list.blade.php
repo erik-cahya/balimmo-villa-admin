@@ -1,7 +1,7 @@
 <div class="row mt-4">
     <div class="col-xl-12">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center border-bottom " style="border-radius: 10px 10px 0px 0px">
+            <div class="card-header d-flex justify-content-between align-items-center border-bottom" style="border-radius: 10px 10px 0px 0px">
                 <div>
                     <h4 class="card-title">Specific Property List</h4>
                 </div>
@@ -79,7 +79,7 @@
 
                                 </tr>
 
-                                {{-- Modal Edit Data Leads--}}
+                                {{-- Modal Edit Data Leads --}}
                                 <div class="modal modal-lg fade" id="makeProspect-{{ $customerData->id }}" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -139,11 +139,10 @@
                                                     </div>
 
                                                     @php
-                                                        $villaData = $customerData->firstWhere('type_asset', 'properties');
-                                                        $landData = $customerData->firstWhere('type_asset', 'land');
+                                                        $villaData = $customerData->where('customer_id', $customerData->customer_id)->where('type_asset', 'properties')->first();
+                                                        $landData = $customerData->where('customer_id', $customerData->customer_id)->where('type_asset', 'land')->first();
                                                     @endphp
 
-                                            {{-- {{ dd($villaData) }} --}}
                                                     {{-- VILLA --}}
                                                     <div class="villa-section" data-index="{{ $customerData->id }}" id="villa_section" style="display: none;">
                                                         <div class="d-flex justify-content-center justify-items-center text-center" bis_skin_checked="1">
@@ -152,7 +151,7 @@
                                                                 <span class="nav-icon">
                                                                     <i class="ri-community-line"></i>
                                                                 </span>
-                                                                Looking For Villa
+                                                                Looking For Villa {{ $villaData->localization }}
                                                             </label>
                                                             <hr class="w-100">
                                                         </div>
@@ -162,13 +161,18 @@
                                                                 <label for="villa_localization" class="form-label">Localization</label>
                                                                 <select id="villa_localization" class="form-select" name="villa_localization">
                                                                     <option value="" selected disabled>Select Area</option>
-                                                                    <option value="ubud" {{ $villaData->localization == 'ubud' ? 'selected' : '' }}>Ubud</option>
-                                                                    <option value="canggu" {{ $villaData->localization == 'canggu' ? 'selected' : '' }}>Canggu</option>
-                                                                    <option value="uluwatu" {{ $villaData->localization == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
-                                                                    <option value="sanur/nusa dua" {{ $villaData->localization == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
-                                                                    <option value="other" {{ $villaData->localization == 'other' ? 'selected' : '' }}>Other</option>
+                                                                    <option value="ubud" {{ isset($villaData->localization) == 'ubud' ? 'selected' : '' }}>Ubud</option>
+                                                                    <option value="canggu" {{ isset($villaData->localization) == 'canggu' ? 'selected' : '' }}>Canggu</option>
+                                                                    <option value="uluwatu" {{ isset($villaData->localization) == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
+                                                                    <option value="sanur/nusa dua" {{ isset($villaData->localization) == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
+                                                                    <option value="other" {{ isset($villaData->localization) == 'other' ? 'selected' : '' }}>Other</option>
                                                                 </select>
                                                             </div>
+
+                                                            @if (!isset($villaData->min_budget_idr) && !isset($villaData->max_budget_idr) && !isset($villaData->min_budget_usd) && !isset($villaData->max_budget_usd))
+                                                                <x-form-input className="col-lg-3" type="text" name="villa_min_budget_idr" label="Budget Min" />
+                                                                <x-form-input className="col-lg-3" type="text" name="villa_max_budget_idr" label="Budget Max" />
+                                                            @endif
 
                                                             @if ($villaData && $villaData->min_budget_idr !== null && $villaData->max_budget_idr !== null)
                                                                 <x-form-input className="col-lg-3" type="text" name="villa_min_budget_idr" label="Budget Min" value="{{ $villaData->min_budget_idr }}" />
@@ -201,13 +205,18 @@
                                                                 <label for="land_localization" class="form-label">Localization</label>
                                                                 <select id="land_localization" class="form-select" name="land_localization">
                                                                     <option value="" selected disabled>Select Area</option>
-                                                                    <option value="ubud" {{ isset($landData->localization) == 'ubud' ? 'selected' : '' }}>Ubud</option>
-                                                                    <option value="canggu" {{ isset($landData->localization) == 'canggu' ? 'selected' : '' }}>Canggu</option>
-                                                                    <option value="uluwatu" {{ isset($landData->localization) == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
-                                                                    <option value="sanur/nusa dua" {{ isset($landData->localization) == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
-                                                                    <option value="other" {{ isset($landData->localization) == 'other' ? 'selected' : '' }}>Other</option>
+                                                                    <option value="ubud">Ubud</option>
+                                                                    <option value="canggu">Canggu</option>
+                                                                    <option value="uluwatu">Uluwatu</option>
+                                                                    <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
+                                                                    <option value="other">Other</option>
                                                                 </select>
                                                             </div>
+
+                                                            @if (!isset($landData->min_budget_idr) && !isset($landData->max_budget_idr) && !isset($landData->min_budget_usd) && !isset($landData->max_budget_usd))
+                                                                <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" />
+                                                                <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" />
+                                                            @endif
 
                                                             @if ($landData && $landData->min_budget_idr !== null && $landData->max_budget_idr !== null)
                                                                 <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" value="{{ $landData->min_budget_idr }}" />
@@ -232,12 +241,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- END Modal Edit Data Leads--}}
+                                {{-- END Modal Edit Data Leads --}}
                             @endforeach
                         </tbody>
                     </table>
-
-
 
                     @foreach ($data_leads as $leads => $lead)
                         @php
@@ -246,6 +253,7 @@
                             $customerDataLand = $lead->where('type_asset', 'land')->first();
 
                             // dd($customerDataProperties);
+
                         @endphp
 
                         <!-- Modal -->
@@ -267,7 +275,7 @@
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:mail-outline" class="fs-16 align-middle"></iconify-icon> {{ $customerDataProperties?->cust_email ?? '' }}</span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="ic:round-phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $customerDataProperties?->cust_phone ?? ''), 4)) }}</span>
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"> {{ \Carbon\Carbon::parse($customerDataProperties?->date ?? '')->format('d F, Y') }}</span>
-                                                
+
                                                 <span class="badge bg-warning text-light p-1" style="font-size: 14px">
                                                     IDR {{ number_format($customerDataProperties?->min_budget_idr ?? 0, 0, ',', '.') }}
                                                     -
@@ -281,8 +289,7 @@
                                                 <span class="badge bg-dark text-light p-1" style="font-size: 14px"><iconify-icon icon="material-symbols:bed-outline" class="fs-16 align-middle"></iconify-icon> {{ $customerDataProperties->min_bedroom . ' - ' . $customerDataProperties->max_bedroom }} </span>
                                             </div>
 
-                                            @if (isset($customerDataProperties->properties_id) && $customerDataProperties->properties_id !== NULL)
-
+                                            @if (isset($customerDataProperties->properties_id) && $customerDataProperties->properties_id !== null)
                                                 <div class="table-responsive">
                                                     <table class="table-hover table-centered table text-nowrap" id="tableProperties_specificLeads-{{ $customerData->customer_id }}">
                                                         <thead class="table-light">
@@ -322,8 +329,7 @@
 
                                         <hr class="my-4">
 
-
-                                        @if (isset($customerDataLand->land_id) && $customerDataLand->land_id !== NULL)
+                                        @if (isset($customerDataLand->land_id) && $customerDataLand->land_id !== null)
                                             <!-- Information Leads Lands -->
                                             <div id="detailsLand">
                                                 <div class="d-flex align-items-center gap-2">

@@ -122,7 +122,7 @@ class PropertiesLeadsController extends Controller
         // dd($data['data_leads']);
 
         $data['data_localization'] = SubRegionModel::select('name')->get();
-        $data['data_agent'] = User::where('role', 'agent')->get();
+        $data['data_agent'] = User::get();
 
         // dd($data['data_agent']);
 
