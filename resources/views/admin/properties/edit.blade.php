@@ -256,21 +256,34 @@
 
                                         <div class="row align-items-center">
                                             <div class="col-6">
+                                                {{-- Debug: {{ old('type_mandate', $data_properties->type_mandate) }} --}}
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="essentials mandate" {{ old('type_mandate') == 'essentials mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="esstentials_mandate">Essentials</label>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="essentials_mandate" value="essentials mandate" 
+                                                        {{ old('type_mandate', $data_properties->type_mandate) == 'essentials mandate' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="essentials_mandate">Essentials</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="booster mandate" {{ old('type_mandate') == 'booster mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="booster mandate" 
+                                                        {{ old('type_mandate', $data_properties->type_mandate) == 'booster mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="booster_mandate">Booster</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="max_booster_mandate" value="max booster mandate" {{ old('type_mandate') == 'max booster mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="max_booster_mandate" value="max booster mandate" 
+                                                        {{ old('type_mandate', $data_properties->type_mandate) == 'max booster mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="max_booster_mandate">Max Booster</label>
                                                 </div>
                                             </div>
+
                                             <div class="col-6">
-                                                <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
+                                                <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control mb-2" placeholder="">
+                                                @if (isset($attachment['file_type_of_mandate']))
+                                                    <a href="{{ asset('admin/attachment/' . $data_properties->property_slug . '/' . $attachment['file_type_of_mandate']) }}">
+                                                        <span style="font-weight: 100" class="badge truncate bg-primary fs-13 d-flex !text-white align-items-center flex-nowrap border px-2 py-1 overflow-hidden">
+                                                            <iconify-icon icon="material-symbols-light:download-rounded" class="fs-18 text-white"></iconify-icon>
+                                                            {{ $attachment['file_type_of_mandate'] }}
+                                                        </span>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -282,20 +295,23 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="construction_quality" id="construction_quality_invest" value="invest" {{ old('type_mandate') == 'invest' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="constructoin_quality" id="construction_quality_invest" value="invest" 
+                                                        {{ old('construction_quality', $data_properties->construction_quality) == 'invest' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="construction_quality_invest">Invest</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="construction_quality" id="construction_quality_comfort" value="comfort" {{ old('type_mandate') == 'comfort' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="construction_quality" id="construction_quality_comfort" value="comfort" 
+                                                        {{ old('construction_quality', $data_properties->construction_quality) == 'comfort' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="construction_quality_comfort">Comfort</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="construction_quality" id="construction_quality_premium" value="premium" {{ old('type_mandate') == 'premium' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="construction_quality" id="construction_quality_premium" value="premium" 
+                                                        {{ old('construction_quality', $data_properties->construction_quality) == 'premium' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="construction_quality_premium">Premium</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <x-form-input type="text" name="constructor_name" label="Constructor name" />
+                                                <x-form-input type="text" name="constructor_name" label="Constructor name" value="{{ old('constructor_name', $data_properties->constructor_name) }}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -307,32 +323,33 @@
                                         <div class="row align-items-center">
                                             <div class="col-12">
 
-                                                <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" />
+                                                <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" :selected="old('legal_category', $data_properties->legal_status ?? '')"/>
 
+                                                <?= old('legal_category', $data_properties->legal_status) ?>
                                                 <div class="row mb-0">
                                                     <div class="bg-light-subtle border-dark rounded border p-2" id="freehold_group">
                                                         <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Freehold (Hak Milik)</h5>
                                                         <hr>
                                                         <div class="row">
 
-                                                            <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" />
-                                                            <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
-                                                            <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
+                                                            <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" value="{{ $data_properties->purchase_date }}"/>
+                                                            <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" value="{{ $data_properties->holder_number }}"/>
+                                                            <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name"  value="{{ $data_properties->holder_name }}" />
 
                                                             <div class="col-lg-6">
                                                                 <div class="row">
                                                                     <label for="" class="form-label">Zoning</label>
                                                                     <div class="col-12">
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone" {{ old('freehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone" {{ $data_properties->zoning == 'Green Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="freehold_green_zone">Green Zone</label>
                                                                         </div>
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone" {{ old('freehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone" {{ $data_properties->zoning == 'Yellow Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="freehold_yellow_zone">Yellow Zone</label>
                                                                         </div>
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone" {{ old('freehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone" {{ $data_properties->zoning == 'Pink Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="freehold_pink_zone">Pink Zone</label>
                                                                         </div>
                                                                     </div>
@@ -347,11 +364,11 @@
                                                         <hr>
                                                         <div class="row">
 
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" value="{{ $data_properties->start_date }}"/>
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" value="{{ $data_properties->end_date }}"/>
 
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" />
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" value="{{ $data_properties->holder_number }}"/>
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" value="{{ $data_properties->holder_name }}" />
 
                                                         </div>
                                                     </div>
@@ -361,24 +378,24 @@
                                                         <hr>
                                                         <div class="row">
 
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" />
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" value="{{ $data_properties->extension_cost }}" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" value="{{ $data_properties->purchase_cost }}" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" value="{{ $data_properties->deadline_payment }}" />
 
                                                             <div class="col-lg-6">
                                                                 <div class="row">
                                                                     <label for="" class="form-label">Zoning</label>
                                                                     <div class="col-12">
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone" {{ old('leasehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone" {{ $data_properties->zoning == 'Green Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="leasehold_green_zone">Green Zone</label>
                                                                         </div>
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone" {{ old('leasehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone" {{ $data_properties->zoning == 'Yellow Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="leasehold_yellow_zone">Yellow Zone</label>
                                                                         </div>
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone" {{ old('leasehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone" {{ $data_properties->zoning == 'Pink Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="leasehold_pink_zone">Pink Zone</label>
                                                                         </div>
                                                                     </div>
@@ -457,26 +474,37 @@
                                         <h5 class="text-dark fw-semibold">Do you have any data about the rental of the property ? </h5>
                                         <hr>
                                         <p class="text-dark">Average Nightly Rate / Average Occupancy Rate / Estimated Annual Turnover etc.</p>
+                                        
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="average_price_status" id="yes" value="yes">
+                                                    <input class="form-check-input" type="radio" name="average_price_status" id="yes" value="yes" {{ $data_properties->average_price_status == 'yes' ? 'checked' : '' }} />
                                                     <label class="form-check-label" for="yes">Yes</label>
                                                 </div>
+                                               
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="average_price_status" id="no" value="no">
+                                                    <input class="form-check-input" type="radio" name="average_price_status" id="no" value="no" {{ $data_properties->average_price_status == 'no' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="no">No</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-6 row">
-                                        <x-form-input className="col-12" type="text" name="average_nightly_rate" label="Average nightly price" />
-                                        <x-form-input className="col-12" type="text" name="average_occupancy_rate" label="Average occupation rate" />
+                                    <div class="col-6 row" id="rentalDataFields" style="display: none;">
+                                        <x-form-input className="col-12" type="text" name="average_nightly_rate" label="Average nightly price" value="{{ old('avg_nightly_rate', $data_properties->avg_nightly_rate) }}"/>
+                                        
+                                        <x-form-input className="col-12" type="text" name="average_occupancy_rate" label="Average occupation rate" value="{{ old('average_occupancy_rate', $data_properties->average_occupancy_rate) }}"/>
                                         <div class="col-12">
                                             <label class="form-check-label" for="file_rental_support">Supporting document</label>
-                                            <input type="file" id="file_rental_support" name="file_rental_support" class="form-control" placeholder="">
+                                            <input type="file" id="file_rental_support" name="file_rental_support" class="form-control mb-2" placeholder="">
+                                            @if (isset($attachment['file_rental_support']))
+                                                <a href="{{ asset('admin/attachment/' . $data_properties->property_slug . '/' . $attachment['file_rental_support']) }}">
+                                                    <span style="font-weight: 100" class="badge truncate bg-primary fs-13 d-flex !text-white align-items-center flex-nowrap border px-2 py-1 overflow-hidden">
+                                                        <iconify-icon icon="material-symbols-light:download-rounded" class="fs-18 text-white"></iconify-icon>
+                                                        {{ $attachment['file_rental_support'] }}
+                                                    </span>                                                  
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -658,6 +686,11 @@
     </form>
 @endsection
 @push('scripts')
+<script>
+    const dataProperties = @json($data_properties);
+    console.log('Data Properties:', dataProperties);
+</script>
+
     <script src="{{ asset('admin/assets/js/jquery.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('admin/assets/js/cleave.min.js') }}"></script>
@@ -893,6 +926,19 @@
     {{-- {-- PRICE CALCULTAION --} --}}
 
     <script>
+        document.querySelectorAll('input[name="average_price_status"]').forEach(function(elem) {
+            elem.addEventListener('change', function() {
+                var rentalFields = document.getElementById('rentalDataFields');
+                if (this.value === 'yes') {
+                    rentalFields.style.display = 'flex';
+                } else {
+                    rentalFields.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+    <script>
         // Ambil semua radio button dengan name "split_land"
         const findProperty = document.querySelectorAll('input[name="find_property"]');
         const findPropertySelected = document.getElementById('find_property_selection');
@@ -953,9 +999,7 @@
             $('#extension_leasehold_group').hide();
 
             // Cek nilai old dari server
-            const oldLegalCategory = "{{ old('legal_category') }}";
-
-            console.log(oldLegalCategory);
+            const oldLegalCategory = "{{ $data_properties->legal_status }}";
 
             if (oldLegalCategory === 'Leasehold') {
                 $('#leasehold_group').attr('style', 'display: block !important');
