@@ -407,7 +407,7 @@
                                     <hr>
                                     <div class="row px-2 pb-2">
                                         @foreach ($feature_list_indoor as $feature_indoor)
-                                            <x-form-checkbox className="form-check col-4 pt-2" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
+                                            <x-form-checkbox className="form-check col-6 pt-2" name="feature[{{ $feature_indoor->slug }}]" label="{{ $feature_indoor->name }}" />
                                         @endforeach
                                     </div>
                                 </div>
@@ -418,7 +418,7 @@
                                     <div class="row px-2 pb-2">
 
                                         @foreach ($feature_list_outdoor as $feature_outdoor)
-                                            <x-form-checkbox className="form-check col-4 pt-2" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
+                                            <x-form-checkbox className="form-check col-6 pt-2" name="feature[{{ $feature_outdoor->slug }}]" label="{{ $feature_outdoor->name }}" />
                                         @endforeach
 
                                     </div>

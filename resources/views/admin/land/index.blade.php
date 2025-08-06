@@ -75,7 +75,7 @@
                             <tbody>
                                 @foreach ($data_land as $property)
                                     
-                                    <tr data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
+                                    <tr>
                                         <td>
                                             <div class="form-check">
                                                 <input type="checkbox" class="form-check-input" id="customCheck2">
@@ -83,29 +83,29 @@
                                             </div>
                                         </td>
 
-                                        <td>
-                                            <a href="{{ route('land.details', $property->land_slug) }}" class="d-flex align-items-center gap-2">
+                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
+                                            <div class="d-flex align-items-center gap-2">
                                                 <div>
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <span class="text-dark fw-medium fs-15" style="text-overflow: ellipsis; max-width: 200px; overflow: hidden; white-space: nowrap">{{ $property->land_name }}</span>
-                                                    <span class="fst-italic">{{ $property->land_code }}</span>
+                                                    <h5 class="text-dark fw-medium mb-0 text-capitalize">{{ $property->land_name }}</h5>
+                                                    <p class="fs-13 mb-0">{{ $property->land_code }}</p>
                                                 </div>
-                                            </a>
+                                            </div>
                                         </td>
-                                        <td>
+                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
                                             <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
                                         </td>
-                                        <td><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
-                                        <td class="text-capitalize">
+                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;"><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
+                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;" class="text-capitalize">
                                             <span class="text-dark fw-medium fs-15">{{ $property->area }}</span>
                                         </td>
-                                        <td>
+                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
                                             <span class="text-dark fw-medium fs-15">{{ $property->total_land_area }} m²</span>
                                         </td>
 
-                                        <td class="text-capitalize">
+                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;" class="text-capitalize">
                                             <div class="d-flex flex-column">
                                                 <span class="text-dark fw-medium fs-15">IDR {{ number_format($property->selling_price_idr, 2, ',', '.') }}</span>
                                                 <span class="text-gray-400 fst-italic">USD {{ number_format($property->selling_price_usd, 2, ',', '.') }}</span>
@@ -136,7 +136,7 @@
                                                     break;
                                             }
                                         @endphp
-                                        <td>
+                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
                                             <span class="badge {{ $badgeClass }} text-light fs-12 text-capitalize px-2 py-1" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{ $popOverContent }}" title="{{ $popOverTitle }}">
                                                 {{ $property->type_acceptance }}
                                             </span>

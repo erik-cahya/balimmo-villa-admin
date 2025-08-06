@@ -16,7 +16,7 @@
                                 <th scope="col">Leads Name</th>
                                 <th scope="col">Agent</th>
                                 <th scope="col">Phone</th>
-                                <th scope="col">Area</th>
+                                <th scope="col">Location</th>
                                 <th scope="col">Ready to Buy</th>
                                 <th scope="col">Looking For</th>
 
@@ -35,11 +35,10 @@
                                 {{-- {{ dd($matchLeads->first_name) }} --}}
 
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer" data-data-id="{{ $matchLeads->id }}">{{ $loop->iteration }}</td>
 
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer" data-data-id="{{ $matchLeads->id }}">
                                         <div class="d-flex align-items-center gap-1">
-                                            <img src="{{ asset('admin') }}/assets/images/users/dummy-avatar.jpg" alt="" class="avatar-sm rounded-circle me-1">
                                             <div class="d-block">
                                                 <h5 class="text-dark fw-medium mb-0">{{ $matchLeads->first_name . ' ' . $matchLeads->last_name }}</h5>
                                                 <p class="fs-13 mb-0">{{ $matchLeads->cust_email }}</p>
@@ -47,7 +46,7 @@
                                         </div>
                                     </td>
 
-                                    <td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer" data-data-id="{{ $matchLeads->id }}">
                                         <div class="matching-container" data-lead-id="{{ $matchLeads->id }}">
 
                                             <div class="propertiesData d-flex flex-column gap-1"></div>
@@ -58,16 +57,15 @@
 
                                         </div>
                                     </td>
-                                    <td>
-                                        <p class="mb-0"><iconify-icon icon="mdi:phone" class="fs-16 align-middle"></iconify-icon> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_phone), 4)) }}</p>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer" data-data-id="{{ $matchLeads->id }}">
+                                        <p class="mb-0"> {{ implode('-', str_split(preg_replace('/\D/', '', $matchLeads->cust_phone), 4)) }}</p>
                                     </td>
 
-                                    <td><iconify-icon icon="flowbite:map-pin-solid" class="fs-16 align-middle"></iconify-icon> {{ $matchLeads->localization }}</td>
-                                    <td>
-                                        <iconify-icon icon="uiw:date" class="fs-16 align-middle"></iconify-icon> {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}
-
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer text-capitalize" data-data-id="{{ $matchLeads->id }}"> {{ $matchLeads->localization }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer" data-data-id="{{ $matchLeads->id }}">
+                                        {{ \Carbon\Carbon::parse($matchLeads->date)->format('d F, Y') }}
                                     </td>
-                                    <td>
+                                    <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer" data-data-id="{{ $matchLeads->id }}">
                                         @foreach ($LeadsMatch as $leads)
                                             @php
                                                 if ($leads->type_asset == 'properties' && $leads->visibility == 1) {
