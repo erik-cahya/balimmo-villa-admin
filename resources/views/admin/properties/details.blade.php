@@ -271,11 +271,11 @@
                         <div class="card-body">
                             <h4>Rental Yield</h4>
                             <div class="row">
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Average Nightly Rate</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Average Nightly Rate</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->avg_nightly_rate, 2, ',', '.') }}</p>
                                 <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Average Occupancy Rate (%) </span><span class="mx-2">:</span>{{ $data_properties->avg_occupancy_rate }} %</p>
 
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Months Rented per Year *</span><span class="mx-2">:</span>{{ $data_properties->months_rented }} Month</p>
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Annual Turnover</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->annual_turnover, 2, ',', '.') }}</p>
+                                <!-- <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Months Rented per Year *</span><span class="mx-2">:</span>{{ $data_properties->months_rented }} Month</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Annual Turnover</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->annual_turnover, 2, ',', '.') }}</p> -->
                             </div>
                         </div>
                     </div>
@@ -287,14 +287,21 @@
                         <div class="card-body">
                             <h4>Sale Price & Conditions</h4>
                             <div class="row">
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Desired Selling Price (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Desired Selling Price (USD)</span><span class="mx-2">:</span>$ {{ number_format($data_properties->selling_price_usd, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Desired Selling Price (IDR)</span><span class="mx-2">:</span>
+                                <br>IDR {{ number_format($data_properties->selling_price_idr, 2, ',', '.') }}</p>
+                                
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Desired Selling Price (USD)</span><span class="mx-2">:</span>
+                                <br>$ {{ number_format($data_properties->selling_price_usd, 2, ',', '.') }}</p>
 
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Commision Ammount (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->commision_ammount_idr, 2, ',', '.') }}</p>
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Commision Ammount (USD)</span><span class="mx-2">:</span>USD {{ number_format($data_properties->commision_ammount_usd, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Commision Ammount (IDR)</span><span class="mx-2">:</span>
+                                <br>IDR {{ number_format($data_properties->net_seller_idr, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Estimated Commision Ammount (USD)</span><span class="mx-2">:</span>
+                                <br>USD {{ number_format($data_properties->net_seller_usd, 2, ',', '.') }}</p>
 
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net Seller price (IDR)</span><span class="mx-2">:</span>IDR {{ number_format($data_properties->net_seller_idr, 2, ',', '.') }}</p>
-                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net Seller price (USD)</span><span class="mx-2">:</span>USD {{ number_format($data_properties->net_seller_usd, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net seller price (IDR)</span><span class="mx-2">:</span>
+                                <br>IDR {{ number_format($data_properties->desired_price_idr, 2, ',', '.') }}</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net seller price (USD)</span><span class="mx-2">:</span>
+                                <br>USD {{ number_format($data_properties->desired_price_usd, 2, ',', '.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -579,7 +586,7 @@
                                 <div class="row">
                                     @foreach ($image_gallery as $gallery)
                                         <a href="{{ asset($gallery->image_path) }}" class="glightbox col-3 mb-3" data-gallery="property-gallery">
-                                            <img src="{{ asset($gallery->image_path) }}" class="w-100" style="border-radius:5px;">
+                                            <img src="{{ asset($gallery->image_path) }}" style="width: 130px; height: 5rem; object-fit:cover; border-radius: 10px" style="border-radius:5px;">
                                         </a>
                                     @endforeach
                                 </div>

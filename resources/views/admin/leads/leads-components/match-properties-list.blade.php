@@ -49,7 +49,7 @@
                                     <td data-bs-toggle="modal" data-bs-target="#seeProperties-{{ $matchLeads->id }}" class="showDetails cursor-pointer" data-data-id="{{ $matchLeads->id }}">
                                         <div class="matching-container" data-lead-id="{{ $matchLeads->id }}">
 
-                                            <div class="propertiesData d-flex flex-column gap-1"></div>
+                                            <div class="propertiesData d-flex flex-column items-center gap-1"></div>
 
                                             <div class="noProperties" style="display: none;">
                                                 <span class="badge bg-primary text-light"> No Match Agent</span>
@@ -71,7 +71,7 @@
                                                 if ($leads->type_asset == 'properties' && $leads->visibility == 1) {
                                                     $className = 'bg-success';
                                                 } elseif ($leads->type_asset == 'land' && $leads->visibility == 1) {
-                                                    $className = 'bg-danger';
+                                                    $className = 'bg-warning';
                                                 } else {
                                                     $className = 'd-none';
                                                 }

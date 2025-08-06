@@ -189,6 +189,20 @@
         });
     });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickableRows = document.querySelectorAll('td[data-href]');
+            
+            clickableRows.forEach(td => {
+                td.addEventListener('click', () => {
+                    const href = td.getAttribute('data-href');
+                    if (href) {
+                        window.location.href = href;
+                    }
+                });
+            });
+        });
+    </script>
     {{-- /* Data Table --}}
     {{-- Sweet Alert --}}
     <script>

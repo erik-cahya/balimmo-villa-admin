@@ -627,9 +627,31 @@
             minCommissionInput.value = minRate.toFixed(2);
         }
 
+        function calculateBalimmoForAgentNo(price, agentCommission) {
+            const fullRate = getBalimmoCommissionRate(price);
+            const minRate = getBalimmoMinCommission(price);
+            
+            // Rumus: Rate penuh dikurangi komisi agent
+            let calculatedBalimmo = fullRate - agentCommission;
+            
+            // Tidak boleh kurang dari minimum
+            if (calculatedBalimmo < minRate) {
+                calculatedBalimmo = minRate;
+            }
+            
+            // Tidak boleh negatif
+            if (calculatedBalimmo < 0) {
+                calculatedBalimmo = minRate;
+            }
+            
+            return calculatedBalimmo;
+        }
+
         function updateBalimmoCommission(forceUpdate = false) {
             const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
             const balimmoInput = document.getElementById("balimmo_commission");
+            const agentCommissionInput = document.getElementById("commission_of_the_agent");
+            const agentCommission = parseFloat(agentCommissionInput.value) || 0;
             const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
             const isAgentFullYes = fullCommission === "Yes";
             const isAgentFullNo = fullCommission === "No";
@@ -659,10 +681,17 @@
                 balimmoInput.readOnly = true;
             }
 
-            // Auto-update logic: update otomatis saat harga berubah atau kondisi tertentu
-            const shouldAutoUpdate = forceUpdate || !balimmoInput.value || val === 0 || 
-                                   (isOwner && event && event.target && event.target.id === 'desire_price_from_the_owner') ||
-                                   (isAgent && isAgentFullYes && event && event.target && event.target.id === 'desire_price_from_the_owner');
+            // Auto-update logic
+            const isInitialLoad = !balimmoInput.value || val === 0;
+            const isPriceChange = window.event && window.event.target && window.event.target.id === 'desire_price_from_the_owner';
+            const isAgentCommissionChange = window.event && window.event.target && window.event.target.id === 'commission_of_the_agent';
+            const isFullCommissionChange = window.event && window.event.target && window.event.target.name === 'full_commission_balimmo';
+            
+            // Kondisi untuk auto-update
+            const shouldAutoUpdate = isInitialLoad || forceUpdate || 
+                                   (isOwner && isPriceChange) ||
+                                   (isAgent && isAgentFullYes && (isPriceChange || isFullCommissionChange)) ||
+                                   (isAgent && isAgentFullNo && (isPriceChange || isAgentCommissionChange || isFullCommissionChange));
 
             if (shouldAutoUpdate) {
                 if (isOwner) {
@@ -672,10 +701,9 @@
                     // Agent + Full Commission Yes: auto-update dengan rate saat harga berubah
                     balimmoInput.value = rate.toFixed(2);
                 } else if (isAgent && isAgentFullNo) {
-                    // Agent + Full Commission No: default rate, bisa diedit
-                    if (!balimmoInput.value || val === 0) {
-                        balimmoInput.value = rate.toFixed(2);
-                    }
+                    // Agent + Full Commission No: otomatis dihitung berdasarkan rumus baru
+                    const calculatedBalimmo = calculateBalimmoForAgentNo(price, agentCommission);
+                    balimmoInput.value = calculatedBalimmo.toFixed(2);
                 } else if (isAgent) {
                     // Agent belum pilih full commission
                     balimmoInput.value = "0";
@@ -752,11 +780,15 @@
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.addEventListener('input', () => {
+                    el.addEventListener('input', (event) => {
+                        // Set global event untuk tracking
+                        window.event = event;
                         updateBalimmoCommission();
                         calculateWebsitePrice();
                     });
-                    el.addEventListener('change', () => {
+                    el.addEventListener('change', (event) => {
+                        // Set global event untuk tracking
+                        window.event = event;
                         updateBalimmoCommission();
                         calculateWebsitePrice();
                     });

@@ -6018,6 +6018,7 @@ textarea.form-control-lg {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: var(--bs-badge-border-radius);
+  width: fit-content;
 }
 .badge:empty {
   display: none;

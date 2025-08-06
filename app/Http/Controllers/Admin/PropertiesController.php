@@ -45,8 +45,12 @@ class PropertiesController extends Controller
                 'bathroom',
                 'users.name as agentName',
                 'users.status',
+                'property_financial.desired_price_idr',
+                'property_financial.desired_price_usd',
                 'property_financial.selling_price_idr',
                 'property_financial.selling_price_usd',
+                'property_financial.net_seller_idr',
+                'property_financial.net_seller_usd',
 
             )
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
@@ -70,8 +74,12 @@ class PropertiesController extends Controller
                     'type_mandate',
                     'type_acceptance',
                     'bathroom',
+                    'property_financial.desired_price_idr',
+                    'property_financial.desired_price_usd',
                     'property_financial.selling_price_idr',
                     'property_financial.selling_price_usd',
+                    'property_financial.net_price_idr',
+                    'property_financial.net_price_usd',
 
                 )
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
@@ -287,8 +295,8 @@ class PropertiesController extends Controller
         PropertyLegalModel::create([
             'properties_id' => $propertyCreate->id,
             'company_name' => $request->company_name,
-            'rep_first_name' => $request->legal_rep_last_name,
-            'rep_last_name' => $request->legal_rep_first_name,
+            'rep_first_name' => $request->legal_rep_first_name,
+            'rep_last_name' => $request->legal_rep_last_name,
             'phone' => $request->legal_rep_phone_number,
             'email' => $request->legal_rep_email,
 
@@ -310,56 +318,94 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ############## Create Properties Financial ##############
         // ==========================================================================================================================================
-        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->find_property == 'owner' ? $request->website_price_owner : $request->website_price_agent);
-        $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
+        // $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->find_property == 'owner' ? $request->find_property : $request->find_property);
+        // $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
 
         // Presentase
-        if ($idrPrice < 15000000000) {
-            $commision = 5;
-        } else if ($idrPrice >= 15000000000  && $idrPrice <= 34000000000) {
-            $commision = 4;
-        } else if ($idrPrice > 34000000000  && $idrPrice <= 70000000000) {
-            $commision = 3;
-        } else {
-            $commision = 2.5;
-        }
+        // if ($idrPrice < 15000000000) {
+        //     $commision = 5;
+        // } else if ($idrPrice >= 15000000000  && $idrPrice <= 34000000000) {
+        //     $commision = 4;
+        // } else if ($idrPrice > 34000000000  && $idrPrice <= 70000000000) {
+        //     $commision = 3;
+        // } else {
+        //     $commision = 2.5;
+        // }
 
-        $commisionAmmountIDR = $idrPrice * $commision / 100;
-        $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
-        $netSellerIDR = $idrPrice - $commisionAmmountIDR;
-        $netSellerUSD = round($usdPrice - $commisionAmmountUSD, 2);
+        // $commisionAmmountIDR = $idrPrice * $commision / 100;
+        // $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
+        // $netSellerIDR = $idrPrice - $commisionAmmountIDR;
+        // $netSellerUSD = round($usdPrice - $commisionAmmountUSD, 2);
 
-
+        $idrPrice = $this->convertToInteger($request->website_price); // Ambil website_price yang sudah dikalkulasi
+        $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
+        
         PropertyFinancialModel::create([
-            'properties_id' => $propertyCreate->id,
-            'average_price_status' => $request->average_price_status,
-            'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
-            'avg_occupancy_rate' => $request->average_occupancy_rate,
+        'properties_id' => $propertyCreate->id,
 
-            'find_property_of' => $request->find_property,
-            'agent_name' => $request->agent_name,
-            'agent_email' => $request->agent_email,
-            'agent_phone' => $request->agent_whatsapp,
+        // Rental Yield
+        'average_price_status' => $request->average_price_status,
+        'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
+        'avg_occupancy_rate' => $request->average_occupancy_rate,
+        'months_rented' => $request->month_rented_per_year,
+        'annual_turnover' => $this->convertToInteger($request->estimated_annual_turnover),
 
-            'base_price' => $request->base_price,
-            'desired_price_idr' => $request->desire_price_from_the_owner,
-            'desired_price_usd' => $this->idrToUsdConvert($request->desire_price_from_the_owner),
-            'agent_commision' => $request->commission_of_the_agent,
-            'give_balimmo_commision' => $request->full_commission_balimmo,
-            'balimmmo_commision' => $request->balimmo_commission,
+        // Agent
+        'find_property_of' => $request->find_property,
+        'agent_name' => $request->agent_name,
+        'agent_email' => $request->agent_email,
+        'agent_phone' => $request->agent_whatsapp,
+
+        // Price Structure
+        'base_price_option' => $request->base_price, // Selling price / Price to owner
+        'base_price' => $this->convertToInteger($request->desire_price_from_the_owner), // This is the main base price
+        'desired_price_idr' => $this->convertToInteger($request->price_to_owner), // Harga yg diterima Owner
+        'desired_price_usd' => $this->idrToUsdConvert($request->price_to_owner),
+
+        // Commission Details
+        'agent_commision' => $request->commission_of_the_agent,
+        'give_balimmo_commision' => $request->full_commission_balimmo,
+        'balimmo_commision' => $request->balimmo_commission,
+
+        // Sale Price & Net Profit
+        'selling_price_idr' => $idrPrice,
+        'selling_price_usd' => $usdPrice,
+        'net_seller_idr' => $this->convertToInteger($request->net_profit),
+        'net_seller_usd' => $this->idrToUsdConvert($request->net_profit),
+    ]);
 
 
-            // 'months_rented' => $request->month_rented_per_year,
-            // 'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
+        // PropertyFinancialModel::create([
+        //     'properties_id' => $propertyCreate->id,
+        //     'average_price_status' => $request->average_price_status,
+        //     'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
+        //     'avg_occupancy_rate' => $request->average_occupancy_rate,
 
-            // Sale Price & Conditions
-            'selling_price_idr' => $this->convertToInteger($request->website_price),
-            'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
-            'net_seller_idr' => $request->base_price == 'Selling price' ? $request->net_profit : NULL,
-            'net_seller_usd' => $request->base_price == 'Selling price' ? $this->idrToUsdConvert($request->net_profit) : NULL,
-            // 'net_seller_idr' => $netSellerIDR,
-            // 'net_seller_usd' => $netSellerUSD,
-        ]);
+        //     'find_property_of' => $request->find_property,
+        //     'agent_name' => $request->agent_name,
+        //     'agent_email' => $request->agent_email,
+        //     'agent_phone' => $request->agent_whatsapp,
+
+        //     'base_price_option' => $request->base_price,
+        //     'base_price' => $request->desire_price_from_the_owner,
+        //     'desired_price_idr' => $request->price_to_owner,
+        //     'desired_price_usd' => $this->idrToUsdConvert($request->price_to_owner),
+        //     'agent_commision' => $request->commission_of_the_agent,
+        //     'give_balimmo_commision' => $request->full_commission_balimmo,
+        //     'balimmo_commision' => $request->balimmo_commission,
+
+
+        //     // 'months_rented' => $request->month_rented_per_year,
+        //     // 'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
+
+        //     // Sale Price & Conditions
+        //     'selling_price_idr' => $this->convertToInteger($request->website_price),
+        //     'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
+        //     'net_seller_idr' => $this->convertToInteger($request->net_profit),
+        //     'net_seller_usd' => $this->idrToUsdConvert($request->net_profit),
+        //     // 'net_seller_idr' => $netSellerIDR,
+        //     // 'net_seller_usd' => $netSellerUSD,
+        // ]);
 
         // ==========================================================================================================================================
         // ########### Create Property Feature Data
@@ -492,10 +538,17 @@ class PropertiesController extends Controller
 
                 'property_financial.avg_nightly_rate',
                 'property_financial.avg_occupancy_rate',
-                'property_financial.selling_price_idr',
-                'property_financial.selling_price_usd',
+                // 'property_financial.selling_price_idr',
+                // 'property_financial.selling_price_usd',
                 // 'property_financial.commision_ammount_idr',
                 // 'property_financial.commision_ammount_usd',
+
+                'property_financial.desired_price_idr',
+                'property_financial.desired_price_usd',
+                'property_financial.selling_price_idr',
+                'property_financial.selling_price_usd',
+                'property_financial.net_seller_idr',
+                'property_financial.net_seller_usd',
 
 
                 'property_legal.company_name',

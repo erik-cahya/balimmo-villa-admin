@@ -10,6 +10,9 @@
         }
     </style>
 @endpush
+@push('style')
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/glightbox.min.css') }}" />
+@endpush
 @section('content')
     <form action="{{ route('properties.update', $data_properties->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
         @csrf
@@ -619,7 +622,7 @@
                                 Photos and videos
                             </button>
                         </h2>
-                        <div id="collapseGallery" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id="collapseGallery" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
 
                                 <div class="col-6 row bg-light-subtle border-dark rounded border p-2">
@@ -632,18 +635,33 @@
                                     <h5 class="text-dark fw-semibold">Publish photos and videos</h5>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <label for="gallery" class="form-label">Property Gallery</label>
+                                        <div class="col-lg-12 d-block mb-3">
+                                        <label for="gallery" class="form-label d-block">Property Gallery </label>
 
+                                        <div class="row">
+                                        @foreach ($image_gallery as $gallery)
+                                            <a href="{{ asset($gallery->image_path) }}" class="glightbox col-3 mb-3" data-gallery="property-gallery">
+                                                <img src="{{ asset($gallery->image_path) }}" style="width: 100%; height: 5rem; object-fit:cover; border-radius: 10px">
+                                            </a>
+                                        @endforeach
+                                        </div>
+
+                                        @if (isset($image_gallery[0]->gallery_id))
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a href="{{ route('gallery.edit', $image_gallery[0]->gallery_id) }}" class="btn btn-sm btn-primary">Edit Gallery</a>
+                                                </div>
+                                            </div>
+                                        @else
                                             <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
 
-                                            <div id="previewContainer" class="d-flex flex-wrap gap-2">
+                                            <div id="previewContainer" class="d-flex flex-wrap gap-3">
                                                 @if (session('old_images'))
                                                     @foreach (session('old_images') as $index => $img)
                                                         <div class="img-preview" data-index="{{ $index }}">
                                                             <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
-                                                                style="width: 100%; max-width: 100px; aspect-ration: 16 / 9; object-fit: cover; border: 1px solid #ccc; padding: 2px;">
-                                                            <p class="mb-0 mt-1 text-center">Image {{ $index + 1 }}</p>
+                                                                style="width: 100px; height: 100px; object-fit: cover; border: 2px solid #ccc; padding: 4px;">
+                                                            <p class="mt-1 text-center">Image {{ $index + 1 }}</p>
                                                             <input type="hidden" name="old_images[]" value="{{ $img }}">
                                                         </div>
                                                     @endforeach
@@ -657,13 +675,53 @@
                                                     {{ $message }}
                                                 </div>
                                             @enderror
+                                        @endif
 
-                                        </div>
-                                        <x-form-input className="col-12" type="text" name="url_virtual_tour" label="Visit Tour Link" />
-                                        <x-form-input className="col-12" type="text" name="url_lifestyle" label="Lifestyle" />
-                                        <x-form-input className="col-12" type="text" name="url_experience" label="Experience" />
                                     </div>
+                                    
+                                    <div class="d-flex flex-column gap-2">
+                                        @php
+                                            function extractYouTubeID($url) {
+                                                if (!$url) return null;
+                                                preg_match('/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/', $url, $matches);
+                                                return $matches[1] ?? null;
+                                            }
 
+                                            $videoVirtualTour = extractYouTubeID($attachment['url_virtual_tour'] ?? '');
+                                            $videoLifestyle = extractYouTubeID($attachment['url_lifestyle'] ?? '');
+                                            $videoExperience = extractYouTubeID($attachment['url_experience'] ?? '');
+                                        @endphp
+
+                                        {{-- VIRTUAL TOUR --}}
+                                        <div>
+                                            <x-form-input className="col-12 yt-input" type="text" name="url_virtual_tour" label="Visit Tour" value="{{ $attachment['url_virtual_tour'] }}" data-preview-id="preview_virtual_tour" />
+                                            <div class="col-4">
+                                                <div class="ratio ratio-16x9">
+                                                    <iframe id="preview_virtual_tour" width="560" height="315" src="{{ $videoVirtualTour ? 'https://www.youtube.com/embed/' . $videoVirtualTour : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- LIFESTYLE --}}
+                                        <div>
+                                            <x-form-input className="col-12 yt-input" type="text" name="url_lifestyle" label="Lifestyle" value="{{ $attachment['url_lifestyle'] }}" data-preview-id="preview_lifestyle" />
+                                            <div class="col-4">
+                                                <div class="ratio ratio-16x9">
+                                                    <iframe id="preview_lifestyle" width="560" height="315" src="{{ $videoLifestyle ? 'https://www.youtube.com/embed/' . $videoLifestyle : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- EXPERIENCE --}}
+                                        <div>
+                                            <x-form-input className="col-12 yt-input" type="text" name="url_experience" label="Experience" value="{{ $attachment['url_experience'] }}" data-preview-id="preview_experience" />
+                                            <div class="col-4">
+                                                <div class="ratio ratio-16x9">
+                                                    <iframe id="preview_experience" width="560" height="315" src="{{ $videoExperience ? 'https://www.youtube.com/embed/' . $videoExperience : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -744,9 +802,31 @@
             minCommissionInput.value = minRate.toFixed(2);
         }
 
+        function calculateBalimmoForAgentNo(price, agentCommission) {
+            const fullRate = getBalimmoCommissionRate(price);
+            const minRate = getBalimmoMinCommission(price);
+            
+            // Rumus: Rate penuh dikurangi komisi agent
+            let calculatedBalimmo = fullRate - agentCommission;
+            
+            // Tidak boleh kurang dari minimum
+            if (calculatedBalimmo < minRate) {
+                calculatedBalimmo = minRate;
+            }
+            
+            // Tidak boleh negatif
+            if (calculatedBalimmo < 0) {
+                calculatedBalimmo = minRate;
+            }
+            
+            return calculatedBalimmo;
+        }
+
         function updateBalimmoCommission(forceUpdate = false) {
             const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
             const balimmoInput = document.getElementById("balimmo_commission");
+            const agentCommissionInput = document.getElementById("commission_of_the_agent");
+            const agentCommission = parseFloat(agentCommissionInput.value) || 0;
             const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
             const isAgentFullYes = fullCommission === "Yes";
             const isAgentFullNo = fullCommission === "No";
@@ -776,10 +856,17 @@
                 balimmoInput.readOnly = true;
             }
 
-            // Auto-update logic: update otomatis saat harga berubah atau kondisi tertentu
-            const shouldAutoUpdate = forceUpdate || !balimmoInput.value || val === 0 || 
-                                   (isOwner && event && event.target && event.target.id === 'desire_price_from_the_owner') ||
-                                   (isAgent && isAgentFullYes && event && event.target && event.target.id === 'desire_price_from_the_owner');
+            // Auto-update logic
+            const isInitialLoad = !balimmoInput.value || val === 0;
+            const isPriceChange = window.event && window.event.target && window.event.target.id === 'desire_price_from_the_owner';
+            const isAgentCommissionChange = window.event && window.event.target && window.event.target.id === 'commission_of_the_agent';
+            const isFullCommissionChange = window.event && window.event.target && window.event.target.name === 'full_commission_balimmo';
+            
+            // Kondisi untuk auto-update
+            const shouldAutoUpdate = isInitialLoad || forceUpdate || 
+                                   (isOwner && isPriceChange) ||
+                                   (isAgent && isAgentFullYes && (isPriceChange || isFullCommissionChange)) ||
+                                   (isAgent && isAgentFullNo && (isPriceChange || isAgentCommissionChange || isFullCommissionChange));
 
             if (shouldAutoUpdate) {
                 if (isOwner) {
@@ -789,10 +876,9 @@
                     // Agent + Full Commission Yes: auto-update dengan rate saat harga berubah
                     balimmoInput.value = rate.toFixed(2);
                 } else if (isAgent && isAgentFullNo) {
-                    // Agent + Full Commission No: default rate, bisa diedit
-                    if (!balimmoInput.value || val === 0) {
-                        balimmoInput.value = rate.toFixed(2);
-                    }
+                    // Agent + Full Commission No: otomatis dihitung berdasarkan rumus baru
+                    const calculatedBalimmo = calculateBalimmoForAgentNo(price, agentCommission);
+                    balimmoInput.value = calculatedBalimmo.toFixed(2);
                 } else if (isAgent) {
                     // Agent belum pilih full commission
                     balimmoInput.value = "0";
@@ -869,11 +955,15 @@
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.addEventListener('input', () => {
+                    el.addEventListener('input', (event) => {
+                        // Set global event untuk tracking
+                        window.event = event;
                         updateBalimmoCommission();
                         calculateWebsitePrice();
                     });
-                    el.addEventListener('change', () => {
+                    el.addEventListener('change', (event) => {
+                        // Set global event untuk tracking
+                        window.event = event;
                         updateBalimmoCommission();
                         calculateWebsitePrice();
                     });
@@ -1313,4 +1403,10 @@
         });
     </script>
     {{-- /* Gallery Upload */ --}}
+    <script src="{{ asset('admin/assets/js/glightbox.min.js') }}"></script>
+    <script>
+        const lightbox = GLightbox({
+            selector: '.glightbox'
+        });
+    </script>
 @endpush

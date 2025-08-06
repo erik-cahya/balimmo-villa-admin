@@ -57,7 +57,7 @@
                                             @if ($ld->type_asset == 'properties' && $ld->visibility == 1)
                                                 <span class="text-capitalize fw-medium badge bg-success">properties</span>
                                             @elseif ($ld->type_asset == 'land' && $ld->visibility == 1)
-                                                <span class="text-capitalize fw-medium badge bg-danger">land</span>
+                                                <span class="text-capitalize fw-medium badge bg-warning">land</span>
                                             @endif
                                         @endforeach
                                     </td>
