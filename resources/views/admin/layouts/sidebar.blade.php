@@ -165,23 +165,23 @@
 
             @role('master')
                 <!-- <li class="menu-title">Setting</li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link {{ request()->routeIs('localization.*') ? 'active' : '' }}" href="{{ route('localization.index') }}">
-                                                                <span class="nav-icon">
-                                                                    <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
-                                                                </span>
-                                                                <span class="nav-text">Localization Management</span>
-                                                            </a>
-                                                        </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link {{ request()->routeIs('localization.*') ? 'active' : '' }}" href="{{ route('localization.index') }}">
+                                                                    <span class="nav-icon">
+                                                                        <iconify-icon icon="icon-park-solid:local-pin" class="fs-18 align-middle"></iconify-icon>
+                                                                    </span>
+                                                                    <span class="nav-text">Localization Management</span>
+                                                                </a>
+                                                            </li>
 
-                                                        <li class="nav-item">
-                                                            <a class="nav-link {{ request()->routeIs('features.*') ? 'active' : '' }}" href="{{ route('features.index') }}">
-                                                                <span class="nav-icon">
-                                                                    <iconify-icon icon="mynaui:air-conditioner-solid" class="fs-18 align-middle"></iconify-icon>
-                                                                </span>
-                                                                <span class="nav-text">Features & Ammenities</span>
-                                                            </a>
-                                                        </li> -->
+                                                            <li class="nav-item">
+                                                                <a class="nav-link {{ request()->routeIs('features.*') ? 'active' : '' }}" href="{{ route('features.index') }}">
+                                                                    <span class="nav-icon">
+                                                                        <iconify-icon icon="mynaui:air-conditioner-solid" class="fs-18 align-middle"></iconify-icon>
+                                                                    </span>
+                                                                    <span class="nav-text">Features & Ammenities</span>
+                                                                </a>
+                                                            </li> -->
 
                 <li class="menu-title">Setting</li>
                 <li class="nav-item">

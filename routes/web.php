@@ -128,6 +128,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('offer-purchase', DocsOfferToPurchaseController::class);
 
     Route::post('prospects/make-prospect/{id}', [ProspectController::class, 'leadsToProspect'])->name('leadsToProspect'); // Make data leads to prospects
+    Route::get('prospect/details/{custID}', [ProspectController::class, 'details'])->name('prospects.details');
     Route::resource('prospects', ProspectController::class);
 
     Route::resource('/notary', NotaryController::class);
