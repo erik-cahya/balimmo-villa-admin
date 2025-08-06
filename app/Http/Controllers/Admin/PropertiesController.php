@@ -631,14 +631,31 @@ class PropertiesController extends Controller
                 'properties.*',
                 // 'property_financial.*',
 
+                // Rental Yield
+                'property_financial.average_price_status',
                 'property_financial.avg_nightly_rate',
                 'property_financial.avg_occupancy_rate',
+
+                // Agent
+                'property_financial.find_property_of',
+                'property_financial.agent_name',
+                'property_financial.agent_email',
+                'property_financial.agent_phone',
+
+                // Price Structure
+                'property_financial.base_price_option',
+                'property_financial.base_price',
+                'property_financial.desired_price_idr',
+
+                // Commission Details
+                'property_financial.agent_commision',
+                'property_financial.give_balimmo_commision',
+                'property_financial.balimmo_commision',
+                
+                // Sale Price & Net Profit
                 'property_financial.selling_price_idr',
-                'property_financial.selling_price_usd',
-                // 'property_financial.commision_ammount_idr',
-                // 'property_financial.commision_ammount_usd',
-                // 'property_financial.net_seller_idr',
-                // 'property_financial.net_seller_usd',
+                'property_financial.net_seller_idr',
+                
 
                 'property_legal.company_name',
                 'property_legal.rep_first_name',
@@ -655,6 +672,8 @@ class PropertiesController extends Controller
                 'property_legal.purchase_cost',
                 'property_legal.deadline_payment',
                 'property_legal.zoning',
+                'property_legal.construction_quality',
+                'property_legal.consturctor_name',
             )
             ->first();
 
@@ -700,74 +719,67 @@ class PropertiesController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-{
-    $property = PropertiesModel::findOrFail($id);
+    {
+        $property = PropertiesModel::findOrFail($id);
 
-    // ========== SLUG ========== 
-    $slug = $property->property_slug;
-    if ($property->property_name != $request->property_name) {
-        $slug = $this->generatePropertiesSlug($request->property_name);
-    }
+        // ========== SLUG ========== 
+        $slug = $property->property_slug;
+        if ($property->property_name != $request->property_name) {
+            $slug = $this->generatePropertiesSlug($request->property_name);
+        }
 
-    // ========== VALIDASI LEGAL ==========
-    if ($request->legal_category === 'Freehold') {
-        $request->validate([
-            'freehold_purchase_date' => 'required',
-            'freehold_certificate_number' => 'required',
-            'freehold_certificate_holder_name' => 'required',
+        // ========== VALIDASI LEGAL ==========
+        if ($request->legal_category === 'Freehold') {
+            $request->validate([
+                'freehold_purchase_date' => 'required',
+                'freehold_certificate_number' => 'required',
+                'freehold_certificate_holder_name' => 'required',
+            ]);
+        } elseif ($request->legal_category === 'Leasehold') {
+            $request->validate([
+                'leasehold_start_date' => 'required',
+                'leasehold_end_date' => 'required',
+                'leasehold_contract_number' => 'required',
+                'leasehold_contract_holder_name' => 'required',
+                'leasehold_negotiation_ext_cost' => 'required',
+                'leasehold_purchase_cost' => 'required',
+                'leasehold_deadline_payment' => 'required',
+            ]);
+        }
+
+        // ========== UPDATE PROPERTIES ==========
+        $property->update([
+            'property_name' => $request->property_name,
+            'property_slug' => $slug,
+            'property_description' => $request->description,
+            'region' => $request->region,
+            'sub_region' => $request->subregion,
+            'property_address' => $request->property_address,
+            'area' => $request->area,
+            'total_land_area' => $this->floatNumbering($request->land_size),
+            'villa_area' => $this->floatNumbering($request->built_area),
+            'pool_area' => $this->floatNumbering($request->pool_area),
+            'bedroom' => $request->bedroom,
+            'bathroom' => $request->bathroom,
+            'year_construction' => $request->year_construction,
+            'year_renovated' => $request->year_renovated,
+            'type_mandate' => $request->type_mandate,
         ]);
-    } elseif ($request->legal_category === 'Leasehold') {
-        $request->validate([
-            'leasehold_start_date' => 'required',
-            'leasehold_end_date' => 'required',
-            'leasehold_contract_number' => 'required',
-            'leasehold_contract_holder_name' => 'required',
-            'leasehold_negotiation_ext_cost' => 'required',
-            'leasehold_purchase_cost' => 'required',
-            'leasehold_deadline_payment' => 'required',
-        ]);
-    }
 
-    // ========== UPDATE PROPERTIES ==========
-    $property->update([
-        'property_name' => $request->property_name,
-        'property_slug' => $slug,
-        'property_description' => $request->description,
-        'region' => $request->region,
-        'sub_region' => $request->subregion,
-        'property_address' => $request->property_address,
-        'area' => $request->area,
-        'total_land_area' => $this->floatNumbering($request->land_size),
-        'villa_area' => $this->floatNumbering($request->built_area),
-        'pool_area' => $this->floatNumbering($request->pool_area),
-        'bedroom' => $request->bedroom,
-        'bathroom' => $request->bathroom,
-        'year_construction' => $request->year_construction,
-        'year_renovated' => $request->year_renovated,
-        'type_mandate' => $request->type_mandate,
-    ]);
+        // ========== SYNC OWNERS ==========
+        PropertyOwnerModel::where('properties_id', $id)->delete();
 
-    // ========== UPDATE OWNERS ==========
-    if ($request->has('owners')) {
-        foreach ($request->owners as $index => $owner) {
-            if (
-                empty($owner['first_name']) &&
-                empty($owner['last_name']) &&
-                empty($owner['phone_number']) &&
-                empty($owner['email'])
-            ) {
-                continue;
-            }
+        if ($request->has('owners')) {
+            foreach ($request->owners as $index => $owner) {
+                if (
+                    empty($owner['first_name']) &&
+                    empty($owner['last_name']) &&
+                    empty($owner['phone_number']) &&
+                    empty($owner['email'])
+                ) {
+                    continue;
+                }
 
-            if (!empty($owner['id'])) {
-                PropertyOwnerModel::where('id', $owner['id'])->update([
-                    'first_name' => $owner['first_name'],
-                    'last_name' => $owner['last_name'],
-                    'phone' => $owner['phone_number'],
-                    'email' => $owner['email'],
-                    'owner_order' => $index + 1,
-                ]);
-            } else {
                 PropertyOwnerModel::create([
                     'properties_id' => $id,
                     'first_name' => $owner['first_name'],
@@ -778,106 +790,117 @@ class PropertiesController extends Controller
                 ]);
             }
         }
-    }
 
-    // ========== UPDATE LEGAL ==========
-    PropertyLegalModel::where('properties_id', $id)->update([
-        'company_name' => $request->company_name,
-        'rep_first_name' => $request->legal_rep_first_name,
-        'rep_last_name' => $request->legal_rep_last_name,
-        'phone' => $request->legal_rep_phone_number,
-        'email' => $request->legal_rep_email,
-        'legal_status' => $request->legal_category,
-        'holder_name' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_holder_name : $request->leasehold_contract_holder_name,
-        'holder_number' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_number : $request->leasehold_contract_number,
-        'start_date' => $request->leasehold_start_date ? $this->dateConversion($request->leasehold_start_date) : null,
-        'end_date' => $request->leasehold_end_date ? $this->dateConversion($request->leasehold_end_date) : null,
-        'purchase_date' => $request->freehold_purchase_date ? $this->dateConversion($request->freehold_purchase_date) : null,
-        'extension_cost' => $this->convertToInteger($request->leasehold_negotiation_ext_cost),
-        'purchase_cost' => $this->convertToInteger($request->leasehold_purchase_cost),
-        'deadline_payment' => $request->leasehold_deadline_payment ? $this->dateConversion($request->leasehold_deadline_payment) : null,
-        'zoning' => $request->legal_category === 'Freehold' ? $request->freehold_zoning : $request->leasehold_zoning,
-        'construction_quality' => $request->construction_quality,
-        'constructor_name' => $request->constructor_name,
-    ]);
 
-    // ========== UPDATE FINANCIAL ==========
-    PropertyFinancialModel::where('properties_id', $id)->update([
-        'average_price_status' => $request->average_price_status,
-        'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
-        'avg_occupancy_rate' => $request->average_occupancy_rate,
-        'find_property_of' => $request->find_property,
-        'agent_name' => $request->agent_name,
-        'agent_email' => $request->agent_email,
-        'agent_phone' => $request->agent_whatsapp,
-        'base_price' => $request->base_price,
-        'desired_price_idr' => $this->convertToInteger($request->desire_price_from_the_owner),
-        'desired_price_usd' => $this->idrToUsdConvert($request->desire_price_from_the_owner),
-        'agent_commision' => $request->commission_of_the_agent,
-        'give_balimmo_commision' => $request->full_commission_balimmo,
-        'balimmmo_commision' => $request->balimmo_commission,
-        'selling_price_idr' => $this->convertToInteger($request->website_price),
-        'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
-        'net_seller_idr' => $this->convertToInteger($request->net_profit),
-        'net_seller_usd' => $this->idrToUsdConvert($request->net_profit),
-    ]);
+        // ========== UPDATE LEGAL ==========
+        PropertyLegalModel::where('properties_id', $id)->update([
+            'company_name' => $request->company_name,
+            'rep_first_name' => $request->legal_rep_first_name,
+            'rep_last_name' => $request->legal_rep_last_name,
+            'phone' => $request->legal_rep_phone_number,
+            'email' => $request->legal_rep_email,
+            'legal_status' => $request->legal_category,
+            'holder_name' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_holder_name : $request->leasehold_contract_holder_name,
+            'holder_number' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_number : $request->leasehold_contract_number,
+            'start_date' => $request->leasehold_start_date ? $this->dateConversion($request->leasehold_start_date) : null,
+            'end_date' => $request->leasehold_end_date ? $this->dateConversion($request->leasehold_end_date) : null,
+            'purchase_date' => $request->freehold_purchase_date ? $this->dateConversion($request->freehold_purchase_date) : null,
+            'extension_cost' => $this->convertToInteger($request->leasehold_negotiation_ext_cost),
+            'purchase_cost' => $this->convertToInteger($request->leasehold_purchase_cost),
+            'deadline_payment' => $request->leasehold_deadline_payment ? $this->dateConversion($request->leasehold_deadline_payment) : null,
+            'zoning' => $request->legal_category === 'Freehold' ? $request->freehold_zoning : $request->leasehold_zoning,
+            'construction_quality' => $request->construction_quality,
+            'consturctor_name' => $request->constructor_name,
+        ]);
 
-    // ========== UPDATE FEATURES ==========
-    PropertyFeatureModel::where('properties_id', $id)->delete();
-    if ($request->has('feature')) {
-        foreach ($request->feature as $featureId) {
-            PropertyFeatureModel::create([
-                'properties_id' => $id,
-                'feature_id' => $featureId,
-            ]);
-        }
-    }
+        // ========== UPDATE FINANCIAL ==========
+        PropertyFinancialModel::where('properties_id', $id)->update([
 
-    // ========== UPDATE ATTACHMENTS ==========
-    $attachmentKeys = ['file_rental_support', 'file_type_of_mandate', 'url_virtual_tour', 'url_lifestyle', 'url_experience'];
-    foreach ($attachmentKeys as $key) {
-        $value = $request->input($key);
-        if ($request->hasFile($key)) {
-            $file = $request->file($key);
-            $filename = $file->getClientOriginalName();
-            $file->move(public_path('admin/attachment/' . $slug), $filename);
-            $value = $filename;
-        }
+            // Rental Yield
+            'average_price_status' => $request->average_price_status,
+            'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
+            'avg_occupancy_rate' => $request->average_occupancy_rate,
 
-        if ($value !== null && $value !== '') {
-            PropertyUrlAttachmentModel::updateOrCreate(
-                ['properties_id' => $id, 'name' => $key],
-                ['path_attachment' => $value]
-            );
-        }
-    }
+            // Agent
+            'find_property_of' => $request->find_property,
+            'agent_name' => $request->agent_name,
+            'agent_email' => $request->agent_email,
+            'agent_phone' => $request->agent_whatsapp,
 
-    // ========== GALLERY ==========
-    if ($request->has('old_images')) {
-        $gallery = PropertyGalleryModel::firstOrCreate(['properties_id' => $id], ['description' => 'gallery']);
-        foreach ($request->old_images as $index => $filename) {
-            $existing = PropertyGalleryImageModel::where('gallery_id', $gallery->id)
-                ->where('image_path', 'admin/gallery/' . $slug . '/' . $filename)
-                ->first();
-            if (!$existing) {
-                PropertyGalleryImageModel::create([
-                    'gallery_id' => $gallery->id,
-                    'image_path' => 'admin/gallery/' . $slug . '/' . $filename,
-                    'order' => $index,
-                    'is_featured' => $index === 0,
+            // Price Structure
+            'base_price_option' => $request->base_price,
+            'base_price' => $this->convertToInteger($request->desire_price_from_the_owner),
+            'desired_price_idr' => $this->convertToInteger($request->price_to_owner),
+            'desired_price_usd' => $this->idrToUsdConvert($request->price_to_owner),
+
+            // Commission Details
+            'agent_commision' => $request->commission_of_the_agent,
+            'give_balimmo_commision' => $request->full_commission_balimmo,
+            'balimmo_commision' => $request->balimmo_commission,
+
+            // Sale Price & Net Profit
+            'selling_price_idr' => $this->convertToInteger($request->website_price),
+            'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
+            'net_seller_idr' => $this->convertToInteger($request->net_profit),
+            'net_seller_usd' => $this->idrToUsdConvert($request->net_profit),
+        ]);
+
+        // ========== UPDATE FEATURES ==========
+        PropertyFeatureModel::where('properties_id', $id)->delete();
+        if ($request->has('feature')) {
+            foreach ($request->feature as $featureId) {
+                PropertyFeatureModel::create([
+                    'properties_id' => $id,
+                    'feature_id' => $featureId,
                 ]);
             }
         }
+
+        // ========== UPDATE ATTACHMENTS ==========
+        $attachmentKeys = ['file_rental_support', 'file_type_of_mandate', 'url_virtual_tour', 'url_lifestyle', 'url_experience'];
+        foreach ($attachmentKeys as $key) {
+            $value = $request->input($key);
+            if ($request->hasFile($key)) {
+                $file = $request->file($key);
+                $filename = $file->getClientOriginalName();
+                $file->move(public_path('admin/attachment/' . $slug), $filename);
+                $value = $filename;
+            }
+
+            if ($value !== null && $value !== '') {
+                PropertyUrlAttachmentModel::updateOrCreate(
+                    ['properties_id' => $id, 'name' => $key],
+                    ['path_attachment' => $value]
+                );
+            }
+        }
+
+        // ========== GALLERY ==========
+        if ($request->has('old_images')) {
+            $gallery = PropertyGalleryModel::firstOrCreate(['properties_id' => $id], ['description' => 'gallery']);
+            foreach ($request->old_images as $index => $filename) {
+                $existing = PropertyGalleryImageModel::where('gallery_id', $gallery->id)
+                    ->where('image_path', 'admin/gallery/' . $slug . '/' . $filename)
+                    ->first();
+                if (!$existing) {
+                    PropertyGalleryImageModel::create([
+                        'gallery_id' => $gallery->id,
+                        'image_path' => 'admin/gallery/' . $slug . '/' . $filename,
+                        'order' => $index,
+                        'is_featured' => $index === 0,
+                    ]);
+                }
+            }
+        }
+
+        Cache::forget('properties_list_cache');
+
+        return redirect()->route('properties.index')->with('flashData', [
+            'judul' => 'Update Success',
+            'pesan' => 'Property updated successfully',
+            'swalFlashIcon' => 'success',
+        ]);
     }
-
-    Cache::forget('properties_list_cache');
-
-    return redirect()->route('properties.index')->with('flashData', [
-        'judul' => 'Update Success',
-        'pesan' => 'Property updated successfully',
-        'swalFlashIcon' => 'success',
-    ]);
-}
 
 
     private function handleFileUpdate($request, $inputName, $folderPath, $propertyId)

@@ -314,7 +314,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <x-form-input type="text" name="constructor_name" label="Constructor name" value="{{ old('constructor_name', $data_properties->constructor_name) }}"/>
+                                                <x-form-input type="text" name="constructor_name" label="Constructor name" value="{{ old('constructor_name', $data_properties->consturctor_name) }}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -481,12 +481,14 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="average_price_status" id="yes" value="yes" {{ $data_properties->average_price_status == 'yes' ? 'checked' : '' }} />
+                                                    <input class="form-check-input" type="radio" name="average_price_status" id="yes" value="yes" 
+                                                    {{ $data_properties->average_price_status == 'yes' ? 'checked' : '' }} />
                                                     <label class="form-check-label" for="yes">Yes</label>
                                                 </div>
                                                
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="average_price_status" id="no" value="no" {{ $data_properties->average_price_status == 'no' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="average_price_status" id="no" value="no" 
+                                                    {{ $data_properties->average_price_status == 'no' ? 'checked' : '' }} />
                                                     <label class="form-check-label" for="no">No</label>
                                                 </div>
                                             </div>
@@ -494,9 +496,12 @@
                                     </div>
 
                                     <div class="col-6 row" id="rentalDataFields" style="display: none;">
-                                        <x-form-input className="col-12" type="text" name="average_nightly_rate" label="Average nightly price" value="{{ old('avg_nightly_rate', $data_properties->avg_nightly_rate) }}"/>
+                                        <x-form-input className="col-12" type="text" name="average_nightly_rate" label="Average nightly price" 
+                                        value="{{ old('average_nightly_rate', $data_properties->avg_nightly_rate) }}" />
                                         
-                                        <x-form-input className="col-12" type="text" name="average_occupancy_rate" label="Average occupation rate" value="{{ old('average_occupancy_rate', $data_properties->average_occupancy_rate) }}"/>
+                                        <x-form-input className="col-12" type="text" name="average_occupancy_rate" label="Average occupation rate" 
+                                        value="{{ old('average_occupancy_rate', $data_properties->avg_occupancy_rate) }}"/>
+
                                         <div class="col-12">
                                             <label class="form-check-label" for="file_rental_support">Supporting document</label>
                                             <input type="file" id="file_rental_support" name="file_rental_support" class="form-control mb-2" placeholder="">
@@ -531,22 +536,33 @@
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
                                     <h5 class="text-dark fw-semibold">How did you find the property?</h5>
                                     <hr>
-                                    <div class="col-12 mb-3">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="owner">
+                                    <div class="col-12 mb-3">                                     
+                                        <div class="form-check form-check-inline">                                            
+                                            <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="owner"                                                
+                                             {{ old('find_property_of', $data_properties->find_property_of) == 'owner' ? 'checked' : '' }} >
                                             <label class="form-check-label" for="by_owner">Owner of the villa</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="agent">
+                                            <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="agent"
+                                             {{ old('find_property_of', $data_properties->find_property_of) == 'agent' ? 'checked' : '' }} >
                                             <label class="form-check-label" for="by_agent">By an agent</label>
                                         </div>
                                     </div>
 
                                     <!-- Jika by agent -->
                                     <div id="agent_fields" style="display: none;">
-                                        <x-form-input className="col-12" type="text" name="agent_name" label="Name of this agent" />
-                                        <x-form-input className="col-12" type="text" name="agent_email" label="Email of this agent" />
-                                        <x-form-input className="col-12" type="text" name="agent_whatsapp" label="Whatsapp of this agent" />
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Name of this agent</label>
+                                            <input type="text" name="agent_name" class="form-control" value="{{ old('agent_name', $data_properties->agent_name) }}" />
+                                        </div>
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Email of this agent</label>
+                                            <input type="text" name="agent_email" class="form-control" value="{{ old('agent_email', $data_properties->agent_email) }}" />
+                                        </div>
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Whatsapp of this agent</label>
+                                            <input type="text" name="agent_whatsapp" class="form-control" value="{{ old('agent_whatsapp', $data_properties->agent_phone) }}"/>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -558,31 +574,37 @@
                                     <!-- BASE PRICE -->
                                     <div class="col-12">
                                         <label class="form-label">What's the base price?</label><br />
+                                        
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
+                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler" 
+                                                {{ old('base_price', $data_properties->base_price_option) == 'NET saler' ? 'checked' : '' }} />
                                             <label class="form-check-label" for="base_price_1">NET saler</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
+                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price"
+                                                {{ old('base_price', $data_properties->base_price_option) == 'Selling price' ? 'checked' : '' }} />
                                             <label class="form-check-label" for="base_price_2">Selling price</label>
                                         </div>
                                     </div>
 
-                                    <!-- DESIRE PRICE -->
+                                    <!-- BASE PRICE -->
                                     <div class="col-12 mt-2">
-                                        <label>Desire price from the owner</label>
-                                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner">
+                                        <label>Base price</label>
+                                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner" 
+                                        value="{{ old('desire_price_from_the_owner', number_format($data_properties->base_price ?? 0, 0, ',', '.')) }}"/>
                                     </div>
 
                                     <!-- FULL COMMISSION (AGENT ONLY) -->
                                     <div id="agent_commission_fields" style="display: none;" class="col-12 mt-2">
                                         <label>Full Balimmo commission?</label><br />
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
+                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes" 
+                                                {{ old('full_commission_balimmo', $data_properties->give_balimmo_commision) == 'Yes' ? 'checked' : '' }} />
                                             <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
+                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No"
+                                                {{ old('full_commission_balimmo', $data_properties->give_balimmo_commision) == 'No' ? 'checked' : '' }} />
                                             <label class="form-check-label" for="commission_balimmo_no">No</label>
                                         </div>
                                     </div>
@@ -590,24 +612,44 @@
                                     <!-- COMMISSIONS -->
                                     <div class="col-12 mt-2" id="agent_commission_field">
                                         <label>Commission of the agent (%)</label>
-                                        <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" />
+                                        <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" 
+                                        value="{{ old('commission_of_the_agent', $data_properties->agent_commision) }}" />
                                     </div>
 
-                                    <div class="col-12 mt-2">
-                                        <label>Balimmo commission (%)</label>
-                                        <input type="text" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%" />
+                                    <div class="row">
+                                        <div class="col-6 mt-2">
+                                            <label>Balimmo commission (%)</label>
+                                            <input type="text" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%" 
+                                            value="{{ old('balimmo_commission', $data_properties->balimmo_commission) }}" />
+                                        </div>
+
+                                        <div class="col-6 mt-2">
+                                            <label>Minimum Balimmo commission (%)</label>
+                                            <input type="text" id="minimum_balimmo_commission" name="minimum_balimmo_commission" class="form-control" placeholder="%" disabled/>
+                                        </div>
                                     </div>
 
                                     <!-- WEBSITE PRICE -->
                                     <div class="col-12 mt-2">
                                         <label>Website price (calculated)</label>
-                                        <input type="text" name="website_price" id="website_price" class="form-control" readonly />
+                                        <input type="text" name="website_price" id="website_price" class="form-control" style="background: #f9f9fc" readonly 
+                                        value="{{ old('website_price', number_format($data_properties->selling_price_idr  ?? 0, 0, ',', '.')) }}"/>
                                     </div>
 
-                                    <!-- NET PROFIT (Selling Price Only) -->
-                                    <div class="col-12 mt-2" id="profit_wrapper" style="display: none;">
-                                        <label>Net Profit / Margin (Estimated)</label>
-                                        <input type="text" name="net_profit" id="net_profit" class="form-control" readonly />
+                                    <div class="row">
+                                        <!-- PRICE TO OWNER (NEW FIELD) -->
+                                        <div class="col-6 mt-2">
+                                            <label>Price to Owner</label>
+                                            <input type="text" name="price_to_owner" id="price_to_owner" class="form-control" style="background: #f9f9fc" readonly 
+                                            value="{{ old('price_to_owner', number_format($data_properties->desired_price_idr  ?? 0, 0, ',', '.')) }}" />
+                                        </div>
+
+                                        <!-- NET PROFIT (Always visible now) -->
+                                        <div class="col-6 mt-2" id="profit_wrapper">
+                                            <label>Net Profit / Margin (Estimated)</label>
+                                            <input type="text" name="net_profit" id="net_profit" class="form-control" style="background: #f9f9fc" readonly
+                                            value="{{ old('net_profit', number_format($data_properties->net_seller_idr  ?? 0, 0, ',', '.')) }}" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -622,7 +664,7 @@
                                 Photos and videos
                             </button>
                         </h2>
-                        <div id="collapseGallery" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div id="collapseGallery" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex align-items-start justify-content-between gap-4 px-4">
 
                                 <div class="col-6 row bg-light-subtle border-dark rounded border p-2">
@@ -695,31 +737,37 @@
                                         {{-- VIRTUAL TOUR --}}
                                         <div>
                                             <x-form-input className="col-12 yt-input" type="text" name="url_virtual_tour" label="Visit Tour" value="{{ $attachment['url_virtual_tour'] }}" data-preview-id="preview_virtual_tour" />
+                                            @if (isset($attachment['url_virtual_tour']))
                                             <div class="col-4">
                                                 <div class="ratio ratio-16x9">
                                                     <iframe id="preview_virtual_tour" width="560" height="315" src="{{ $videoVirtualTour ? 'https://www.youtube.com/embed/' . $videoVirtualTour : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
                                                 </div>
                                             </div>
+                                            @endif
                                         </div>
 
                                         {{-- LIFESTYLE --}}
                                         <div>
                                             <x-form-input className="col-12 yt-input" type="text" name="url_lifestyle" label="Lifestyle" value="{{ $attachment['url_lifestyle'] }}" data-preview-id="preview_lifestyle" />
+                                            @if (isset($attachment['url_virtual_tour']))
                                             <div class="col-4">
                                                 <div class="ratio ratio-16x9">
                                                     <iframe id="preview_lifestyle" width="560" height="315" src="{{ $videoLifestyle ? 'https://www.youtube.com/embed/' . $videoLifestyle : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
                                                 </div>
                                             </div>
+                                            @endif
                                         </div>
 
                                         {{-- EXPERIENCE --}}
                                         <div>
                                             <x-form-input className="col-12 yt-input" type="text" name="url_experience" label="Experience" value="{{ $attachment['url_experience'] }}" data-preview-id="preview_experience" />
+                                            @if (isset($attachment['url_experience']))
                                             <div class="col-4">
                                                 <div class="ratio ratio-16x9">
                                                     <iframe id="preview_experience" width="560" height="315" src="{{ $videoExperience ? 'https://www.youtube.com/embed/' . $videoExperience : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
                                                 </div>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -729,14 +777,14 @@
                     </div>
                 </div>
             </div>
-
-            <div class="mb-3 rounded">
+                                                        
+            <div class="mb-3 mt-3 rounded">
                 <div class="row justify-content-end g-2">
                     <div class="col-lg-2">
                         <a href="#!" class="btn btn-danger w-100">Cancel</a>
                     </div>
                     <div class="col-lg-2">
-                        <button type="submit" class="btn btn-primary w-100">Create Properties</button>
+                        <button type="submit" class="btn btn-primary w-100">Update Villa</button>
                     </div>
                 </div>
             </div>
@@ -823,83 +871,57 @@
         }
 
         function updateBalimmoCommission(forceUpdate = false) {
-            const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
-            const balimmoInput = document.getElementById("balimmo_commission");
-            const agentCommissionInput = document.getElementById("commission_of_the_agent");
-            const agentCommission = parseFloat(agentCommissionInput.value) || 0;
-            const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
-            const isAgentFullYes = fullCommission === "Yes";
-            const isAgentFullNo = fullCommission === "No";
-            const isAgent = document.getElementById("by_agent").checked;
-            const isOwner = isOwnerSelected();
+        const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+        const balimmoInput = document.getElementById("balimmo_commission");
+        const agentCommissionInput = document.getElementById("commission_of_the_agent");
+        const agentCommission = parseFloat(agentCommissionInput.value) || 0;
+        const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
+        const isAgentFullYes = fullCommission === "Yes";
+        const isAgentFullNo = fullCommission === "No";
+        const isAgent = document.getElementById("by_agent").checked;
+        const isOwner = isOwnerSelected();
 
-            if (!price || !balimmoInput) {
-                balimmoInput.value = "0";
-                updateMinimumBalimmoCommission();
-                return;
-            }
-
-            const rate = getBalimmoCommissionRate(price); // Default rate (tinggi)
-            const minRate = getBalimmoMinCommission(price); // Minimum rate (rendah)
-            let val = parseFloat(balimmoInput.value);
-
-            // Update minimum commission display
+        if (!price || !balimmoInput) {
+            balimmoInput.value = "0";
             updateMinimumBalimmoCommission();
-
-            // SEMUA kondisi bisa diedit
-            if (isOwner) {
-                balimmoInput.readOnly = false;
-            } else if (isAgent && (isAgentFullYes || isAgentFullNo)) {
-                balimmoInput.readOnly = false; // SEMUA Agent dengan pilihan bisa diedit
-            } else if (isAgent) {
-                // Agent belum pilih full commission: tidak bisa diedit
-                balimmoInput.readOnly = true;
-            }
-
-            // Auto-update logic
-            const isInitialLoad = !balimmoInput.value || val === 0;
-            const isPriceChange = window.event && window.event.target && window.event.target.id === 'desire_price_from_the_owner';
-            const isAgentCommissionChange = window.event && window.event.target && window.event.target.id === 'commission_of_the_agent';
-            const isFullCommissionChange = window.event && window.event.target && window.event.target.name === 'full_commission_balimmo';
-            
-            // Kondisi untuk auto-update
-            const shouldAutoUpdate = isInitialLoad || forceUpdate || 
-                                   (isOwner && isPriceChange) ||
-                                   (isAgent && isAgentFullYes && (isPriceChange || isFullCommissionChange)) ||
-                                   (isAgent && isAgentFullNo && (isPriceChange || isAgentCommissionChange || isFullCommissionChange));
-
-            if (shouldAutoUpdate) {
-                if (isOwner) {
-                    // Owner: auto-update dengan rate saat harga berubah
-                    balimmoInput.value = rate.toFixed(2);
-                } else if (isAgent && isAgentFullYes) {
-                    // Agent + Full Commission Yes: auto-update dengan rate saat harga berubah
-                    balimmoInput.value = rate.toFixed(2);
-                } else if (isAgent && isAgentFullNo) {
-                    // Agent + Full Commission No: otomatis dihitung berdasarkan rumus baru
-                    const calculatedBalimmo = calculateBalimmoForAgentNo(price, agentCommission);
-                    balimmoInput.value = calculatedBalimmo.toFixed(2);
-                } else if (isAgent) {
-                    // Agent belum pilih full commission
-                    balimmoInput.value = "0";
-                }
-            }
-
-            val = parseFloat(balimmoInput.value);
-
-            // Validasi manual input - SEMUA menggunakan minimum yang sama
-            if (balimmoInput === document.activeElement && !balimmoInput.readOnly) {
-                if (val < minRate) {
-                    alert(`Balimmo commission cannot be lower than minimum: ${minRate}%`);
-                    balimmoInput.value = minRate.toFixed(2);
-                } else if (val > 100) {
-                    alert("Balimmo commission cannot exceed 100%");
-                    balimmoInput.value = "100";
-                }
-            }
-
-            calculateWebsitePrice();
+            return;
         }
+
+        const rate = getBalimmoCommissionRate(price);
+        const minRate = getBalimmoMinCommission(price);
+        let val = parseFloat(balimmoInput.value);
+
+        updateMinimumBalimmoCommission();
+
+        // Semua kondisi bisa diedit
+        balimmoInput.readOnly = !(isOwner || (isAgent && (isAgentFullYes || isAgentFullNo)));
+
+        // Always recalculate on user interaction
+        if (forceUpdate) {
+            if (isOwner || (isAgent && isAgentFullYes)) {
+                balimmoInput.value = rate.toFixed(2);
+            } else if (isAgent && isAgentFullNo) {
+                const calculatedBalimmo = calculateBalimmoForAgentNo(price, agentCommission);
+                balimmoInput.value = calculatedBalimmo.toFixed(2);
+            } else if (isAgent) {
+                balimmoInput.value = "0";
+            }
+        }
+
+        val = parseFloat(balimmoInput.value);
+
+        // Validation while typing
+        if (balimmoInput === document.activeElement && !balimmoInput.readOnly) {
+            if (val < minRate) {
+                balimmoInput.value = minRate.toFixed(2);
+            } else if (val > 100) {
+                balimmoInput.value = "100";
+            }
+        }
+
+        calculateWebsitePrice();
+    }
+
 
         function calculateWebsitePrice() {
             const desiredPrice = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
@@ -943,7 +965,7 @@
 
         function setupListeners() {
             const fields = [
-                'desire_price_from_the_owner',
+                'desire_price_from_the_owner', // ← Ini yang benar
                 'commission_of_the_agent',
                 'balimmo_commission',
                 'commission_balimmo_yes',
@@ -955,20 +977,17 @@
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.addEventListener('input', (event) => {
-                        // Set global event untuk tracking
-                        window.event = event;
-                        updateBalimmoCommission();
+                    el.addEventListener('input', () => {
+                        updateBalimmoCommission(true);
                         calculateWebsitePrice();
                     });
-                    el.addEventListener('change', (event) => {
-                        // Set global event untuk tracking
-                        window.event = event;
-                        updateBalimmoCommission();
+                    el.addEventListener('change', () => {
+                        updateBalimmoCommission(true);
                         calculateWebsitePrice();
                     });
                 }
             });
+
         }
 
         window.addEventListener("DOMContentLoaded", () => {
@@ -982,9 +1001,12 @@
                 const commonFields = document.getElementById("common_fields");
                 const balimmoInput = document.getElementById("balimmo_commission");
 
-                commonFields.style.display = "block";
+                // Always show common fields if radio is selected
+                if (ownerRadio.checked || agentRadio.checked) {
+                    commonFields.style.display = "block";
+                }
 
-                if (document.getElementById("by_agent").checked) {
+                if (agentRadio.checked) {
                     agentFields.style.display = "block";
                     agentCommissionFields.style.display = "block";
                     agentCommissionField.style.display = "block";
@@ -994,39 +1016,53 @@
                     agentCommissionField.style.display = "none";
                 }
 
-                // Reset values
-                balimmoInput.value = "0";
-                balimmoInput.readOnly = false;
-                document.getElementById("website_price").value = "";
-                document.getElementById("net_profit").value = "";
-                document.getElementById("price_to_owner").value = "";
-                
-                // Clear radio selections for full commission
-                const fullCommissionRadios = document.querySelectorAll('input[name="full_commission_balimmo"]');
-                fullCommissionRadios.forEach(radio => radio.checked = false);
-
-                updateBalimmoCommission();
-                setupListeners();
+                // Run Commission Calculations on load
+                updateBalimmoCommission(true);
+                calculateWebsitePrice();
             }
 
+            // Initial Load Run
+            updateFormDisplay();
+
+            // On Change Event
             ownerRadio.addEventListener("change", updateFormDisplay);
             agentRadio.addEventListener("change", updateFormDisplay);
+
+            // Setup Listeners
+            setupListeners();
         });
+
+        window.addEventListener("load", () => {
+            updateBalimmoCommission(true); // Force initial calculation
+            calculateWebsitePrice();
+        });
+
     </script>
     {{-- {-- PRICE CALCULTAION --} --}}
 
     <script>
-        document.querySelectorAll('input[name="average_price_status"]').forEach(function(elem) {
-            elem.addEventListener('change', function() {
-                var rentalFields = document.getElementById('rentalDataFields');
-                if (this.value === 'yes') {
-                    rentalFields.style.display = 'flex';
-                } else {
-                    rentalFields.style.display = 'none';
-                }
+        function toggleRentalFields() {
+            var rentalFields = document.getElementById('rentalDataFields');
+            var selected = document.querySelector('input[name="average_price_status"]:checked');
+            
+            if (selected && selected.value === 'yes') {
+                rentalFields.style.display = 'flex';
+            } else {
+                rentalFields.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial check saat page load
+            toggleRentalFields();
+
+            // Listen to change events
+            document.querySelectorAll('input[name="average_price_status"]').forEach(function(elem) {
+                elem.addEventListener('change', toggleRentalFields);
             });
         });
     </script>
+
 
     <script>
         // Ambil semua radio button dengan name "split_land"
