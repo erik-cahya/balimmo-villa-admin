@@ -442,7 +442,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- DESIRE PRICE -->
+                                    <!-- BASE PRICE -->
                                     <div class="col-12 mt-2">
                                         <label>Base price</label>
                                         <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner">
@@ -482,20 +482,20 @@
                                     <!-- WEBSITE PRICE -->
                                     <div class="col-12 mt-2">
                                         <label>Website price (calculated)</label>
-                                        <input type="text" name="website_price" id="website_price" class="form-control" disabled />
+                                        <input type="text" name="website_price" id="website_price" class="form-control" style="background: #f9f9fc" readonly />
                                     </div>
 
                                     <div class="row">
                                         <!-- PRICE TO OWNER (NEW FIELD) -->
                                         <div class="col-6 mt-2">
                                             <label>Price to Owner</label>
-                                            <input type="text" name="price_to_owner" id="price_to_owner" class="form-control" disabled />
+                                            <input type="text" name="price_to_owner" id="price_to_owner" class="form-control" style="background: #f9f9fc" readonly />
                                         </div>
 
                                         <!-- NET PROFIT (Always visible now) -->
                                         <div class="col-6 mt-2" id="profit_wrapper">
                                             <label>Net Profit / Margin (Estimated)</label>
-                                            <input type="text" name="net_profit" id="net_profit" class="form-control" disabled />
+                                            <input type="text" name="net_profit" id="net_profit" class="form-control" style="background: #f9f9fc" readonly />
                                         </div>
                                     </div>
                                 </div>
@@ -787,7 +787,7 @@
 
         function setupListeners() {
             const fields = [
-                'desire_price_from_the_owner',
+                'desire_price',
                 'commission_of_the_agent',
                 'balimmo_commission',
                 'commission_balimmo_yes',
