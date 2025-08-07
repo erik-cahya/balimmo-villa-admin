@@ -98,7 +98,7 @@
                                 currency: 'USD',
                                 minimumFractionDigits: 2
                             }).format(property.selling_price_usd);
-                            
+
                             tablePropertiesHTML += `
                                 <tr>
                                     <td>${index + 1}</td>
@@ -391,9 +391,7 @@
                 '#villa_min_budget_usd',
                 '#villa_max_budget_usd',
                 '#land_min_budget_idr',
-                '#land_max_budget_idr',
-                '#land_min_budget_idr',
-                '#land_max_budget_usd',
+
             ];
 
             cleaveFields.forEach(selector => {
@@ -414,8 +412,7 @@
             });
         });
     </script>
-    
-   
+
     {{-- /* End Currency Format --}}
 
     {{-- Toggle Villa/Land Checkbox --}}

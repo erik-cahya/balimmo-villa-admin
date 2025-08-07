@@ -152,7 +152,7 @@ class ProspectController extends Controller
         }
 
         if (Auth::user()->role == 'master') {
-             $data['data_prospect_villa'] = PropertyProspectModel::where('prospect.type_asset', 'properties')
+            $data['data_prospect_villa'] = PropertyProspectModel::where('prospect.type_asset', 'properties')
                 ->leftJoin('properties', 'properties.id', '=', 'prospect.properties_id')
                 ->join('customer', 'customer.id', '=', 'prospect.customer_id')
                 ->get();
@@ -174,11 +174,22 @@ class ProspectController extends Controller
         }
         // dd( $data['data_prospect_villa']);
 
-       
+
 
         // dd($data['data_prospect']);
         return view('admin.prospect.index', $data);
     }
+
+    public function details($custID)
+    {
+        $data['data_property'] = PropertiesModel::join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
+            ->with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'property_gallery.id');
+                $query->where('is_featured', 1);
+            }])->get();
+        return view('admin.prospect.details', $data);
+    }
+
     /**
      * Display a listing of the resource.
      */
