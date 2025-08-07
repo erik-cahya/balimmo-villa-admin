@@ -372,8 +372,8 @@ class LandController extends Controller
         LandLegalModel::create([
             'land_id' => $landCreate->id,
             'company_name' => $request->company_name,
-            'rep_first_name' => $request->legal_rep_last_name,
-            'rep_last_name' => $request->legal_rep_first_name,
+            'rep_first_name' => $request->legal_rep_first_name,
+            'rep_last_name' => $request->legal_rep_last_name,
             'phone' => $request->legal_rep_phone_number,
             'email' => $request->legal_rep_email,
 
@@ -395,55 +395,60 @@ class LandController extends Controller
         // ==========================================================================================================================================
         // ############## Create Properties Financial ##############
         // ==========================================================================================================================================
-        $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->find_property == 'owner' ? $request->website_price_owner : $request->website_price_agent);
+        // $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->find_property == 'owner' ? $request->website_price_owner : $request->website_price_agent);
+        // $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
+
+        // // Presentase
+        // if ($idrPrice < 15000000000) {
+        //     $commision = 5;
+        // } else if ($idrPrice >= 15000000000  && $idrPrice <= 34000000000) {
+        //     $commision = 4;
+        // } else if ($idrPrice > 34000000000  && $idrPrice <= 70000000000) {
+        //     $commision = 3;
+        // } else {
+        //     $commision = 2.5;
+        // }
+
+        // $commisionAmmountIDR = $idrPrice * $commision / 100;
+        // $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
+        // $netSellerIDR = $idrPrice - $commisionAmmountIDR;
+        // $netSellerUSD = round($usdPrice - $commisionAmmountUSD, 2);
+
+
+        $idrPrice = $this->convertToInteger($request->website_price); // Ambil website_price yang sudah dikalkulasi
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
 
-        // Presentase
-        if ($idrPrice < 15000000000) {
-            $commision = 5;
-        } else if ($idrPrice >= 15000000000  && $idrPrice <= 34000000000) {
-            $commision = 4;
-        } else if ($idrPrice > 34000000000  && $idrPrice <= 70000000000) {
-            $commision = 3;
-        } else {
-            $commision = 2.5;
-        }
-
-        $commisionAmmountIDR = $idrPrice * $commision / 100;
-        $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
-        $netSellerIDR = $idrPrice - $commisionAmmountIDR;
-        $netSellerUSD = round($usdPrice - $commisionAmmountUSD, 2);
-
-
         LandFinancialModel::create([
+
             'land_id' => $landCreate->id,
+            
+            // Rental Yield
             'average_price_status' => $request->average_price_status,
-            'avg_nightly_rate' => (int)preg_replace('/[^0-9]/', '', $request->average_nightly_rate),
+            'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
             'avg_occupancy_rate' => $request->average_occupancy_rate,
 
+            // Agent
             'find_property_of' => $request->find_property,
             'agent_name' => $request->agent_name,
             'agent_email' => $request->agent_email,
             'agent_phone' => $request->agent_whatsapp,
 
-            'base_price' => $request->base_price,
-            'desired_price_idr' => $request->desire_price_from_the_owner,
-            'desired_price_usd' => $this->idrToUsdConvert($request->desire_price_from_the_owner),
+            // Price Structure
+            'base_price_option' => $request->base_price, // Selling price / Price to owner
+            'base_price' => $this->convertToInteger($request->desire_price_from_the_owner), // This is the main base price
+            'desired_price_idr' => $this->convertToInteger($request->price_to_owner), // Harga yg diterima Owner
+            'desired_price_usd' => $this->idrToUsdConvert($request->price_to_owner),
+
+            // Commission Details
             'agent_commision' => $request->commission_of_the_agent,
             'give_balimmo_commision' => $request->full_commission_balimmo,
-            'balimmmo_commision' => $request->balimmo_commission,
+            'balimmo_commision' => $request->balimmo_commission,
 
-
-            // 'months_rented' => $request->month_rented_per_year,
-            // 'annual_turnover' => (int)preg_replace('/[^0-9]/', '', $request->estimated_annual_turnover),
-
-            // Sale Price & Conditions
-            'selling_price_idr' => $this->convertToInteger($request->website_price),
-            'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
-            'net_seller_idr' => $request->base_price == 'Selling price' ? $request->net_profit : NULL,
-            'net_seller_usd' => $request->base_price == 'Selling price' ? $this->idrToUsdConvert($request->net_profit) : NULL,
-            // 'net_seller_idr' => $netSellerIDR,
-            // 'net_seller_usd' => $netSellerUSD,
+            // Sale Price & Net Profit
+            'selling_price_idr' => $idrPrice,
+            'selling_price_usd' => $usdPrice,
+            'net_seller_idr' => $this->convertToInteger($request->net_profit),
+            'net_seller_usd' => $this->idrToUsdConvert($request->net_profit),
         ]);
 
 
