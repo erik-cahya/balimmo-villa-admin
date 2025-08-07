@@ -328,7 +328,6 @@
 
                                                 <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" :selected="old('legal_category', $data_properties->legal_status ?? '')"/>
 
-                                                <?= old('legal_category', $data_properties->legal_status) ?>
                                                 <div class="row mb-0">
                                                     <div class="bg-light-subtle border-dark rounded border p-2" id="freehold_group">
                                                         <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Freehold (Hak Milik)</h5>
@@ -721,55 +720,6 @@
 
                                     </div>
                                     
-                                    <div class="d-flex flex-column gap-2">
-                                        @php
-                                            function extractYouTubeID($url) {
-                                                if (!$url) return null;
-                                                preg_match('/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/', $url, $matches);
-                                                return $matches[1] ?? null;
-                                            }
-
-                                            $videoVirtualTour = extractYouTubeID($attachment['url_virtual_tour'] ?? '');
-                                            $videoLifestyle = extractYouTubeID($attachment['url_lifestyle'] ?? '');
-                                            $videoExperience = extractYouTubeID($attachment['url_experience'] ?? '');
-                                        @endphp
-
-                                        {{-- VIRTUAL TOUR --}}
-                                        <div>
-                                            <x-form-input className="col-12 yt-input" type="text" name="url_virtual_tour" label="Visit Tour" value="{{ $attachment['url_virtual_tour'] }}" data-preview-id="preview_virtual_tour" />
-                                            @if (isset($attachment['url_virtual_tour']))
-                                            <div class="col-4">
-                                                <div class="ratio ratio-16x9">
-                                                    <iframe id="preview_virtual_tour" width="560" height="315" src="{{ $videoVirtualTour ? 'https://www.youtube.com/embed/' . $videoVirtualTour : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </div>
-
-                                        {{-- LIFESTYLE --}}
-                                        <div>
-                                            <x-form-input className="col-12 yt-input" type="text" name="url_lifestyle" label="Lifestyle" value="{{ $attachment['url_lifestyle'] }}" data-preview-id="preview_lifestyle" />
-                                            @if (isset($attachment['url_virtual_tour']))
-                                            <div class="col-4">
-                                                <div class="ratio ratio-16x9">
-                                                    <iframe id="preview_lifestyle" width="560" height="315" src="{{ $videoLifestyle ? 'https://www.youtube.com/embed/' . $videoLifestyle : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </div>
-
-                                        {{-- EXPERIENCE --}}
-                                        <div>
-                                            <x-form-input className="col-12 yt-input" type="text" name="url_experience" label="Experience" value="{{ $attachment['url_experience'] }}" data-preview-id="preview_experience" />
-                                            @if (isset($attachment['url_experience']))
-                                            <div class="col-4">
-                                                <div class="ratio ratio-16x9">
-                                                    <iframe id="preview_experience" width="560" height="315" src="{{ $videoExperience ? 'https://www.youtube.com/embed/' . $videoExperience : '' }}" frameborder="0" allowfullscreen class="rounded"></iframe>
-                                                </div>
-                                            </div>
-                                            @endif
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -871,57 +821,70 @@
         }
 
         function updateBalimmoCommission(forceUpdate = false) {
-        const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
-        const balimmoInput = document.getElementById("balimmo_commission");
-        const agentCommissionInput = document.getElementById("commission_of_the_agent");
-        const agentCommission = parseFloat(agentCommissionInput.value) || 0;
-        const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
-        const isAgentFullYes = fullCommission === "Yes";
-        const isAgentFullNo = fullCommission === "No";
-        const isAgent = document.getElementById("by_agent").checked;
-        const isOwner = isOwnerSelected();
+            const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+            const balimmoInput = document.getElementById("balimmo_commission");
+            const agentCommissionInput = document.getElementById("commission_of_the_agent");
+            const agentCommission = parseFloat(agentCommissionInput.value) || 0;
+            const fullCommission = document.querySelector('input[name="full_commission_balimmo"]:checked')?.value;
+            const isAgentFullYes = fullCommission === "Yes";
+            const isAgentFullNo = fullCommission === "No";
+            const isAgent = document.getElementById("by_agent").checked;
+            const isOwner = isOwnerSelected();
 
-        if (!price || !balimmoInput) {
-            balimmoInput.value = "0";
-            updateMinimumBalimmoCommission();
-            return;
-        }
-
-        const rate = getBalimmoCommissionRate(price);
-        const minRate = getBalimmoMinCommission(price);
-        let val = parseFloat(balimmoInput.value);
-
-        updateMinimumBalimmoCommission();
-
-        // Semua kondisi bisa diedit
-        balimmoInput.readOnly = !(isOwner || (isAgent && (isAgentFullYes || isAgentFullNo)));
-
-        // Always recalculate on user interaction
-        if (forceUpdate) {
-            if (isOwner || (isAgent && isAgentFullYes)) {
-                balimmoInput.value = rate.toFixed(2);
-            } else if (isAgent && isAgentFullNo) {
-                const calculatedBalimmo = calculateBalimmoForAgentNo(price, agentCommission);
-                balimmoInput.value = calculatedBalimmo.toFixed(2);
-            } else if (isAgent) {
-                balimmoInput.value = "0";
+            if (!price || !balimmoInput) {
+                if (balimmoInput) balimmoInput.value = "0";
+                updateMinimumBalimmoCommission();
+                return;
             }
+
+            const rate = getBalimmoCommissionRate(price);
+            const minRate = getBalimmoMinCommission(price);
+            
+            updateMinimumBalimmoCommission();
+
+            // Set field editability
+            const canEdit = isOwner || (isAgent && (isAgentFullYes || isAgentFullNo));
+            balimmoInput.readOnly = !canEdit;
+
+            // Auto-calculate only on force update (not during manual editing)
+            if (forceUpdate) {
+                if (isOwner || (isAgent && isAgentFullYes)) {
+                    balimmoInput.value = rate.toFixed(2);
+                } else if (isAgent && isAgentFullNo) {
+                    const calculatedBalimmo = calculateBalimmoForAgentNo(price, agentCommission);
+                    balimmoInput.value = calculatedBalimmo.toFixed(2);
+                } else if (isAgent) {
+                    balimmoInput.value = "0";
+                }
+            }
+
+            // PERBAIKAN: Validasi hanya saat blur (kehilangan focus), bukan saat mengetik
+            // Hilangkan validasi real-time yang mengganggu pengeditan manual
+            
+            calculateWebsitePrice();
         }
 
-        val = parseFloat(balimmoInput.value);
-
-        // Validation while typing
-        if (balimmoInput === document.activeElement && !balimmoInput.readOnly) {
+        // TAMBAHAN: Fungsi untuk validasi saat blur
+        function validateBalimmoCommission() {
+            const balimmoInput = document.getElementById("balimmo_commission");
+            const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+            
+            if (!price || !balimmoInput || balimmoInput.readOnly) return;
+            
+            const minRate = getBalimmoMinCommission(price);
+            let val = parseFloat(balimmoInput.value) || 0;
+            
+            // Validasi dan koreksi nilai
             if (val < minRate) {
+                alert(`Balimmo commission cannot be lower than minimum: ${minRate}%`);
                 balimmoInput.value = minRate.toFixed(2);
             } else if (val > 100) {
+                alert("Balimmo commission cannot exceed 100%");
                 balimmoInput.value = "100";
             }
+            
+            calculateWebsitePrice();
         }
-
-        calculateWebsitePrice();
-    }
-
 
         function calculateWebsitePrice() {
             const desiredPrice = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
@@ -965,7 +928,7 @@
 
         function setupListeners() {
             const fields = [
-                'desire_price_from_the_owner', // ← Ini yang benar
+                'desire_price_from_the_owner',
                 'commission_of_the_agent',
                 'balimmo_commission',
                 'commission_balimmo_yes',
@@ -977,17 +940,27 @@
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.addEventListener('input', () => {
-                        updateBalimmoCommission(true);
-                        calculateWebsitePrice();
-                    });
-                    el.addEventListener('change', () => {
-                        updateBalimmoCommission(true);
-                        calculateWebsitePrice();
-                    });
+                    if (id === 'balimmo_commission') {
+                        // Untuk balimmo commission, gunakan input event tanpa force update
+                        el.addEventListener('input', () => {
+                            calculateWebsitePrice(); // Hanya hitung ulang harga, jangan auto-update nilai
+                        });
+                        
+                        // Tambahkan blur event untuk validasi
+                        el.addEventListener('blur', validateBalimmoCommission);
+                    } else {
+                        // Untuk field lain, tetap gunakan force update
+                        el.addEventListener('input', () => {
+                            updateBalimmoCommission(true);
+                            calculateWebsitePrice();
+                        });
+                        el.addEventListener('change', () => {
+                            updateBalimmoCommission(true);
+                            calculateWebsitePrice();
+                        });
+                    }
                 }
             });
-
         }
 
         window.addEventListener("DOMContentLoaded", () => {
@@ -999,7 +972,6 @@
                 const agentCommissionFields = document.getElementById("agent_commission_fields");
                 const agentCommissionField = document.getElementById("agent_commission_field");
                 const commonFields = document.getElementById("common_fields");
-                const balimmoInput = document.getElementById("balimmo_commission");
 
                 // Always show common fields if radio is selected
                 if (ownerRadio.checked || agentRadio.checked) {
@@ -1036,7 +1008,6 @@
             updateBalimmoCommission(true); // Force initial calculation
             calculateWebsitePrice();
         });
-
     </script>
     {{-- {-- PRICE CALCULTAION --} --}}
 

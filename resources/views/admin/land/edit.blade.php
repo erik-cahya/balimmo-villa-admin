@@ -1,7 +1,11 @@
 @extends('admin.layouts.master')
+@push('style')
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/glightbox.min.css') }}" />
+@endpush
 @section('content')
-    <form action="{{ route('land.store') }}" method="POST" enctype="multipart/form-data" id="galleryForm">
-        @csrf
+    <form action="{{ route('land.update', $data_properties->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
+    @csrf
+    @method('PUT')
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
@@ -42,14 +46,16 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse show collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body row d-flex justify-content-between align-items-start px-4">
-                                <div class="bg-light-subtle border-dark col-4 row rounded border px-1 pt-2">
+                                <div class="bg-light-subtle border-dark col-4 row rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 1</h5>
                                     <hr>
                                     <div class="row m-0 mb-2 p-0">
+      
                                         <div class="col-6 mb-1 p-1" id="group_owners[0][first_name]">
                                             <label for="owners[0][first_name]" class="form-label">First Name</label>
 
-                                            <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.0.first_name') }}">
+                                           <input type="text" id="owners[0][first_name]" name="owners[0][first_name]" class="form-control @error('owners.0.first_name') validation-form @enderror" placeholder="Input First Name" 
+                                            value="{{ old('owners.0.first_name', $property_owner[0]->first_name ?? '') }}">
 
                                             @error('owners.0.first_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
@@ -61,7 +67,8 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[0][last_name]">
                                             <label for="owners[0][last_name]" class="form-label">Last Name</label>
 
-                                            <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.0.last_name') }}">
+                                            <input type="text" id="owners[0][last_name]" name="owners[0][last_name]" class="form-control @error('owners.0.last_name') validation-form @enderror" placeholder="Input Last Name" 
+                                            value="{{ old('owners.0.last_name', $property_owner[0]->last_name ?? '') }}">
 
                                             @error('owners.0.last_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
@@ -73,11 +80,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[0][email]">
                                             <label for="owners[0][email]" class="form-label">Email</label>
 
-                                            <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.0.email') }}">
+                                            <input type="text" id="owners[0][email]" name="owners[0][email]" class="form-control @error('owners.0.email') validation-form @enderror" placeholder="Input Email" 
+                                            value="{{ old('owners.0.email', $property_owner[0]->email ?? '') }}">
 
                                             @error('owners.0.email')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -86,18 +93,18 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[0][phone_number]">
                                             <label for="owners[0][phone_number]" class="form-label">Phone Number</label>
 
-                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.0.phone_number') }}">
+                                            <input type="text" id="owners[0][phone_number]" name="owners[0][phone_number]" class="form-control @error('owners.0.phone_number') validation-form @enderror" placeholder="Input Phone Number" 
+                                            value="{{ old('owners.0.phone_number', $property_owner[0]->phone ?? '') }}">
 
                                             @error('owners.0.phone_number')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
-                                <div class="bg-light-subtle border-dark col-4 row rounded border px-1 pt-2">
+                                <div class="bg-light-subtle border-dark col-4 row rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Owner 2</h5>
                                     <hr>
 
@@ -106,11 +113,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[1][first_name]">
                                             <label for="owners[1][first_name]" class="form-label">First Name</label>
 
-                                            <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name" value="{{ old('owners.1.first_name') }}">
+                                            <input type="text" id="owners[1][first_name]" name="owners[1][first_name]" class="form-control @error('owners.1.first_name') validation-form @enderror" placeholder="Input First Name"
+                                            value="{{ old('owners.1.first_name', $property_owner[1]->first_name ?? '') }}">
 
                                             @error('owners.1.first_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -119,11 +126,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[1][last_name]">
                                             <label for="owners[1][last_name]" class="form-label">Last Name</label>
 
-                                            <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" value="{{ old('owners.1.last_name') }}">
+                                            <input type="text" id="owners[1][last_name]" name="owners[1][last_name]" class="form-control @error('owners.1.last_name') validation-form @enderror" placeholder="Input Last Name" 
+                                            value="{{ old('owners.1.last_name', $property_owner[1]->last_name ?? '') }}">
 
                                             @error('owners.1.last_name')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -132,11 +139,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[1][email]">
                                             <label for="owners[1][email]" class="form-label">Email</label>
 
-                                            <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email" value="{{ old('owners.1.email') }}">
+                                            <input type="text" id="owners[1][email]" name="owners[1][email]" class="form-control @error('owners.1.email') validation-form @enderror" placeholder="Input Email"
+                                            value="{{ old('owners.1.email', $property_owner[1]->email ?? '') }}">
 
                                             @error('owners.1.email')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -145,11 +152,11 @@
                                         <div class="col-6 mb-1 p-1" id="group_owners[1][phone_number]">
                                             <label for="owners[1][phone_number]" class="form-label">Phone Number</label>
 
-                                            <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" value="{{ old('owners.1.phone_number') }}">
+                                            <input type="text" id="owners[1][phone_number]" name="owners[1][phone_number]" class="form-control @error('owners.1.phone_number') validation-form @enderror" placeholder="Input Phone Number" 
+                                            value="{{ old('owners.1.phone_number', $property_owner[1]->phone ?? '') }}">
 
                                             @error('owners.1.phone_number')
                                                 <div class="alert alert-danger fs-11 m-0 p-1">
-
                                                     {{ $message }}
                                                 </div>
                                             @enderror
@@ -157,16 +164,16 @@
 
                                     </div>
                                 </div>
-                                <div class="bg-light-subtle border-dark col-4 row rounded border px-1 pt-2">
+                                <div class="bg-light-subtle border-dark col-4 row rounded border p-3">
                                     <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> Legal Entity (if applicable): PT PMA</h5>
                                     <hr>
-                                    <div class="row m-0 mb-2 p-0">
+                                    <div class="row">
 
-                                        <x-form-input className="p-1 col-12" type="text" name="company_name" label="Company Name" />
-                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_first_name" label="Owner First Name" />
-                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_last_name" label="Owner Last Name" />
-                                        <x-form-input className="p-1 col-6" type="email" name="legal_rep_email" label="Email" />
-                                        <x-form-input className="p-1 col-6" type="number" name="legal_rep_phone_number" label="Phone Number" />
+                                        <x-form-input className="p-1 col-12" type="text" name="company_name" label="Company Name" value="{{ $data_properties->company_name }}"/>
+                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_first_name" label="Owner First Name" value="{{ $data_properties->rep_first_name }}"/>
+                                        <x-form-input className="p-1 col-6" type="text" name="legal_rep_last_name" label="Owner Last Name" value="{{ $data_properties->rep_last_name }}"/>
+                                        <x-form-input className="p-1 col-6" type="email" name="legal_rep_email" label="Email" value="{{ $data_properties->email }}"/>
+                                        <x-form-input className="p-1 col-6" type="number" name="legal_rep_phone_number" label="Phone Number" value="{{ $data_properties->phone }}"/>
 
                                     </div>
                                 </div>
@@ -191,19 +198,15 @@
                                         <input type="text" class="form-control" placeholder="Internal Reference" disabled value="{{ Auth::user()->reference_code }}">
                                     </div>
 
-                                    <x-form-input className="col-lg-6" type="text" name="property_name" label="Land Name" />
+                                    <x-form-input className="col-lg-6" type="text" name="property_name" label="Property Name" value="{{ $data_properties->land_name }}"/>
 
                                     <div class="col-lg-4 mb-3" id="group_area">
                                         <label for="area" class="form-label">Area</label>
                                         <select id="area" class="form-select" name="area">
                                             <option value="" selected disabled>Select Area</option>
-                                            <option value="ubud">Ubud</option>
-                                            <option value="canggu">Canggu</option>
-                                            <option value="uluwatu">Uluwatu</option>
-                                            <option value="sanur/nusa dua">Sanur/Nusa Dua</option>
-                                            <option value="other">Other</option>
                                         </select>
                                     </div>
+
 
                                     <div class="col-lg-4 mb-3" id="group_region">
                                         <label for="region" class="form-label">Region</label>
@@ -221,34 +224,37 @@
 
                                     <div class="col-lg-12 mb-3" id="group_property_address">
                                         <label for="property_address" class="form-label">Property Address</label>
-                                        <textarea class="form-control" id="property_address" name="property_address" rows="1" placeholder="Enter address">{{ old('property_address') }}</textarea>
+                                        <textarea class="form-control" id="property_address" name="property_address" rows="1" placeholder="Enter address">{{ old('land_address', $data_properties->land_address) }}</textarea>
                                     </div>
 
                                     <div class="col-lg-12 mb-3" id="group_description">
                                         <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ old('description') }}</textarea>
+                                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ old('land_description', $data_properties->land_description) }}</textarea>
                                     </div>
 
-                                    <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" />
-                                    <x-form-input className="col-lg-4" type="text" name="land_width" label="Width (m)" />
-                                    <x-form-input className="col-lg-4" type="text" name="land_length" label="Length (m)" />
+                                    <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" value="{{ old('total_land_area', $data_properties->total_land_area) }}"/>
+                                    <x-form-input className="col-lg-4" type="text" name="land_width" label="Width (m)" value="{{ old('land_width', $data_properties->land_width) }}"/>
+                                    <x-form-input className="col-lg-4" type="text" name="land_length" label="Length (m)" value="{{ old('land_length', $data_properties->land_length) }}"/>
 
                                     <div class="row">
                                         <div class="col-6">
                                             <label for="description" class="form-label">Does the land could be split ?</label>
                                             <br />
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="split_land" id="split_land_yes" value="Yes">
+                                                <input class="form-check-input" type="radio" name="split_land" id="split_land_yes" value="Yes"
+                                                    {{ old('split_land', $data_properties->is_land_split) == 'Yes' ? 'checked' : '' }} />
                                                 <label class="form-check-label" for="split_land_yes">Yes</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="split_land" id="split_land_no" value="No">
+                                                <input class="form-check-input" type="radio" name="split_land" id="split_land_no" value="No"
+                                                    {{ old('split_land', $data_properties->is_land_split) == 'No' ? 'checked' : '' }} />
                                                 <label class="form-check-label" for="split_land_no">No</label>
                                             </div>
                                         </div>
                                         <div class="col-6" id="split_field_container" style="display: none;">
                                             <label for="split_land_value" class="form-label">Minimum split</label>
-                                            <input type="text" id="split_land_value" name="split_land_value" class="form-control" />
+                                            <input type="text" id="split_land_value" name="split_land_value" class="form-control" 
+                                                value="{{ old('split_land_value', $data_properties->minimum_split) }}"/>
                                         </div>
                                     </div>
 
@@ -256,7 +262,19 @@
                                         <label for="description" class="form-label">Features</label>
                                         <div class="d-flex gap-4">
                                             @foreach ($feature_list as $feature)
-                                                <x-form-checkbox className="form-check" name="feature[{{ $feature->slug }}]" label="{{ $feature->name }}" />
+                                                <div class="form-check">
+                                                    <input
+                                                        class="form-check-input"
+                                                        type="checkbox"
+                                                        name="feature[]"
+                                                        id="feature_{{ $feature->id }}"
+                                                        value="{{ $feature->id }}"
+                                                        {{ in_array($feature->id, $selected_feature_ids) ? 'checked' : '' }}
+                                                    >
+                                                    <label class="form-check-label" for="feature_{{ $feature->id }}">
+                                                        {{ $feature->name }}
+                                                    </label>
+                                                </div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -270,21 +288,34 @@
 
                                         <div class="row align-items-center">
                                             <div class="col-6">
+                                                {{-- Debug: {{ old('type_mandate', $data_properties->type_mandate) }} --}}
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="esstentials_mandate" value="essentials mandate" {{ old('type_mandate') == 'essentials mandate' ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="esstentials_mandate">Essentials</label>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="essentials_mandate" value="essentials mandate" 
+                                                        {{ old('type_mandate', $data_properties->type_mandate) == 'essentials mandate' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="essentials_mandate">Essentials</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="booster mandate" {{ old('type_mandate') == 'booster mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="booster_mandate" value="booster mandate" 
+                                                        {{ old('type_mandate', $data_properties->type_mandate) == 'booster mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="booster_mandate">Booster</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="type_mandate" id="max_booster_mandate" value="max booster mandate" {{ old('type_mandate') == 'max booster mandate' ? 'checked' : '' }}>
+                                                    <input class="form-check-input" type="radio" name="type_mandate" id="max_booster_mandate" value="max booster mandate" 
+                                                        {{ old('type_mandate', $data_properties->type_mandate) == 'max booster mandate' ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="max_booster_mandate">Max Booster</label>
                                                 </div>
                                             </div>
+
                                             <div class="col-6">
-                                                <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control" placeholder="">
+                                                <input type="file" id="file_type_of_mandate" name="file_type_of_mandate" class="form-control mb-2" placeholder="">
+                                                @if (isset($attachment['file_type_of_mandate']))
+                                                    <a href="{{ asset('admin/attachment/' . $data_properties->property_slug . '/' . $attachment['file_type_of_mandate']) }}">
+                                                        <span style="font-weight: 100" class="badge truncate bg-primary fs-13 d-flex !text-white align-items-center flex-nowrap border px-2 py-1 overflow-hidden">
+                                                            <iconify-icon icon="material-symbols-light:download-rounded" class="fs-18 text-white"></iconify-icon>
+                                                            {{ $attachment['file_type_of_mandate'] }}
+                                                        </span>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -296,7 +327,7 @@
                                         <div class="row align-items-center">
                                             <div class="col-12">
 
-                                                <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" />
+                                                <x-form-select className="col-lg-12" name="legal_category" label="Property category" :options="['Leasehold', 'Freehold']" :selected="old('legal_category', $data_properties->legal_status ?? '')"/>
 
                                                 <div class="row mb-0">
                                                     <div class="bg-light-subtle border-dark rounded border p-2" id="freehold_group">
@@ -304,24 +335,24 @@
                                                         <hr>
                                                         <div class="row">
 
-                                                            <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" />
-                                                            <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" />
-                                                            <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name" />
+                                                            <x-form-input className="col-lg-6" type="text" name="freehold_purchase_date" label="Purchase Date" value="{{ $data_properties->purchase_date }}"/>
+                                                            <x-form-input className="col-lg-6" type="text" name="freehold_certificate_number" label="Certificate Number" value="{{ $data_properties->holder_number }}"/>
+                                                            <x-form-input className="col-lg-6" type="text" name="freehold_certificate_holder_name" label="Certificate Holder Name"  value="{{ $data_properties->holder_name }}" />
 
                                                             <div class="col-lg-6">
                                                                 <div class="row">
                                                                     <label for="" class="form-label">Zoning</label>
                                                                     <div class="col-12">
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone" {{ old('freehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_green_zone" value="Green Zone" {{ $data_properties->zoning == 'Green Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="freehold_green_zone">Green Zone</label>
                                                                         </div>
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone" {{ old('freehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_yellow_zone" value="Yellow Zone" {{ $data_properties->zoning == 'Yellow Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="freehold_yellow_zone">Yellow Zone</label>
                                                                         </div>
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone" {{ old('freehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="freehold_zoning" id="freehold_pink_zone" value="Pink Zone" {{ $data_properties->zoning == 'Pink Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="freehold_pink_zone">Pink Zone</label>
                                                                         </div>
                                                                     </div>
@@ -336,11 +367,11 @@
                                                         <hr>
                                                         <div class="row">
 
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" />
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_start_date" label="Start Date" value="{{ $data_properties->start_date }}"/>
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_end_date" label="End Date" value="{{ $data_properties->end_date }}"/>
 
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" />
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_contract_number" label="Contract Number" value="{{ $data_properties->holder_number }}"/>
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_contract_holder_name" label="Contract Holder Name" value="{{ $data_properties->holder_name }}" />
 
                                                         </div>
                                                     </div>
@@ -350,24 +381,24 @@
                                                         <hr>
                                                         <div class="row">
 
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" />
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" />
-                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_negotiation_ext_cost" label="Negotiation Extension Cost" value="{{ $data_properties->extension_cost }}" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_purchase_cost" label="Purchase Cost" value="{{ $data_properties->purchase_cost }}" />
+                                                            <x-form-input className="col-lg-6" type="text" name="leasehold_deadline_payment" label="Deadline for Payment to Secure this Rate" value="{{ $data_properties->deadline_payment }}" />
 
                                                             <div class="col-lg-6">
                                                                 <div class="row">
                                                                     <label for="" class="form-label">Zoning</label>
                                                                     <div class="col-12">
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone" {{ old('leasehold_zoning') == 'Green Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_green_zone" value="Green Zone" {{ $data_properties->zoning == 'Green Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="leasehold_green_zone">Green Zone</label>
                                                                         </div>
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone" {{ old('leasehold_zoning') == 'Yellow Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_yellow_zone" value="Yellow Zone" {{ $data_properties->zoning == 'Yellow Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="leasehold_yellow_zone">Yellow Zone</label>
                                                                         </div>
                                                                         <div class="form-check form-check">
-                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone" {{ old('leasehold_zoning') == 'Pink Zone' ? 'checked' : '' }}>
+                                                                            <input class="form-check-input" type="radio" name="leasehold_zoning" id="leasehold_pink_zone" value="Pink Zone" {{ $data_properties->zoning == 'Pink Zone' ? 'checked' : '' }}>
                                                                             <label class="form-check-label" for="leasehold_pink_zone">Pink Zone</label>
                                                                         </div>
                                                                     </div>
@@ -401,22 +432,33 @@
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
                                     <h5 class="text-dark fw-semibold">How did you find the property?</h5>
                                     <hr>
-                                    <div class="col-12 mb-3">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="owner">
+                                    <div class="col-12 mb-3">                                     
+                                        <div class="form-check form-check-inline">                                            
+                                            <input class="form-check-input" type="radio" name="find_property" id="by_owner" value="owner"                                                
+                                             {{ old('find_property_of', $data_properties->find_property_of) == 'owner' ? 'checked' : '' }} >
                                             <label class="form-check-label" for="by_owner">Owner of the villa</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="agent">
+                                            <input class="form-check-input" type="radio" name="find_property" id="by_agent" value="agent"
+                                             {{ old('find_property_of', $data_properties->find_property_of) == 'agent' ? 'checked' : '' }} >
                                             <label class="form-check-label" for="by_agent">By an agent</label>
                                         </div>
                                     </div>
 
                                     <!-- Jika by agent -->
                                     <div id="agent_fields" style="display: none;">
-                                        <x-form-input className="col-12" type="text" name="agent_name" label="Name of this agent" />
-                                        <x-form-input className="col-12" type="text" name="agent_email" label="Email of this agent" />
-                                        <x-form-input className="col-12" type="text" name="agent_whatsapp" label="Whatsapp of this agent" />
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Name of this agent</label>
+                                            <input type="text" name="agent_name" class="form-control" value="{{ old('agent_name', $data_properties->agent_name) }}" />
+                                        </div>
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Email of this agent</label>
+                                            <input type="text" name="agent_email" class="form-control" value="{{ old('agent_email', $data_properties->agent_email) }}" />
+                                        </div>
+                                        <div class="col-12 mb-2">
+                                            <label class="form-label">Whatsapp of this agent</label>
+                                            <input type="text" name="agent_whatsapp" class="form-control" value="{{ old('agent_whatsapp', $data_properties->agent_phone) }}"/>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -428,31 +470,37 @@
                                     <!-- BASE PRICE -->
                                     <div class="col-12">
                                         <label class="form-label">What's the base price?</label><br />
+                                        
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler">
+                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_1" value="NET saler" 
+                                                {{ old('base_price', $data_properties->base_price_option) == 'NET saler' ? 'checked' : '' }} />
                                             <label class="form-check-label" for="base_price_1">NET saler</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price">
+                                            <input class="form-check-input" type="radio" name="base_price" id="base_price_2" value="Selling price"
+                                                {{ old('base_price', $data_properties->base_price_option) == 'Selling price' ? 'checked' : '' }} />
                                             <label class="form-check-label" for="base_price_2">Selling price</label>
                                         </div>
                                     </div>
 
-                                    <!-- DESIRE PRICE -->
+                                    <!-- BASE PRICE -->
                                     <div class="col-12 mt-2">
-                                        <label>Desire price from the owner</label>
-                                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner">
+                                        <label>Base price</label>
+                                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner" 
+                                        value="{{ old('desire_price_from_the_owner', number_format($data_properties->base_price ?? 0, 0, ',', '.')) }}"/>
                                     </div>
 
                                     <!-- FULL COMMISSION (AGENT ONLY) -->
                                     <div id="agent_commission_fields" style="display: none;" class="col-12 mt-2">
                                         <label>Full Balimmo commission?</label><br />
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes">
+                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_yes" value="Yes" 
+                                                {{ old('full_commission_balimmo', $data_properties->give_balimmo_commision) == 'Yes' ? 'checked' : '' }} />
                                             <label class="form-check-label" for="commission_balimmo_yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No">
+                                            <input class="form-check-input" type="radio" name="full_commission_balimmo" id="commission_balimmo_no" value="No"
+                                                {{ old('full_commission_balimmo', $data_properties->give_balimmo_commision) == 'No' ? 'checked' : '' }} />
                                             <label class="form-check-label" for="commission_balimmo_no">No</label>
                                         </div>
                                     </div>
@@ -460,24 +508,44 @@
                                     <!-- COMMISSIONS -->
                                     <div class="col-12 mt-2" id="agent_commission_field">
                                         <label>Commission of the agent (%)</label>
-                                        <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" />
+                                        <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" 
+                                        value="{{ old('commission_of_the_agent', $data_properties->agent_commision) }}" />
                                     </div>
 
-                                    <div class="col-12 mt-2">
-                                        <label>Balimmo commission (%)</label>
-                                        <input type="text" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%" />
+                                    <div class="row">
+                                        <div class="col-6 mt-2">
+                                            <label>Balimmo commission (%)</label>
+                                            <input type="text" id="balimmo_commission" name="balimmo_commission" class="form-control" placeholder="%" 
+                                            value="{{ old('balimmo_commission', $data_properties->balimmo_commission) }}" />
+                                        </div>
+
+                                        <div class="col-6 mt-2">
+                                            <label>Minimum Balimmo commission (%)</label>
+                                            <input type="text" id="minimum_balimmo_commission" name="minimum_balimmo_commission" class="form-control" placeholder="%" disabled/>
+                                        </div>
                                     </div>
 
                                     <!-- WEBSITE PRICE -->
                                     <div class="col-12 mt-2">
                                         <label>Website price (calculated)</label>
-                                        <input type="text" name="website_price" id="website_price" class="form-control" readonly />
+                                        <input type="text" name="website_price" id="website_price" class="form-control" style="background: #f9f9fc" readonly 
+                                        value="{{ old('website_price', number_format($data_properties->selling_price_idr  ?? 0, 0, ',', '.')) }}"/>
                                     </div>
 
-                                    <!-- NET PROFIT (Selling Price Only) -->
-                                    <div class="col-12 mt-2" id="profit_wrapper" style="display: none;">
-                                        <label>Net Profit / Margin (Estimated)</label>
-                                        <input type="text" name="net_profit" id="net_profit" class="form-control" readonly />
+                                    <div class="row">
+                                        <!-- PRICE TO OWNER (NEW FIELD) -->
+                                        <div class="col-6 mt-2">
+                                            <label>Price to Owner</label>
+                                            <input type="text" name="price_to_owner" id="price_to_owner" class="form-control" style="background: #f9f9fc" readonly 
+                                            value="{{ old('price_to_owner', number_format($data_properties->desired_price_idr  ?? 0, 0, ',', '.')) }}" />
+                                        </div>
+
+                                        <!-- NET PROFIT (Always visible now) -->
+                                        <div class="col-6 mt-2" id="profit_wrapper">
+                                            <label>Net Profit / Margin (Estimated)</label>
+                                            <input type="text" name="net_profit" id="net_profit" class="form-control" style="background: #f9f9fc" readonly
+                                            value="{{ old('net_profit', number_format($data_properties->net_seller_idr  ?? 0, 0, ',', '.')) }}" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -505,52 +573,34 @@
                                     <h5 class="text-dark fw-semibold">Publish photos and videos</h5>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <label for="gallery" class="form-label">Property Gallery</label>
+                                        <div class="col-lg-12 d-block mb-3">
+                                        <label for="gallery" class="form-label d-block">Property Gallery </label>
 
-                                            <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
-
-                                            <div id="previewContainer" class="d-flex flex-wrap gap-2">
-                                                @if (session('old_images'))
-                                                    @foreach (session('old_images') as $index => $img)
-                                                        <div class="img-preview" data-index="{{ $index }}">
-                                                            <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
-                                                                style="width: 100%; max-width: 100px; aspect-ration: 16 / 9; object-fit: cover; border: 1px solid #ccc; padding: 2px;">
-                                                            <p class="mb-0 mt-1 text-center">Image {{ $index + 1 }}</p>
-                                                            <input type="hidden" name="old_images[]" value="{{ $img }}">
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-
-                                            <input type="hidden" name="order" id="imageOrder">
-
-                                            @error('images')
-                                                <div class="alert alert-danger" role="alert">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-
-                                        </div>
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Visit Tour Link" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Lifestyle" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Experience" />
-                                    </div>
-
+                                        <div class="row">
+                                        @foreach ($image_gallery as $gallery)
+                                            <a href="{{ asset($gallery->image_path) }}" class="glightbox col-3 mb-3" data-gallery="property-gallery">
+                                                <img src="{{ asset($gallery->image_path) }}" style="width: 100%; height: 5rem; object-fit:cover; border-radius: 10px">
+                                            </a>
+                                        @endforeach
+                                        </div>                                    
+                                    </div>    
+                                    
+                                   
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mb-3 rounded">
+            <div class="mb-3 mt-3 rounded">
                 <div class="row justify-content-end g-2">
                     <div class="col-lg-2">
                         <a href="#!" class="btn btn-danger w-100">Cancel</a>
                     </div>
                     <div class="col-lg-2">
-                        <button type="submit" class="btn btn-primary w-100">Create Land</button>
+                        <button type="submit" class="btn btn-primary w-100">Update Land</button>
                     </div>
                 </div>
             </div>
@@ -659,70 +709,57 @@
             const isOwner = isOwnerSelected();
 
             if (!price || !balimmoInput) {
-                balimmoInput.value = "0";
+                if (balimmoInput) balimmoInput.value = "0";
                 updateMinimumBalimmoCommission();
                 return;
             }
 
-            const rate = getBalimmoCommissionRate(price); // Default rate (tinggi)
-            const minRate = getBalimmoMinCommission(price); // Minimum rate (rendah)
-            let val = parseFloat(balimmoInput.value);
-
-            // Update minimum commission display
+            const rate = getBalimmoCommissionRate(price);
+            const minRate = getBalimmoMinCommission(price);
+            
             updateMinimumBalimmoCommission();
 
-            // SEMUA kondisi bisa diedit
-            if (isOwner) {
-                balimmoInput.readOnly = false;
-            } else if (isAgent && (isAgentFullYes || isAgentFullNo)) {
-                balimmoInput.readOnly = false; // SEMUA Agent dengan pilihan bisa diedit
-            } else if (isAgent) {
-                // Agent belum pilih full commission: tidak bisa diedit
-                balimmoInput.readOnly = true;
-            }
+            // Set field editability
+            const canEdit = isOwner || (isAgent && (isAgentFullYes || isAgentFullNo));
+            balimmoInput.readOnly = !canEdit;
 
-            // Auto-update logic
-            const isInitialLoad = !balimmoInput.value || val === 0;
-            const isPriceChange = window.event && window.event.target && window.event.target.id === 'desire_price_from_the_owner';
-            const isAgentCommissionChange = window.event && window.event.target && window.event.target.id === 'commission_of_the_agent';
-            const isFullCommissionChange = window.event && window.event.target && window.event.target.name === 'full_commission_balimmo';
-            
-            // Kondisi untuk auto-update
-            const shouldAutoUpdate = isInitialLoad || forceUpdate || 
-                                   (isOwner && isPriceChange) ||
-                                   (isAgent && isAgentFullYes && (isPriceChange || isFullCommissionChange)) ||
-                                   (isAgent && isAgentFullNo && (isPriceChange || isAgentCommissionChange || isFullCommissionChange));
-
-            if (shouldAutoUpdate) {
-                if (isOwner) {
-                    // Owner: auto-update dengan rate saat harga berubah
-                    balimmoInput.value = rate.toFixed(2);
-                } else if (isAgent && isAgentFullYes) {
-                    // Agent + Full Commission Yes: auto-update dengan rate saat harga berubah
+            // Auto-calculate only on force update (not during manual editing)
+            if (forceUpdate) {
+                if (isOwner || (isAgent && isAgentFullYes)) {
                     balimmoInput.value = rate.toFixed(2);
                 } else if (isAgent && isAgentFullNo) {
-                    // Agent + Full Commission No: otomatis dihitung berdasarkan rumus baru
                     const calculatedBalimmo = calculateBalimmoForAgentNo(price, agentCommission);
                     balimmoInput.value = calculatedBalimmo.toFixed(2);
                 } else if (isAgent) {
-                    // Agent belum pilih full commission
                     balimmoInput.value = "0";
                 }
             }
 
-            val = parseFloat(balimmoInput.value);
+            // PERBAIKAN: Validasi hanya saat blur (kehilangan focus), bukan saat mengetik
+            // Hilangkan validasi real-time yang mengganggu pengeditan manual
+            
+            calculateWebsitePrice();
+        }
 
-            // Validasi manual input - SEMUA menggunakan minimum yang sama
-            if (balimmoInput === document.activeElement && !balimmoInput.readOnly) {
-                if (val < minRate) {
-                    alert(`Balimmo commission cannot be lower than minimum: ${minRate}%`);
-                    balimmoInput.value = minRate.toFixed(2);
-                } else if (val > 100) {
-                    alert("Balimmo commission cannot exceed 100%");
-                    balimmoInput.value = "100";
-                }
+        // TAMBAHAN: Fungsi untuk validasi saat blur
+        function validateBalimmoCommission() {
+            const balimmoInput = document.getElementById("balimmo_commission");
+            const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+            
+            if (!price || !balimmoInput || balimmoInput.readOnly) return;
+            
+            const minRate = getBalimmoMinCommission(price);
+            let val = parseFloat(balimmoInput.value) || 0;
+            
+            // Validasi dan koreksi nilai
+            if (val < minRate) {
+                alert(`Balimmo commission cannot be lower than minimum: ${minRate}%`);
+                balimmoInput.value = minRate.toFixed(2);
+            } else if (val > 100) {
+                alert("Balimmo commission cannot exceed 100%");
+                balimmoInput.value = "100";
             }
-
+            
             calculateWebsitePrice();
         }
 
@@ -780,18 +817,25 @@
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.addEventListener('input', (event) => {
-                        // Set global event untuk tracking
-                        window.event = event;
-                        updateBalimmoCommission();
-                        calculateWebsitePrice();
-                    });
-                    el.addEventListener('change', (event) => {
-                        // Set global event untuk tracking
-                        window.event = event;
-                        updateBalimmoCommission();
-                        calculateWebsitePrice();
-                    });
+                    if (id === 'balimmo_commission') {
+                        // Untuk balimmo commission, gunakan input event tanpa force update
+                        el.addEventListener('input', () => {
+                            calculateWebsitePrice(); // Hanya hitung ulang harga, jangan auto-update nilai
+                        });
+                        
+                        // Tambahkan blur event untuk validasi
+                        el.addEventListener('blur', validateBalimmoCommission);
+                    } else {
+                        // Untuk field lain, tetap gunakan force update
+                        el.addEventListener('input', () => {
+                            updateBalimmoCommission(true);
+                            calculateWebsitePrice();
+                        });
+                        el.addEventListener('change', () => {
+                            updateBalimmoCommission(true);
+                            calculateWebsitePrice();
+                        });
+                    }
                 }
             });
         }
@@ -805,11 +849,13 @@
                 const agentCommissionFields = document.getElementById("agent_commission_fields");
                 const agentCommissionField = document.getElementById("agent_commission_field");
                 const commonFields = document.getElementById("common_fields");
-                const balimmoInput = document.getElementById("balimmo_commission");
 
-                commonFields.style.display = "block";
+                // Always show common fields if radio is selected
+                if (ownerRadio.checked || agentRadio.checked) {
+                    commonFields.style.display = "block";
+                }
 
-                if (document.getElementById("by_agent").checked) {
+                if (agentRadio.checked) {
                     agentFields.style.display = "block";
                     agentCommissionFields.style.display = "block";
                     agentCommissionField.style.display = "block";
@@ -819,23 +865,25 @@
                     agentCommissionField.style.display = "none";
                 }
 
-                // Reset values
-                balimmoInput.value = "0";
-                balimmoInput.readOnly = false;
-                document.getElementById("website_price").value = "";
-                document.getElementById("net_profit").value = "";
-                document.getElementById("price_to_owner").value = "";
-                
-                // Clear radio selections for full commission
-                const fullCommissionRadios = document.querySelectorAll('input[name="full_commission_balimmo"]');
-                fullCommissionRadios.forEach(radio => radio.checked = false);
-
-                updateBalimmoCommission();
-                setupListeners();
+                // Run Commission Calculations on load
+                updateBalimmoCommission(true);
+                calculateWebsitePrice();
             }
 
+            // Initial Load Run
+            updateFormDisplay();
+
+            // On Change Event
             ownerRadio.addEventListener("change", updateFormDisplay);
             agentRadio.addEventListener("change", updateFormDisplay);
+
+            // Setup Listeners
+            setupListeners();
+        });
+
+        window.addEventListener("load", () => {
+            updateBalimmoCommission(true); // Force initial calculation
+            calculateWebsitePrice();
         });
     </script>
     {{-- {-- PRICE CALCULTAION --} --}}
@@ -901,9 +949,7 @@
             $('#extension_leasehold_group').hide();
 
             // Cek nilai old dari server
-            const oldLegalCategory = "{{ old('legal_category') }}";
-
-            console.log(oldLegalCategory);
+            const oldLegalCategory = "{{ $data_properties->legal_status }}";
 
             if (oldLegalCategory === 'Leasehold') {
                 $('#leasehold_group').attr('style', 'display: block !important');
@@ -1047,28 +1093,49 @@
 
     {{-- Get Region & Subregion --}}
     <script>
-        const oldRegion = @json(old('region'));
-        const oldSubregion = @json(old('subregion'));
-    </script>
-    <script>
+        const areaData = [
+            { value: 'ubud', label: 'Ubud' },
+            { value: 'canggu', label: 'Canggu' },
+            { value: 'uluwatu', label: 'Uluwatu' },
+            { value: 'sanur/nusa dua', label: 'Sanur/Nusa Dua' },
+            { value: 'other', label: 'Other' }
+        ];
+
         document.addEventListener('DOMContentLoaded', function() {
+            const areaSelect = document.getElementById('area');
             const regionSelect = document.getElementById('region');
             const subregionSelect = document.getElementById('subregion');
 
+            const areaChoices = new Choices(areaSelect, {
+                searchEnabled: false,
+                shouldSort: false
+            });
             const regionChoices = new Choices(regionSelect, {
-                searchEnabled: false
+                searchEnabled: false,
+                shouldSort: false
             });
             const subregionChoices = new Choices(subregionSelect, {
-                searchEnabled: false
+                searchEnabled: false,
+                shouldSort: false
             });
 
-            const url = "{{ route('api.regions') }}";
+            const selectedArea = "{{ old('area', $data_properties->area ?? '') }}".toLowerCase();
+            const selectedRegion = "{{ old('region', $data_properties->region ?? '') }}".toLowerCase();
+            const selectedSubregion = "{{ old('subregion', $data_properties->sub_region ?? '') }}";
+
+            areaChoices.setChoices(areaData, 'value', 'label', true);
+            if (selectedArea) {
+                areaChoices.setChoiceByValue(selectedArea);
+            }
+
+            const url = "{{ route('api.regions') }}"; // Ganti dari asset() ke route()
 
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     const regions = Object.keys(data);
 
+                    // Populate region dropdown
                     regionChoices.setChoices(
                         regions.map(region => ({
                             value: region,
@@ -1079,12 +1146,11 @@
                         true
                     );
 
-                    // ✅ Set old region setelah setChoices selesai
-                    if (oldRegion) {
-                        regionChoices.setChoiceByValue(oldRegion);
+                    // Set selected region dan subregion (jika ada)
+                    if (selectedRegion && regions.includes(selectedRegion)) {
+                        regionChoices.setChoiceByValue(selectedRegion);
 
-                        // ✅ Load subregion berdasarkan region lama
-                        const subregions = data[oldRegion] || [];
+                        const subregions = data[selectedRegion];
                         subregionChoices.setChoices(
                             subregions.map(sub => ({
                                 value: sub,
@@ -1095,16 +1161,15 @@
                             true
                         );
 
-                        // ✅ Set old subregion
-                        if (oldSubregion) {
-                            subregionChoices.setChoiceByValue(oldSubregion);
+                        if (selectedSubregion) {
+                            subregionChoices.setChoiceByValue(selectedSubregion);
                         }
                     }
 
-                    // 🔁 Handle perubahan region (user memilih)
+                    // On region change
                     regionSelect.addEventListener('change', function() {
-                        const selectedRegion = this.value;
-                        const subregions = data[selectedRegion] || [];
+                        const selected = this.value;
+                        const subregions = data[selected] || [];
 
                         subregionChoices.clearChoices();
                         subregionChoices.setChoices(
@@ -1196,4 +1261,10 @@
         });
     </script>
     {{-- /* Gallery Upload */ --}}
+    <script src="{{ asset('admin/assets/js/glightbox.min.js') }}"></script>
+    <script>
+        const lightbox = GLightbox({
+            selector: '.glightbox'
+        });
+    </script>
 @endpush

@@ -97,84 +97,74 @@ class LandController extends Controller
 
     public function detail($slug)
     {
-        // dd($slug);
-        $property = LandModel::where('land_slug', $slug)->select('id', 'internal_reference')->first();
-        $data['data_properties'] = LandModel::where('land_slug', $slug)
-            ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
-            ->join('land_legal', 'land_legal.land_id', '=', 'land.id')
-            ->with(['featuredImage' => function ($query) {
-                $query->select('image_path', 'land_gallery.id');
-                $query->where('is_featured', 1);
-            }])
-            ->select(
-                'land.*',
-                // 'land_financial.*',
+        // Ambil properti utama berdasarkan slug
+        $property = LandModel::with([
+            'featuredImage', // gunakan relasi hasOneThrough
+        ])->where('land_slug', $slug)->firstOrFail();
 
-                'land_financial.avg_nightly_rate',
-                'land_financial.avg_occupancy_rate',
-                'land_financial.selling_price_idr',
-                'land_financial.selling_price_usd',
-                // 'land_financial.commision_ammount_idr',
-                // 'land_financial.commision_ammount_usd',
+        // Ambil data legal & financial via model relasi (jika kamu punya relasi, contoh di bawah)
+        $financial = LandFinancialModel::where('land_id', $property->id)->first();
+        $legal     = LandLegalModel::where('land_id', $property->id)->first();
 
+        // Gabungkan semua data ke model utama
+        $property->avg_nightly_rate     = optional($financial)->avg_nightly_rate;
+        $property->avg_occupancy_rate   = optional($financial)->avg_occupancy_rate;
+        $property->desired_price_idr    = optional($financial)->desired_price_idr;
+        $property->desired_price_usd    = optional($financial)->desired_price_usd;
+        $property->selling_price_idr    = optional($financial)->selling_price_idr;
+        $property->selling_price_usd    = optional($financial)->selling_price_usd;
+        $property->net_seller_idr       = optional($financial)->net_seller_idr;
+        $property->net_seller_usd       = optional($financial)->net_seller_usd;
 
-                'land_legal.company_name',
-                'land_legal.rep_first_name',
-                'land_legal.rep_last_name',
-                'land_legal.phone',
-                'land_legal.email',
-                'land_legal.legal_status',
-                'land_legal.holder_name',
-                'land_legal.holder_number',
-                'land_legal.start_date',
-                'land_legal.end_date',
-                'land_legal.purchase_date',
-                'land_legal.extension_cost',
-                'land_legal.purchase_cost',
-                'land_legal.deadline_payment',
-                'land_legal.zoning',
-            )
-            ->first();
+        $property->company_name         = optional($legal)->company_name;
+        $property->rep_first_name       = optional($legal)->rep_first_name;
+        $property->rep_last_name        = optional($legal)->rep_last_name;
+        $property->phone                = optional($legal)->phone;
+        $property->email                = optional($legal)->email;
+        $property->legal_status         = optional($legal)->legal_status;
+        $property->holder_name          = optional($legal)->holder_name;
+        $property->holder_number        = optional($legal)->holder_number;
+        $property->start_date           = optional($legal)->start_date;
+        $property->end_date             = optional($legal)->end_date;
+        $property->purchase_date        = optional($legal)->purchase_date;
+        $property->extension_cost       = optional($legal)->extension_cost;
+        $property->purchase_cost        = optional($legal)->purchase_cost;
+        $property->deadline_payment     = optional($legal)->deadline_payment;
+        $property->zoning               = optional($legal)->zoning;
 
-        // dd($property);
+        $data['data_properties'] = $property;
 
+        // Fitur tanah
         $data['feature_list'] = LandFeatureModel::where('land_id', $property->id)
             ->join('land_feature_list', 'land_feature_list.id', '=', 'land_feature.feature_land_id')
             ->select('land_feature_list.name as feature_name')
             ->get();
 
-        // dd($data['data_properties']);
+        // Ambil gallery_id dari featuredImage (jika ada)
+        $galleryId = optional($property->featuredImage)->land_gallery_id;
 
-        $galleryId = optional($data['data_properties']['featuredImage'])->id;
+        // Ambil semua image gallery berdasarkan gallery_id
         $data['image_gallery'] = $galleryId
-            ? PropertyGalleryImageModel::where('gallery_id', $galleryId)->get()
+            ? LandGalleryImageModel::where('land_gallery_id', $galleryId)->get()
             : collect();
 
-        // $data['image_gallery'] = PropertyGalleryImageModel::where('gallery_id', $data['data_properties']['featuredImage']->id)->get();
-
+        // Data agen
         $data['agent_data'] = User::where('reference_code', $property->internal_reference)->first();
 
-        $data['property_owner'] = LandOwnerModel::where('land_id', $data['data_properties']->id)->get();
+        // Pemilik properti
+        $data['property_owner'] = LandOwnerModel::where('land_id', $property->id)->get();
 
-        $url_attachment = LandUrlAttachmentModel::where('land_id', $data['data_properties']->id)->get();
+        // URL attachment (YouTube embed, dll.)
+        $url_attachment = LandUrlAttachmentModel::where('land_id', $property->id)->get();
 
         foreach ($url_attachment as $url) {
-
             if (in_array($url->name, ['url_virtual_tour', 'url_lifestyle', 'url_experience'])) {
-
                 preg_match(
                     '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/',
                     $url->path_attachment,
                     $match
                 );
-
-                // Cek apakah $match[1] ada sebelum diakses
-                if (isset($match[1])) {
-                    $url->path_attachment = $match[1];
-                } else {
-                    // Bisa kosongin, kasih nilai default, atau handle error sesuai kebutuhan
-                    $url->path_attachment = null; // atau bisa log error di sini
-                }
+                $url->path_attachment = $match[1] ?? null;
             }
         }
 
@@ -182,6 +172,7 @@ class LandController extends Controller
 
         return view('admin.land.details', $data);
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -225,39 +216,6 @@ class LandController extends Controller
         }
 
         $request->validate($rules, $messages);
-
-        // $request->validate([
-        //     // 'images' => 'required|array|min:4',
-        //     // 'images.*' => 'image|mimes:jpeg,png,jpg,webp,aviv|max:10024',
-
-        //     'property_name' => 'required',
-        //     'description' => 'required',
-        //     'region' => 'required',
-        //     'subregion' => 'required',
-        //     'property_address' => 'required',
-        //     'land_size' => 'required',
-        //     'built_area' => 'required',
-        //     'pool_area' => 'required',
-        //     'bedroom' => 'required',
-        //     'bathroom' => 'required',
-        //     'year_construction' => 'required',
-        //     'year_renovated' => 'required',
-        //     'feature' => 'required|array|min:1',
-
-        //     'legal_category' => 'required',
-
-        //     // ##### Rental Yield
-        //     'average_nightly_rate' => 'required',
-        //     'average_occupancy_rate' => 'required',
-        //     'month_rented_per_year' => 'required',
-        //     'estimated_annual_turnover' => 'required',
-
-        //     // ##### Gallery
-        //     // 'images.*' => 'required|image|max:2048',
-        // ], [
-        //     'feature' => 'Please Choose features & Amenities',
-
-        // ]);
 
         // Freehold Validation
         if ($request->legal_category === 'Freehold') {
@@ -388,32 +346,9 @@ class LandController extends Controller
             'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
             'zoning' => $zoning,
 
-            // 'construction_quality' => $request->construction_quality,
-            // 'constructor_name' => $request->constructor_name,
         ]);
 
-        // ==========================================================================================================================================
-        // ############## Create Properties Financial ##############
-        // ==========================================================================================================================================
-        // $idrPrice = (int)preg_replace('/[^0-9]/', '', $request->find_property == 'owner' ? $request->website_price_owner : $request->website_price_agent);
-        // $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
-
-        // // Presentase
-        // if ($idrPrice < 15000000000) {
-        //     $commision = 5;
-        // } else if ($idrPrice >= 15000000000  && $idrPrice <= 34000000000) {
-        //     $commision = 4;
-        // } else if ($idrPrice > 34000000000  && $idrPrice <= 70000000000) {
-        //     $commision = 3;
-        // } else {
-        //     $commision = 2.5;
-        // }
-
-        // $commisionAmmountIDR = $idrPrice * $commision / 100;
-        // $commisionAmmountUSD = round($usdPrice * $commision / 100, 2);
-        // $netSellerIDR = $idrPrice - $commisionAmmountIDR;
-        // $netSellerUSD = round($usdPrice - $commisionAmmountUSD, 2);
-
+ 
 
         $idrPrice = $this->convertToInteger($request->website_price); // Ambil website_price yang sudah dikalkulasi
         $usdPrice = round((float)$idrPrice / $this->getUSDtoIDRRate(), 2);
@@ -567,8 +502,6 @@ class LandController extends Controller
         return redirect()->route('land.index')->with('flashData', $flashData);
     }
 
-
-
     /**
      * Display the specified resource.
      */
@@ -593,14 +526,31 @@ class LandController extends Controller
                 'land.*',
                 // 'land_financial.*',
 
+                // Rental Yield
+                'land_financial.average_price_status',
                 'land_financial.avg_nightly_rate',
                 'land_financial.avg_occupancy_rate',
+
+
+                // Agent
+                'land_financial.find_property_of',
+                'land_financial.agent_name',
+                'land_financial.agent_email',
+                'land_financial.agent_phone',
+
+                // Price Structure
+                'land_financial.base_price_option',
+                'land_financial.base_price',
+                'land_financial.desired_price_idr',
+
+                // Commission Details
+                'land_financial.agent_commision',
+                'land_financial.give_balimmo_commision',
+                'land_financial.balimmo_commision',
+                
+                // Sale Price & Net Profit
                 'land_financial.selling_price_idr',
-                'land_financial.selling_price_usd',
-                // 'land_financial.commision_ammount_idr',
-                // 'land_financial.commision_ammount_usd',
-                // 'land_financial.net_seller_idr',
-                // 'land_financial.net_seller_usd',
+                'land_financial.net_seller_idr',
 
                 'land_legal.company_name',
                 'land_legal.rep_first_name',
@@ -628,13 +578,10 @@ class LandController extends Controller
         // dd($data['data_properties']);
         $data['property_owner'] = LandOwnerModel::where('land_id', $data['data_properties']->id)->get();
 
-        // Properties Feature
-        $data['feature_list'] = LandFeatureListModel::where('type', 'outdoor')->get();
-        // $data['feature_list_indoor'] = LandFeatureListModel::where('type', 'indoor')->get();
-        // User Checked berdasarkan id
+        $data['feature_list'] = LandFeatureListModel::where('type', 'land-feature')->get();
         $data['properties_feature'] = LandFeatureModel::where('land_id', $data['data_properties']->id)->get();
-        // Ambil ID fitur yang sudah dipilih
-        $data['selected_feature_ids'] = $data['properties_feature']->pluck('feature_id')->toArray();
+        $data['selected_feature_ids'] = $data['properties_feature']->pluck('feature_land_id')->toArray();
+
 
         // URL Attachment
         $url_attachment = LandUrlAttachmentModel::where('land_id', $data['data_properties']->id)->select('name', 'path_attachment')->get();
@@ -663,8 +610,173 @@ class LandController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $land = LandModel::findOrFail($id);
+
+        // ========== SLUG ========== 
+        $slug = $land->land_slug;
+        if ($land->land_name != $request->property_name) {
+            $slug = $this->generatePropertiesSlug($request->property_name);
+        }
+
+        // ========== VALIDASI LEGAL ========== 
+        if ($request->legal_category === 'Freehold') {
+            $request->validate([
+                'freehold_purchase_date' => 'required',
+                'freehold_certificate_number' => 'required',
+                'freehold_certificate_holder_name' => 'required',
+            ]);
+        } elseif ($request->legal_category === 'Leasehold') {
+            $request->validate([
+                'leasehold_start_date' => 'required',
+                'leasehold_end_date' => 'required',
+                'leasehold_contract_number' => 'required',
+                'leasehold_contract_holder_name' => 'required',
+                'leasehold_negotiation_ext_cost' => 'required',
+                'leasehold_purchase_cost' => 'required',
+                'leasehold_deadline_payment' => 'required',
+            ]);
+        }
+
+        // ========== UPDATE LAND ========== 
+        $land->update([
+            'land_name' => $request->property_name,
+            'land_slug' => $slug,
+            'land_description' => $request->description,
+            'region' => $request->region,
+            'sub_region' => $request->subregion,
+            'area' => $request->area,
+            'land_address' => $request->property_address,
+            'total_land_area' => $this->floatNumbering($request->land_size),
+            'land_width' => $this->floatNumbering($request->land_width),
+            'land_length' => $this->floatNumbering($request->land_length),
+            'is_land_split' => $request->split_land,
+            'minimum_split' => $request->split_land_value,
+            'type_mandate' => $request->type_mandate,
+        ]);
+
+        // ========== UPDATE OWNER ========== 
+        LandOwnerModel::where('land_id', $id)->delete();
+        if ($request->has('owners')) {
+            foreach ($request->owners as $index => $owner) {
+                if (
+                    empty($owner['first_name']) &&
+                    empty($owner['last_name']) &&
+                    empty($owner['phone_number']) &&
+                    empty($owner['email'])
+                ) continue;
+
+                LandOwnerModel::create([
+                    'land_id' => $id,
+                    'first_name' => $owner['first_name'],
+                    'last_name' => $owner['last_name'],
+                    'phone' => $owner['phone_number'],
+                    'email' => $owner['email'],
+                    'owner_order' => $index + 1,
+                ]);
+            }
+        }
+
+        // ========== UPDATE LEGAL ========== 
+        LandLegalModel::where('land_id', $id)->update([
+            'company_name' => $request->company_name,
+            'rep_first_name' => $request->legal_rep_first_name,
+            'rep_last_name' => $request->legal_rep_last_name,
+            'phone' => $request->legal_rep_phone_number,
+            'email' => $request->legal_rep_email,
+            'legal_status' => $request->legal_category,
+            'holder_name' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_holder_name : $request->leasehold_contract_holder_name,
+            'holder_number' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_number : $request->leasehold_contract_number,
+            'start_date' => $request->leasehold_start_date ? $this->dateConversion($request->leasehold_start_date) : null,
+            'end_date' => $request->leasehold_end_date ? $this->dateConversion($request->leasehold_end_date) : null,
+            'purchase_date' => $request->freehold_purchase_date ? $this->dateConversion($request->freehold_purchase_date) : null,
+            'extension_cost' => $this->convertToInteger($request->leasehold_negotiation_ext_cost),
+            'purchase_cost' => $this->convertToInteger($request->leasehold_purchase_cost),
+            'deadline_payment' => $request->leasehold_deadline_payment ? $this->dateConversion($request->leasehold_deadline_payment) : null,
+            'zoning' => $request->legal_category === 'Freehold' ? $request->freehold_zoning : $request->leasehold_zoning,
+        ]);
+
+        // ========== UPDATE FINANCIAL ========== 
+        LandFinancialModel::where('land_id', $id)->update([
+            'average_price_status' => $request->average_price_status,
+            'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
+            'avg_occupancy_rate' => $request->average_occupancy_rate,
+            'find_property_of' => $request->find_property,
+            'agent_name' => $request->agent_name,
+            'agent_email' => $request->agent_email,
+            'agent_phone' => $request->agent_whatsapp,
+            'base_price_option' => $request->base_price,
+            'base_price' => $this->convertToInteger($request->desire_price_from_the_owner),
+            'desired_price_idr' => $this->convertToInteger($request->price_to_owner),
+            'desired_price_usd' => $this->idrToUsdConvert($request->price_to_owner),
+            'agent_commision' => $request->commission_of_the_agent,
+            'give_balimmo_commision' => $request->full_commission_balimmo,
+            'balimmo_commision' => $request->balimmo_commission,
+            'selling_price_idr' => $this->convertToInteger($request->website_price),
+            'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
+            'net_seller_idr' => $this->convertToInteger($request->net_profit),
+            'net_seller_usd' => $this->idrToUsdConvert($request->net_profit),
+        ]);
+
+        // ========== UPDATE FEATURES ========== 
+        LandFeatureModel::where('land_id', $id)->delete();
+        if ($request->has('feature')) {
+            foreach ($request->feature as $featureId) {
+                $idFeature = LandFeatureListModel::select('id')->where('slug', $featureId)->first();
+                if ($idFeature) {
+                    LandFeatureModel::create([
+                        'land_id' => $id,
+                        'feature_land_id' => $idFeature->id,
+                    ]);
+                }
+            }
+        }
+
+        // ========== UPDATE ATTACHMENTS ========== 
+        $attachmentKeys = ['file_rental_support', 'file_type_of_mandate', 'url_virtual_tour', 'url_lifestyle', 'url_experience'];
+        foreach ($attachmentKeys as $key) {
+            $value = $request->input($key);
+            if ($request->hasFile($key)) {
+                $file = $request->file($key);
+                $filename = $file->getClientOriginalName();
+                $file->move(public_path('admin/attachment/' . $slug), $filename);
+                $value = $filename;
+            }
+
+            if ($value !== null && $value !== '') {
+                LandUrlAttachmentModel::updateOrCreate(
+                    ['land_id' => $id, 'name' => $key],
+                    ['path_attachment' => $value]
+                );
+            }
+        }
+
+        // ========== UPDATE GALLERY ========== 
+        if ($request->has('old_images')) {
+            $gallery = LandGalleryModel::firstOrCreate(['land_id' => $id], ['description' => 'land gallery']);
+            foreach ($request->old_images as $index => $filename) {
+                $existing = LandGalleryImageModel::where('land_gallery_id', $gallery->id)
+                    ->where('image_path', 'admin/gallery/' . $slug . '/' . $filename)
+                    ->first();
+                if (!$existing) {
+                    LandGalleryImageModel::create([
+                        'land_gallery_id' => $gallery->id,
+                        'image_path' => 'admin/gallery/' . $slug . '/' . $filename,
+                        'order' => $index,
+                        'is_featured' => $index === 0,
+                    ]);
+                }
+            }
+        }
+
+        Cache::forget('land_list_cache');
+
+        return redirect()->route('land.index')->with('flashData', [
+            'judul' => 'Update Success',
+            'pesan' => 'Land updated successfully',
+            'swalFlashIcon' => 'success',
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.

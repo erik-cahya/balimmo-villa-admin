@@ -678,70 +678,57 @@
             const isOwner = isOwnerSelected();
 
             if (!price || !balimmoInput) {
-                balimmoInput.value = "0";
+                if (balimmoInput) balimmoInput.value = "0";
                 updateMinimumBalimmoCommission();
                 return;
             }
 
-            const rate = getBalimmoCommissionRate(price); // Default rate (tinggi)
-            const minRate = getBalimmoMinCommission(price); // Minimum rate (rendah)
-            let val = parseFloat(balimmoInput.value);
-
-            // Update minimum commission display
+            const rate = getBalimmoCommissionRate(price);
+            const minRate = getBalimmoMinCommission(price);
+            
             updateMinimumBalimmoCommission();
 
-            // SEMUA kondisi bisa diedit
-            if (isOwner) {
-                balimmoInput.readOnly = false;
-            } else if (isAgent && (isAgentFullYes || isAgentFullNo)) {
-                balimmoInput.readOnly = false; // SEMUA Agent dengan pilihan bisa diedit
-            } else if (isAgent) {
-                // Agent belum pilih full commission: tidak bisa diedit
-                balimmoInput.readOnly = true;
-            }
+            // Set field editability
+            const canEdit = isOwner || (isAgent && (isAgentFullYes || isAgentFullNo));
+            balimmoInput.readOnly = !canEdit;
 
-            // Auto-update logic
-            const isInitialLoad = !balimmoInput.value || val === 0;
-            const isPriceChange = window.event && window.event.target && window.event.target.id === 'desire_price_from_the_owner';
-            const isAgentCommissionChange = window.event && window.event.target && window.event.target.id === 'commission_of_the_agent';
-            const isFullCommissionChange = window.event && window.event.target && window.event.target.name === 'full_commission_balimmo';
-            
-            // Kondisi untuk auto-update
-            const shouldAutoUpdate = isInitialLoad || forceUpdate || 
-                                   (isOwner && isPriceChange) ||
-                                   (isAgent && isAgentFullYes && (isPriceChange || isFullCommissionChange)) ||
-                                   (isAgent && isAgentFullNo && (isPriceChange || isAgentCommissionChange || isFullCommissionChange));
-
-            if (shouldAutoUpdate) {
-                if (isOwner) {
-                    // Owner: auto-update dengan rate saat harga berubah
-                    balimmoInput.value = rate.toFixed(2);
-                } else if (isAgent && isAgentFullYes) {
-                    // Agent + Full Commission Yes: auto-update dengan rate saat harga berubah
+            // Auto-calculate only on force update (not during manual editing)
+            if (forceUpdate) {
+                if (isOwner || (isAgent && isAgentFullYes)) {
                     balimmoInput.value = rate.toFixed(2);
                 } else if (isAgent && isAgentFullNo) {
-                    // Agent + Full Commission No: otomatis dihitung berdasarkan rumus baru
                     const calculatedBalimmo = calculateBalimmoForAgentNo(price, agentCommission);
                     balimmoInput.value = calculatedBalimmo.toFixed(2);
                 } else if (isAgent) {
-                    // Agent belum pilih full commission
                     balimmoInput.value = "0";
                 }
             }
 
-            val = parseFloat(balimmoInput.value);
+            // PERBAIKAN: Validasi hanya saat blur (kehilangan focus), bukan saat mengetik
+            // Hilangkan validasi real-time yang mengganggu pengeditan manual
+            
+            calculateWebsitePrice();
+        }
 
-            // Validasi manual input - SEMUA menggunakan minimum yang sama
-            if (balimmoInput === document.activeElement && !balimmoInput.readOnly) {
-                if (val < minRate) {
-                    alert(`Balimmo commission cannot be lower than minimum: ${minRate}%`);
-                    balimmoInput.value = minRate.toFixed(2);
-                } else if (val > 100) {
-                    alert("Balimmo commission cannot exceed 100%");
-                    balimmoInput.value = "100";
-                }
+        // TAMBAHAN: Fungsi untuk validasi saat blur
+        function validateBalimmoCommission() {
+            const balimmoInput = document.getElementById("balimmo_commission");
+            const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+            
+            if (!price || !balimmoInput || balimmoInput.readOnly) return;
+            
+            const minRate = getBalimmoMinCommission(price);
+            let val = parseFloat(balimmoInput.value) || 0;
+            
+            // Validasi dan koreksi nilai
+            if (val < minRate) {
+                alert(`Balimmo commission cannot be lower than minimum: ${minRate}%`);
+                balimmoInput.value = minRate.toFixed(2);
+            } else if (val > 100) {
+                alert("Balimmo commission cannot exceed 100%");
+                balimmoInput.value = "100";
             }
-
+            
             calculateWebsitePrice();
         }
 
@@ -787,7 +774,7 @@
 
         function setupListeners() {
             const fields = [
-                'desire_price',
+                'desire_price_from_the_owner',
                 'commission_of_the_agent',
                 'balimmo_commission',
                 'commission_balimmo_yes',
@@ -799,18 +786,25 @@
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    el.addEventListener('input', (event) => {
-                        // Set global event untuk tracking
-                        window.event = event;
-                        updateBalimmoCommission();
-                        calculateWebsitePrice();
-                    });
-                    el.addEventListener('change', (event) => {
-                        // Set global event untuk tracking
-                        window.event = event;
-                        updateBalimmoCommission();
-                        calculateWebsitePrice();
-                    });
+                    if (id === 'balimmo_commission') {
+                        // Untuk balimmo commission, gunakan input event tanpa force update
+                        el.addEventListener('input', () => {
+                            calculateWebsitePrice(); // Hanya hitung ulang harga, jangan auto-update nilai
+                        });
+                        
+                        // Tambahkan blur event untuk validasi
+                        el.addEventListener('blur', validateBalimmoCommission);
+                    } else {
+                        // Untuk field lain, tetap gunakan force update
+                        el.addEventListener('input', () => {
+                            updateBalimmoCommission(true);
+                            calculateWebsitePrice();
+                        });
+                        el.addEventListener('change', () => {
+                            updateBalimmoCommission(true);
+                            calculateWebsitePrice();
+                        });
+                    }
                 }
             });
         }
@@ -824,11 +818,13 @@
                 const agentCommissionFields = document.getElementById("agent_commission_fields");
                 const agentCommissionField = document.getElementById("agent_commission_field");
                 const commonFields = document.getElementById("common_fields");
-                const balimmoInput = document.getElementById("balimmo_commission");
 
-                commonFields.style.display = "block";
+                // Always show common fields if radio is selected
+                if (ownerRadio.checked || agentRadio.checked) {
+                    commonFields.style.display = "block";
+                }
 
-                if (document.getElementById("by_agent").checked) {
+                if (agentRadio.checked) {
                     agentFields.style.display = "block";
                     agentCommissionFields.style.display = "block";
                     agentCommissionField.style.display = "block";
@@ -838,23 +834,25 @@
                     agentCommissionField.style.display = "none";
                 }
 
-                // Reset values
-                balimmoInput.value = "0";
-                balimmoInput.readOnly = false;
-                document.getElementById("website_price").value = "";
-                document.getElementById("net_profit").value = "";
-                document.getElementById("price_to_owner").value = "";
-                
-                // Clear radio selections for full commission
-                const fullCommissionRadios = document.querySelectorAll('input[name="full_commission_balimmo"]');
-                fullCommissionRadios.forEach(radio => radio.checked = false);
-
-                updateBalimmoCommission();
-                setupListeners();
+                // Run Commission Calculations on load
+                updateBalimmoCommission(true);
+                calculateWebsitePrice();
             }
 
+            // Initial Load Run
+            updateFormDisplay();
+
+            // On Change Event
             ownerRadio.addEventListener("change", updateFormDisplay);
             agentRadio.addEventListener("change", updateFormDisplay);
+
+            // Setup Listeners
+            setupListeners();
+        });
+
+        window.addEventListener("load", () => {
+            updateBalimmoCommission(true); // Force initial calculation
+            calculateWebsitePrice();
         });
     </script>
     {{-- {-- PRICE CALCULTAION --} --}}
