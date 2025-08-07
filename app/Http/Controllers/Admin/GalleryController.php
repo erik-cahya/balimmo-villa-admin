@@ -16,9 +16,11 @@ class GalleryController extends Controller
     public function edit(PropertyGalleryModel $gallery)
     {
         $propertyName = PropertiesModel::where('id', $gallery->properties_id)->value('property_name');
+        $slug = PropertiesModel::where('id', $gallery->properties_id)->value('property_slug');
+
         $gallery->load(['images' => fn($q) => $q->orderBy('order')]);
 
-        return view('admin.properties.gallery.edit', compact(['gallery', 'propertyName']));
+        return view('admin.properties.gallery.edit', compact(['gallery', 'propertyName', 'slug']));
     }
 
     public function update(Request $request, PropertyGalleryModel $gallery)
@@ -64,8 +66,12 @@ class GalleryController extends Controller
             'pesan' => 'Gallery edited successfully',
             'swalFlashIcon' => 'success',
         ];
-        return back()->with('flashData', $flashData);
+        // return back()->with('flashData', $flashData);
         // return redirect()->route('properties.index')->with('success', 'Gallery updated');
+
+        $slug = PropertiesModel::where('id', $gallery->properties_id)->value('property_slug');
+        return redirect()->route('properties.edit', $slug)
+            ->with('flashData', $flashData);
     }
 
     public function destroy($id)

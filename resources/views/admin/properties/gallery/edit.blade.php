@@ -27,55 +27,58 @@
         {{-- <h2>Edit Properties Gallery</h2> --}}
 
         <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <h4 class="fw-semibold mb-0">Property Galleries</h4>                    
+            </div>
+        </div>
+        
+        <div class="row">
             <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header text-bg-primary" style="border-radius: 0px 0px 20px 0px">
-                        <h4 class="card-title text-uppercase">Property Galleries</h4>
-                    </div>
+                <div class="card">               
                     <div class="card-body">
-                        <div class="row">
+                        <a href="{{ route('properties.edit', $slug) }}" class="btn btn-danger mb-3">
+                            ← Back to Edit Property
+                        </a>
 
-                            <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                                <h5 class="text-dark fw-semibold"><span class="nav-icon"><i class="ri-user-line"></i></span> {{ $propertyName }}</h5>
-                                <hr>
-                                <div class="row my-3">
+                        <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
+                            <h5 class="text-dark fw-semibold">{{ $propertyName }} | Edit Gallery</h5>
+                            <hr>
+                            <div class="row my-3">
 
-                                    <form action="{{ route('gallery.update', $gallery->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
-                                        @csrf
-                                        <h5 class="text-dark fw-semibold">Existing Images</h5>
-                                        <div id="existingImages" class="d-flex mb-3 flex-wrap gap-3">
+                                <form action="{{ route('gallery.update', $gallery->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
+                                    @csrf
+                                    <h5 class="text-dark fw-semibold">Existing Images</h5>
+                                    <div id="existingImages" class="d-flex mb-3 flex-wrap gap-3">
 
-                                            @foreach ($gallery->images->sortBy('order') as $img)
-                                                <div class="img-preview" data-id="{{ $img->id }}">
-                                                    <img src="{{ asset($img->image_path) }}" style="width:150px; height:150px; object-fit:cover; border:1px solid #ccc; border-radius: 10px; padding:4px;">
-                                                    <p class="mt-1 text-center"></p>
-                                                    <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $img->id }}">Delete</button>
-                                                </div>
+                                        @foreach ($gallery->images->sortBy('order') as $img)
+                                            <div class="img-preview" data-id="{{ $img->id }}">
+                                                <img src="{{ asset($img->image_path) }}" style="width:150px; height:150px; object-fit:cover; border:1px solid #ccc; border-radius: 10px; padding:4px;">
+                                                <p class="mt-1 text-center"></p>
+                                                <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{{ $img->id }}">Delete</button>
+                                            </div>
 
-                                                @if ($img->is_featured)
-                                                    <span style="position: absolute; top: 35px; left: 25px; background-color: gold; color: black; padding: 2px 6px; font-size: 12px; border-radius: 3px;">
-                                                        Featured
-                                                    </span>
-                                                @endif
-                                            @endforeach
+                                            @if ($img->is_featured)
+                                                <span style="position: absolute; top: 35px; left: 25px; background-color: gold; color: black; padding: 2px 6px; font-size: 12px; border-radius: 3px;">
+                                                    Featured
+                                                </span>
+                                            @endif
+                                        @endforeach
 
-                                        </div>
+                                    </div>
 
-                                        <input type="hidden" name="order" id="imageOrder">
+                                    <input type="hidden" name="order" id="imageOrder">
 
-                                        <hr>
-                                        <h5 class="text-dark fw-semibold">Upload New Images</h5>
-                                        <div id="newImagesPreview" class="d-flex mb-3 flex-wrap gap-3"></div>
-                                        <input type="file" name="images[]" id="newImageInput" multiple class="form-control mb-3">
+                                    <hr>
+                                    <h5 class="text-dark fw-semibold">Upload New Images</h5>
+                                    <div id="newImagesPreview" class="d-flex mb-3 flex-wrap gap-3"></div>
+                                    <input type="file" name="images[]" id="newImageInput" multiple class="form-control mb-3">
 
-                                        <button type="submit" class="btn btn-success">Update Gallery</button>
-                                    </form>
+                                    <button type="submit" class="btn btn-success">Update Gallery</button>
+                                </form>
 
-                                </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
