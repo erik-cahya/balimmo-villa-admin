@@ -81,6 +81,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
     Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
 
+        Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImageland'])->name('gallery-images.destroy');
+    Route::get('/galleries/{gallery}/editland', [GalleryController::class, 'editland'])->name('gallery.editland');
+    Route::post('/galleries/{gallery}/updateland', [GalleryController::class, 'updateland'])->name('gallery.update');
+
     Route::get('/visit/generate/english', [DocsVisitController::class, 'generateEnglishPDF'])->name('visit.pdf.english');
     Route::post('/visit/generate/english', [DocsVisitController::class, 'generateEnglishPDF'])->name('visit.pdf.english.post');
     Route::resource('/visit', DocsVisitController::class);

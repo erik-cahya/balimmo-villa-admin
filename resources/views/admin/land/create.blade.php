@@ -517,7 +517,7 @@
                                 <div class="col-6 row bg-light-subtle border-dark rounded border p-2">
                                     <h5 class="text-dark fw-semibold">Plan shooting</h5>
                                     <hr>
-                                    <button type="button" class="btn btn-primary width-xl col-4">Book shooting on calendar</button>
+                                    <button type="button" class="btn btn-primary" style="width: fit-content">Book shooting on calendar</button>
                                 </div>
 
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">

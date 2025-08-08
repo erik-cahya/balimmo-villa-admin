@@ -62,7 +62,7 @@
                                             <label class="form-check-label" for="customCheck1"></label>
                                         </div>
                                     </th>
-                                    <th>Land Photo & Name</th>
+                                    <th style="width: 250px;">Land Photo & Name</th>
                                     <th>Agent</th>
                                     <th>Mandates</th>
                                     <th>Location</th>
@@ -89,15 +89,27 @@
                                                     <img src="{{ asset($property?->featuredImage->image_path ?? 'admin/assets/images/placeholder.webp') }}" alt="" class="avatar-md border-light border-3 rounded border" style="object-fit: cover">
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <h5 class="text-dark fw-medium mb-0 text-capitalize">{{ $property->land_name }}</h5>
+                                                    <!-- <h5 class="text-dark fw-medium mb-0 text-capitalize">{{ $property->land_name }}</h5> -->
+                                                    <h5 class="text-dark fw-medium mb-0 capitalize"
+                                                        data-bs-toggle="popover"
+                                                        data-bs-trigger="hover"
+                                                        data-bs-placement="top"
+                                                        data-bs-content="{{ $property->land_name }}">
+                                                        {{ $property->land_name }}
+                                                    </h5>
                                                     <p class="fs-13 mb-0">{{ $property->land_code }}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
-                                            <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-12 px-2 py-1">{{ $property->internal_reference }}</span>
+                                            <span class="badge {{ $property->status === 0 ? 'bg-danger' : 'bg-dark' }} text-light fs-10 px-1 py-1">{{ $property->internal_reference }}</span>
                                         </td>
-                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;"><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td>
+                                        <!-- <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;"><span class="badge text-capitalize bg-primary-subtle text-primary fs-12 px-2 py-1">{{ $property->type_mandate }}</span></td> -->
+                                        <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
+                                            <span class="badge text-capitalize bg-primary-subtle text-primary fs-11 px-1 py-1">
+                                                {{ \Illuminate\Support\Str::of($property->type_mandate)->replaceMatches('/\s*mandate\s*$/i', '')->trim() }}
+                                            </span>
+                                        </td>
                                         <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;" class="text-capitalize">
                                             <span class="text-dark fw-medium fs-15">{{ $property->area }}</span>
                                         </td>
@@ -137,20 +149,22 @@
                                             }
                                         @endphp
                                         <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
-                                            <span class="badge {{ $badgeClass }} text-light fs-12 text-capitalize px-2 py-1" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{ $popOverContent }}" title="{{ $popOverTitle }}">
+                                            <span class="badge {{ $badgeClass }} text-light fs-12 text-capitalize px-1 py-1" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="{{ $popOverContent }}" title="{{ $popOverTitle }}">
                                                 {{ $property->type_acceptance }}
                                             </span>
                                         </td>
 
                                         <td>                                        
-
-                                            <div class="d-flex gap-2">
-                                                
-                                                <a href="{{ route('land.edit', $property->land_slug) }}" class="btn btn-soft-warning btn-sm"><iconify-icon icon="tabler:edit" class="fs-18 align-middle"></iconify-icon></a>
+                                            <div class="d-flex gap-2">                                                
+                                                <a href="{{ route('land.edit', $property->land_slug) }}" class="btn btn-soft-warning btn-sm">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M7 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0-2.97-2.97L9 12v3h3zM16 5l3 3"/></g></svg>
+                                                </a>
                                                
                                                 {{-- Delete Button --}}
                                                 <input type="hidden" class="propertyId" value="{{ $property->id }}">
-                                                <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->property_name }}"><iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="fs-18 align-middle"></iconify-icon></button>
+                                                <button type="button" class="btn btn-soft-danger btn-sm deleteButton" data-nama="{{ $property->property_name }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M9.17 4a3.001 3.001 0 0 1 5.66 0m5.67 2h-17m14.874 9.4c-.177 2.654-.266 3.981-1.131 4.79s-2.195.81-4.856.81h-.774c-2.66 0-3.99 0-4.856-.81c-.865-.809-.953-2.136-1.13-4.79l-.46-6.9m13.666 0l-.2 3M9.5 11l.5 5m4.5-5l-.5 5"/></svg>
+                                                </button>
                                                 {{-- /. Delete Button --}}
                                             </div>
 

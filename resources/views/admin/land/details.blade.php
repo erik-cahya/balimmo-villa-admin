@@ -347,30 +347,43 @@
                     <div class="card">
                         <div class="card-body"> 
 
-                            <!-- Gallery Data Start -->
+                            <!-- Gallery Data Start -->                           
                             <div class="row mb-1">
                                 <h4>Gallery</h4>
-                                
                                 <div class="row">
-                                    @foreach ($image_gallery as $gallery)
-                                        <a href="{{ asset($gallery->image_path) }}" class="glightbox col-3 mb-3" data-gallery="property-gallery">
-                                            <img src="{{ asset($gallery->image_path) }}" class="w-100" style="border-radius:5px;">
-                                        </a>
-                                    @endforeach
+                                    @if (!empty($image_gallery) && count($image_gallery) > 0)
+                                        @foreach ($image_gallery as $gallery)
+                                            <a href="{{ asset($gallery->image_path) }}"
+                                            class="glightbox col-3 mb-3"
+                                            data-gallery="property-gallery">
+                                                <img src="{{ asset($gallery->image_path) }}"
+                                                    style="width: 130px; height: 5rem; object-fit:cover; border-radius: 10px;">
+                                            </a>
+                                        @endforeach
+                                    @else
+                                        <p class="text-muted">No image</p>
+                                    @endif
                                 </div>
-                                
                             </div>
                             <!-- Gallery Data End -->
 
                             <!-- Video Data Start -->
                             <div class="row mb-1">
                                 <h4>Video</h4>
-                                @if (($experience !== null) | ($virtualTour !== null) | ($lifestyle !== null))
-                                
+                                @if (($experience !== null) || ($virtualTour !== null) || ($lifestyle !== null))
+                                    
                                     @if ($virtualTour !== null)
                                         <div class="col-4">
                                             <div class="ratio ratio-16x9">
-                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $virtualTour }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                                <iframe width="560" height="315"
+                                                    src="https://www.youtube.com/embed/{{ $virtualTour }}"
+                                                    title="YouTube video player"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    referrerpolicy="strict-origin-when-cross-origin"
+                                                    class="rounded"
+                                                    allowfullscreen>
+                                                </iframe>
                                             </div>
                                             <span class="text-dark d-inline-block my-2">
                                                 <a href="https://www.youtube.com/embed/{{ $virtualTour }}">Visit Tour Video</a>
@@ -379,27 +392,45 @@
                                     @endif
                                     
                                     @if ($experience !== null)
-                                        <div class="col-4">                                            
+                                        <div class="col-4">
                                             <div class="ratio ratio-16x9">
-                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $experience }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                                <iframe width="560" height="315"
+                                                    src="https://www.youtube.com/embed/{{ $experience }}"
+                                                    title="YouTube video player"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    referrerpolicy="strict-origin-when-cross-origin"
+                                                    class="rounded"
+                                                    allowfullscreen>
+                                                </iframe>
                                             </div>
                                             <span class="text-dark d-inline-block my-2">
                                                 <a href="https://www.youtube.com/embed/{{ $experience }}">Experience Video</a>
                                             </span>
                                         </div>
-                                    @endif                                
-
+                                    @endif
+                                    
                                     @if ($lifestyle !== null)
                                         <div class="col-4">
                                             <div class="ratio ratio-16x9">
-                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $lifestyle }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+                                                <iframe width="560" height="315"
+                                                    src="https://www.youtube.com/embed/{{ $lifestyle }}"
+                                                    title="YouTube video player"
+                                                    frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    referrerpolicy="strict-origin-when-cross-origin"
+                                                    class="rounded"
+                                                    allowfullscreen>
+                                                </iframe>
                                             </div>
                                             <span class="text-dark d-inline-block my-2">
                                                 <a href="https://www.youtube.com/embed/{{ $lifestyle }}">Lifestyle Video</a>
                                             </span>
                                         </div>
                                     @endif
-                          
+
+                                @else
+                                    <p class="text-muted">No video</p>
                                 @endif
                             </div>
                             <!-- Video Data End -->

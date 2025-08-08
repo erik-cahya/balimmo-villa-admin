@@ -606,7 +606,7 @@
                                 <div class="col-6 row bg-light-subtle border-dark rounded border p-2">
                                     <h5 class="text-dark fw-semibold">Plan shooting</h5>
                                     <hr>
-                                    <button type="button" class="btn btn-primary width-xl col-4">Book shooting on calendar</button>
+                                    <button type="button" class="btn btn-primary" style="width: fit-content">Book shooting on calendar</button>
                                 </div>
 
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
@@ -623,7 +623,7 @@
                                                     @foreach (session('old_images') as $index => $img)
                                                         <div class="img-preview" data-index="{{ $index }}">
                                                             <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
-                                                                style="width: 100%; max-width: 100px; aspect-ration: 16 / 9; object-fit: cover; border: 1px solid #ccc; padding: 2px;">
+                                                                style="width: 130px; height: 5rem; aspect-ration: 16 / 9; object-fit: cover; border: 1px solid #ccc; padding: 2px;">
                                                             <p class="mb-0 mt-1 text-center">Image {{ $index + 1 }}</p>
                                                             <input type="hidden" name="old_images[]" value="{{ $img }}">
                                                         </div>
@@ -656,7 +656,7 @@
             <div class="mb-3 rounded">
                 <div class="row justify-content-end g-2">
                     <div class="col-lg-2">
-                        <a href="#!" class="btn btn-danger w-100">Cancel</a>
+                        <a href="/properties" class="btn btn-danger w-100">Cancel</a>
                     </div>
                     <div class="col-lg-2">
                         <button type="submit" class="btn btn-primary w-100">Create Villa</button>

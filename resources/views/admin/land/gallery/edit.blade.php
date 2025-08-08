@@ -42,7 +42,7 @@
                         </a>
 
                         <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
-                            <h5 class="text-dark fw-semibold">{{ $propertyName }} | Edit Gallery</h5>
+                            <h5 class="text-dark fw-semibold">| Edit Gallery</h5>
                             <hr>
                             <div class="row my-3">
 

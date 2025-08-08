@@ -37,60 +37,47 @@ class LandController extends Controller
      */
     public function index()
     {
+        // Kolom yang diperlukan (prefix tabel untuk hindari ambiguous)
+        $baseSelect = [
+            'land.id',
+            'land.type_properties',
+            'land.land_name',
+            'land.land_slug',
+            'land.internal_reference',
+            'land.land_code',
+            'land.total_land_area',
+            'land.area',          // hapus baris ini jika kolom 'area' tidak ada di tabel land
+            'land.region',
+            'land.sub_region',
+            'land.land_address',
+            'land.type_mandate',
+            'land.type_acceptance',
+            'land_financial.selling_price_idr',
+            'land_financial.selling_price_usd',
+            'users.name as agentName',
+            'users.status',
+            'land.created_at',
+        ];
 
-        if (Auth::user()->role == 'master') {
-            $data['data_land'] = LandModel::select(
-                'land.id',
-                'land.type_properties',
-                'land_name',
-                'land_slug',
-                'internal_reference',
-                'land_code',
-                'area',
-                'region',
-                'total_land_area',
-                'sub_region',
-                'land_address',
-                'type_mandate',
-                'type_acceptance',
-                'users.name as agentName',
-                'users.status',
-                'land_financial.selling_price_idr',
-                'land_financial.selling_price_usd',
+        // Query dasar
+        $query = LandModel::select($baseSelect)
+            ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
+            ->leftJoin('users', 'users.reference_code', '=', 'land.internal_reference')
+            ->with([
+                'featuredImage' => function ($q) {
+                    $q->select('image_path', 'land_gallery.id')
+                      ->where('is_featured', 1);
+                }
+            ])
+            ->orderByDesc('land.created_at'); // jika tidak ada timestamps, ganti ke ->orderByDesc('land.id')
 
-            )
-                ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
-                ->with(['featuredImage' => function ($query) {
-                    $query->select('image_path', 'land_gallery.id');
-                    $query->where('is_featured', 1);
-                }])->leftJoin('users', 'reference_code', '=', 'land.internal_reference')->get();
-        } else {
-            $data['data_land'] = LandModel::where('land.internal_reference', Auth::user()->reference_code)
-                ->select(
-                    'land.id',
-                    'land.type_properties',
-                    'land_name',
-                    'land_slug',
-                    'internal_reference',
-                    'land_code',
-                    'total_land_area',
-                    'region',
-                    'sub_region',
-                    'land_address',
-                    'type_mandate',
-                    'type_acceptance',
-                    'land_financial.selling_price_idr',
-                    'land_financial.selling_price_usd',
-
-                )
-                ->join('land_financial', 'land_financial.land_id', '=', 'land.id')
-                ->with(['featuredImage' => function ($query) {
-                    $query->select('image_path', 'land_gallery.id');
-                    $query->where('is_featured', 1);
-                }])->get();
+        // Filter jika bukan master
+        if (Auth::user()->role !== 'master') {
+            $query->where('land.internal_reference', Auth::user()->reference_code);
         }
 
-        // dd($data['data_land']);
+        // Paginate 50 per halaman
+        $data['data_land'] = $query->paginate(50);
 
         return view('admin.land.index', $data);
     }

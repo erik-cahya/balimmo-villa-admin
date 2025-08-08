@@ -26,72 +26,55 @@ class PropertiesController extends Controller
 {
     public function index()
     {
+        $baseSelect = [
+            'properties.id',
+            'properties.type_properties',
+            'property_name',
+            'property_slug',
+            'internal_reference',
+            'bedroom',
+            'property_code',
+            'area',
+            'region',
+            'sub_region',
+            'property_address',
+            'type_mandate',
+            'type_acceptance',
+            'bathroom',
+            'property_financial.desired_price_idr',
+            'property_financial.desired_price_usd',
+            'property_financial.selling_price_idr',
+            'property_financial.selling_price_usd',
+            // pastikan kolom yg kamu butuh ada di select
+            // 'property_financial.net_seller_idr', 'property_financial.net_seller_usd',
+            // 'property_financial.net_price_idr', 'property_financial.net_price_usd',
+            'properties.created_at',
+        ];
 
         if (Auth::user()->role == 'master') {
-            $data['data_property'] = PropertiesModel::select(
-                'properties.id',
-                'properties.type_properties',
-                'property_name',
-                'property_slug',
-                'internal_reference',
-                'bedroom',
-                'property_code',
-                'area',
-                'region',
-                'sub_region',
-                'property_address',
-                'type_mandate',
-                'type_acceptance',
-                'bathroom',
-                'users.name as agentName',
-                'users.status',
-                'property_financial.desired_price_idr',
-                'property_financial.desired_price_usd',
-                'property_financial.selling_price_idr',
-                'property_financial.selling_price_usd',
-                'property_financial.net_seller_idr',
-                'property_financial.net_seller_usd',
-
-            )
+            $query = PropertiesModel::select($baseSelect)
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                ->with(['featuredImage' => function ($query) {
-                    $query->select('image_path', 'property_gallery.id');
-                    $query->where('is_featured', 1);
-                }])->leftJoin('users', 'reference_code', '=', 'properties.internal_reference')->get();
+                ->leftJoin('users', 'users.reference_code', '=', 'properties.internal_reference')
+                ->with(['featuredImage' => function ($q) {
+                    $q->select('image_path', 'property_gallery.id')->where('is_featured', 1);
+                }])
+                ->orderByDesc('properties.created_at');
         } else {
-            $data['data_property'] = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
-                ->select(
-                    'properties.id',
-                    'properties.type_properties',
-                    'property_name',
-                    'property_slug',
-                    'internal_reference',
-                    'bedroom',
-                    'property_code',
-                    'region',
-                    'sub_region',
-                    'property_address',
-                    'type_mandate',
-                    'type_acceptance',
-                    'bathroom',
-                    'property_financial.desired_price_idr',
-                    'property_financial.desired_price_usd',
-                    'property_financial.selling_price_idr',
-                    'property_financial.selling_price_usd',
-                    'property_financial.net_price_idr',
-                    'property_financial.net_price_usd',
-
-                )
+            $query = PropertiesModel::where('properties.internal_reference', Auth::user()->reference_code)
+                ->select($baseSelect)
                 ->join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
-                ->with(['featuredImage' => function ($query) {
-                    $query->select('image_path', 'property_gallery.id');
-                    $query->where('is_featured', 1);
-                }])->get();
+                ->with(['featuredImage' => function ($q) {
+                    $q->select('image_path', 'property_gallery.id')->where('is_featured', 1);
+                }])
+                ->orderByDesc('properties.created_at');
         }
 
+        // Lebih bagus pakai paginate biar ringan:
+        $data['data_property'] = $query->paginate(50);
 
         return view('admin.properties.index', $data);
     }
+
 
     public function create()
     {

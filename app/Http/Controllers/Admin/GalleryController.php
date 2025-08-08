@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\PropertiesModel;
 use App\Models\PropertyGalleryImageModel;
 use App\Models\PropertyGalleryModel;
+
+use App\Models\Land\LandModel;
+use App\Models\Land\LandGalleryImageModel;
+use App\Models\Land\LandGalleryModel;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -21,6 +26,16 @@ class GalleryController extends Controller
         $gallery->load(['images' => fn($q) => $q->orderBy('order')]);
 
         return view('admin.properties.gallery.edit', compact(['gallery', 'propertyName', 'slug']));
+    }
+
+    public function editland(LandGalleryModel $gallery)
+    {
+        $landName = LandModel::where('id', $gallery->land_id)->value('land_name');
+        $slug = LandModel::where('id', $gallery->land_id)->value('land_slug');
+
+        $gallery->load(['images' => fn($q) => $q->orderBy('order')]);
+
+        return view('admin.land.gallery.edit', compact(['gallery', 'landName', 'slug']));
     }
 
     public function update(Request $request, PropertyGalleryModel $gallery)
@@ -73,6 +88,8 @@ class GalleryController extends Controller
         return redirect()->route('properties.edit', $slug)
             ->with('flashData', $flashData);
     }
+
+    
 
     public function destroy($id)
     {

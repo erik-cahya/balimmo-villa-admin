@@ -4,6 +4,7 @@
 @endpush
 @section('content')
     <!-- Start Hero section -->
+     <iframe width="560" height="315" src="https://www.youtube.com/embed/X_44526J0ik?si=TliiL0mxbDjJ8NBu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     <div class="hero__section hero__section--bg">
         <div class="container-fluid-2">
             <div class="hero__section--inner">
@@ -131,22 +132,7 @@
                     </div>
                     <br>
                     <br>
-                    <!-- <div class="about__content--info d-flex">
-                                                                                                                                                                                                                                                                            <div class="about__content--info__list d-flex align-items-center">
-                                                                                                                                                                                                                                                                                <div class="about__content--info__icon">
-                                                                                                                                                                                                                                                                                    <img src="{{ asset('landing') }}/assets/img/other/about-info-icon3.png" alt="icon">
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                <h3 class="about__content--info__title">Perfect Duplex
-                                                                                                                                                                                                                                                                                    Houses</h3>
-                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                            <div class="about__content--info__list d-flex align-items-center">
-                                                                                                                                                                                                                                                                                <div class="about__content--info__icon">
-                                                                                                                                                                                                                                                                                    <img src="{{ asset('landing') }}/assets/img/other/about-info-icon4.png" alt="icon">
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                <h3 class="about__content--info__title">Friendly Support
-                                                                                                                                                                                                                                                                                    Team</h3>
-                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                        </div> -->
+                  
                     <div class="about__content--details d-flex align-items-center">
                         <div class="about__experince">
                             <span class="about__experince--number">25</span>

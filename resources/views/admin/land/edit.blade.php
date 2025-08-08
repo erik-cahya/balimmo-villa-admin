@@ -566,7 +566,7 @@
                                 <div class="col-6 row bg-light-subtle border-dark rounded border p-2">
                                     <h5 class="text-dark fw-semibold">Plan shooting</h5>
                                     <hr>
-                                    <button type="button" class="btn btn-primary width-xl col-4">Book shooting on calendar</button>
+                                    <button type="button" class="btn btn-primary" style="width: fit-content">Book shooting on calendar</button>
                                 </div>
 
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
@@ -575,16 +575,136 @@
                                     <div class="row">
                                         <div class="col-lg-12 d-block mb-3">
                                         <label for="gallery" class="form-label d-block">Property Gallery </label>
+                                        <!-- <p>{{ dump($image_gallery) }}</p> -->
 
                                         <div class="row">
                                         @foreach ($image_gallery as $gallery)
                                             <a href="{{ asset($gallery->image_path) }}" class="glightbox col-3 mb-3" data-gallery="property-gallery">
-                                                <img src="{{ asset($gallery->image_path) }}" style="width: 100%; height: 5rem; object-fit:cover; border-radius: 10px">
+                                                <img src="{{ asset($gallery->image_path) }}" 
+                                                style="width: 130px; height: 5rem; aspect-ration: 16 / 9; object-fit: cover; border: 1px solid #ccc; padding: 2px;">
                                             </a>
                                         @endforeach
-                                        </div>                                    
-                                    </div>    
-                                    
+                                        </div>
+
+                                        @if (isset($image_gallery[0]->land_gallery_id))
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <a href="{{ route('gallery.editland', $image_gallery[0]->land_gallery_id) }}" class="btn btn-sm btn-primary">Edit Gallery</a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <input type="file" name="images[]" id="imageInput" multiple accept="image/*" class="form-control mb-1">
+
+                                            <div id="previewContainer" class="d-flex flex-wrap gap-3">
+                                                @if (session('old_images'))
+                                                    @foreach (session('old_images') as $index => $img)
+                                                        <div class="img-preview" data-index="{{ $index }}">
+                                                            <img src="{{ asset('tmp_uploads/' . Auth::user()->reference_code . '/' . $img) }}" alt="Preview"
+                                                                style="width: 130px; height: 5rem; aspect-ration: 16 / 9; object-fit: cover; border: 1px solid #ccc; padding: 2px;">
+                                                            <p class="mt-1 text-center">Image {{ $index + 1 }}</p>
+                                                            <input type="hidden" name="old_images[]" value="{{ $img }}">
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+
+                                            <input type="hidden" name="order" id="imageOrder">
+
+                                            @error('images')
+                                                <div class="alert alert-danger" role="alert">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        @endif
+
+                                    </div>   
+                                    <div class="d-flex flex-column gap-2">
+                                        @php
+                                            // Pastikan $attachment berupa array agar aman diakses
+                                            $att = is_array($attachment ?? null) ? $attachment : [];
+
+                                            // Hindari redeclare function saat view di-include berkali-kali
+                                            if (!function_exists('extractYouTubeID')) {
+                                                function extractYouTubeID($url) {
+                                                    if (!$url) return null;
+                                                    preg_match('/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/', $url, $m);
+                                                    return $m[1] ?? null;
+                                                }
+                                            }
+
+                                            // Ambil nilai (atau kosong) + siapkan ID untuk preview
+                                            $urlVirtualTour = $att['url_virtual_tour'] ?? '';
+                                            $urlLifestyle   = $att['url_lifestyle'] ?? '';
+                                            $urlExperience  = $att['url_experience'] ?? '';
+
+                                            $videoVirtualTour = extractYouTubeID($urlVirtualTour);
+                                            $videoLifestyle   = extractYouTubeID($urlLifestyle);
+                                            $videoExperience  = extractYouTubeID($urlExperience);
+                                        @endphp
+
+                                        {{-- VIRTUAL TOUR --}}
+                                        <div>
+                                            <x-form-input className="col-12 yt-input"
+                                                        type="text"
+                                                        name="url_virtual_tour"
+                                                        label="Visit Tour"
+                                                        value="{{ old('url_virtual_tour', $urlVirtualTour) }}"
+                                                        data-preview-id="preview_virtual_tour" />
+                                            @if ($videoVirtualTour)
+                                                <div class="col-4 mt-2">
+                                                    <div class="ratio ratio-16x9">
+                                                        <iframe id="preview_virtual_tour"
+                                                                width="560" height="315"
+                                                                src="https://www.youtube.com/embed/{{ $videoVirtualTour }}"
+                                                                frameborder="0" allowfullscreen
+                                                                class="rounded"></iframe>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        {{-- LIFESTYLE --}}
+                                        <div>
+                                            <x-form-input className="col-12 yt-input"
+                                                        type="text"
+                                                        name="url_lifestyle"
+                                                        label="Lifestyle"
+                                                        value="{{ old('url_lifestyle', $urlLifestyle) }}"
+                                                        data-preview-id="preview_lifestyle" />
+                                            @if ($videoLifestyle)
+                                                <div class="col-4 mt-2">
+                                                    <div class="ratio ratio-16x9">
+                                                        <iframe id="preview_lifestyle"
+                                                                width="560" height="315"
+                                                                src="https://www.youtube.com/embed/{{ $videoLifestyle }}"
+                                                                frameborder="0" allowfullscreen
+                                                                class="rounded"></iframe>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        {{-- EXPERIENCE --}}
+                                        <div>
+                                            <x-form-input className="col-12 yt-input"
+                                                        type="text"
+                                                        name="url_experience"
+                                                        label="Experience"
+                                                        value="{{ old('url_experience', $urlExperience) }}"
+                                                        data-preview-id="preview_experience" />
+                                            @if ($videoExperience)
+                                                <div class="col-4 mt-2">
+                                                    <div class="ratio ratio-16x9">
+                                                        <iframe id="preview_experience"
+                                                                width="560" height="315"
+                                                                src="https://www.youtube.com/embed/{{ $videoExperience }}"
+                                                                frameborder="0" allowfullscreen
+                                                                class="rounded"></iframe>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
                                    
                                 </div>
 
