@@ -19,6 +19,7 @@ yarn-error.log
 /.vscode
 
 /public/gallery
+/public/admin/gallery
 /public/admin/profile-image 
 /public/tmp_uploads
 
