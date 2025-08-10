@@ -49,7 +49,7 @@
                     </nav>
                 </div>
                 <div class="main__header--right d-flex align-items-center">
-                    <li class="main__menu--items me-0">
+                    <!-- <li class="main__menu--items me-0">
                         <a class="main__menu--link" href="./listing.html"> Select Currency</a>
                         <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 12 7.41">
                             <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7"></path>
@@ -58,7 +58,7 @@
                             <li class="sub__menu--items"><a href="/" class="sub__menu--link">USD</a></li>
                             <li class="sub__menu--items"><a href="/" class="sub__menu--link">IDR</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                     <a class="add__listing--btn solid__btn" href="{{ route('landing-page.contact') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
