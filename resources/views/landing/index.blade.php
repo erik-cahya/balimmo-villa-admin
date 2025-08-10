@@ -4,7 +4,6 @@
 @endpush
 @section('content')
     <!-- Start Hero section -->
-     <iframe width="560" height="315" src="https://www.youtube.com/embed/X_44526J0ik?si=TliiL0mxbDjJ8NBu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     <div class="hero__section hero__section--bg">
         <div class="container-fluid-2">
             <div class="hero__section--inner">
@@ -20,9 +19,9 @@
                             <li class="nav-item advance__tab--btn__list">
                                 <button class="advance__tab--btn__field active" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Villa </button>
                             </li>
-                            <li class="nav-item advance__tab--btn__list">
+                            <!-- <li class="nav-item advance__tab--btn__list">
                                 <button class="advance__tab--btn__field" data-bs-toggle="tab" data-bs-target="#buy" type="button"> Land </button>
-                            </li>
+                            </li> -->
                         </ul>
                         <form action="{{ route('filter.properties') }}" method="POST">
                             @csrf

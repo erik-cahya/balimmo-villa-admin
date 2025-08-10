@@ -248,13 +248,25 @@
                                     </div>
 
                                     <div class="mt-2">
-                                        <label for="description" class="form-label">Features</label>
-                                        <div class="d-flex gap-4">
+                                        <label class="form-label">Features</label>
+                                        <div class="d-flex gap-4 flex-wrap">
                                             @foreach ($feature_list as $feature)
-                                                <x-form-checkbox className="form-check" name="feature[{{ $feature->slug }}]" label="{{ $feature->name }}" />
+                                            @php $fid = 'feature_'.$feature->id; @endphp
+                                            <div class="form-check">
+                                                <input
+                                                type="checkbox"
+                                                class="form-check-input"
+                                                name="feature[]"
+                                                value="{{ $feature->id }}"
+                                                id="{{ $fid }}"
+                                                {{ !empty($selected_feature_ids) && in_array($feature->id, $selected_feature_ids) ? 'checked' : '' }}
+                                                >
+                                                <label class="form-check-label" for="{{ $fid }}">{{ $feature->name }}</label>
+                                            </div>
                                             @endforeach
                                         </div>
-                                    </div>
+                                        </div>
+
 
                                 </div>
                                 <div class="col-6 row bg-light-subtle border-dark rounded border px-1 py-2">
@@ -551,9 +563,9 @@
                                             @enderror
 
                                         </div>
-                                        <x-form-input className="col-12" type="text" name="leasehold_negotiation_ext_cost" label="Visit Tour Link" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Lifestyle" />
-                                        <x-form-input className="col-12" type="text" name="leasehold_purchase_cost" label="Experience" />
+                                        <x-form-input className="col-12" type="text" name="url_virtual_tour" label="Visit Tour Link" />
+                                        <x-form-input className="col-12" type="text" name="url_lifestyle" label="Lifestyle" />
+                                        <x-form-input className="col-12" type="text" name="url_experience" label="Experience" />
                                     </div>
 
                                 </div>

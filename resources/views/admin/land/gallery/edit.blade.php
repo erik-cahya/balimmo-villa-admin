@@ -24,12 +24,12 @@
 @endpush
 @section('content')
     <div class="container-fluid">
-        {{-- <h2>Edit Properties Gallery</h2> --}}
+        {{-- <h2>Edit Land Gallery</h2> --}}
 
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <h4 class="fw-semibold mb-0">Property Galleries</h4>                    
+                    <h4 class="fw-semibold mb-0">Land Galleries</h4>                    
             </div>
         </div>
         
@@ -37,16 +37,17 @@
             <div class="col-lg-12">
                 <div class="card">               
                     <div class="card-body">
-                        <a href="{{ route('properties.edit', $slug) }}" class="btn btn-danger mb-3">
-                            ← Back to Edit Property
+                        <a href="{{ route('land.edit', $slug) }}" class="btn btn-danger mb-3">
+                            ← Back to Edit Land
                         </a>
 
                         <div class="bg-light-subtle border-dark mb-4 rounded border px-3 pt-4">
                             <h5 class="text-dark fw-semibold">| Edit Gallery</h5>
                             <hr>
                             <div class="row my-3">
+                                
+                                <form action="{{ route('gallery.updateland', $gallery->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
 
-                                <form action="{{ route('gallery.update', $gallery->id) }}" method="POST" enctype="multipart/form-data" id="galleryForm">
                                     @csrf
                                     <h5 class="text-dark fw-semibold">Existing Images</h5>
                                     <div id="existingImages" class="d-flex mb-3 flex-wrap gap-3">
@@ -93,36 +94,39 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.btn-delete').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const imageId = this.getAttribute('data-id');
-                    if (confirm('Are you sure you want to delete this image?')) {
-                        fetch(`/gallery-images/${imageId}`, {
-                                method: 'DELETE',
-                                headers: {
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                    'Accept': 'application/json',
-                                }
-                            })
-                            .then(res => res.json())
-                            .then(data => {
-                                console.log(data);
+                const imageId = this.getAttribute('data-id');
+                if (!confirm('Are you sure you want to delete this image?')) return;
 
-                                if (data.success) {
-
-                                    // remove image from DOM
-                                    this.closest('.img-preview').remove();
-
-                                    Swal.fire({
-                                        title: 'Edit Gallery Success',
-                                        text: 'Gallery edited successfully',
-                                        icon: 'success',
-                                        confirmButtonText: 'OK'
-                                    });
-                                }
-                            });
+                fetch(`/land-gallery-images/${imageId}`, {   // <— ganti ke endpoint LAND
+                    method: 'DELETE',
+                    headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
                     }
+                })
+                .then(async res => {
+                    if (!res.ok) {
+                    const text = await res.text();
+                    throw new Error(`HTTP ${res.status}: ${text}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                    this.closest('.img-preview').remove();
+                    Swal.fire({ title: 'Edit Gallery Success', text: 'Image deleted', icon: 'success' });
+                    } else {
+                    throw new Error('Delete failed');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    Swal.fire({ title: 'Error', text: 'Failed to delete image', icon: 'error' });
+                });
                 });
             });
-        });
+            });
+
     </script>
     {{-- /*  Delete Per Image */ --}}
 

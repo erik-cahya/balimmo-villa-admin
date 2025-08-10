@@ -378,13 +378,20 @@ class LandController extends Controller
         // ==========================================================================================================================================
         // ########### Create Property Feature Data
         // ==========================================================================================================================================
-        foreach ($request->feature as $index => $feature) {
-            $idFeature = LandFeatureListModel::select('id')->where('slug', $index)->first();
-            LandFeatureModel::create([
+        // ========== CREATE FEATURES (konsisten dengan UPDATE: pakai ID langsung) ==========
+        $featureIds = collect($request->input('feature', []))
+            ->map(fn($v) => (int)$v)->filter(fn($v) => $v > 0)->unique()->values();
+
+        if ($featureIds->isNotEmpty()) {
+            LandFeatureModel::insert($featureIds->map(fn($fid) => [
                 'land_id' => $landCreate->id,
-                'feature_land_id' => $idFeature->id
-            ]);
+                'feature_land_id' => $fid,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ])->all());
         }
+
+
 
         // ==========================================================================================================================================
         // ########### Create Property URL & Attachment ##############
@@ -706,22 +713,26 @@ class LandController extends Controller
 
         // ========== UPDATE FEATURES ========== 
         LandFeatureModel::where('land_id', $id)->delete();
-        if ($request->has('feature')) {
+
+        if (is_array($request->feature)) {
             foreach ($request->feature as $featureId) {
-                $idFeature = LandFeatureListModel::select('id')->where('slug', $featureId)->first();
-                if ($idFeature) {
+                $featureId = (int) $featureId;
+                if ($featureId > 0) {
                     LandFeatureModel::create([
-                        'land_id' => $id,
-                        'feature_land_id' => $idFeature->id,
+                        'land_id'         => $id,
+                        'feature_land_id' => $featureId,
                     ]);
                 }
             }
         }
 
-        // ========== UPDATE ATTACHMENTS ========== 
-        $attachmentKeys = ['file_rental_support', 'file_type_of_mandate', 'url_virtual_tour', 'url_lifestyle', 'url_experience'];
+        // ========== UPDATE ATTACHMENTS ==========
+        $attachmentKeys = ['file_rental_support','file_type_of_mandate','url_virtual_tour','url_lifestyle','url_experience'];
+
         foreach ($attachmentKeys as $key) {
             $value = $request->input($key);
+
+            // Handle file upload
             if ($request->hasFile($key)) {
                 $file = $request->file($key);
                 $filename = $file->getClientOriginalName();
@@ -729,13 +740,15 @@ class LandController extends Controller
                 $value = $filename;
             }
 
-            if ($value !== null && $value !== '') {
+            // Jika field ada di request (meskipun kosong), kita update.
+            if ($request->exists($key)) {
                 LandUrlAttachmentModel::updateOrCreate(
                     ['land_id' => $id, 'name' => $key],
-                    ['path_attachment' => $value]
+                    ['path_attachment' => $value ?: null]
                 );
             }
         }
+
 
         // ========== UPDATE GALLERY ========== 
         if ($request->has('old_images')) {

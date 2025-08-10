@@ -28,15 +28,15 @@ class GalleryController extends Controller
         return view('admin.properties.gallery.edit', compact(['gallery', 'propertyName', 'slug']));
     }
 
-    public function editland(LandGalleryModel $gallery)
-    {
-        $landName = LandModel::where('id', $gallery->land_id)->value('land_name');
-        $slug = LandModel::where('id', $gallery->land_id)->value('land_slug');
+    // public function editland(LandGalleryModel $gallery)
+    // {
+    //     $landName = LandModel::where('id', $gallery->land_id)->value('land_name');
+    //     $slug = LandModel::where('id', $gallery->land_id)->value('land_slug');
 
-        $gallery->load(['images' => fn($q) => $q->orderBy('order')]);
+    //     $gallery->load(['images' => fn($q) => $q->orderBy('order')]);
 
-        return view('admin.land.gallery.edit', compact(['gallery', 'landName', 'slug']));
-    }
+    //     return view('admin.land.gallery.edit', compact(['gallery', 'landName', 'slug']));
+    // }
 
     public function update(Request $request, PropertyGalleryModel $gallery)
     {
@@ -89,8 +89,6 @@ class GalleryController extends Controller
             ->with('flashData', $flashData);
     }
 
-    
-
     public function destroy($id)
     {
         $image = PropertyGalleryModel::findOrFail($id);
@@ -119,4 +117,84 @@ class GalleryController extends Controller
 
         // Cache::forget('properties_list_cache');
     }
+
+    public function editland(LandGalleryModel $gallery)
+    {
+        $landName = LandModel::where('id', $gallery->land_id)->value('land_name');
+        $slug = LandModel::where('id', $gallery->land_id)->value('land_slug');
+
+        $gallery->load(['images' => fn($q) => $q->orderBy('order')]);
+
+        return view('admin.land.gallery.edit', compact(['gallery', 'landName', 'slug']));
+    }
+
+    public function updateland(Request $request, LandGalleryModel $gallery)
+    {
+        $slug = LandModel::where('id', $gallery->land_id)->value('land_slug');
+
+        // Urutkan existing images sesuai order dari client
+        $order = array_filter(explode(',', $request->order ?? ''), fn($v) => $v !== '');
+        foreach ($order as $i => $imageId) {
+            $image = $gallery->images()->where('id', (int)$imageId)->first();
+            if ($image) {
+                $image->update([
+                    'order'       => $i,
+                    'is_featured' => $i === 0,
+                ]);
+            }
+        }
+
+        // Upload gambar baru
+        if ($request->hasFile('images')) {
+            // hitung start index berdasarkan jumlah existing image setelah re-order
+            $start = $gallery->images()->count();
+            foreach ($request->file('images') as $idx => $image) {
+                $filename = Str::uuid() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('/admin/gallery/' . $slug), $filename);
+
+                $gallery->images()->create([
+                    'image_path'  => 'admin/gallery/' . $slug . '/' . $filename,
+                    'order'       => $start + $idx,
+                    'is_featured' => false,
+                ]);
+            }
+        }
+
+        Cache::forget('land_list_cache');
+
+        return redirect()
+            ->route('land.edit', $slug)
+            ->with('flashData', [
+                'judul' => 'Edit Gallery Success',
+                'pesan' => 'Gallery edited successfully',
+                'swalFlashIcon' => 'success',
+            ]);
+    }
+
+    public function deleteImageland($id)
+    {
+        $image = \App\Models\Land\LandGalleryImageModel::findOrFail($id);
+
+        if (file_exists(public_path($image->image_path))) {
+            @unlink(public_path($image->image_path));
+        }
+
+        $galleryId = $image->land_gallery_id;
+        $image->delete();
+
+        // rapikan ulang order & featured
+        $siblings = \App\Models\Land\LandGalleryImageModel::where('land_gallery_id', $galleryId)
+            ->orderBy('order')
+            ->get();
+
+        foreach ($siblings as $i => $img) {
+            $img->update([
+                'order'       => $i,
+                'is_featured' => $i === 0,
+            ]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
 }

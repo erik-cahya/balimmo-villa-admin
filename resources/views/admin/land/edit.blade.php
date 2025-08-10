@@ -575,7 +575,6 @@
                                     <div class="row">
                                         <div class="col-lg-12 d-block mb-3">
                                         <label for="gallery" class="form-label d-block">Property Gallery </label>
-                                        <!-- <p>{{ dump($image_gallery) }}</p> -->
 
                                         <div class="row">
                                         @foreach ($image_gallery as $gallery)
@@ -589,7 +588,9 @@
                                         @if (isset($image_gallery[0]->land_gallery_id))
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <a href="{{ route('gallery.editland', $image_gallery[0]->land_gallery_id) }}" class="btn btn-sm btn-primary">Edit Gallery</a>
+                                                    <a href="{{ route('gallery.editland', $image_gallery[0]->land_gallery_id) }}" class="btn btn-sm btn-primary">
+                                                        Edit Gallery
+                                                    </a>
                                                 </div>
                                             </div>
                                         @else
