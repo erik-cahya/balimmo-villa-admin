@@ -314,7 +314,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                <x-form-input type="text" name="constructor_name" label="Constructor name" value="{{ old('constructor_name', $data_properties->consturctor_name) }}"/>
+                                                <x-form-input type="text" name="constructor_name" label="Constructor name" value="{{ old('consturctor_name', $data_properties->consturctor_name) }}"/>
                                             </div>
                                         </div>
                                     </div>
