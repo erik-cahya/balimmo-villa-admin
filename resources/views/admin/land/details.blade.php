@@ -313,6 +313,13 @@
                                 <br>IDR {{ number_format($data_properties->desired_price_idr, 2, ',', '.') }}</p>
                                 <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Net seller price (USD)</span><span class="mx-2">:</span>
                                 <br>USD {{ number_format($data_properties->desired_price_usd, 2, ',', '.') }}</p>
+
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Balimmo Commision</span><span class="mx-2">:</span>
+                                <br>IDR {{ number_format($data_properties->balimmo_commision_idr, 2, ',', '.') }} | {{ $data_properties->balimmo_commision }}%</p>
+                                <p class="col-lg-6 mb-2"><span class="fw-medium text-dark">Agent Commision</span><span class="mx-2">:</span>
+                                <br>IDR {{ isset($data_properties->agent_commision_idr) ? number_format($data_properties->agent_commision_idr, 2, ',', '.') : '-' }} 
+                                    | 
+                                    {{ isset($data_properties->agent_commision) ? $data_properties->agent_commision : '-'}} %</p>
                             </div>
                         </div>
                     </div>

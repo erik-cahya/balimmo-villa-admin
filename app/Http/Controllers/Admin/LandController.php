@@ -102,6 +102,11 @@ class LandController extends Controller
         $property->selling_price_usd    = optional($financial)->selling_price_usd;
         $property->net_seller_idr       = optional($financial)->net_seller_idr;
         $property->net_seller_usd       = optional($financial)->net_seller_usd;
+        $property->net_seller_idr       = optional($financial)->net_seller_idr;
+        $property->agent_commision      = optional($financial)->agent_commision;
+        $property->agent_commision_idr  = optional($financial)->agent_commision_idr;
+        $property->balimmo_commision    = optional($financial)->balimmo_commision;
+        $property->balimmo_commision_idr= optional($financial)->balimmo_commision_idr;
 
         $property->company_name         = optional($legal)->company_name;
         $property->rep_first_name       = optional($legal)->rep_first_name;
@@ -373,8 +378,10 @@ class LandController extends Controller
 
             // Commission Details
             'agent_commision' => $request->commission_of_the_agent,
+            'agent_commision_idr' => $this->convertToInteger($request->commission_of_the_agent_idr),
             'give_balimmo_commision' => $request->full_commission_balimmo,
             'balimmo_commision' => $request->balimmo_commission,
+            'balimmo_commision_idr' => $this->convertToInteger($request->balimmo_commission_idr),
 
             // Sale Price & Net Profit
             'selling_price_idr' => $idrPrice,
@@ -549,8 +556,10 @@ class LandController extends Controller
 
                 // Commission Details
                 'land_financial.agent_commision',
+                'land_financial.agent_commision_idr',
                 'land_financial.give_balimmo_commision',
                 'land_financial.balimmo_commision',
+                'land_financial.balimmo_commision_idr',
                 
                 // Sale Price & Net Profit
                 'land_financial.selling_price_idr',
@@ -704,17 +713,23 @@ class LandController extends Controller
             'average_price_status' => $request->average_price_status,
             'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
             'avg_occupancy_rate' => $request->average_occupancy_rate,
+            
             'find_property_of' => $request->find_property,
             'agent_name' => $request->agent_name,
             'agent_email' => $request->agent_email,
             'agent_phone' => $request->agent_whatsapp,
+
             'base_price_option' => $request->base_price,
             'base_price' => $this->convertToInteger($request->desire_price_from_the_owner),
             'desired_price_idr' => $this->convertToInteger($request->price_to_owner),
             'desired_price_usd' => $this->idrToUsdConvert($request->price_to_owner),
+
             'agent_commision' => $request->commission_of_the_agent,
+            'agent_commision_idr' => $this->convertToInteger($request->commission_of_the_agent_idr),
             'give_balimmo_commision' => $request->full_commission_balimmo,
             'balimmo_commision' => $request->balimmo_commission,
+            'balimmo_commision_idr' => $this->convertToInteger($request->balimmo_commission_idr),
+            
             'selling_price_idr' => $this->convertToInteger($request->website_price),
             'selling_price_usd' => $this->idrToUsdConvert($request->website_price),
             'net_seller_idr' => $this->convertToInteger($request->net_profit),

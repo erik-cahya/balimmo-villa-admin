@@ -66,7 +66,7 @@
                                     <th>Agent</th>
                                     <th>Mandates</th>
                                     <th>Location</th>
-                                    <th>Size (m²)</th>
+                                    <th>Size (are)</th>
                                     <th>Price</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -114,7 +114,7 @@
                                             <span class="text-dark fw-medium fs-15">{{ $property->area }}</span>
                                         </td>
                                         <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;">
-                                            <span class="text-dark fw-medium fs-15">{{ $property->total_land_area }} m²</span>
+                                            <span class="text-dark fw-medium fs-15">{{ $property->total_land_area }}</span>
                                         </td>
 
                                         <td data-href="{{ route('land.details', $property->land_slug) }}" style="cursor: pointer;" class="text-capitalize">

@@ -224,7 +224,7 @@
                                         <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description">{{ old('description') }}</textarea>
                                     </div>
 
-                                    <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Area (m²)" />
+                                    <x-form-input className="col-lg-4" type="text" name="land_size" label="Total Land Size (are)" />
                                     <x-form-input className="col-lg-4" type="text" name="land_width" label="Width (m)" />
                                     <x-form-input className="col-lg-4" type="text" name="land_length" label="Length (m)" />
 
@@ -242,8 +242,8 @@
                                             </div>
                                         </div>
                                         <div class="col-6" id="split_field_container" style="display: none;">
-                                            <label for="split_land_value" class="form-label">Minimum split</label>
-                                            <input type="text" id="split_land_value" name="split_land_value" class="form-control" />
+                                            <label for="split_land_value" class="form-label">Minimum split (are)</label>
+                                            <input type="text" id="split_land_value" name="split_land_value" class="form-control" placeholder="Minimum split (are)"/>
                                         </div>
                                     </div>
 
@@ -456,8 +456,8 @@
 
                                     <!-- BASE PRICE -->
                                     <div class="col-12 mt-2">
-                                        <label>Base price</label>
-                                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner">
+                                        <label>Base price (IDR)</label>
+                                        <input type="text" class="form-control" id="desire_price_from_the_owner" name="desire_price_from_the_owner" placeholder="IDR">
                                     </div>
 
                                     <!-- FULL COMMISSION (AGENT ONLY) -->
@@ -474,9 +474,16 @@
                                     </div>
 
                                     <!-- COMMISSIONS -->
-                                    <div class="col-12 mt-2" id="agent_commission_field">
-                                        <label>Commission of the agent (%)</label>
-                                        <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" />
+                                    <div class="row" id="agent_commission_row" style="display: none;">
+                                        <div class="col-6 mt-2" id="agent_commission_field">
+                                            <label>Commission of the agent (%)</label>
+                                            <input type="text" id="commission_of_the_agent" name="commission_of_the_agent" class="form-control" />
+                                        </div>
+                                        
+                                        <div class="col-6 mt-2" id="agent_commission_field_idr">
+                                            <label>Commission of the agent (IDR)</label>
+                                            <input type="text" id="commission_of_the_agent_idr" name="commission_of_the_agent_idr" class="form-control" style="background: #f9f9fc" readonly/>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -486,9 +493,14 @@
                                         </div>
 
                                         <div class="col-6 mt-2">
-                                            <label>Minimum Balimmo commission (%)</label>
-                                            <input type="text" id="minimum_balimmo_commission" name="minimum_balimmo_commission" class="form-control" placeholder="%" disabled/>
+                                            <label>Balimmo commission (IDR)</label>
+                                            <input type="text" id="balimmo_commission_idr" name="balimmo_commission_idr" class="form-control" placeholder="IDR" style="background: #f9f9fc" readonly/>
                                         </div>
+
+                                        <!-- <div class="col-4 mt-2">
+                                            <label>Min Balimmo commission (%)</label>
+                                            <input type="text" id="minimum_balimmo_commission" name="minimum_balimmo_commission" class="form-control" placeholder="%" disabled/>
+                                        </div> -->
                                     </div>
 
                                     <!-- WEBSITE PRICE -->
@@ -617,9 +629,34 @@
     </script>
 
     {{-- {-- PRICE CALCULTAION --} --}}
-    <script>
-        function parseRupiah(value) {
+    <script>    function parseRupiah(value) {
             return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
+        }
+
+        function formatRupiah(value) {
+            // Hapus semua karakter non-digit
+            const number = value.replace(/[^0-9]/g, '');
+            // Format dengan titik pemisah ribuan
+            return number.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        function handleBasePriceInput(event) {
+            const input = event.target;
+            const cursorPosition = input.selectionStart;
+            const oldValue = input.value;
+            const oldLength = oldValue.length;
+            
+            // Format nilai
+            const formattedValue = formatRupiah(input.value);
+            input.value = formattedValue;
+            
+            // Hitung posisi cursor baru berdasarkan perubahan panjang
+            const newLength = formattedValue.length;
+            const lengthDiff = newLength - oldLength;
+            const newCursorPosition = cursorPosition + lengthDiff;
+            
+            // Set posisi cursor yang benar
+            input.setSelectionRange(newCursorPosition, newCursorPosition);
         }
 
         function getBalimmoCommissionRate(price) {
@@ -678,6 +715,34 @@
             return calculatedBalimmo;
         }
 
+        // FUNGSI BARU: Kalkulasi commission dalam IDR
+        function updateCommissionIDR() {
+            const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
+            const agentCommissionPercent = parseFloat(document.getElementById("commission_of_the_agent").value) || 0;
+            const balimmoCommissionPercent = parseFloat(document.getElementById("balimmo_commission").value) || 0;
+            
+            const agentCommissionIdrField = document.getElementById("commission_of_the_agent_idr");
+            const balimmoCommissionIdrField = document.getElementById("balimmo_commission_idr");
+            
+            if (!price) {
+                if (agentCommissionIdrField) agentCommissionIdrField.value = "0";
+                if (balimmoCommissionIdrField) balimmoCommissionIdrField.value = "0";
+                return;
+            }
+            
+            // Kalkulasi commission dalam IDR
+            const agentCommissionIdr = price * agentCommissionPercent / 100;
+            const balimmoCommissionIdr = price * balimmoCommissionPercent / 100;
+            
+            // Update field dengan format number
+            if (agentCommissionIdrField) {
+                agentCommissionIdrField.value = Math.round(agentCommissionIdr).toLocaleString('id-ID');
+            }
+            if (balimmoCommissionIdrField) {
+                balimmoCommissionIdrField.value = Math.round(balimmoCommissionIdr).toLocaleString('id-ID');
+            }
+        }
+
         function updateBalimmoCommission(forceUpdate = false) {
             const price = parseRupiah(document.getElementById("desire_price_from_the_owner").value);
             const balimmoInput = document.getElementById("balimmo_commission");
@@ -692,6 +757,7 @@
             if (!price || !balimmoInput) {
                 if (balimmoInput) balimmoInput.value = "0";
                 updateMinimumBalimmoCommission();
+                updateCommissionIDR(); // TAMBAHAN: Update IDR calculations
                 return;
             }
 
@@ -716,9 +782,8 @@
                 }
             }
 
-            // PERBAIKAN: Validasi hanya saat blur (kehilangan focus), bukan saat mengetik
-            // Hilangkan validasi real-time yang mengganggu pengeditan manual
-            
+            // TAMBAHAN: Update IDR calculations
+            updateCommissionIDR();
             calculateWebsitePrice();
         }
 
@@ -741,6 +806,7 @@
                 balimmoInput.value = "100";
             }
             
+            updateCommissionIDR(); // TAMBAHAN: Update IDR setelah validasi
             calculateWebsitePrice();
         }
 
@@ -782,6 +848,9 @@
             if (netProfitField) {
                 netProfitField.value = Math.round(netProfit).toLocaleString('id-ID');
             }
+
+            // TAMBAHAN: Update IDR calculations setiap kali website price dikalkulasi
+            updateCommissionIDR();
         }
 
         function setupListeners() {
@@ -798,9 +867,21 @@
             fields.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
-                    if (id === 'balimmo_commission') {
+                    if (id === 'desire_price_from_the_owner') {
+                        // Khusus untuk base price field - tambahkan formatting
+                        el.addEventListener('input', (event) => {
+                            handleBasePriceInput(event);
+                            updateBalimmoCommission(true);
+                            calculateWebsitePrice();
+                        });
+                        el.addEventListener('change', () => {
+                            updateBalimmoCommission(true);
+                            calculateWebsitePrice();
+                        });
+                    } else if (id === 'balimmo_commission') {
                         // Untuk balimmo commission, gunakan input event tanpa force update
                         el.addEventListener('input', () => {
+                            updateCommissionIDR(); // TAMBAHAN: Update IDR saat mengetik
                             calculateWebsitePrice(); // Hanya hitung ulang harga, jangan auto-update nilai
                         });
                         
@@ -828,7 +909,7 @@
             function updateFormDisplay() {
                 const agentFields = document.getElementById("agent_fields");
                 const agentCommissionFields = document.getElementById("agent_commission_fields");
-                const agentCommissionField = document.getElementById("agent_commission_field");
+                const agentCommissionRow = document.getElementById("agent_commission_row"); // TAMBAHAN: Referensi ke row agent commission
                 const commonFields = document.getElementById("common_fields");
 
                 // Always show common fields if radio is selected
@@ -837,13 +918,13 @@
                 }
 
                 if (agentRadio.checked) {
-                    agentFields.style.display = "block";
+                    if (agentFields) agentFields.style.display = "block";
                     agentCommissionFields.style.display = "block";
-                    agentCommissionField.style.display = "block";
+                    agentCommissionRow.style.display = "flex"; // TAMBAHAN: Tampilkan row agent commission untuk agent
                 } else {
-                    agentFields.style.display = "none";
+                    if (agentFields) agentFields.style.display = "none";
                     agentCommissionFields.style.display = "none";
-                    agentCommissionField.style.display = "none";
+                    agentCommissionRow.style.display = "none"; // TAMBAHAN: Sembunyikan row agent commission untuk owner
                 }
 
                 // Run Commission Calculations on load
@@ -855,8 +936,8 @@
             updateFormDisplay();
 
             // On Change Event
-            ownerRadio.addEventListener("change", updateFormDisplay);
-            agentRadio.addEventListener("change", updateFormDisplay);
+            if (ownerRadio) ownerRadio.addEventListener("change", updateFormDisplay);
+            if (agentRadio) agentRadio.addEventListener("change", updateFormDisplay);
 
             // Setup Listeners
             setupListeners();
@@ -962,7 +1043,7 @@
 
     {{-- Convert IDR to USD --}}
     <script>
-        const defaultKurs = 15000;
+        const defaultKurs = 16000;
         const cacheKey = 'usd_to_idr_rate';
         const cacheTimeKey = 'usd_to_idr_rate_time';
         const cacheTTL = 10 * 60 * 2000; // 20 minutes
