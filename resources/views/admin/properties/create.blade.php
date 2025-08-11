@@ -457,13 +457,59 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-6 row" id="rentalDataFields" style="display: none;">
-                                        <x-form-input className="col-12" type="text" name="average_nightly_rate" label="Average nightly price" />
-                                        <x-form-input className="col-12" type="text" name="average_occupancy_rate" label="Average occupation rate" />
-                                        <div class="col-12">
+                                    <div class="col-6 row" id="rentalDataFields" style="display: none">
+                                        <h5 class="text-dark fw-semibold">Choose for calculate</h5>
+                                        <hr>
+                                        
+                                        <!-- Radio buttons for calculation type -->
+                                        <div class="col-12 mb-3">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="average_price_option" id="Daily" value="Daily">
+                                                <label class="form-check-label" for="Daily">Daily</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="average_price_option" id="Monthly" value="Monthly">
+                                                <label class="form-check-label" for="Monthly">Monthly</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="average_price_option" id="Yearly" value="Yearly">
+                                                <label class="form-check-label" for="Yearly">Yearly</label>
+                                            </div>
+                                        </div>
+
+                                        <!-- Average price input with dynamic label -->
+                                        <div class="col-12 mb-1">
+                                            <label class="form-label" id="averagePriceLabel">Average price</label>
+                                            <input type="text" name="average_price" id="average_price" class="form-control" placeholder="Average price (e.g., 1.000.000)"/>
+                                        </div>
+
+                                        <!-- Average occupancy rate input (only visible for Daily option) -->
+                                        <div class="col-12 mb-1" id="occupancyRateField" style="display: none;">
+                                            <label class="form-label">Average occupation rate (%)</label>
+                                            <input type="number" name="average_occupancy_rate" id="average_occupancy_rate" class="form-control" placeholder="Average occupation rate in percentage" min="0" max="100" step="0.1"/>
+                                            <div class="form-text">Enter percentage value (e.g., 75 for 75%)</div>
+                                        </div>
+
+                                        <!-- Annual turnover (readonly, calculated automatically) -->
+                                        <div class="col-12 mb-1">
+                                            <label class="form-label">Annual turnover</label>
+                                            <input type="text" name="annual_turnover" id="annual_turnover" class="form-control" placeholder="Annual turnover" style="background: #f9f9fc" readonly/>
+                                        </div>
+
+                                        <!-- Display calculation formula -->
+                                        <div class="col-12 mb-1">
+                                            <div class="alert alert-info" id="calculationFormula" style="display: none;">
+                                                <small id="formulaText"></small>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Supporting document upload -->
+                                        <div class="col-12 mb-3">
                                             <label class="form-check-label" for="file_rental_support">Supporting document</label>
                                             <input type="file" id="file_rental_support" name="file_rental_support" class="form-control" placeholder="">
                                         </div>
+
+                                        
                                     </div>
                                 </div>
 
@@ -689,6 +735,7 @@
     <script src="{{ asset('admin/assets/js/custom/currency-format.js') }}"></script>
 
     <script src="{{ asset('admin/assets/js/axios.min.js') }}"></script>
+    
 
     {{-- {-- PRICE CALCULTAION --} --}}
     <script>
@@ -1039,6 +1086,7 @@
         });
     </script>
 
+    {{-- Rental Option --}}
     <script>
         document.querySelectorAll('input[name="average_price_status"]').forEach(function(elem) {
             elem.addEventListener('change', function() {
@@ -1051,6 +1099,137 @@
             });
         });
     </script>
+    {{-- Rental Option --}}
+    
+    {{-- Rental Calculation --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const radioButtons = document.querySelectorAll('input[name="average_price_option"]');
+            const averagePriceLabel = document.getElementById('averagePriceLabel');
+            const averagePriceInput = document.getElementById('average_price');
+            const occupancyRateField = document.getElementById('occupancyRateField');
+            const occupancyRateInput = document.getElementById('average_occupancy_rate');
+            const annualTurnoverInput = document.getElementById('annual_turnover');
+            const calculationFormula = document.getElementById('calculationFormula');
+            const formulaText = document.getElementById('formulaText');
+
+            // Function to update label based on selected option
+            function updateLabel(selectedOption) {
+                switch(selectedOption) {
+                    case 'Daily':
+                        averagePriceLabel.textContent = 'Average price per night';
+                        occupancyRateField.style.display = 'block';
+                        break;
+                    case 'Monthly':
+                        averagePriceLabel.textContent = 'Average price per month';
+                        occupancyRateField.style.display = 'none';
+                        occupancyRateInput.value = '';
+                        break;
+                    case 'Yearly':
+                        averagePriceLabel.textContent = 'Average price per year';
+                        occupancyRateField.style.display = 'none';
+                        occupancyRateInput.value = '';
+                        break;
+                    default:
+                        averagePriceLabel.textContent = 'Average price';
+                        occupancyRateField.style.display = 'none';
+                        break;
+                }
+            }
+
+            // Function to calculate annual turnover
+            function calculateAnnualTurnover() {
+                const selectedOption = document.querySelector('input[name="average_price_option"]:checked');
+                const averagePrice = getNumericValue(averagePriceInput.value);
+                const occupancyRate = parseFloat(occupancyRateInput.value) || 0;
+
+                if (!selectedOption || averagePrice === 0) {
+                    annualTurnoverInput.value = '';
+                    calculationFormula.style.display = 'none';
+                    return;
+                }
+
+                let annualTurnover = 0;
+                let formula = '';
+
+                switch(selectedOption.value) {
+                    case 'Daily':
+                        if (occupancyRate === 0) {
+                            annualTurnoverInput.value = '';
+                            calculationFormula.style.display = 'none';
+                            return;
+                        }
+                        // Convert percentage to decimal (e.g., 75% = 0.75)
+                        const occupancyDecimal = occupancyRate / 100;
+                        annualTurnover = averagePrice * 365 * occupancyDecimal;
+                        formula = `Formula: ${averagePrice.toLocaleString('id-ID')} × 365 × ${occupancyRate}% = ${annualTurnover.toLocaleString('id-ID')}`;
+                        break;
+                    case 'Monthly':
+                        annualTurnover = averagePrice * 12;
+                        formula = `Formula: ${averagePrice.toLocaleString('id-ID')} × 12 = ${annualTurnover.toLocaleString('id-ID')}`;
+                        break;
+                    case 'Yearly':
+                        annualTurnover = averagePrice;
+                        formula = `Formula: ${averagePrice.toLocaleString('id-ID')} = ${annualTurnover.toLocaleString('id-ID')}`;
+                        break;
+                }
+
+                // Format the result with thousand separators
+                annualTurnoverInput.value = annualTurnover.toLocaleString('id-ID');
+                
+                // Show calculation formula
+                formulaText.textContent = formula;
+                calculationFormula.style.display = 'block';
+            }
+
+            // Event listeners for radio buttons
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    updateLabel(this.value);
+                    calculateAnnualTurnover();
+                });
+            });
+
+            // Function to format number with thousand separators as user types (integers only)
+            function formatNumberInput(input) {
+                // Remove all non-digit characters (no decimal points allowed)
+                let value = input.value.replace(/[^\d]/g, '');
+                
+                // Format with thousand separators (dots)
+                if (value) {
+                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                }
+                
+                input.value = value;
+            }
+
+            // Function to get numeric value from formatted input
+            function getNumericValue(formattedValue) {
+                // Remove thousand separators (.) to get pure number
+                return parseInt(formattedValue.replace(/\./g, '')) || 0;
+            }
+
+            // Event listeners for input changes
+            averagePriceInput.addEventListener('input', function() {
+                formatNumberInput(this);
+                calculateAnnualTurnover();
+            });
+            
+            occupancyRateInput.addEventListener('input', calculateAnnualTurnover);
+
+            // Validate occupancy rate input (0-100%) - only for occupancy rate field
+            occupancyRateInput.addEventListener('input', function() {
+                let value = parseFloat(this.value);
+                if (value > 100) {
+                    this.value = 100;
+                } else if (value < 0) {
+                    this.value = 0;
+                }
+                calculateAnnualTurnover();
+            });
+        });
+    </script>
+    {{-- Rental Calculation --}}
 
     {{-- Custom Toggle --}}
     <script>

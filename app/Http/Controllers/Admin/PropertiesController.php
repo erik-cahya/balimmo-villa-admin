@@ -340,10 +340,15 @@ class PropertiesController extends Controller
 
         // Rental Yield
         'average_price_status' => $request->average_price_status,
+        'average_price_option' => $request->average_price_option,
+        'average_price' => $this->convertToInteger($request->average_price),
+        'average_occupancy_rate' => $request->average_occupancy_rate,
+        'annual_turnover' => $this->convertToInteger($request->estimated_annual_turnover),
+
+        //
         'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
         'avg_occupancy_rate' => $request->average_occupancy_rate,
-        'months_rented' => $request->month_rented_per_year,
-        'annual_turnover' => $this->convertToInteger($request->estimated_annual_turnover),
+        'months_rented' => $request->month_rented_per_year,        
 
         // Agent
         'find_property_of' => $request->find_property,
@@ -632,8 +637,15 @@ class PropertiesController extends Controller
                 'properties.*',
                 // 'property_financial.*',
 
-                // Rental Yield
+                // Rental Yield                
+
                 'property_financial.average_price_status',
+                'property_financial.average_price_option',
+                'property_financial.average_price',
+                'property_financial.average_occupancy_rate',
+                'property_financial.annual_turnover',
+
+
                 'property_financial.avg_nightly_rate',
                 'property_financial.avg_occupancy_rate',
 
@@ -818,11 +830,19 @@ class PropertiesController extends Controller
 
         // ========== UPDATE FINANCIAL ==========
         PropertyFinancialModel::where('properties_id', $id)->update([
+                
 
             // Rental Yield
             'average_price_status' => $request->average_price_status,
+            'average_price_option' => $request->average_price_option,
+            'average_price' => $this->convertToInteger($request->average_price),
+            'average_occupancy_rate' => $request->average_occupancy_rate,
+            'annual_turnover' => $this->convertToInteger($request->estimated_annual_turnover),
+
+            //
             'avg_nightly_rate' => $this->convertToInteger($request->average_nightly_rate),
             'avg_occupancy_rate' => $request->average_occupancy_rate,
+            'months_rented' => $request->month_rented_per_year, 
 
             // Agent
             'find_property_of' => $request->find_property,

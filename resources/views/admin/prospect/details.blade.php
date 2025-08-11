@@ -222,7 +222,7 @@
                                         <h4 class="fw-medium text-capitalize">Files Offerings</h4>
                                         <div class="d-flex flex-wrap gap-2">
                                             <!-- Button Visit Dropdown -->
-                                            @foreach($villaData->visitDocs as $visitDocs)
+                                            {{-- @foreach($villaData->visitDocs as $visitDocs)
                                                 <div class="dropdown">
                                                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <!-- <i class="ri-download-cloud-line fs-16 text-muted"></i>     -->
@@ -234,7 +234,7 @@
                                                         <a class="dropdown-item" href="#">Indonesia</a>
                                                     </div>
                                                 </div>
-                                            @endforeach
+                                            @endforeach --}}
                                         </div>
                                     </div>
                                 </div>
@@ -509,7 +509,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="d-flex flex-column gap-1">
-                                                                <span class="fst-italic fs-12">{{ $prospectLandSelected->land->total_land_area }} m<sup>2</sup></span>
+                                                                <span class="fst-italic fs-12">{{ $prospectLandSelected->land->total_land_area }} are</span>
                                                             </div>
                                                         </td>
 
@@ -635,7 +635,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="d-flex flex-column gap-1">
-                                                                    <span class="fst-italic fs-12">{{ $land->total_land_area }} m<sup>2</sup></span>
+                                                                    <span class="fst-italic fs-12">{{ $land->total_land_area }} are</span>
                                                                 </div>
                                                             </td>
 
