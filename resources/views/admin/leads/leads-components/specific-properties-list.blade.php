@@ -187,50 +187,38 @@
                                                     </div>
 
                                                     {{-- LAND --}}
-                                                    @if(!is_null($landData))
-                                                        <div class="land-section" data-index="{{ $customerData->id }}" id="land_section" style="display: none;">
-                                                            <div class="d-flex justify-content-center justify-items-center text-center" bis_skin_checked="1">
-                                                                <hr class="w-100">
-                                                                <label class="w-100 text-warning">
-                                                                    <span class="nav-icon">
-                                                                        <iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon>
-                                                                    </span>
-                                                                    Looking For Land
-                                                                </label>
-                                                                <hr class="w-100">
-                                                            </div>
-
-                                                            <div class="row my-3">
-                                                                <div class="col-lg-12 mb-3" id="group_land_localization">
-                                                                    <label for="land_localization" class="form-label">Localization</label>
-                                                                    <select id="land_localization" class="form-select" name="land_localization">
-                                                                        <option value="" selected disabled>Select Area</option>
-                                                                        <option value="ubud" {{ ($landData->localization ?? '') == 'ubud' ? 'selected' : '' }}>Ubud</option>
-                                                                        <option value="canggu" {{ ($landData->localization ?? '') == 'canggu' ? 'selected' : '' }}>Canggu</option>
-                                                                        <option value="uluwatu" {{ ($landData->localization ?? '') == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
-                                                                        <option value="sanur/nusa dua" {{ ($landData->localization ?? '') == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
-                                                                        <option value="other" {{ ($landData->localization ?? '') == 'other' ? 'selected' : '' }}>Other</option>
-                                                                    </select>
-                                                                </div>
-
-                                                                @if (!isset($landData->min_budget_idr) && !isset($landData->max_budget_idr) && !isset($landData->min_budget_usd) && !isset($landData->max_budget_usd))
-                                                                    <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" />
-                                                                    <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" />
-                                                                @endif
-
-                                                                @if ($landData && $landData->min_budget_idr !== null && $landData->max_budget_idr !== null)
-                                                                    <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" value="{{ $landData->min_budget_idr }}" />
-                                                                    <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" value="{{ $landData->max_budget_idr }}" />
-                                                                @elseif ($landData && $landData->min_budget_usd !== null && $landData->max_budget_usd !== null)
-                                                                    <x-form-input className="col-lg-3" type="text" name="land_min_budget_usd" label="Budget Min" value="{{ $landData->min_budget_usd }}" />
-                                                                    <x-form-input className="col-lg-3" type="text" name="land_max_budget_usd" label="Budget Max" value="{{ $landData->max_budget_usd }}" />
-                                                                @endif
-
-                                                                <x-form-input className="col-lg-3" type="text" name="min_land_size" label="Size Min" value="{{ $landData->min_land_size ?? '' }}" />
-                                                                <x-form-input className="col-lg-3" type="text" name="max_land_size" label="Size Max" value="{{ $landData->max_land_size ?? '' }}" />
-                                                            </div>
+                                                    <div class="land-section" data-index="{{ $customerData->id }}" id="land_section" style="display: none;">
+                                                        <div class="d-flex justify-content-center justify-items-center text-center" bis_skin_checked="1">
+                                                            <hr class="w-100">
+                                                            <label class="w-100 text-warning">
+                                                                <span class="nav-icon">
+                                                                    <iconify-icon icon="tabler:chart-area-line-filled" class="fs-16 align-middle"></iconify-icon>
+                                                                </span>
+                                                                Looking For Land
+                                                            </label>
+                                                            <hr class="w-100">
                                                         </div>
-                                                    @endif
+
+                                                        <div class="row my-3">
+                                                            <div class="col-lg-12 mb-3" id="group_land_localization">
+                                                                <label for="land_localization" class="form-label">Localization</label>
+                                                                <select id="land_localization" class="form-select" name="land_localization">
+                                                                    <option value="" selected disabled>Select Area</option>
+                                                                    <option value="ubud" {{ (!is_null($landData) && $landData->localization ? $landData->localization : '') == 'ubud' ? 'selected' : '' }}>Ubud</option>
+                                                                    <option value="canggu" {{ (!is_null($landData) && $landData->localization ? $landData->localization : '') == 'canggu' ? 'selected' : '' }}>Canggu</option>
+                                                                    <option value="uluwatu" {{ (!is_null($landData) && $landData->localization ? $landData->localization : '') == 'uluwatu' ? 'selected' : '' }}>Uluwatu</option>
+                                                                    <option value="sanur/nusa dua" {{ (!is_null($landData) && $landData->localization ? $landData->localization : '') == 'sanur/nusa dua' ? 'selected' : '' }}>Sanur/Nusa Dua</option>
+                                                                    <option value="other" {{ (!is_null($landData) && $landData->localization ? $landData->localization : '') == 'other' ? 'selected' : '' }}>Other</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <x-form-input className="col-lg-3" type="text" name="land_min_budget_idr" label="Budget Min" value="{{ !is_null($landData) && $landData->min_budget_idr ? $landData->min_budget_idr : '' }}" />
+                                                            <x-form-input className="col-lg-3" type="text" name="land_max_budget_idr" label="Budget Max" value="{{ !is_null($landData) && $landData->max_budget_idr ? $landData->max_budget_idr : '' }}" />
+
+                                                            <x-form-input className="col-lg-3" type="text" name="min_land_size" label="Size Min" value="{{ !is_null($landData) && $landData->min_land_size ? $landData->min_land_size : '' }}" />
+                                                            <x-form-input className="col-lg-3" type="text" name="max_land_size" label="Size Max" value="{{ !is_null($landData) && $landData->max_land_size ? $landData->max_land_size : '' }}" />
+                                                        </div>
+                                                    </div>
 
                                                 </div>
                                                 <div class="modal-footer" bis_skin_checked="1">
