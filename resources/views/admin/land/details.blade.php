@@ -146,9 +146,9 @@
                                     <div class="col lg-6">
                                         <p class="mb-2"><span class="fw-medium text-dark">Reference code</span><span class="mx-2">:</span>{{ $agent_data->reference_code }}</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Created date</span><span class="mx-2">:</span>{{ \Carbon\Carbon::parse($data_properties->created_at)->format('d F, Y') }}</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Area</span><span class="mx-2">:</span>{{ $data_properties->area }}</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Sub region</span><span class="mx-2">:</span>{{ $data_properties->sub_region }}</p>
-                                        <p class="mb-2"><span class="fw-medium text-dark">Region</span><span class="mx-2">:</span>{{ $data_properties->region }}</p>
+                                        <p class="mb-2 text-capitalize"><span class="fw-medium text-dark">Area</span><span class="mx-2">:</span>{{ $data_properties->area }}</p>
+                                        <p class="mb-2 text-capitalize"><span class="fw-medium text-dark">Sub region</span><span class="mx-2">:</span>{{ $data_properties->sub_region }}</p>
+                                        <p class="mb-2 text-capitalize"><span class="fw-medium text-dark">Region</span><span class="mx-2">:</span>{{ $data_properties->region }}</p>
                                         <p class="mb-2"><span class="fw-medium text-dark">Address</span><span class="mx-2">:</span>{{ isset($data_properties->land_address) ? $data_properties->land_address : 'Data Not Found' }}</p>
                                                                             
                                     </div>
@@ -240,7 +240,7 @@
                                                                         <h4 class="card-title mb-2">Extension Details :</h4>
                                                                         <p class="mb-2"><span class="fw-medium text-dark">Negotiation Extension Cost</span><span class="mx-2">:</span>{{ isset($data_properties->extension_cost) ? $data_properties->extension_cost : '-' }}</p>
                                                                         <p class="mb-2"><span class="fw-medium text-dark">Purchase Cost</span><span class="mx-2">:</span>{{ isset($data_properties->purchase_cost) ? $data_properties->purchase_cost : '-' }}</p>
-                                                                        <p class="mb-0"><span class="fw-medium text-dark">Deadline for Payment to Secure Rate</span><span class="mx-2">:</span>{{ isset($data_properties->deadline_payment) ? $data_properties->deadline_payment : '-' }}</p>
+                                                                        <p class="mb-2"><span class="fw-medium text-dark">Deadline for Payment to Secure Rate</span><span class="mx-2">:</span>{{ isset($data_properties->deadline_payment) ? $data_properties->deadline_payment : '-' }}</p>
                                                                         <p class="mb-0"><span class="fw-medium text-dark">Zoning</span><span class="mx-2">:</span>{{ $data_properties->zoning }}</p>
 
                                                                         <div class="d-flex align-items-center mt-3 flex-wrap gap-2">
@@ -481,124 +481,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- {{-- Agent Details --}}
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="card-title">Property Agent Details</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center">
-                            <img src="{{ asset('admin') }}{{ $agent_data->profile == null ? '/assets/images/users/dummy-avatar.jpg' : '/profile-image/' . $agent_data->reference_code . '/' . $agent_data->profile }}" alt="" class="avatar-xl rounded-circle border-light mx-auto border border-2" style="width: 8rem; height: 8rem; object-fit:cover; border-radius: 10px">
-                            <div class="mt-2">
-                                <a href="#!" class="fw-medium text-dark fs-16 text-uppercase">{{ $agent_data->name }}</a>
-                                <p class="text-capitalize mb-0">({{ $agent_data->role }})</p>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="d-flex align-items-center border-bottom gap-3 pb-3">
-                                <div class="avatar bg-primary rounded bg-opacity-10">
-                                    <iconify-icon icon="material-symbols:real-estate-agent-outline" class="fs-28 text-primary avatar-title"></iconify-icon>
-                                </div>
-                                <div>
-                                    <p class="text-dark fw-medium fs-15 mb-1">Reference Code</p>
-                                    <p class="text-muted mb-0">{{ $agent_data->reference_code }}</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center border-bottom gap-3 py-3">
-                                <div class="avatar bg-primary rounded bg-opacity-10">
-                                    <iconify-icon icon="ic:round-email" class="fs-28 text-primary avatar-title"></iconify-icon>
-                                </div>
-                                <div>
-                                    <p class="text-dark fw-medium fs-15 mb-1">Agent Email</p>
-                                    <p class="text-muted mb-0">{{ $agent_data->email }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-light-subtle">
-                        <div class="row g-2">
-                            <div class="col-lg-12">
-                                <a href="mailto:{{ $agent_data->email }}" class="btn btn-primary w-100"><iconify-icon icon="material-symbols:mail" class="fs-18 align-middle"></iconify-icon> Mail Us</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- /* Agent Details --}}
-
-                {{-- Property File --}}
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="card-title">Property File</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex flex-wrap gap-2">
-
-                            @foreach ($attachment as $key => $value)
-                                @if ($value->name !== 'url_virtual_tour' && $value->name !== 'url_lifestyle' && $value->name !== 'url_experience')
-                                    @if ($value->path_attachment !== null)
-                                        <div class="d-flex bg-light-subtle align-items-center position-relative gap-2 rounded border p-2 text-start">
-                                            <iconify-icon icon="ph:file-fill" class="text-danger fs-24"></iconify-icon>
-                                            <div>
-                                                <h4 class="fs-14 mb-1"><a href="{{ asset('admin/attachment/' . $data_properties->land_slug . '/' . $value->path_attachment) }}" class="text-dark stretched-link">{{ $value->path_attachment }}</a></h4>
-                                            </div>
-                                            <i class="ri-download-cloud-line fs-20 text-muted"></i><i class=''></i>
-                                        </div>
-                                    @endif
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                @if (($experience !== null) | ($virtualTour !== null) | ($lifestyle !== null))
-                    {{-- Video --}}
-                    <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <h4 class="card-title">Video</h4>
-                        </div>
-                        <div class="card-body">
-                            @if ($experience !== null)
-                                <div class="card">
-                                    <div class="card-body p-2">
-                                        <div class="ratio ratio-16x9">
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $experience }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
-                                        </div>
-                                        <span class="text-dark d-inline-block my-2">
-                                            <a href="#!" class="text-dark fs-18 fw-medium">Experience Video</a>
-                                        </span>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if ($virtualTour !== null)
-                                <div class="card">
-                                    <div class="card-body p-2">
-                                        <div class="ratio ratio-16x9">
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $virtualTour }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
-                                        </div>
-                                        <span class="text-dark d-inline-block my-2">
-                                            <a href="#!" class="text-dark fs-18 fw-medium">Virtual Tour Video</a>
-                                        </span>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if ($lifestyle !== null)
-                                <div class="card">
-                                    <div class="card-body p-2">
-                                        <div class="ratio ratio-16x9">
-                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $lifestyle }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
-                                        </div>
-                                        <span class="text-dark d-inline-block my-2">
-                                            <a href="#!" class="text-dark fs-18 fw-medium">Lifestyle Video</a>
-                                        </span>
-                                    </div>
-                                </div>
-                            @endif
-
-                        </div>
-                    </div>
-                @endif -->
+                </div>        
 
             </div>
         </div>

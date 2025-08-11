@@ -11,4 +11,19 @@ class CustomerDataModel extends Model
     protected $table = 'customer';
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
+
+    public function leads()
+    {
+        return $this->hasMany(PropertyLeadsModel::class, 'customer_id');
+    }
+
+    public function prospects()
+    {
+        return $this->hasMany(PropertyProspectModel::class , 'customer_id');
+    }
+
+    public function agen()
+    {
+        return User::where('reference_code' , $this->agent_code)->first();
+    }
 }

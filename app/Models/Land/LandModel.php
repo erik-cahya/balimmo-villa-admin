@@ -28,4 +28,9 @@ class LandModel extends Model
             'id'             // Local key on PropertyGallery table
         );
     }
+
+    public function landFinancial()
+    {
+        return $this->hasOne(LandFinancialModel::class , 'land_id');
+    }
 }

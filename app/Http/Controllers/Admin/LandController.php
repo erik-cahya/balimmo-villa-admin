@@ -314,25 +314,35 @@ class LandController extends Controller
         // ==========================================================================================================================================
         // ########### Create Land Legal ##############
         // ==========================================================================================================================================
+        function toYmd(?string $v): ?string {
+            if (!$v) return null;
+            foreach (['Y-m-d', 'd-m-Y', 'd/m/Y'] as $fmt) {
+                try { return Carbon::createFromFormat($fmt, $v)->format('Y-m-d'); }
+                catch (\Exception $e) {}
+            }
+            return null; // atau lempar ValidationException kalau mau strict
+        }
+
         LandLegalModel::create([
-            'land_id' => $landCreate->id,
-            'company_name' => $request->company_name,
-            'rep_first_name' => $request->legal_rep_first_name,
-            'rep_last_name' => $request->legal_rep_last_name,
-            'phone' => $request->legal_rep_phone_number,
-            'email' => $request->legal_rep_email,
+            'land_id'         => $landCreate->id,
+            'company_name'    => $request->company_name,
+            'rep_first_name'  => $request->legal_rep_first_name,
+            'rep_last_name'   => $request->legal_rep_last_name,
+            'phone'           => $request->legal_rep_phone_number,
+            'email'           => $request->legal_rep_email,
 
-            'legal_status' => $request->legal_category,
-            'holder_name' => $holder_name,
-            'holder_number' => $holder_number,
-            'start_date' => $request->leasehold_start_date == null ? null : $this->dateConversion($request->leasehold_start_date),
-            'end_date' =>  $request->leasehold_end_date == null ? null : $this->dateConversion($request->leasehold_end_date),
-            'purchase_date' => $request->freehold_purchase_date == null ? null : $this->dateConversion($request->freehold_purchase_date),
-            'extension_cost' => (int)preg_replace('/[^0-9]/', '', $request->leasehold_negotiation_ext_cost),
-            'purchase_cost' =>  (int)preg_replace('/[^0-9]/', '', $request->leasehold_purchase_cost),
-            'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
-            'zoning' => $zoning,
+            'legal_status'    => $request->legal_category,
+            'holder_name'     => $holder_name,
+            'holder_number'   => $holder_number,
 
+            'start_date'      => toYmd($request->leasehold_start_date),
+            'end_date'        => toYmd($request->leasehold_end_date),
+            'purchase_date'   => toYmd($request->freehold_purchase_date),
+            'deadline_payment'=> toYmd($request->leasehold_deadline_payment),
+
+            'extension_cost'  => (int)preg_replace('/[^0-9]/', '', $request->leasehold_negotiation_ext_cost),
+            'purchase_cost'   => (int)preg_replace('/[^0-9]/', '', $request->leasehold_purchase_cost),
+            'zoning'          => $zoning,
         ]);
 
  
@@ -680,12 +690,12 @@ class LandController extends Controller
             'legal_status' => $request->legal_category,
             'holder_name' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_holder_name : $request->leasehold_contract_holder_name,
             'holder_number' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_number : $request->leasehold_contract_number,
-            'start_date' => $request->leasehold_start_date ? $this->dateConversion($request->leasehold_start_date) : null,
-            'end_date' => $request->leasehold_end_date ? $this->dateConversion($request->leasehold_end_date) : null,
-            'purchase_date' => $request->freehold_purchase_date ? $this->dateConversion($request->freehold_purchase_date) : null,
+            'start_date' => $request->leasehold_start_date ? $request->leasehold_start_date : null,
+            'end_date' => $request->leasehold_end_date ? $request->leasehold_end_date : null,
+            'purchase_date' => $request->freehold_purchase_date ? $request->freehold_purchase_date : null,
             'extension_cost' => $this->convertToInteger($request->leasehold_negotiation_ext_cost),
             'purchase_cost' => $this->convertToInteger($request->leasehold_purchase_cost),
-            'deadline_payment' => $request->leasehold_deadline_payment ? $this->dateConversion($request->leasehold_deadline_payment) : null,
+            'deadline_payment' => $request->leasehold_deadline_payment ? $request->leasehold_deadline_payment : null,
             'zoning' => $request->legal_category === 'Freehold' ? $request->freehold_zoning : $request->leasehold_zoning,
         ]);
 
@@ -840,10 +850,10 @@ class LandController extends Controller
         return (int)preg_replace('/[^0-9]/', '', $value);
     }
 
-    private function dateConversion($date)
-    {
-        return Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
-    }
+    // private function dateConversion($date)
+    // {
+    //     return Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+    // }
 
     private function generatePropertiesSlug($name)
     {
@@ -934,9 +944,9 @@ class LandController extends Controller
         return Cache::remember('usd_to_idr_rate', now()->addHours(1), function () {
             try {
                 $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
-                return $response['rates']['IDR'] ?? 15000;
+                return $response['rates']['IDR'] ?? 16000;
             } catch (\Exception $e) {
-                return 15000;
+                return 16000;
             }
         });
     }

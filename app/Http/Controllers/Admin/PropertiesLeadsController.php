@@ -11,6 +11,8 @@ use App\Models\PropertiesModel;
 use App\Models\PropertyLeadsModel;
 use App\Models\SubRegionModel;
 use App\Models\User;
+use App\Services\LeadsService;
+use App\Services\ProspectService;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +20,15 @@ use Illuminate\Support\Facades\Mail;
 
 class PropertiesLeadsController extends Controller
 {
+
+    protected $leads_service;
+    protected $prospect_service;
+
+    public function __construct()
+    {
+        $this->leads_service = new LeadsService();
+        $this->prospect_service = new ProspectService();
+    }
 
     public function searchMatchProperties(Request $request, $leadId)
     {
@@ -141,7 +152,6 @@ class PropertiesLeadsController extends Controller
 
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
         $customerID = $id;
 
         CustomerDataModel::where('id', $customerID)->update([
@@ -153,50 +163,42 @@ class PropertiesLeadsController extends Controller
             'cust_passport' => $request->customer_passport,
         ]);
 
-        PropertyLeadsModel::updateOrCreate(
-            [
-                'customer_id' => $customerID,
-                'type_asset'  => 'properties',
-            ],
-            [
-                'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_min_budget_idr),
-                'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_max_budget_idr),
+        $dataLeads = collect();
+        $dataLeads->add([
+            'type_asset'  => 'properties',
+            'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_min_budget_idr),
+            'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->villa_max_budget_idr),
 
-                'min_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->villa_min_budget_usd)),
-                'max_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->villa_max_budget_usd)),
+            'min_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->villa_min_budget_usd)),
+            'max_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->villa_max_budget_usd)),
 
-                'min_bedroom' => $request->min_bedroom,
-                'max_bedroom' => $request->max_bedroom,
+            'min_bedroom' => $request->min_bedroom,
+            'max_bedroom' => $request->max_bedroom,
 
-                'localization' => $request->villa_localization,
-                'date' => Carbon::createFromFormat('d F, Y', $request->ready_buy_villa)->format('Y-m-d'),
+            'localization' => $request->villa_localization,
+            'date' => Carbon::createFromFormat('d F, Y', $request->ready_buy_villa)->format('Y-m-d'),
 
-                'visibility' => $request->type_properties_villa == null ? 0 : 1,
-            ]
-        );
+            'visibility' => $request->type_properties_villa == null ? 0 : 1,
+        ]);
+        $dataLeads->add([
+            'type_asset'  => 'land',
+            'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->land_min_budget_idr),
+            'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->land_max_budget_idr),
 
+            'min_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->land_min_budget_usd)),
+            'max_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->land_max_budget_usd)),
 
-        PropertyLeadsModel::updateOrCreate(
-            [
-                'customer_id' => $customerID,
-                'type_asset'  => 'land'
-            ],
-            [
-                'min_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->land_min_budget_idr),
-                'max_budget_idr' => (int)preg_replace('/[^0-9]/', '', $request->land_max_budget_idr),
+            'min_land_size' => $request->min_land_size,
+            'max_land_size' => $request->max_land_size,
 
-                'min_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->land_min_budget_usd)),
-                'max_budget_usd' => floatval(preg_replace('/[^\d.]/', '', $request->land_max_budget_usd)),
+            'localization' => $request->land_localization,
+            'date' => Carbon::createFromFormat('d F, Y', $request->ready_buy_villa)->format('Y-m-d'),
 
-                'min_land_size' => $request->min_land_size,
-                'max_land_size' => $request->max_land_size,
+            'visibility' => $request->type_properties_land == null ? 0 : 1,
+        ]);
 
-                'localization' => $request->land_localization,
-                'date' => Carbon::createFromFormat('d F, Y', $request->ready_buy_villa)->format('Y-m-d'),
-
-                'visibility' => $request->type_properties_land == null ? 0 : 1,
-            ]
-        );
+        $leads = $this->leads_service->updateOrCreateLeads($customerID, $dataLeads);
+        $prospects = $this->prospect_service->createNewProspect($customerID, $leads);
 
 
 
@@ -305,6 +307,24 @@ class PropertiesLeadsController extends Controller
             'swalFlashIcon' => 'success',
         ];
         return redirect()->route('leads.index')->with('flashData', $flashData);
+    }
+
+    public function changeAgent(Request $request , string $id)
+    {
+        $lead = PropertyLeadsModel::find($id);
+
+        $lead->customer()->update([
+            'agent_code' => $request->get('agent_code')
+        ]);
+
+        $flashData = [
+            'judul' => 'Success',
+            'pesan' => 'Agent changed sucessfully',
+            'swalFlashIcon' => 'success',
+        ];
+        
+
+        return response()->json($flashData);
     }
 
     private function convertToInteger($value)

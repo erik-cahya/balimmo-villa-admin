@@ -5,27 +5,28 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ClientModel;
 use App\Models\CustomerDataModel;
+use App\Models\Land\LandModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyLeadsModel;
 use App\Models\PropertyProspectModel;
+use App\Services\ProspectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProspectController extends Controller
 {
 
+    protected $prospect_service;
+
+    public function __construct()
+    {
+        $this->prospect_service = new ProspectService();
+    }
+
     public function leadsToProspect(Request $request, $id)
     {
-
-        // dd($id);
-
-
-        // dd($request->all());
-
         $customerID = $id;
-
-        // dd($request->all());
-
+        
         // Validasi nationality & passport customer
         // $dataCustomer = CustomerDataModel::where('id', $customerID)->first();
 
@@ -48,28 +49,9 @@ class ProspectController extends Controller
 
         // Pindahkan data dari table leads ke prospect
         $dataLeads = PropertyLeadsModel::where('customer_id', $customerID)->get();
-        foreach ($dataLeads as $lead) {
-            PropertyProspectModel::create([
-                'properties_id' => $lead->properties_id,
-                'land_id' => $lead->land_idd,
-                'customer_id' => $lead->customer_id,
-                'type_asset' => $lead->type_asset,
-                'min_budget_idr' => $lead->min_budget_idr,
-                'max_budget_idr' => $lead->max_budget_idr,
-                'min_budget_usd' => $lead->min_budget_usd,
-                'max_budget_usd' => $lead->max_budget_usd,
-                'min_bedroom' => $lead->min_bedroom,
-                'max_bedroom' => $lead->max_bedroom,
-                'min_land_size' => $lead->min_land_size,
-                'max_land_size' => $lead->max_land_size,
-                'localization' => $lead->localization,
-                'date' => $lead->date,
-                'status' => 'new prospect'
-            ]);
-        }
-        PropertyLeadsModel::where('customer_id', $customerID)->delete();
+        $prospects = $this->prospect_service->createNewProspect($customerID, $dataLeads);
 
-
+        //Update data agen
         CustomerDataModel::where('id', $customerID)->update([
             'agent_code' => $request->agent_code
         ]);
@@ -182,11 +164,29 @@ class ProspectController extends Controller
 
     public function details($custID)
     {
+        $customerID = $custID;
+
         $data['data_property'] = PropertiesModel::join('property_financial', 'property_financial.properties_id', '=', 'properties.id')
             ->with(['featuredImage' => function ($query) {
                 $query->select('image_path', 'property_gallery.id');
                 $query->where('is_featured', 1);
             }])->get();
+
+        $data['data_land'] = LandModel::join('land_financial', 'land_financial.land_id', '=', 'land.id')
+            ->with(['featuredImage' => function ($query) {
+                $query->select('image_path', 'land_gallery.id');
+                $query->where('is_featured', 1);
+            }])->get();
+
+        $data['customer'] = CustomerDataModel::find($customerID);
+        $data['agen'] = $data['customer']->agen();
+        $data['prospects'] = $data['customer']->prospects;
+        foreach($data['prospects'] as $prospect){
+            $prospect->load($prospect->type_asset == 'land' ? 'landSelected.land.landFinancial' : 'propertySelected.property.propertyFinancial');
+            $prospect->load($prospect->type_asset == 'land' ? 'visitDocs.landVisitDocs.land.landFinancial' : 'visitDocs.propertyVisitDocs.property.propertyFinancial');
+            $prospect->load('visitDocs.propertyVisitDocs.property.propertyFinancial');
+        }
+
         return view('admin.prospect.details', $data);
     }
 
@@ -290,6 +290,26 @@ class ProspectController extends Controller
         // dd($data['matchProperties']);
 
         return view('admin.prospect.index', $data);
+    }
+
+    public function addToSelectedAsset(Request $request)
+    {
+        // dd($request->all());
+        $prospect_id = $request->get('prospect_id');
+        $asset_id = $request->get('asset_id'); // berisi land_id atau property_id
+
+        $prospect = PropertyProspectModel::find($prospect_id);
+
+        $asset_selected = $this->prospect_service->addAssetToProspectSelected($prospect , $asset_id);
+
+        $asset = $prospect->type_asset == 'land' ? 'Land' : 'Villa';
+
+        $flashData = [
+            'judul' => $asset . ' added to selected',
+            'pesan' => $asset . ' Data Added Successfully',
+            'swalFlashIcon' => 'success',
+        ];
+        return back()->with('flashData', $flashData);
     }
 
     /**

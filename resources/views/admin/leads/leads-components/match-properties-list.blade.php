@@ -384,7 +384,7 @@
                                             @role('master')
                                                 <div class="propertiesDataLeads"></div>
                                                 <div class="row" style="min-width: 200px">
-                                                    <select class="form-control choose_agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}">
+                                                    <select class="form-control change-agent" name="agent_code" id="choose_agent-{{ $matchLeads->id }}" data-lead-id="{{ $matchLeads->id }}" data-lead-nama="{{ $matchLeads->first_name . ' ' . $matchLeads->last_name }}">
                                                         <option value="" selected disabled>Choose agent</option>
                                                         @foreach ($data_agent as $agent)
                                                             <option value="{{ $agent->reference_code }}" data-agent-id="{{ $agent->id }}">
@@ -403,7 +403,7 @@
                                                                                                                                                                                 </div>
 @endrole -->
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save Leads</button>
+                                            {{-- <button type="submit" class="btn btn-primary">Save Leads</button> --}}
                                         </div>
                                     </form>
                                 </div>

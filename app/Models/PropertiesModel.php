@@ -28,4 +28,9 @@ class PropertiesModel extends Model
             'id'             // Local key on PropertyGallery table
         );
     }
+
+    public function propertyFinancial()
+    {
+        return $this->hasOne(PropertyFinancialModel::class , 'properties_id');
+    }
 }

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin\Docs;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClientModel;
+use App\Models\CustomerDataModel;
 use App\Models\PropertiesModel;
 use App\Models\PropertyLeadsModel;
+use App\Models\PropertyProspectModel;
 use App\Models\User;
 use App\Models\VisitDocsModel;
+use App\Models\VisitLandDocsModel;
 use App\Models\VisitPropertyDocsModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -119,46 +122,44 @@ class DocsVisitController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        $dataClient = explode('||', $request->input('dataClients'));
-        // dd($dataClient[0]);
-
-        $request->validate([
-            'dataClients' => 'required',
-            'date_visit' => 'required',
-        ]);
-
-        if ($request->propertyId == null) {
-            return back()->withErrors(['propertiesNull' => 'Please check the properties']);
-        }
+        $dataClient = CustomerDataModel::find($request->get('customer_id'));
+        $prospect = PropertyProspectModel::find($request->get('prospect_id'));
         $nameDocs = 'visit_docs_' . str::slug(Auth::user()->name) . '_' . $request->date_visit;
 
         $docsVisit = VisitDocsModel::create([
+            'prospect_id' => $prospect->id,
             'name_docs' => $nameDocs,
-            'first_name' => $dataClient[1],
-            'last_name' => $dataClient[2],
-            'email' => $dataClient[0],
-            'phone_number' => $dataClient[3],
-            'visit_date' => Carbon::createFromFormat('d-m-Y', $request->date_visit)->format('Y-m-d'),
+            'first_name' => $dataClient->first_name,
+            'last_name' => $dataClient->last_name,
+            'email' => $dataClient->cust_email,
+            'phone_number' => $dataClient->cust_phone,
+            'visit_date' => Carbon::createFromFormat('d-m-Y', $request->get('date_visit'))->format('Y-m-d'),
             'reference_code' => Auth::user()->reference_code,
             'status_docs' => 2
         ]);
 
-        foreach ($request->propertyId as $idProperty) {
-            VisitPropertyDocsModel::create([
-                'docs_visit_id' => $docsVisit->id,
-                'property_id' => $idProperty,
-            ]);
+        if($prospect->type_asset == 'land') {
+            foreach ($request->get('asset_ids') as $asset_id) {
+                VisitLandDocsModel::create([
+                    'docs_visit_id' => $docsVisit->id,
+                    'land_id' => $asset_id,
+                ]);
+            }
+        } else if($prospect->type_asset == 'properties') {
+            foreach ($request->get('asset_ids') as $asset_id) {
+                VisitPropertyDocsModel::create([
+                    'docs_visit_id' => $docsVisit->id,
+                    'property_id' => $asset_id,
+                ]);
+            }
         }
-
-        PropertyLeadsModel::where('cust_email', $dataClient[0])->update(['docs_status' => 1]);
 
         $flashData = [
             'judul' => 'Create Success',
             'pesan' => 'Document Visit Successfully Created',
             'swalFlashIcon' => 'success',
         ];
-        return redirect()->route('visit.index')->with('flashData', $flashData);
+        return redirect()->route('prospects.details' , $dataClient->id)->with('flashData', $flashData);
     }
 
     public function update(Request $request, $id)

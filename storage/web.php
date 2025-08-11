@@ -77,14 +77,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/profile', ProfileController::class);
 
-    // Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImage'])->name('gallery-images.destroy');
-    // Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
-    // Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
-
-    // // Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImageland'])->name('gallery-images.destroy');
-    // // Route::get('/galleries/{gallery}/editland', [GalleryController::class, 'editland'])->name('gallery.editland');
-    // // Route::post('/galleries/{gallery}/updateland', [GalleryController::class, 'updateland'])->name('gallery.update');
-
     // PROPERTY
     Route::get('/galleries/{gallery}/edit',  [GalleryController::class, 'edit'])->name('gallery.edit');
     Route::post('/galleries/{gallery}/update',[GalleryController::class, 'update'])->name('gallery.update');

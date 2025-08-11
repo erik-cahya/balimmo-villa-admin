@@ -460,4 +460,66 @@
         });
     </script>
     {{-- /* End Flatpickr --}}
+
+    {{-- Sweet Alert --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Saat halaman sudah ready
+            const changeAgents = document.querySelectorAll('.change-agent');
+
+            changeAgents.forEach(button => {
+                button.addEventListener('change', function(e) {
+                    e.preventDefault();
+
+                    let leadName = this.getAttribute('data-lead-nama');
+                    let leadId = this.getAttribute('data-lead-id')
+                    let agent_code = this.value;
+                    // console.log(propertyId);
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Change agen on lead " +leadName+" ?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, change it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Kirim DELETE request manual lewat JavaScript
+                            fetch('/leads/change-agent/' + leadId, {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        agent_code: agent_code
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    Swal.fire({
+                                        title: data.judul,
+                                        text: data.pesan,
+                                        icon: data.swalFlashIcon,
+                                    });
+
+                                    // Optional: reload table / halaman
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1500);
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire('Error', 'Something went wrong!', 'error');
+                                });
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+    {{-- /* End Sweet Alert --}}
 @endpush

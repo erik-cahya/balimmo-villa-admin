@@ -4,7 +4,7 @@
     <section class="breadcrumb__section section--padding">
         <div class="container">
             <div class="breadcrumb__content text-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="100">
-                <h1 class="breadcrumb__title h2"><span>Listing</span> Page</h1>
+                <h1 class="breadcrumb__title h2"><span>Searching</span> Result</h1>
                 <ul class="breadcrumb__menu d-flex justify-content-center">
                     <li class="breadcrumb__menu--items"><a class="breadcrumb__menu--link" href="./index.html">Home</a></li>
                     <li><span><svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -102,12 +102,12 @@
                                                                 </li>
                                                             </ul>
                                                             <div class="featured__content--list__footer">
-                                                                <p class="featured__content--desc listing__style">
+                                                                <!-- <p class="featured__content--desc listing__style">
                                                                     <svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#063436" />
                                                                     </svg>
                                                                     {{ $property->property_address }}
-                                                                </p>
+                                                                </p> -->
                                                                 <a class="listing__details--btn" href="{{ route('landing-page.listing.detail', $property->property_slug) }}"> Details</a>
                                                             </div>
 

@@ -187,10 +187,10 @@
             <div class="footer__bottom">
                 <div class="container">
                     <div class="footer__bottom--inner d-flex justify-content-between align-items-center">
-                        <p class="copyright__content mb-0"><span class="text__secondary">PT BALIMMO DEVELOPMENT GROUP © 2021 - 2025. All rights reserved</span></p>
-                        <div class="footer__payment">
+                        <p class="copyright__content mb-0 w-100 text-center"><span class="text__secondary">PT BALIMMO DEVELOPMENT GROUP © 2021 - 2025. All rights reserved</span></p>
+                        <!-- <div class="footer__payment">
                             <img src="{{ asset('landing') }}/assets/img/icon/payment-img.png" alt="payment-img">
-                        </div>
+                        </div> -->
                         <!-- <ul class="footer__bottom--menu d-flex">
                             <li><a href="./admin/create-listing.html">Terms of Use</a></li>
                             <li><a href="./admin/create-listing.html">Privacy Policy</a></li>

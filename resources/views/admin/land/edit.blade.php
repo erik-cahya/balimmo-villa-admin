@@ -718,7 +718,7 @@
             <div class="mb-3 mt-3 rounded">
                 <div class="row justify-content-end g-2">
                     <div class="col-lg-2">
-                        <a href="#!" class="btn btn-danger w-100">Cancel</a>
+                        <a href="{{ route('land.index') }}" class="btn btn-danger w-100">Cancel</a>
                     </div>
                     <div class="col-lg-2">
                         <button type="submit" class="btn btn-primary w-100">Update Land</button>
@@ -1197,17 +1197,36 @@
 
     {{-- Flatpickr --}}
     <script>
-        $("#leasehold_start_date").flatpickr({
-            dateFormat: "d-m-Y"
+        flatpickr("#leasehold_start_date", {
+            dateFormat: "Y-m-d",      // format nilai yang disimpan/submit
+            altInput: true,           // tampilkan input alternatif untuk user
+            altFormat: "d-m-Y",       // format tampilan ke user
+            allowInput: true,
+            defaultDate: document.getElementById('leasehold_start_date').value || null
         });
-        $("#leasehold_end_date").flatpickr({
-            dateFormat: "d-m-Y"
+
+        flatpickr("#leasehold_end_date", {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d-m-Y",
+            allowInput: true,
+            defaultDate: document.getElementById('leasehold_end_date').value || null
         });
-        $("#freehold_purchase_date").flatpickr({
-            dateFormat: "d-m-Y"
+
+        flatpickr("#freehold_purchase_date", {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d-m-Y",
+            allowInput: true,
+            defaultDate: document.getElementById('freehold_purchase_date').value || null
         });
-        $("#leasehold_deadline_payment").flatpickr({
-            dateFormat: "d-m-Y"
+
+        flatpickr("#leasehold_deadline_payment", {
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "d-m-Y",
+            allowInput: true,
+            defaultDate: document.getElementById('leasehold_deadline_payment').value || null
         });
     </script>
     {{-- /* Flatpickr --}}

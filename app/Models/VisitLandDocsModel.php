@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Land\LandModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PropertyLeadsModel extends Model
+class VisitLandDocsModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'leads';
+    protected $table = 'visit_land_docs';
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
 
-    public function customer()
+    public function land()
     {
-        return $this->belongsTo(CustomerDataModel::class , 'customer_id');
+        return $this->belongsTo(LandModel::class , 'land_id');
     }
 }

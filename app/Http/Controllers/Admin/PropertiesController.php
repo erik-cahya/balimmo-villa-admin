@@ -275,6 +275,15 @@ class PropertiesController extends Controller
         // ==========================================================================================================================================
         // ########### Create Properties Legal ##############
         // ==========================================================================================================================================
+        function toYmd(?string $v): ?string {
+            if (!$v) return null;
+            foreach (['Y-m-d', 'd-m-Y', 'd/m/Y'] as $fmt) {
+                try { return Carbon::createFromFormat($fmt, $v)->format('Y-m-d'); }
+                catch (\Exception $e) {}
+            }
+            return null; // atau lempar ValidationException kalau mau strict
+        }
+
         PropertyLegalModel::create([
             'properties_id' => $propertyCreate->id,
             'company_name' => $request->company_name,
@@ -286,12 +295,15 @@ class PropertiesController extends Controller
             'legal_status' => $request->legal_category,
             'holder_name' => $holder_name,
             'holder_number' => $holder_number,
-            'start_date' => $request->leasehold_start_date == null ? null : $this->dateConversion($request->leasehold_start_date),
-            'end_date' =>  $request->leasehold_end_date == null ? null : $this->dateConversion($request->leasehold_end_date),
-            'purchase_date' => $request->freehold_purchase_date == null ? null : $this->dateConversion($request->freehold_purchase_date),
+
+            'start_date'      => toYmd($request->leasehold_start_date),
+            'end_date'        => toYmd($request->leasehold_end_date),
+            'purchase_date'   => toYmd($request->freehold_purchase_date),
+            'deadline_payment'=> toYmd($request->leasehold_deadline_payment),
+            
             'extension_cost' => (int)preg_replace('/[^0-9]/', '', $request->leasehold_negotiation_ext_cost),
             'purchase_cost' =>  (int)preg_replace('/[^0-9]/', '', $request->leasehold_purchase_cost),
-            'deadline_payment' => $request->leasehold_deadline_payment == null ? null : $this->dateConversion($request->leasehold_deadline_payment),
+            
             'zoning' => $zoning,
 
             'construction_quality' => $request->construction_quality,
@@ -347,10 +359,12 @@ class PropertiesController extends Controller
 
         // Commission Details
         'agent_commision' => $request->commission_of_the_agent,
+        'agent_commision_idr' => $this->convertToInteger($request->commission_of_the_agent_idr),
         'give_balimmo_commision' => $request->full_commission_balimmo,
         'balimmo_commision' => $request->balimmo_commission,
+        'balimmo_commision_idr' => $this->convertToInteger($request->balimmo_commission_idr),
 
-        // Sale Price & Net Profit
+        // Sale Price & Net Profit`
         'selling_price_idr' => $idrPrice,
         'selling_price_usd' => $usdPrice,
         'net_seller_idr' => $this->convertToInteger($request->net_profit),
@@ -532,6 +546,10 @@ class PropertiesController extends Controller
                 'property_financial.selling_price_usd',
                 'property_financial.net_seller_idr',
                 'property_financial.net_seller_usd',
+                'property_financial.agent_commision',
+                'property_financial.agent_commision_idr',
+                'property_financial.balimmo_commision',
+                'property_financial.balimmo_commision_idr',
 
 
                 'property_legal.company_name',
@@ -632,8 +650,10 @@ class PropertiesController extends Controller
 
                 // Commission Details
                 'property_financial.agent_commision',
+                'property_financial.agent_commision_idr',
                 'property_financial.give_balimmo_commision',
                 'property_financial.balimmo_commision',
+                'property_financial.balimmo_commision_idr',
                 
                 // Sale Price & Net Profit
                 'property_financial.selling_price_idr',
@@ -785,12 +805,12 @@ class PropertiesController extends Controller
             'legal_status' => $request->legal_category,
             'holder_name' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_holder_name : $request->leasehold_contract_holder_name,
             'holder_number' => $request->legal_category === 'Freehold' ? $request->freehold_certificate_number : $request->leasehold_contract_number,
-            'start_date' => $request->leasehold_start_date ? $this->dateConversion($request->leasehold_start_date) : null,
-            'end_date' => $request->leasehold_end_date ? $this->dateConversion($request->leasehold_end_date) : null,
-            'purchase_date' => $request->freehold_purchase_date ? $this->dateConversion($request->freehold_purchase_date) : null,
+            'start_date' => $request->leasehold_start_date ? $request->leasehold_start_date : null,
+            'end_date' => $request->leasehold_end_date ? $request->leasehold_end_date : null,
+            'purchase_date' => $request->freehold_purchase_date ? ($request->freehold_purchase_date) : null,
             'extension_cost' => $this->convertToInteger($request->leasehold_negotiation_ext_cost),
             'purchase_cost' => $this->convertToInteger($request->leasehold_purchase_cost),
-            'deadline_payment' => $request->leasehold_deadline_payment ? $this->dateConversion($request->leasehold_deadline_payment) : null,
+            'deadline_payment' => $request->leasehold_deadline_payment ? $request->leasehold_deadline_payment : null,
             'zoning' => $request->legal_category === 'Freehold' ? $request->freehold_zoning : $request->leasehold_zoning,
             'construction_quality' => $request->construction_quality,
             'consturctor_name' => $request->constructor_name,
@@ -818,8 +838,10 @@ class PropertiesController extends Controller
 
             // Commission Details
             'agent_commision' => $request->commission_of_the_agent,
+            'agent_commision_idr' => $this->convertToInteger($request->commission_of_the_agent_idr),
             'give_balimmo_commision' => $request->full_commission_balimmo,
             'balimmo_commision' => $request->balimmo_commission,
+            'balimmo_commision_idr' => $this->convertToInteger($request->balimmo_commission_idr),
 
             // Sale Price & Net Profit
             'selling_price_idr' => $this->convertToInteger($request->website_price),
@@ -942,9 +964,9 @@ class PropertiesController extends Controller
         return Cache::remember('usd_to_idr_rate', now()->addHours(1), function () {
             try {
                 $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
-                return $response['rates']['IDR'] ?? 15000;
+                return $response['rates']['IDR'] ?? 16000;
             } catch (\Exception $e) {
-                return 15000;
+                return 16000;
             }
         });
     }
@@ -954,10 +976,10 @@ class PropertiesController extends Controller
         return (int)preg_replace('/[^0-9]/', '', $value);
     }
 
-    private function dateConversion($date)
-    {
-        return Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
-    }
+    // private function dateConversion($date)
+    // {
+    //     return Carbon::createFromFormat('d-m-Y', $date)->format('Y-m-d');
+    // }
 
     private function generatePropertiesSlug($name)
     {

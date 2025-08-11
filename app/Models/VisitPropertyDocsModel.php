@@ -12,4 +12,9 @@ class VisitPropertyDocsModel extends Model
     protected $table = 'visit_property_docs';
     protected $guarded = ['id'];
     protected $primaryKey = 'id';
+
+    public function property()
+    {
+        return $this->belongsTo(PropertiesModel::class , 'property_id');
+    }
 }

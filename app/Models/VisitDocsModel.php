@@ -18,4 +18,19 @@ class VisitDocsModel extends Model
     {
         return $this->belongsTo(ClientModel::class, 'client_id', 'id');
     }
+
+    public function prospect()
+    {
+        return $this->belongsTo(PropertyProspectModel::class , 'prospect_id');
+    }
+
+    public function propertyVisitDocs()
+    {
+        return $this->hasMany(VisitPropertyDocsModel::class , 'docs_visit_id');
+    }
+
+    public function landVisitDocs()
+    {
+        return $this->hasMany(VisitLandDocsModel::class , 'docs_visit_id');
+    }
 }

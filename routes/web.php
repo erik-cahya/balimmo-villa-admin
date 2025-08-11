@@ -99,18 +99,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/leadsSingle/{id}', [PropertiesLeadsController::class, 'deleteSingle']);
 
     Route::resource('/leads', PropertiesLeadsController::class);
+    Route::post('/leads/change-agent/{id}', [PropertiesLeadsController::class , 'changeAgent'])->name('leads.changeAgent');
 
     // Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 
     Route::resource('/profile', ProfileController::class);
-
-    // Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImage'])->name('gallery-images.destroy');
-    // Route::get('/galleries/{gallery}/edit', [GalleryController::class, 'edit'])->name('gallery.edit');
-    // Route::post('/galleries/{gallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
-
-    // Route::delete('/gallery-images/{id}', [GalleryController::class, 'deleteImageland'])->name('gallery-images.destroy');
-    // Route::get('/galleries/{gallery}/editland', [GalleryController::class, 'editland'])->name('gallery.editland');
-    // // Route::post('/galleries/{gallery}/updateland', [GalleryController::class, 'updateland'])->name('gallery.update');
 
     // PROPERTY
     Route::get('/galleries/{gallery}/edit',  [GalleryController::class, 'edit'])->name('gallery.edit');
@@ -121,8 +114,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/land-galleries/{gallery}/edit',   [GalleryController::class, 'editland'])->name('gallery.editland');
     Route::post('/land-galleries/{gallery}/update',[GalleryController::class, 'updateland'])->name('gallery.updateland');
     Route::delete('/land-gallery-images/{id}',     [GalleryController::class, 'deleteImageland'])->name('land.gallery-images.destroy');
-
-    
 
     Route::get('/visit/generate/english', [DocsVisitController::class, 'generateEnglishPDF'])->name('visit.pdf.english');
     Route::post('/visit/generate/english', [DocsVisitController::class, 'generateEnglishPDF'])->name('visit.pdf.english.post');
@@ -146,6 +137,7 @@ Route::middleware('auth')->group(function () {
     Route::post('prospects/make-prospect/{id}', [ProspectController::class, 'leadsToProspect'])->name('leadsToProspect'); // Make data leads to prospects
     Route::get('prospect/details/{custID}', [ProspectController::class, 'details'])->name('prospects.details');
     Route::resource('prospects', ProspectController::class);
+    Route::post('/prospect/add-asset' , [ ProspectController::class , 'addToSelectedAsset'])->name('prospects.addAsset');
 
     Route::resource('/notary', NotaryController::class);
 

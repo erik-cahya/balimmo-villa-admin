@@ -47,10 +47,11 @@
                                         <div class="advance__search--items">
                                             <select class="advance__search--select" name="property_location">
                                                 <option selected disabled>Select Location</option>
-                                                <option value="Canggu">Canggu</option>
-                                                <option value="Seminyak">Seminyak</option>
                                                 <option value="Ubud">Ubud</option>
-                                                <option value="Cemagi">Cemagi</option>
+                                                <option value="Canggu">Canggu</option>
+                                                <option value="Uluwatu">Uluwatu</option>
+                                                <option value="Sanur/Nusa Dua">Sanur/Nusa Dua</option>                                                
+                                                <option value="Other">Other</option>
                                             </select>
                                         </div>
 
@@ -66,7 +67,7 @@
                             </div>
                         </form>
 
-                        <div class="advance__wrapper position-relative text-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="250">
+                        <!-- <div class="advance__wrapper position-relative text-center" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="250">
                             <button class="advance__option--btn position-relative" data-bs-toggle="modal" data-bs-target="#advanceModal"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M9 17.9991C13.9624 17.9991 18 13.9618 18 8.99957C18 4.03734 13.9624 0 9 0C4.03764 0 0 4.03734 0 8.99957C0 13.9618 4.03764 17.9991 9 17.9991ZM4.71946 8.51799H8.51846V4.71869C8.51846 4.45281 8.73429 4.23715 9 4.23715C9.26589 4.23715 9.48154 4.45298 9.48154 4.71869V8.51799H13.2805C13.5464 8.51799 13.7621 8.73382 13.7621 8.99953C13.7621 9.26541 13.5462 9.48107 13.2805 9.48107H9.48154V13.2802C9.48154 13.5461 9.26571 13.7617 9 13.7617C8.73412 13.7617 8.51846 13.5459 8.51846 13.2802V9.48107H4.71946C4.45358 9.48107 4.23792 9.26524 4.23792 8.99953C4.23792 8.73364 4.45342 8.51799 4.71946 8.51799Z" fill="#DDAB70" />
                                 </svg>
@@ -77,7 +78,7 @@
                                 </svg>
 
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- Advance search filter .\ -->
                 </div>
@@ -224,11 +225,11 @@
                                         </div>
                                         <hr>
 
-                                        <p class="featured__content--desc"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- <p class="featured__content--desc"><svg width="11" height="17" viewBox="0 0 11 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M5.48287 0C2.45013 0 0 2.4501 0 5.48288C0 5.85982 0.0343013 6.21958 0.102785 6.57945C0.514031 9.69783 4.42055 11.9767 5.51712 16.4144C6.5966 12.0452 11 8.824 11 5.48288H10.9657C10.9657 2.45013 8.51548 0 5.48282 0H5.48287ZM5.48287 2.17592C7.21338 2.17592 8.61839 3.58097 8.61839 5.31144C8.61839 7.04191 7.21335 8.44696 5.48287 8.44696C3.7524 8.44696 2.34736 7.04191 2.34736 5.31144C2.34736 3.58097 3.75228 2.17592 5.48287 2.17592Z" fill="#063436" />
                                             </svg>
                                             {{ Str::limit($property->property_address, 40) }}
-                                        </p>
+                                        </p> -->
                                         <ul class="featured__info d-flex">
                                             <li class="featured__info--items">
                                                 <span class="featured__info--icon">
@@ -470,7 +471,7 @@
                             <h5 class="counterup__subtitle"> Years of experience in international real estate</h5>
                         </div>
                         <div class="counterup__items text-center">
-                            <h2 class="counterup__number"> <span class="js-counter" data-count="200">+200</span></h2>
+                            <h2 class="counterup__number"> <span class="js-counter" data-count="45">+200</span></h2>
                             <h5 class="counterup__subtitle"> Villas available</h5>
                         </div>
                         <div class="counterup__items text-center">
