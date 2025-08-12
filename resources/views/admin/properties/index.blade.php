@@ -64,7 +64,7 @@
                                     <th style="width: 250px;">Villa Photo & Name</th>
                                     <th>Agent</th>
                                     <th>Mandates</th>                                    
-                                    <th>Location</th>
+                                    <th>Area</th>
                                     <th>Bedroom</th>
                                     <th>Price</th>
                                     <th>Status</th>

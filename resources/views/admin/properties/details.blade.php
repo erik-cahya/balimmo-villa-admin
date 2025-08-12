@@ -474,9 +474,9 @@
                             <div class="row d-flex align-items-center" style="justify-content: space-between !important ">
                                 <div class="col-6 d-flex gap-2">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+                                    <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
                                         Make an estimation
-                                    </button>
+                                    </button> -->
                                     <a href="{{ route('properties.edit', $data_properties->property_slug) }}" type="submit" class="btn btn-primary w-fit">Edit Villa</a>
                                 </div>
                                 <div class="col-6 ">

@@ -479,8 +479,8 @@
 
                                         <!-- Average price input with dynamic label -->
                                         <div class="col-12 mb-1">
-                                            <label class="form-label" id="averagePriceLabel">Average price</label>
-                                            <input type="text" name="average_price" id="average_price" class="form-control" placeholder="Average price (e.g., 1.000.000)"/>
+                                            <label class="form-label" id="averagePriceLabel">Average price (IDR)</label>
+                                            <input type="text" name="average_price" id="average_price" class="form-control" placeholder="(IDR) Average price (e.g., 1.000.000)"/>
                                         </div>
 
                                         <!-- Average occupancy rate input (only visible for Daily option) -->
@@ -492,7 +492,7 @@
 
                                         <!-- Annual turnover (readonly, calculated automatically) -->
                                         <div class="col-12 mb-1">
-                                            <label class="form-label">Annual turnover</label>
+                                            <label class="form-label">Annual turnover (IDR)</label>
                                             <input type="text" name="annual_turnover" id="annual_turnover" class="form-control" placeholder="Annual turnover" style="background: #f9f9fc" readonly/>
                                         </div>
 
@@ -1117,21 +1117,21 @@
             function updateLabel(selectedOption) {
                 switch(selectedOption) {
                     case 'Daily':
-                        averagePriceLabel.textContent = 'Average price per night';
+                        averagePriceLabel.textContent = 'Average price per night (IDR)';
                         occupancyRateField.style.display = 'block';
                         break;
                     case 'Monthly':
-                        averagePriceLabel.textContent = 'Average price per month';
+                        averagePriceLabel.textContent = 'Average price per month (IDR)';
                         occupancyRateField.style.display = 'none';
                         occupancyRateInput.value = '';
                         break;
                     case 'Yearly':
-                        averagePriceLabel.textContent = 'Average price per year';
+                        averagePriceLabel.textContent = 'Average price per year (IDR)';
                         occupancyRateField.style.display = 'none';
                         occupancyRateInput.value = '';
                         break;
                     default:
-                        averagePriceLabel.textContent = 'Average price';
+                        averagePriceLabel.textContent = 'Average price (IDR)';
                         occupancyRateField.style.display = 'none';
                         break;
                 }

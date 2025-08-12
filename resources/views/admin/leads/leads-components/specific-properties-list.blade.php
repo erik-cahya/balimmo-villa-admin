@@ -64,7 +64,7 @@
 
                                     <td>
                                         <button type="button" class="btn btn-xs btn-primary" data-bs-toggle="modal" data-bs-target="#makeProspect-{{ $customerData->id }}">
-                                            <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon> Edit Data Leads
+                                            <iconify-icon icon="tabler:edit" class="fs-12 align-middle"></iconify-icon> Make to prospect
                                         </button>
 
                                         <input type="hidden" class="propertyId" value="{{ $customerData->id }}">

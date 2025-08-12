@@ -65,7 +65,7 @@
                                     <th style="width: 250px;">Land Photo & Name</th>
                                     <th>Agent</th>
                                     <th>Mandates</th>
-                                    <th>Location</th>
+                                    <th>Area</th>
                                     <th>Size (are)</th>
                                     <th>Price</th>
                                     <th>Status</th>
