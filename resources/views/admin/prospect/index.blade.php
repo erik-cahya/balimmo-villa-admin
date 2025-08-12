@@ -61,7 +61,7 @@
                                                 <th scope="col">Prospect Name</th>
                                                 <th scope="col">Agent</th>
                                                 <th scope="col">Phone Number</th>
-                                                <th scope="col">Localization</th>
+                                                <th scope="col">Area</th>
                                                 <th scope="col">Ready to buy</th>
                                                 <th scope="col">Villa Selected</th>
                                                 <th scope="col">Status</th>
@@ -130,7 +130,7 @@
                                                 <th scope="col">Prospect Name</th>
                                                 <th scope="col">Agent</th>
                                                 <th scope="col">Phone Number</th>
-                                                <th scope="col">Localization</th>
+                                                <th scope="col">Area</th>
                                                 <th scope="col">Ready to buy</th>
                                                 <th scope="col">Land Selected</th>
                                                 <th scope="col">Status</th>

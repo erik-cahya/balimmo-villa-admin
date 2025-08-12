@@ -16,7 +16,7 @@
                                 <th scope="col">Leads Name</th>
                                 <th scope="col">Agent</th>
                                 <th scope="col">Phone</th>
-                                <th scope="col">Location</th>
+                                <th scope="col">Area</th>
                                 <th scope="col">Ready to Buy</th>
                                 <th scope="col">Looking For</th>
 
